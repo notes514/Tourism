@@ -7,19 +7,32 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.tourism.ui.home.HomeFragment"
+        android:name="com.example.tourism.ui.fragment.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.tourism.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_browse"
+        android:name="com.example.tourism.ui.fragment.BrowseFragment"
+        android:label="@string/title_browse"
+        tools:layout="@layout/fragment_browse" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.tourism.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_destination"
+        android:name="com.example.tourism.ui.fragment.DestinationFragment"
+        android:label="@string/title_destination"
+        tools:layout="@layout/fragment_destination" />
+
+    <fragment
+        android:id="@+id/navigation_order"
+        android:name="com.example.tourism.ui.fragment.OrderFragment"
+        android:label="@string/title_order"
+        tools:layout="@layout/fragment_order" />
+
+    <fragment
+        android:id="@+id/navigation_personer"
+        android:name="com.example.tourism.ui.fragment.PersonerFragment"
+        android:label="@string/title_personer"
+        tools:layout="@layout/fragment_personer" />
+
 </navigation>
