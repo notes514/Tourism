@@ -1,4 +1,4 @@
-package com.example.tourism.ui.fragment;
+package com.example.tourism.ui.fragment.base;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
