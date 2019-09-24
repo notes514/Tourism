@@ -34,7 +34,7 @@ public class InitApp extends Application {
     }
 
     /**
-     *
+     * 初始化ImageLoader
      * @param context
      */
     private void initImageLoader(Context context){
@@ -58,7 +58,7 @@ public class InitApp extends Application {
     }
 
     /**
-     *
+     * 设置DisplayImageOptions
      * @return
      */
     public static DisplayImageOptions getOptions() {
