@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- android:shape="rectangle"：表示设置矩形的意思 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!--  设置背景色(半透明)  -->
+    <solid android:color="@color/color_translucent"/>
+    <!--  设置圆角  -->
+    <corners android:radius="30dip"/>
+</shape>

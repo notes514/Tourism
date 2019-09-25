@@ -7,11 +7,10 @@
 <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
         <!-- 在此自定义主题 -->
-        <item name="android:windowBackground">@drawable/abc_vector_test</item>
     </style>
 
     <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-
+        <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
 
 </resources>
