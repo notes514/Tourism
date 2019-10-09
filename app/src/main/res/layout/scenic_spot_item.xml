@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/scenicSpot_pic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+        <TextView
+            android:id="@+id/scenicSpot_name"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@+id/scenicSpot_pic"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/scenicSpot_pic"
+            app:layout_constraintTop_toBottomOf="@+id/scenicSpot_pic" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
