@@ -1,4 +1,4 @@
-package com.example.tourism.bean;
+package com.example.tourism.entity;
 
 public class SecondaryMenu {
 

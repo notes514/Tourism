@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tourism.R;
-import com.example.tourism.bean.SecondaryMenu;
+import com.example.tourism.entity.SecondaryMenu;
 
 public class SecondaryMenuItemAdapter extends BaseAdapter {
 
