@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_browse"
-        android:name="com.example.tourism.ui.fragment.BrowseFragment"
+        android:name="com.example.tourism.ui.fragment.DestinationFragment"
         android:label="@string/title_browse"
         tools:layout="@layout/fragment_browse" />
 
     <fragment
         android:id="@+id/navigation_destination"
-        android:name="com.example.tourism.ui.fragment.DestinationFragment"
+        android:name="com.example.tourism.ui.fragment.BrowseFragment"
         android:label="@string/title_destination"
         tools:layout="@layout/fragment_destination" />
 

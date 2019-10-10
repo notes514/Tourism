@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tourism.ui.activity.base.BaseActivity;
 
 /**
  * 引导页面类
  */
-public class StartPageActivity extends BaseActivity {
+public class StartPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -18,7 +18,7 @@ public class StartPageActivity extends BaseActivity {
         //创建子线程
         new Thread(() -> {
             try {
-                Thread.sleep(1000); //使程序休眠一秒
+                Thread.sleep(100); //使程序休眠一秒
                 Intent intent = new Intent(StartPageActivity.this, WelcomeActivity.class);
                 startActivity(intent);
                 finish();
@@ -28,4 +28,5 @@ public class StartPageActivity extends BaseActivity {
         }).start();
 
     }
+
 }

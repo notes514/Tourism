@@ -2,15 +2,34 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
-<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
         <!-- 在此自定义主题 -->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Main" parent="AppTheme.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <!--  启动闪屏页面设置  -->
+    <style name="TranslucentTheme" parent="AppTheme">
+        <!--  启动背景图  -->
         <item name="android:windowBackground">@drawable/bg_splash</item>
+        <!--  无标题  -->
+        <item name="android:windowNoTitle">true</item>
+        <!--  无ActionBar  -->
+        <item name="android:windowActionBar">false</item>
+        <!--  全屏即无通知栏  -->
+        <item name="android:windowFullscreen">true</item>
+        <!--  是否有遮盖  -->
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import com.example.tourism.R;
+import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,7 +17,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
  *
  */
 public class InitApp extends Application {
-    private static final String TAG = "InitApp";
+    public static final String TAG = "InitApp";
     private static InitApp instance = null;
     private static DisplayImageOptions options;
 
@@ -24,6 +25,7 @@ public class InitApp extends Application {
     public void onCreate() {
         super.onCreate();
         this.instance = instance;
+        AppUtils.init(this);
     }
 
     /**

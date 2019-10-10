@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 自定义标题栏控件响应 -->
 <resources>
-
-    <!--use_height：设置当前布局高度=状态栏高度值 用于无子View时的占位
-        use_padding_top：设置当前顶部padding=状态栏高度值 用于有子View时的占位
-    -->
-    <declare-styleable name="StatusBarHeightView">
-        <attr name="use_type" format="integer">
-            <enum name="use_height" value="0"/>
-            <enum name="use_padding_top" value="1"/>
-        </attr>
+    <declare-styleable name="CustomToolbar">
+        <attr name="leftButtonIcon" format="reference"/>
+        <attr name="rightButtonIcon" format="reference"/>
+        <attr name="myTitle" format="string"/>
     </declare-styleable>
-
 </resources>

@@ -1,10 +1,11 @@
 package com.example.tourism.ui.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -28,8 +29,7 @@ public class WelcomeActivity extends BaseActivity {
     Button btnSkip;
     @BindView(R.id.welcome_background)
     ConstraintLayout welcome_background;
-    private int i;
-    private int time = 5;
+    private int time = 3;
     private int[] image = {R.drawable.poster_one, R.drawable.poster_two, R.drawable.poster_three};
 
     @SuppressLint("HandlerLeak")
@@ -47,12 +47,14 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fullscreen(false);
         //创建随机数对象
         Random random = new Random();
-        i = random.nextInt(6);
+        int i = random.nextInt(3);
         if (i < 3) {
             setContentView(R.layout.activity_welcome);
             ButterKnife.bind(this);
+//            welcome_background.setSystemUiVisibility(View.INVISIBLE);
             //随机替换广告背景
             welcome_background.setBackgroundResource(image[i]);
             btnSkip.setOnClickListener(view -> { //点击跳过
@@ -74,6 +76,20 @@ public class WelcomeActivity extends BaseActivity {
             finish();
         }
         return time;
+    }
+
+    private void fullscreen(boolean enable) {
+        if (enable) { //显示状态栏
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+            getWindow().setAttributes(lp);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        } else { //隐藏状态栏
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().setAttributes(lp);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
     }
 
 }
