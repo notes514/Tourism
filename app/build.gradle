@@ -70,6 +70,17 @@ dependencies {
     implementation files('libs/nineoldandroids-2.4.0.jar')
     //图片轮播banner 最新版
     implementation 'com.youth.banner:banner:1.4.10'
+
+    //下拉刷新&上拉加载
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
+    implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
+    implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
+    implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
+    implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
+    implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
+    implementation  'com.github.yalantis:taurus:1.0.2'
     //image-loader图片加载框架
     implementation files('libs/universal-image-loader-1.9.5.jar')
 
