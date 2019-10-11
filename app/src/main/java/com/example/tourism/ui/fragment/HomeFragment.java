@@ -1,5 +1,6 @@
 package com.example.tourism.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,11 +20,16 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.tourism.R;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
-import com.example.tourism.bean.ScenicSpot;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.widget.GlideImageLoader;
+import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -36,12 +43,18 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 首页
@@ -50,6 +63,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.linearLayout)
+    LinearLayout linearLayout;
     @BindView(R.id.toolBar)
     Toolbar toolbar;
     @BindView(R.id.banner)
@@ -61,9 +76,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private int mOffset = 0;
-    private int mScrollY = 0;
-    private boolean isShow = true;
     private List<String> images = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
@@ -85,7 +97,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @Override
     public void initView() {
         //默认初始工具栏为透明
-        //toolbar.setAlpha(0);
+        toolbar.setAlpha(0);
         //设置 Header 为 贝塞尔雷达 样式
         refreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true)
                 .setPrimaryColorId(R.color.mask_tags_8));
@@ -96,8 +108,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
         refreshLayout.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                mOffset = offset / 2;
-                //toolbar.setAlpha(1 - Math.min(percent, 1));
+                                //toolbar.setAlpha(1 - Math.min(percent, 1));
                 //工具栏透明处理
                 //toolbar.setAlpha(1 - Math.min(percent, 1));
 
@@ -137,7 +148,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFooterFinish(RefreshFooter footer, boolean success) {
-                add();
+                //add();
             }
 
             @Override
@@ -156,9 +167,26 @@ public class HomeFragment extends BaseFragment implements DefineView {
             }
         });
 
+        scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == 0){
+                    //处于顶部时 工具栏透明
+                    toolbar.setAlpha(0);
+                }else if (scrollY > 0 && scrollY < toolbar.getHeight()){
+                    //下拉 并且 正在显示工具栏
+                    toolbar.setAlpha(((float) scrollY/(float) toolbar.getHeight()));
+                }else if (scrollY >= toolbar.getHeight()){
+                    toolbar.setAlpha(1);
+                }
+            }
+
+        });
+
         initBanner();
         initSecondaryMenu();
         initRecyclerView();
+        showNearby();
     }
 
     @Override
@@ -229,34 +257,61 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
     private void initRecyclerView(){
-        for (int i = 1; i <= 20; i++) {
-            scenicSpots.add(new ScenicSpot(R.drawable.defaultbg,i+""));
-        }
         StaggeredGridLayoutManager staggeredGridLayoutManager =
                 new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter2 = new ScenicSpotItemAdapter(getContext(),scenicSpots);
         recyclerView.setAdapter(adapter2);
-        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+
+    }
+
+    private void queryAllScenicSpot(){
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("","");
+        Call<ResponseBody> scenicSpotCall = api.getASync("queryAllScenicSpot",hashMap);
+        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
-                //上滑 并且 正在显示底部栏
-                if (i1 - i3 > 0 && isShow) {
-                    isShow = false;
-                    //将Y属性变为底部栏高度  (相当于隐藏了)
-                    toolbar.animate().translationY(toolbar.getHeight());
-                } else if (i1 - i3 < 0 && !isShow) {
-                    isShow = true;
-                    toolbar.animate().translationY(0);
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    Log.d("@@@", "请求成功！");
+                    //String data = response.body().string();
+                    //Log.d("@@@",data);
+                    //JSONObject jsonObject = new JSONObject(data);
+                    scenicSpots = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
+                            new TypeToken<List<ScenicSpot>>(){}.getType());
+                    Log.d("@@@",scenicSpots.size()+"");
+                    initRecyclerView();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("@@@","请求失败！");
+                Log.d("@@@",t.getMessage());
+            }
+        });
+
+    }
+
+    private void showNearby(){
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(),"查看附近景点",Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), NearbyActivity.class);
+                startActivity(intent);
             }
         });
     }
 
+
+
     private void add(){
         int l = scenicSpots.size();
         for (int i = 1; i <= 10; i++) {
-            scenicSpots.add(new ScenicSpot(R.drawable.defaultbg,i+l+""));
+            //scenicSpots.add(new ScenicSpot(R.drawable.defaultbg,i+l+""));
         }
         adapter2.notifyDataSetChanged();
     }

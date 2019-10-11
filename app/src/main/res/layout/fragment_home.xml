@@ -38,6 +38,7 @@
                     android:layout_height="6dp"
                     android:background="@color/color_Palegrey"/>
                 <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:orientation="horizontal"
@@ -82,7 +83,7 @@
         android:id="@+id/toolBar"
         android:background="@color/mask_tags_8"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         app:layout_collapseMode="pin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
