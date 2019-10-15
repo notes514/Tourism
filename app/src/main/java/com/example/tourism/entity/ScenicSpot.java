@@ -21,6 +21,19 @@ public class ScenicSpot {
 
     private String scenicSpotDescribe;
 
+    public ScenicSpot(Integer scenicSpotId, Integer regionId, String scenicSpotTheme, String scenicSpotPicUrl, Double scenicSpotPrice, Integer travelMode, String startLand, String endLand, Integer scenicSpotState, String scenicSpotDescribe) {
+        this.scenicSpotId = scenicSpotId;
+        this.regionId = regionId;
+        this.scenicSpotTheme = scenicSpotTheme;
+        this.scenicSpotPicUrl = scenicSpotPicUrl;
+        this.scenicSpotPrice = scenicSpotPrice;
+        this.travelMode = travelMode;
+        this.startLand = startLand;
+        this.endLand = endLand;
+        this.scenicSpotState = scenicSpotState;
+        this.scenicSpotDescribe = scenicSpotDescribe;
+    }
+
     public Integer getScenicSpotId() {
         return scenicSpotId;
     }

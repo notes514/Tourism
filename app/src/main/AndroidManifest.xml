@@ -38,10 +38,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".ui.activity.NearbyActivity">
+        </activity>
+        <activity android:name=".ui.activity.ActivitySpotActivity">
         </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"

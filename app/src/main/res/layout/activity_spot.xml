@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/fanhui"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/layout_border"
+            android:layout_gravity="center_vertical"
+            android:hint="请输入文字"
+            android:textSize="25dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="10dp"
+            android:paddingLeft="5dp">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/travel_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/travel_spot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/travel_mode">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+
+
+
+
+</LinearLayout>
