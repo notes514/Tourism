@@ -58,6 +58,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- BRTSDK服务. -->
+        <service
+            android:name="com.brtbeacon.sdk.BleService"
+            android:enabled="true" />
     </application>
 
 </manifest>
