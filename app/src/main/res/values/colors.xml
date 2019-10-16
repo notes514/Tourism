@@ -40,4 +40,12 @@
     <color name="mask_tags_11">#ffa319</color>
     <color name="mask_tags_12">#f08945</color>
 
+    <!--白色  标题 背景-->
+    <color name="colorBackground">#ffffff</color>
+    <!--蓝色  选中下划线 -->
+    <color name="colorLineChoosed">#33B5E5</color>
+    <!--半透明蓝色  选中下划线 阴影-->
+    <color name="colorLineChoosedShadow">#8833B5E5</color>
+    <!--灰色  未选中下划线 -->
+    <color name="colorLineDefault">#FFAAAAAA</color>
 </resources>
