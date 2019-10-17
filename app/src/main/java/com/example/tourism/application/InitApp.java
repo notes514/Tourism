@@ -67,9 +67,9 @@ public class InitApp extends Application {
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .build();
-        // 用ImageLoaderConfiguration配置对象来完成ImageLoader的初始化，单利
+    // 用ImageLoaderConfiguration配置对象来完成ImageLoader的初始化，单利
         ImageLoader.getInstance().init(config);
-    }
+}
 
     /**
      * 设置DisplayImageOptions

@@ -46,6 +46,17 @@
         </activity>
         <activity android:name=".ui.activity.ActivitySpotActivity">
         </activity>
+        <activity android:name=".ui.activity.PersonalMyCollection">
+        </activity>
+        <activity android:name=".ui.activity.PersonalTalk">
+        </activity>
+        <activity android:name=".ui.activity.PersonalHolidayproblem">
+        </activity>
+        <activity android:name=".ui.activity.PersonalSubscriptions">
+        </activity>
+        <activity android:name=".ui.activity.PersonalhomepageActivity">
+        </activity>
+
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
