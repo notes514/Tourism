@@ -47,9 +47,9 @@ dependencies {
     //圆形图片控件 CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     //Glide(图片加载库)
-    implementation('com.github.bumptech.glide:glide:4.9.0') {
-        exclude group: "com.android.support"
-    }
+//    implementation('com.github.bumptech.glide:glide:4.9.0') {
+//        exclude group: "com.android.support"
+//    }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     //Retrofit（网络请求框架）
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
@@ -70,6 +70,7 @@ dependencies {
     //第三方下拉刷新、上拉加载
     implementation 'com.liaoinstan.springview:library:1.2.6'
     implementation files('libs/nineoldandroids-2.4.0.jar')
+    implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     //图片轮播banner 最新版
     implementation 'com.youth.banner:banner:1.4.10'
 
@@ -87,6 +88,9 @@ dependencies {
     implementation files('libs/universal-image-loader-1.9.5.jar')
 
     implementation files('libs/systembartint-1.0.3.jar')
+    //顶部磨砂图像背景以及圆形头像
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.1'
     //开源搜索框
     implementation 'com.carson_ho:SearchLayout:1.0.1'
     implementation files('libs/BRTSDK-5.0.8.jar')

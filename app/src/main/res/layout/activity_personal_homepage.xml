@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         tools:ignore="MissingConstraints">
 
         <ImageView
@@ -16,75 +16,70 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             tools:ignore="MissingConstraints" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="95dp">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/h_back"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 
-
+            <ImageView
+                android:id="@+id/user_return_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center|left"
+                android:onClick="my_personal_homepage_return_arrow"
+                android:src="@drawable/personal_arrow_white_left1"
+                tools:ignore="OnClick" />
 
             <ImageView
-                android:id="@+id/user_message"
+                android:id="@+id/personal_user_export"
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center|right"
-                android:src="@drawable/personal_message_white" />
+                android:src="@drawable/personal_export" />
+
         </FrameLayout>
-
-        <ImageView
-            android:id="@+id/h_head"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_centerInParent="true"
-            tools:ignore="MissingConstraints" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/h_back"
-            android:layout_marginBottom="40dp"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints">
-
             <ImageView
-                android:id="@+id/user_line"
-                android:layout_width="1dp"
-                android:layout_height="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
-                android:background="@android:color/white" />
+                android:id="@+id/h_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center" />
+    </FrameLayout>
 
-            <TextView
-                android:id="@+id/user_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/user_line"
-                android:text="账号"
-                android:textColor="@android:color/white"
-                android:textSize="17sp" />
 
-            <TextView
-                android:id="@+id/user_val"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/user_line"
-                android:text="电话号码"
-                android:textColor="@android:color/white"
-                android:textSize="17sp" />
-        </RelativeLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/h_back"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="40dp"
+            tools:ignore="MissingConstraints">
+
+
+            <TextView
+                android:id="@+id/personal_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="张飞"
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/h_back"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 
@@ -93,9 +88,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="40dp"
+                android:layout_marginRight="30dp"
                 android:text="关注"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_white"
                 android:textSize="12sp" />
 
             <TextView
@@ -103,16 +98,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="5dp"
                 android:text="0"
-                android:textColor="@android:color/white"
+                android:textColor="@color/color_white"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/user_fans"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="25dp"
                 android:layout_gravity="center"
                 android:text="粉丝"
                 android:textColor="@android:color/white"
@@ -122,46 +117,36 @@
                 android:id="@+id/user_fans_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="45dp"
                 android:layout_gravity="center"
                 android:text="0"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/user_homepage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center"
-                android:layout_marginRight="30dp"
-                android:text="个人主页"
-                android:onClick="btn_my_homepage"
-                android:textColor="@android:color/white"
-                android:textSize="12sp" />
-
-            <ImageView
-                android:id="@+id/user_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_gravity="right|center"
-                android:layout_marginRight="0dp"
-                android:src="@drawable/personal_arrow_white_right" />
         </FrameLayout>
     </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
-        tools:context=".PersonalActivity">
+        android:layout_height="match_parent"
+        android:layout_marginTop="150dp"
+        tools:ignore="MissingConstraints">
 
-        <include layout="@layout/activity_personal_part"></include>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <!-- 顶部的内容 -->
+            <include layout="@layout/activity_personalhomepage_top_bar" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/color_white">
+
+            </androidx.viewpager.widget.ViewPager>
+        </LinearLayout>
     </FrameLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
