@@ -28,7 +28,7 @@ public class InitApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        this.instance = instance;
+        this.instance = this;
         AppUtils.init(this);
         // 开启log打印
         L.enableDebugLogging(true);
@@ -38,6 +38,7 @@ public class InitApp extends Application {
         beaconManager.registerApp("00000000000000000000000000000000");
         // 开启Beacon扫描服务
         beaconManager.startService();
+        initImageLoader(getApplicationContext());
     }
 
     /**

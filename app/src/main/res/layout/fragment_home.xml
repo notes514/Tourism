@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -27,58 +26,74 @@
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"/>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    app:cardCornerRadius="6dp">
+                    <GridView
+                        android:id="@+id/gridView"
+                        android:layout_width="match_parent"
+                        android:layout_height="122dp"
+                        android:numColumns="4" />
+                </androidx.cardview.widget.CardView>
 
-                <GridView
-                    android:id="@+id/gridView"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:numColumns="4" />
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:background="@color/color_Palegrey"/>
-                <LinearLayout
-                    android:id="@+id/linearLayout"
+                    android:layout_height="6dp"/>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginLeft="6dp"
-                        app:srcCompat="@android:drawable/ic_menu_report_image" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="附近有7处旅游景点"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="最近距您100m"
-                        android:gravity="right"/>
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginRight="6dp"
-                        app:srcCompat="@android:drawable/ic_menu_report_image" />
-                </LinearLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
+                    app:cardCornerRadius="6dp">
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginLeft="6dp"
+                            android:background="@drawable/ic_location" />
+                        <TextView
+                            android:id="@+id/count"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"/>
+                        <TextView
+                            android:id="@+id/distance"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"/>
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginRight="6dp"
+                            android:background="@drawable/ic_navigate_next" />
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:background="@color/color_Palegrey"/>
+                    android:layout_height="6dp"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:background="@color/mask_tags_8"

@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -43,6 +44,8 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".ui.activity.NearbyActivity">
+        </activity>
+        <activity android:name=".ui.activity.SecondaryActivity">
         </activity>
         <activity android:name=".ui.activity.ActivitySpotActivity">
         </activity>

@@ -15,14 +15,14 @@
         app:layout_constraintTop_toTopOf="parent">
     </com.example.tourism.widget.CustomToolbar>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolBar"
-        app:srcCompat="@drawable/map" />
+        app:layout_constraintTop_toBottomOf="@+id/toolBar" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
