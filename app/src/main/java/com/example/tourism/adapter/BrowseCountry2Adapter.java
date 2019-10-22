@@ -13,9 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
 import com.example.tourism.entity.RegionType;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,8 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
                 case 1:
                 case 2:
                 case 3:
+                case 4:
+                case 5:
                     if (position<=regionTypes.size()){
                         for (int j = 0; j < countries.size(); j++) {
                             country = countries.get(j);
@@ -106,7 +111,7 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScenicRegion country = cc.get(position);
         if (holder instanceof Country3ViewHolder){
-            ((Country3ViewHolder) holder).countryPic.setImageResource(R.drawable.defaultbg);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic, InitApp.getOptions());
             ((Country3ViewHolder) holder).countryName.setText(country.getRegionName());
             ((Country3ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

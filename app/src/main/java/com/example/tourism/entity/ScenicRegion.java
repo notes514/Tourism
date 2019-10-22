@@ -11,6 +11,13 @@ public class ScenicRegion implements Serializable{
 
     private String regionDescribe;
 
+    public ScenicRegion(Integer regionId, String regionName, String regionPicUrl, String regionDescribe) {
+        this.regionId = regionId;
+        this.regionName = regionName;
+        this.regionPicUrl = regionPicUrl;
+        this.regionDescribe = regionDescribe;
+    }
+
     public Integer getRegionId() {
         return regionId;
     }

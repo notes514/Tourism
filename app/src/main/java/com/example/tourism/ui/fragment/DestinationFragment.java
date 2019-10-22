@@ -2,6 +2,8 @@ package com.example.tourism.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,8 @@ import com.example.tourism.adapter.BrowseRegionAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Constant;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
 import com.example.tourism.ui.activity.SearchList;
@@ -35,6 +39,9 @@ import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.entity.Country;
 import com.example.tourism.entity.Region;
 import com.example.tourism.entity.RegionType;
+import com.example.tourism.utils.AppUtils;
+import com.example.tourism.utils.DbManger;
+import com.example.tourism.utils.MySqliteHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -74,6 +81,8 @@ public class DestinationFragment extends BaseFragment implements DefineView {
     BrowseRegionAdapter browseRegionAdapter;
     List<ScenicRegion> scenicRegions = new ArrayList<>();
     String temp=null;
+    private MySqliteHelper helper;
+    private SQLiteDatabase db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,6 +103,8 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         search = root.findViewById(R.id.search);
         // 4. 设置点击键盘上的搜索按键后的操作（通过回调接口）
         // 参数 = 搜索框输入的内容
+        helper = new MySqliteHelper(getActivity());
+        db = helper.getWritableDatabase();
 
 
 
@@ -206,47 +217,9 @@ public class DestinationFragment extends BaseFragment implements DefineView {
 
     }
 
-    public void getType(){
-        String url = "http://192.168.42.39:8080/api/";
-        RetrofitManger retrofit = RetrofitManger.getInstance();
-        ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
-        Map<String,Object> map=new HashMap<>();
-        Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
-        List<RegionType> temp = new ArrayList<>();
-        temp.addAll(mlist);
-        for (int i=temp.size()-1;i>0;i--) {
-            RegionType regionType = temp.get(i);
-            if (regionType.getRegionTypeId() != 0) {
-                temp.remove(regionType);
-            }
-        }
-        scenicRegionCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String m = response.body().string();
-                    scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
 
 
-                    browseCountryAdapter = new BrowseCountryAdapter(temp,scenicRegions);
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(DestinationFragment.this.getContext());
-                    layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    countryRecycleView.setLayoutManager(layoutManager);
-//给RecyclerView设置适配器
-                    countryRecycleView.setAdapter(browseCountryAdapter);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d(TAG, "onFailure: "+t.getMessage());
-            }
-        });
-
-
-    }
 
     private void replaceFragment(Fragment fragment){
         //1.实例化FragmentManager对象
@@ -306,11 +279,11 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                 }else {
                     replaceFragment(new SearchSpotAdapterFragment());
                 }
-                String url = "http://192.168.42.39:8080/api/";
+
                 RetrofitManger retrofit = RetrofitManger.getInstance();
-                ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+                ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
-                Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+                Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
                 scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -323,7 +296,17 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                                 Log.e(TAG, "abconResponse: "+newText, null);
                                 if (newText.equals(scenicRegion.getRegionName())){
                                     temp=newText;
-                                    Log.e(TAG, "abcnewText: "+temp,null );
+                                    String selectSql = "select * from "+ Constant.TABLE_NAME;
+                                    Cursor cursor = DbManger.selectSQL(db,selectSql,null);
+                                    List<ScenicRegion> sc = DbManger.cursorToList(cursor);
+                                    for (int j=0;j<sc.size();j++){
+                                        if (sc.get(j).getRegionId()==scenicRegion.getRegionId()){
+                                            DbManger.execSQL(db,"delete from ScenicRegion_Data where scenicRegionId = "+sc.get(j).getRegionId()+";");
+                                        }
+                                    }
+                                    String sql = "insert into " + Constant.TABLE_NAME +" values ("+scenicRegion.getRegionId()+",'"+scenicRegion.getRegionName()+"')";
+                                    DbManger.execSQL(db,sql);//执行语句
+                                    Log.e(TAG, "ssssonResponse: "+cursor.getCount(),null );
                                     break;
                                 }else{
                                     temp=null;
@@ -350,11 +333,11 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                 if (temp!=null){
 
 
-                    String url = "http://192.168.42.39:8080/api/";
+
                     RetrofitManger retrofit = RetrofitManger.getInstance();
-                    ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+                    ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                     Map<String,Object> map=new HashMap<>();
-                    Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+                    Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
                     scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -383,7 +366,11 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                     });
 
                 }else {
-                    Toast.makeText(DestinationFragment.this.getContext(), "没有找到您想找的", Toast.LENGTH_SHORT).show();
+//                    Toast t;
+////                    t = Toast.makeText(getActivity(),null,Toast.LENGTH_SHORT);
+////                    t.setText("无法找到你想找的");
+////                    t.show();
+                    AppUtils.getToast("无法找到你想找的");
                 }
             }
 
@@ -391,28 +378,4 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         Log.e(TAG, "abconStart: ",null );
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e(TAG, "abconResume: ",null);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.e(TAG, "abconAttach: ",null);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        Log.e(TAG, "abconPause: ",null );
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.e(TAG, "abconDestroyView: ",null);
-    }
 }

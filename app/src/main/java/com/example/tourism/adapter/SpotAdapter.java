@@ -10,13 +10,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
 public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder> {
 
     private List<ScenicSpot> scenicSpots;
+    private BrowseCountry2Adapter.OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onClick(int position);
+    }
 
     public SpotAdapter(List<ScenicSpot> scenicSpots) {
         this.scenicSpots = scenicSpots;
@@ -34,10 +42,16 @@ public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder
     public void onBindViewHolder(@NonNull SpotViewHolder holder, int position) {
         ScenicSpot scenicSpot = scenicSpots.get(position);
         holder.spotTitle.setText(scenicSpot.getScenicSpotTheme());
-        holder.spotPic.setImageResource(R.drawable.defaultbg);
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images+scenicSpot.getScenicSpotPicUrl(),holder.spotPic, InitApp.getOptions());
         holder.spotStart.setText("出发:"+scenicSpot.getStartLand());
         holder.spotEnd.setText("终点:"+scenicSpot.getEndLand());
         holder.spotPrice.setText(scenicSpot.getScenicSpotPrice()+"起/人");
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

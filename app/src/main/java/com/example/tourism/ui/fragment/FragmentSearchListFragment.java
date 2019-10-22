@@ -1,6 +1,9 @@
 package com.example.tourism.ui.fragment;
 
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -17,12 +20,18 @@ import com.example.tourism.adapter.BrowseCountryAdapter;
 import com.example.tourism.adapter.SearchListAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Constant;
 import com.example.tourism.entity.ScenicRegion;
+import com.example.tourism.ui.activity.ActivitySpotActivity;
+import com.example.tourism.utils.DbManger;
+import com.example.tourism.utils.MySqliteHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +50,8 @@ public class FragmentSearchListFragment extends Fragment {
     private List<ScenicRegion> scenicRegions;
     Bundle info;
     String init;
+    private MySqliteHelper helper;
+    private SQLiteDatabase db;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,12 +66,14 @@ public class FragmentSearchListFragment extends Fragment {
         searchList = (RecyclerView) view.findViewById(R.id.search_list);
         info=getArguments();
         init=info.getString("newText");
+        helper = new MySqliteHelper(getActivity());
+        db = helper.getWritableDatabase();
 
-        String url = "http://192.168.42.39:8080/api/";
+        //String url = "http://192.168.42.77:8080/api/";
         RetrofitManger retrofit = RetrofitManger.getInstance();
-        ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+        ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String,Object> map=new HashMap<>();
-        Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+        Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
         scenicRegionCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -75,7 +88,52 @@ public class FragmentSearchListFragment extends Fragment {
                             temp.add(scenicRegion);
                         }
                     }
-                    SearchListAdapter searchListAdapter = new SearchListAdapter(temp);
+                    SearchListAdapter searchListAdapter = new SearchListAdapter(1,temp);
+                    searchListAdapter.setmOnItemClickListener(new SearchListAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(int position) {
+                            RetrofitManger retrofit = RetrofitManger.getInstance();
+                            ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                            Map<String,Object> map=new HashMap<>();
+                            Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+                            scenicRegionCall.enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    try {
+                                        String m = response.body().string();
+                                        scenicRegions = new Gson().fromJson(m, new TypeToken<List<ScenicRegion>>() {
+                                        }.getType());
+                                        for (int i = 0; i < scenicRegions.size(); i++) {
+                                            ScenicRegion scenicRegion = scenicRegions.get(i);
+                                            String selectSql = "select * from " + Constant.TABLE_NAME;
+                                            Cursor cursor = DbManger.selectSQL(db, selectSql, null);
+                                            List<ScenicRegion> sc = DbManger.cursorToList(cursor);
+                                            for (int j = 0; j < sc.size(); j++) {
+                                                if (sc.get(j).getRegionId() == scenicRegion.getRegionId()) {
+                                                    DbManger.execSQL(db, "delete from ScenicRegion_Data where scenicRegionId = " + sc.get(j).getRegionId() + ";");
+                                                }
+                                            }
+                                            String sql = "insert into " + Constant.TABLE_NAME + " values (" + scenicRegion.getRegionId() + ",'" + scenicRegion.getRegionName() + "')";
+                                            DbManger.execSQL(db, sql);//执行语句
+                                            Log.e(ImageLoader.TAG, "ssssonResponse: " + cursor.getCount(), null);
+                                            break;
+                                        }
+
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Log.d(ImageLoader.TAG, "onFailure: "+t.getMessage());
+                                }
+                            });
+                            Intent intent = new Intent(FragmentSearchListFragment.this.getContext(),ActivitySpotActivity.class);
+                            intent.putExtra("country",temp.get(position));
+                            FragmentSearchListFragment.this.getContext().startActivity(intent);
+                        }
+                    });
                     LinearLayoutManager layoutManager = new LinearLayoutManager(FragmentSearchListFragment.this.getContext());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     searchList.setLayoutManager(layoutManager);

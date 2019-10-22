@@ -9,7 +9,7 @@
     >
 
     <LinearLayout
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="2dp"
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         <Button
             android:id="@+id/search"
             android:layout_width="80dp"
-            android:layout_height="50dp"
+            android:layout_height="47dp"
             android:text="搜索"
             android:background="@drawable/layout_border">
 
