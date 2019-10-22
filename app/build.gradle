@@ -127,6 +127,10 @@ dependencies {
     implementation files('libs/BRTSDK-5.0.8.jar')
     //网页数据抓取
     implementation 'org.jsoup:jsoup:1.12.1'
+
+    //哔哩哔哩开源的弹幕效果库
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 }
 MobSDK {
     appKey "2c75fba93b9b8"
@@ -163,7 +167,4 @@ MobSDK {
         }
     }
 
-    //哔哩哔哩开源的弹幕效果库
-    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
-    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 }
