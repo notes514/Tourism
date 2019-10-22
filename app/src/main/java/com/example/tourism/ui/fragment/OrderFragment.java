@@ -31,7 +31,7 @@ public class OrderFragment extends BaseFragment implements DefineView {
         unbinder = ButterKnife.bind(this, root);
         initView();
         initValidata();
-        initValidata();
+        initListener();
         bindData();
         return root;
     }

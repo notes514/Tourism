@@ -14,8 +14,18 @@ import retrofit2.http.Url;
  * 网络请求接口
  */
 public interface ServerApi {
+
     /**
-     * GET异步请求
+     * GET无参异步请求
+     *
+     * @param url 传入的URL
+     * @return
+     */
+    @GET
+    Call<ResponseBody> getNAsync(@Url String url);
+    /**
+     * GET有参异步请求
+     *
      * @param url 传入的URL
      * @param map 参数
      * @return ResponseBody

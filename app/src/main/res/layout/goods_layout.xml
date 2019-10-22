@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <!--卡片布局CardView 继承自FrameLayout(帧布局)-->
     <androidx.cardview.widget.CardView
         android:id="@+id/goods_cardView"
@@ -25,8 +26,8 @@
                 <!--用户头像-->
                 <com.example.tourism.widget.CircleImageView
                     android:id="@+id/head_portrait_image"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="34dp"
+                    android:layout_height="39dp"
                     android:layout_marginStart="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,103 +39,164 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="@string/app_name"
-                    android:textColor="@color/color_black"
-                    android:textSize="12sp"
+                    android:textColor="@color/color_blue"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/head_portrait_image"
                     app:layout_constraintTop_toTopOf="@+id/head_portrait_image" />
-                <!--发表时间-->
+
                 <TextView
-                    android:id="@+id/publication_time_text"
+                    android:id="@+id/user_tag_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="标签"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_navy_blue"
+                    app:layout_constraintBottom_toBottomOf="@+id/account_name_text"
+                    app:layout_constraintStart_toEndOf="@+id/account_name_text"
+                    app:layout_constraintTop_toTopOf="@+id/account_name_text"
+                    app:layout_constraintVertical_bias="1.0" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="@string/app_name"
-                    android:textSize="10sp"
                     app:layout_constraintBottom_toBottomOf="@+id/head_portrait_image"
-                    app:layout_constraintStart_toEndOf="@+id/head_portrait_image" />
-                <!--点击关注-->
-                <TextView
-                    android:id="@+id/follow_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:background="@drawable/select_follow"
-                    android:text="+ 关注"
-                    android:textColor="@color/mask_tags_4"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/head_portrait_image">
+                    <!--发表时间-->
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp"/>
+                    <!--天数-->
+                    <TextView
+                        android:id="@+id/tv_days"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp"/>
+                    <!--照片数量-->
+                    <TextView
+                        android:id="@+id/tv_pic_nums"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp" />
+                    <!--关系-->
+                    <TextView
+                        android:id="@+id/tv_relation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="12sp" />
+                    <!--发表时间-->
+                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <!--文字内容-->
             <TextView
-                android:id="@+id/content_text"
+                android:id="@+id/tv_title_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="3"
+                android:text="@string/app_name"
                 android:textColor="@color/color_black"
+                android:textSize="16sp" />
+            <!--途径-->
+            <TextView
+                android:id="@+id/cannel_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
                 android:layout_margin="10dp"
                 android:text="TextView" />
-            <GridView
-                android:id="@+id/content_pic_gridview"
+            <!--行程-->
+            <TextView
+                android:id="@+id/trip_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numColumns="3"
+                android:textSize="12sp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:text="TextView" />
+            <!-- 图片加载 -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_good"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp">
-
+                <!-- 用户浏览 -->
                 <ImageView
-                    android:id="@+id/collecion_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="60dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/forward_image"
-                    app:layout_constraintEnd_toStartOf="@+id/forward_image"
-                    app:layout_constraintTop_toTopOf="@+id/forward_image"
-                    app:layout_constraintVertical_bias="0.0" />
-
+                    android:id="@+id/iv_browse"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginEnd="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/browse_textView"
+                    app:layout_constraintEnd_toStartOf="@+id/browse_textView"
+                    app:layout_constraintTop_toTopOf="@+id/browse_textView"
+                    app:srcCompat="@drawable/icon_browse" />
                 <TextView
-                    android:id="@+id/collection_number_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:text="99"
-                    android:textColor="@color/color_black"
-                    app:layout_constraintBottom_toBottomOf="@+id/collecion_image"
-                    app:layout_constraintStart_toEndOf="@+id/collecion_image"
-                    app:layout_constraintTop_toTopOf="@+id/collecion_image"
-                    app:layout_constraintVertical_bias="0.8" />
-
-                <ImageView
-                    android:id="@+id/forward_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="4dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/forward_text"
-                    app:layout_constraintEnd_toStartOf="@+id/forward_text"
-                    app:layout_constraintTop_toTopOf="@+id/forward_text"
-                    app:layout_constraintVertical_bias="0.6" />
-
-                <TextView
-                    android:id="@+id/forward_text"
+                    android:id="@+id/browse_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
-                    android:text="转发"
-                    android:textColor="@color/color_black"
+                    android:text="111"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_fabulous"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_fabulous"
+                    app:layout_constraintTop_toTopOf="@+id/iv_fabulous"
+                    app:layout_constraintVertical_bias="1.0" />
+                <!-- 用户获得点赞数量 -->
+                <ImageView
+                    android:id="@+id/iv_fabulous"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginEnd="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fabulous_text"
+                    app:layout_constraintEnd_toStartOf="@+id/fabulous_text"
+                    app:layout_constraintTop_toTopOf="@+id/fabulous_text"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@drawable/icon_fabulous" />
+                <!-- 用户评论 -->
+                <TextView
+                    android:id="@+id/fabulous_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="99"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_comment"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_comment"
+                    app:layout_constraintTop_toTopOf="@+id/iv_comment"
+                    app:layout_constraintVertical_bias="1.0" />
+                <ImageView
+                    android:id="@+id/iv_comment"
+                    android:layout_width="20sp"
+                    android:layout_height="20sp"
+                    android:layout_marginEnd="5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/comment_text"
+                    app:layout_constraintEnd_toStartOf="@+id/comment_text"
+                    app:layout_constraintTop_toTopOf="@+id/comment_text"
+                    app:layout_constraintVertical_bias="1.0"
+                    app:srcCompat="@drawable/icon_comment" />
+
+                <TextView
+                    android:id="@+id/comment_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:text="111"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.512" />
-
+                    app:layout_constraintVertical_bias="0.545" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
-
 </LinearLayout>

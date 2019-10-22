@@ -82,7 +82,6 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         unbinder = ButterKnife.bind(this, root);
         initView();
         initValidata();
-        initValidata();
         bindData();
         getData();
 

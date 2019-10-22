@@ -7,16 +7,18 @@
     <color name="color_orange">#FF9800</color>
     <color name="color_Palegrey">#F3F3F3</color>
     <color name="color_white">#FFFFFF</color>
+    <color name="color_Pale">#CFCFCF</color>
     <color name="color_red">#F44336</color>
     <color name="color_navy_blue">#3F51B5</color>
     <color name="color_blue">#2196F3</color>
     <color name="color_wathet_blue">#03A9F4</color>
     <color name="color_gray">#BBBBBB</color>
+    <color name="color_light_gray">#D3D3D3</color>
     <color name="color_dark_grey">#868686</color>
     <color name="color_dark_grey_two">#616161</color>
 
-
-
+    <!--黑色半透明-->
+    <color name="color_black_translucent">#80000000</color>
     <!--半透明-->
     <color name="color_translucent">#e0000000</color>
     <!--半透明-->

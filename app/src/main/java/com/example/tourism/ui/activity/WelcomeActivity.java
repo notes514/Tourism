@@ -50,7 +50,7 @@ public class WelcomeActivity extends BaseActivity {
         fullscreen(false);
         //创建随机数对象
         Random random = new Random();
-        int i = random.nextInt(3);
+        int i = random.nextInt(100);
         if (i < 3) {
             setContentView(R.layout.activity_welcome);
             ButterKnife.bind(this);
