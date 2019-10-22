@@ -3,7 +3,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <!--  设置背景色(半透明)  -->
-    <solid android:color="@color/color_translucent"/>
+    <solid android:color="@color/color_black_translucent"/>
     <!--  设置圆角  -->
     <corners android:radius="30dip"/>
 </shape>

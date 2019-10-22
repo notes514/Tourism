@@ -114,7 +114,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         }
 
         initValidata();
-        initValidata();
+        initListener();
         bindData();
         return root;
     }

@@ -1,6 +1,8 @@
 package com.example.tourism.entity;
 
-public class ScenicSpot {
+import java.io.Serializable;
+
+public class ScenicSpot implements Serializable {
     private Integer scenicSpotId;
 
     private Integer regionId;

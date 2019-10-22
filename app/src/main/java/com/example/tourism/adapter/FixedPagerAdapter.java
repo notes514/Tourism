@@ -8,12 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.tourism.entity.TrHeadBean;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class FixedPagerAdapter extends FragmentStatePagerAdapter {
     //数组标签
-    private String[] title = new String[10];
+    private List<TrHeadBean> headBeanList = new ArrayList<>();
     //集合碎片
     private List<Fragment> fragmentList = new ArrayList<>();
 
@@ -35,7 +37,7 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return title[position];
+        return headBeanList.get(position).getTitle();
     }
 
     /**
@@ -72,7 +74,7 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
         this.fragmentList = fragmentList;
     }
 
-    public void setTitle(String[] title) {
-        this.title = title;
+    public void setHeadBeanList(List<TrHeadBean> headBeanList) {
+        this.headBeanList = headBeanList;
     }
 }
