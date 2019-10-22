@@ -9,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAdapter.ViewHolder> {
 
@@ -39,7 +44,18 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
-        holder.scenicSpotName.setText(objects.get(position).getScenicSpotTheme());
+        holder.scenicSpotTheme.setText(objects.get(position).getScenicSpotTheme());
+        holder.scenicSpotDescribe.setText(objects.get(position).getScenicSpotDescribe());
+        holder.scenicSpotPrice.setText("¥:"+objects.get(position).getScenicSpotPrice());
+        holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,objects.get(position).getScenicSpotId()+"",Toast.LENGTH_SHORT).show();
+            }
+        });
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getScenicSpotPicUrl(),
+                holder.scenicSpotPic, InitApp.getOptions());
+
     }
 
 
@@ -52,13 +68,19 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
     }
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
+        public CardView scenicSpotId;
         public ImageView scenicSpotPic;
-        public TextView scenicSpotName;
+        public TextView scenicSpotTheme;
+        public TextView scenicSpotDescribe;
+        public TextView scenicSpotPrice;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.scenicSpotPic = itemView.findViewById(R.id.scenicSpot_pic);
-            this.scenicSpotName = itemView.findViewById(R.id.scenicSpot_name);
+            this.scenicSpotId = itemView.findViewById(R.id.scenic_spot_id);
+            this.scenicSpotPic = itemView.findViewById(R.id.scenic_spot_pic);
+            this.scenicSpotTheme = itemView.findViewById(R.id.scenic_spot_theme);
+            this.scenicSpotDescribe = itemView.findViewById(R.id.scenic_spot_describe);
+            this.scenicSpotPrice = itemView.findViewById(R.id.scenic_spot_price);
         }
     }
 }

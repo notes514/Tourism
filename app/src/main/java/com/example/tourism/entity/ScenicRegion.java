@@ -1,6 +1,8 @@
 package com.example.tourism.entity;
 
-public class ScenicRegion {
+import java.io.Serializable;
+
+public class ScenicRegion implements Serializable{
     private Integer regionId;
 
     private String regionName;

@@ -17,6 +17,7 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.biz.TravelsDataManger;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.TrHeadBean;
 import com.example.tourism.entity.TravelsBean;
 import com.example.tourism.ui.fragment.base.BaseFragment;
@@ -134,14 +135,14 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
     }
 
     private void getTravels(String url) {
-        ServerApi api = RetrofitManger.getInstance().getFileRetrofit(InitApp.html).create(ServerApi.class);
+        ServerApi api = RetrofitManger.getInstance().getFileRetrofit(RequestURL.html).create(ServerApi.class);
         Call<ResponseBody> call = api.getNAsync(url);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String message = response.body().string();
-                    Document document = Jsoup.parse(message, InitApp.html);
+                    Document document = Jsoup.parse(message, RequestURL.html);
                     travelsList = new TravelsDataManger().getTravels(document);
                     if (travelsList != null) {
                         bindData();

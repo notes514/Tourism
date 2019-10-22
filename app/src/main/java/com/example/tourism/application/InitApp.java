@@ -3,6 +3,9 @@ package com.example.tourism.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.brtbeacon.sdk.BRTBeaconManager;
+import com.brtbeacon.sdk.IBle;
+import com.brtbeacon.sdk.utils.L;
 import com.example.tourism.R;
 import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -20,22 +23,21 @@ public class InitApp extends Application {
     public static final String TAG = "InitApp";
     private static InitApp instance = null;
     private static DisplayImageOptions options;
-    //IP地址,端口号
-    public static final String ip_port = "http://192.168.43.115:8080/api/";
-    //IP地址,图片路径
-    public static final String ip_images = "http://localhost:8080/api/images";
-    //首页地址
-    public static final String html = "https://travel.qunar.com/";
-    //攻略库首页地址
-    public static final String library_html = "travelbook/list.htm?order=hot_heat";
-    //用户详情页地址
-    public static final String user_tml = "https://travel.qunar.com/space/134653134@qunar";
+    private BRTBeaconManager beaconManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.instance = this;
         AppUtils.init(this);
+        // 开启log打印
+        L.enableDebugLogging(true);
+        //获取单例
+        beaconManager = BRTBeaconManager.getInstance(this);
+        // 注册应用 APPKEY申请:http://brtbeacon.com/main/index.shtml
+        beaconManager.registerApp("00000000000000000000000000000000");
+        // 开启Beacon扫描服务
+        beaconManager.startService();
         initImageLoader(getApplicationContext());
     }
 
@@ -66,9 +68,9 @@ public class InitApp extends Application {
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .build();
-        // 用ImageLoaderConfiguration配置对象来完成ImageLoader的初始化，单利
+    // 用ImageLoaderConfiguration配置对象来完成ImageLoader的初始化，单利
         ImageLoader.getInstance().init(config);
-    }
+}
 
     /**
      * 设置DisplayImageOptions
@@ -76,6 +78,23 @@ public class InitApp extends Application {
      */
     public static DisplayImageOptions getOptions() {
         return options;
+    }
+
+    /**
+     * 创建Beacon连接需要传递此参数
+     * @return IBle
+     */
+    public IBle getIBle() {
+        return beaconManager.getIBle();
+    }
+
+    /**
+     * 获取Beacon管理对象
+     *
+     * @return BRTBeaconManager
+     */
+    public BRTBeaconManager getBRTBeaconManager() {
+        return beaconManager;
     }
 
 }

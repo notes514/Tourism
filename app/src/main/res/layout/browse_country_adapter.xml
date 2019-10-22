@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="match_parent"
+        android:layout_height="130px"
+        android:text="TextView"
+        android:textStyle="bold"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@color/color_white"
+        android:textSize="22dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/country"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

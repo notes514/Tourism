@@ -1,5 +1,8 @@
 package com.example.tourism.ui.fragment;
 
+import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,17 +12,24 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.brtbeacon.sdk.BRTBeacon;
+import com.brtbeacon.sdk.BRTBeaconManager;
+import com.brtbeacon.sdk.BRTThrowable;
+import com.brtbeacon.sdk.callback.BRTBeaconManagerListener;
 import com.example.tourism.R;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
@@ -27,11 +37,14 @@ import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.ui.activity.NearbyActivity;
+import com.example.tourism.ui.activity.SecondaryActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.GlideImageLoader;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
 import com.scwang.smart.refresh.layout.api.RefreshHeader;
@@ -43,8 +56,14 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -75,11 +94,17 @@ public class HomeFragment extends BaseFragment implements DefineView {
     GridView gridView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
+    @BindView(R.id.count)
+    TextView tv_count;
+    @BindView(R.id.distance)
+    TextView tv_distance;
 
     private List<String> images = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
-    private List<ScenicSpot> scenicSpots = new ArrayList<>();
+    private List<ScenicSpot> allScenicSpots = new ArrayList<>();
+    private List<ScenicSpot> secondaryScenicSpots = new ArrayList<>();
+    private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private SecondaryMenuItemAdapter adapter1;
     private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
@@ -98,17 +123,48 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public void initView() {
         //默认初始工具栏为透明
         toolbar.setAlpha(0);
+        initRefreshLayout();
+        initScrollView();
+        initBanner();
+        initSecondaryMenu();
+        showNearby();
+        checkBluetoothValid();
+        startScan();
+    }
+
+    @Override
+    public void initValidata() {
+        queryAllScenicSpot();
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void bindData() {
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind(); //解绑
+    }
+
+    private void initRefreshLayout(){
         //设置 Header 为 贝塞尔雷达 样式
-        refreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true)
-                .setPrimaryColorId(R.color.mask_tags_8));
+//        refreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true)
+//                .setPrimaryColorId(R.color.mask_tags_8));
+        refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         //设置 Footer 为 球脉冲 样式
         refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
                 .setAnimatingColor(0xFF1DA8FE));
-//        refreshLayout.setRefreshFooter(new ClassicsFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate));
         refreshLayout.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                                //toolbar.setAlpha(1 - Math.min(percent, 1));
+                //toolbar.setAlpha(1 - Math.min(percent, 1));
                 //工具栏透明处理
                 //toolbar.setAlpha(1 - Math.min(percent, 1));
 
@@ -166,7 +222,9 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             }
         });
+    }
 
+    private void initScrollView(){
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -182,32 +240,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
             }
 
         });
-
-        initBanner();
-        initSecondaryMenu();
-        initRecyclerView();
-        showNearby();
-    }
-
-    @Override
-    public void initValidata() {
-
-    }
-
-    @Override
-    public void initListener() {
-
-    }
-
-    @Override
-    public void bindData() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind(); //解绑
     }
 
     private void initBanner(){
@@ -238,29 +270,34 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
     private void initSecondaryMenu(){
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"周边游"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"一日游"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"自由行"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"景点·门票"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"浪漫之旅"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"当地向导"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"定制旅行"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.defaultbg,"亲子·游学"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_1,"周边游"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_2,"一日游"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_3,"自由行"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_4,"景点·门票"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_5,"浪漫之旅"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_6,"当地向导"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_7,"定制旅行"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_8,"亲子·游学"));
         adapter1 = new SecondaryMenuItemAdapter(getContext(),secondaryMenuList);
         gridView.setAdapter(adapter1);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Toast.makeText(getContext(),secondaryMenuList.get(i).menu_name,Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), SecondaryActivity.class);
+                intent.putExtra("travel_mode", (i+1));
+                intent.putExtra("menu_name",secondaryMenuList.get(i).menu_name);
+                startActivity(intent);
             }
         });
     }
 
     private void initRecyclerView(){
         StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-        adapter2 = new ScenicSpotItemAdapter(getContext(),scenicSpots);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        adapter2 = new ScenicSpotItemAdapter(getContext(),allScenicSpots);
         recyclerView.setAdapter(adapter2);
     }
 
@@ -273,13 +310,11 @@ public class HomeFragment extends BaseFragment implements DefineView {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Log.d("@@@", "请求成功！");
                     //String data = response.body().string();
                     //Log.d("@@@",data);
                     //JSONObject jsonObject = new JSONObject(data);
-                    scenicSpots = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
+                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
                             new TypeToken<List<ScenicSpot>>(){}.getType());
-                    Log.d("@@@",scenicSpots.size()+"");
                     initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -294,6 +329,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     }
 
+
+
     private void showNearby(){
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -305,13 +342,94 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
     }
 
-
-
     private void add(){
-        int l = scenicSpots.size();
+        int l = allScenicSpots.size();
         for (int i = 1; i <= 10; i++) {
             //scenicSpots.add(new ScenicSpot(R.drawable.defaultbg,i+l+""));
         }
         adapter2.notifyDataSetChanged();
     }
+
+    /**
+     * 检测手机蓝牙是否开启
+     */
+    private void checkBluetoothValid() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if(adapter == null) {
+            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("错误").setMessage("你的设备不具备蓝牙功能!").create();
+            dialog.show();
+            return;
+        }
+        if(!adapter.isEnabled()) {
+            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("提示")
+                    .setMessage("蓝牙设备未打开,请开启此功能后重试!")
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            getActivity().startActivityForResult(intent,1);
+                        }
+                    })
+                    .create();
+            dialog.show();
+        }
+    }
+
+    /**
+     * 计算与BRTBeacon之间的距离
+     */
+    private double calculateDistance(int txPower,int rssi){
+        double distance = (double) rssi / (double) txPower;
+        return distance;
+    }
+
+    /**
+     *开始扫描周边Beacon
+     */
+    private void startScan(){
+        InitApp.getInstance().getBRTBeaconManager().setBRTBeaconManagerListener(beaconManagerListener);
+        InitApp.getInstance().getBRTBeaconManager().setPowerMode(BRTBeaconManager.POWER_MODE_LOW_POWER);
+        InitApp.getInstance().getBRTBeaconManager().startRanging();
+    }
+
+    private BRTBeaconManagerListener beaconManagerListener = new BRTBeaconManagerListener() {
+        @Override
+        public void onUpdateBeacon(ArrayList<BRTBeacon> arrayList) {
+            List<BRTBeacon> result = new ArrayList<>();
+            for (int i = 0; i < arrayList.size(); i++) {
+                if (arrayList.get(i).isBrightBeacon()){
+                    result.add(arrayList.get(i));
+                }
+            }
+            // Beacon信息更新
+            if (result.size()==0){
+                tv_count.setText("获取位置失败~~~");
+            }else {
+                Collections.sort(result, new Comparator<BRTBeacon>() {
+                    @Override
+                    public int compare(BRTBeacon brtBeacon, BRTBeacon t1) {
+                        return brtBeacon.getRssi()*(-1)-t1.getRssi()*(-1);
+                    }
+                });
+                tv_count.setText("附近有"+result.size()+"处旅游景点");
+                tv_distance.setText("最近距您"+calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi())+"m");
+                InitApp.getInstance().getBRTBeaconManager().stopRanging();
+            }
+        }
+
+        @Override
+        public void onNewBeacon(BRTBeacon brtBeacon) {
+            // 发现一个新的Beacon
+        }
+
+        @Override
+        public void onGoneBeacon(BRTBeacon brtBeacon) {
+            // 一个Beacon消失
+        }
+
+        @Override
+        public void onError(BRTThrowable brtThrowable) {
+
+        }
+    };
 }

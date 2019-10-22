@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
@@ -38,11 +39,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".ui.activity.NearbyActivity">
         </activity>
+        <activity android:name=".ui.activity.SecondaryActivity">
+        </activity>
+        <activity android:name=".ui.activity.ActivitySpotActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalMyCollection">
+        </activity>
+        <activity android:name=".ui.activity.PersonalTalk">
+        </activity>
+        <activity android:name=".ui.activity.PersonalHolidayproblem">
+        </activity>
+        <activity android:name=".ui.activity.PersonalSubscriptions">
+        </activity>
+        <activity android:name=".ui.activity.PersonalhomepageActivity">
+        </activity>
+
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -58,6 +75,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <!-- BRTSDK服务. -->
+        <service
+            android:name="com.brtbeacon.sdk.BleService"
+            android:enabled="true" />
     </application>
 
 </manifest>
