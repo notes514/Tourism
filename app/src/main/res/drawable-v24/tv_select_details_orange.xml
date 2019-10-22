@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!--  景区详情页红包方框说明-->
+    <stroke android:color="@color/color_orange" android:width="0.5dip"/>
+    <corners android:radius="5dip"/>
+    <padding android:left="5dip" android:right="5dip"/>
+</shape>

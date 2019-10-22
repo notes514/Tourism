@@ -2,8 +2,24 @@
     <string name="app_name">爱旅游</string>
     <string name="title_home">首页</string>
     <string name="title_browse">目的地</string>
-    <string name="title_destination">好货</string>
+    <string name="title_destination">攻略库</string>
     <string name="title_order">旅游订单</string>
     <string name="title_personer">我的</string>
-
+    <!--  景区详情页面加载模块  -->
+    <string name="tourism_details_content">内容主题</string>
+    <string name="tourism_details_price">景区价格</string>
+    <string name="tourism_details_cash">现金红包</string>
+    <string name="tourism_details_vip">专享红包</string>
+    <string name="tourism_details_voucher">代金券</string>
+    <string name="tourism_details_shop">店铺红包</string>
+    <string name="tourism_details_explain">您有6张店铺红包未领取</string>
+    <string name="tourism_details_luxury">豪华游</string>
+    <string name="tourism_details_expense">无自费</string>
+    <string name="tourism_details_shopping">无购物</string>
+    <string name="tourism_details_Ironclad">铁定成团</string>
+    <string name="tourism_details_date">更多日期</string>
+    <string name="tourism_details_cost">费用信息</string>
+    <string name="tourism_details_trip">行程信息</string>
+    <string name="tourism_details_line">线路特色</string>
+    <string name="tourism_details_reserve">预定通知</string>
 </resources>

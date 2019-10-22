@@ -262,7 +262,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         adapter2 = new ScenicSpotItemAdapter(getContext(),scenicSpots);
         recyclerView.setAdapter(adapter2);
-
     }
 
     private void queryAllScenicSpot(){

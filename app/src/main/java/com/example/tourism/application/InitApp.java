@@ -20,12 +20,23 @@ public class InitApp extends Application {
     public static final String TAG = "InitApp";
     private static InitApp instance = null;
     private static DisplayImageOptions options;
+    //IP地址,端口号
+    public static final String ip_port = "http://192.168.43.115:8080/api/";
+    //IP地址,图片路径
+    public static final String ip_images = "http://localhost:8080/api/images";
+    //首页地址
+    public static final String html = "https://travel.qunar.com/";
+    //攻略库首页地址
+    public static final String library_html = "travelbook/list.htm?order=hot_heat";
+    //用户详情页地址
+    public static final String user_tml = "https://travel.qunar.com/space/134653134@qunar";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        this.instance = instance;
+        this.instance = this;
         AppUtils.init(this);
+        initImageLoader(getApplicationContext());
     }
 
     /**
