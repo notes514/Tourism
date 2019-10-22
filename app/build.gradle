@@ -94,4 +94,8 @@ dependencies {
     //开源搜索框
     implementation 'com.carson_ho:SearchLayout:1.0.1'
     implementation files('libs/BRTSDK-5.0.8.jar')
+
+    //哔哩哔哩开源的弹幕效果库
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 }

@@ -59,7 +59,8 @@
         </activity>
         <activity android:name=".ui.activity.PersonalhomepageActivity">
         </activity>
-
+        <activity android:name=".ui.activity.ShowExhibitsDetialActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

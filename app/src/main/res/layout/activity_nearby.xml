@@ -5,24 +5,93 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.example.tourism.widget.CustomToolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/mask_tags_8"
+        android:layout_height="wrap_content"
+        android:background="@color/color_blue"
+        app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </com.example.tourism.widget.CustomToolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBar"
         app:srcCompat="@drawable/map" />
+
+    <TextView
+        android:id="@+id/view6"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/view5"
+        app:layout_constraintEnd_toStartOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/view5"></TextView>
+
+    <TextView
+        android:id="@+id/view5"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="186dp"
+        android:layout_marginTop="247dp"
+        android:layout_marginEnd="205dp"
+        android:layout_marginBottom="415dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"></TextView>
+
+    <TextView
+        android:id="@+id/view4"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/view5"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/view5"
+        app:layout_constraintTop_toTopOf="@+id/view5"></TextView>
+
+    <TextView
+        android:id="@+id/view3"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/view2"></TextView>
+
+    <TextView
+        android:id="@+id/view2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="186dp"
+        android:layout_marginTop="398dp"
+        android:layout_marginEnd="205dp"
+        android:layout_marginBottom="264dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"></TextView>
+
+    <TextView
+        android:id="@+id/view1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
