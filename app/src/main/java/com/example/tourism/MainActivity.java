@@ -3,6 +3,7 @@ package com.example.tourism;
 import android.os.Bundle;
 
 import com.example.tourism.common.DefineView;
+import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -12,7 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 public class MainActivity extends BaseActivity implements DefineView {
-
+    public static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

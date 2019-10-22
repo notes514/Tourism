@@ -32,6 +32,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--  自定义EditText样式 -->
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#4B4B4B</item>
+        <item name="colorControlActivated">#BBBBBB</item>
+    </style>
+
     <declare-styleable name="PercentLayout_Layout">
         <attr format="fraction" name="layout_widthPercent"/>
         <attr format="fraction" name="layout_heightPercent"/>

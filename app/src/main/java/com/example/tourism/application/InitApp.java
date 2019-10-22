@@ -38,6 +38,7 @@ public class InitApp extends Application {
         beaconManager.registerApp("00000000000000000000000000000000");
         // 开启Beacon扫描服务
         beaconManager.startService();
+        initImageLoader(getApplicationContext());
     }
 
     /**
