@@ -1,19 +1,23 @@
 package com.example.tourism.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.ui.fragment.Good;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.entity.TravelsBean;
+import com.example.tourism.widget.CircleImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -21,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapter.ViewHolder> {
-    private List<Good> goodList;
+    private List<TravelsBean> travelsBeans;
     private Context context;
     private LayoutInflater inflater;
 
@@ -30,8 +34,9 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         this.inflater = LayoutInflater.from(context);
     }
 
-    public void setGoodList(List<Good> goodList) {
-        this.goodList = goodList;
+    //设置数据
+    public void setTravelsBeans(List<TravelsBean> travelsBeans) {
+        this.travelsBeans = travelsBeans;
     }
 
     @NonNull
@@ -42,40 +47,105 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         return holder;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.headPortraitImage.setImageResource(goodList.get(position).getImagePic());
-        holder.accountNameText.setText(goodList.get(position).getAccountName());
-        holder.publicationTimeText.setText(goodList.get(position).getTime());
-        holder.contentText.setText(goodList.get(position).getContent());
+        TravelsBean travels = travelsBeans.get(position);
+        //用户头像
+        ImageLoader.getInstance().displayImage(travels.getUserPicUrl(), holder.headPortraitImage, InitApp.getOptions());
+        //标题内容
+        holder.tvTitleContent.setText(travels.getTitle());
+        //用户姓名
+        holder.accountNameText.setText(travels.getUserName());
+        //标签(别称)
+        holder.userTagText.setText(travels.getNickName());
+        //时间
+        holder.tvDate.setText(travels.getTime());
+        //天数
+        holder.tvDays.setText(" | " + travels.getDays());
+        if (travels.getDays().length() < 1) {
+            holder.tvDays.setVisibility(TextView.GONE);
+        }
+        //照片数量
+        holder.tvPicNums.setText(" | " + travels.getPhotoNumber());
+        if (travels.getPhotoNumber().length() < 1) {
+            holder.tvPicNums.setVisibility(TextView.GONE);
+        }
+        //关系
+        holder.tvRelation.setText(" | " + travels.getRelation());
+        if (travels.getRelation().length() < 1) {
+            holder.tvRelation.setVisibility(TextView.GONE);
+        }
+        //途径
+        holder.cannelText.setText(travels.getChannel());
+        if (travels.getChannel().length() < 1) {
+            holder.cannelText.setVisibility(TextView.GONE);
+        }
+        //行程
+        holder.tripText.setText("行程"+travels.getTrips());
+        if (travels.getTrips().length() < 1) {
+            holder.tripText.setVisibility(TextView.GONE);
+        }
+        //浏览
+        holder.ivBrowse.setImageResource(R.drawable.icon_browse);
+        holder.browseTextView.setText(travels.getBrowse());
+        //点赞
+        holder.ivFabulous.setImageResource(R.drawable.icon_fabulous);
+        holder.fabulousText.setText(travels.getFoubles());
+        //评论
+        holder.ivComment.setImageResource(R.drawable.icon_comment);
+        holder.commentText.setText(travels.getComment());
+        //显示图片
+        goodAdapter = new GoodAdapter(context);
+        goodAdapter.setPicList(travels.getPicUrl());
+        holder.rvGood.setLayoutManager(new GridLayoutManager(context, 3));
+        holder.rvGood.setAdapter(goodAdapter);
     }
+
+    private GoodAdapter goodAdapter;
 
     @Override
     public int getItemCount() {
-        return goodList.size();
+        return travelsBeans == null ? 0 : travelsBeans.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.head_portrait_image)
-        ImageView headPortraitImage;
+        CircleImageView headPortraitImage;
         @BindView(R.id.account_name_text)
         TextView accountNameText;
-        @BindView(R.id.publication_time_text)
-        TextView publicationTimeText;
-        @BindView(R.id.follow_text)
-        TextView followText;
-        @BindView(R.id.content_text)
-        TextView contentText;
-        @BindView(R.id.content_pic_gridview)
-        GridView contentPicGridview;
-        @BindView(R.id.collecion_image)
-        ImageView collecionImage;
-        @BindView(R.id.collection_number_text)
-        TextView collectionNumberText;
-        @BindView(R.id.forward_image)
-        ImageView forwardImage;
-        @BindView(R.id.forward_text)
-        TextView forwardText;
+        @BindView(R.id.user_tag_text)
+        TextView userTagText;
+        @BindView(R.id.tv_date)
+        TextView tvDate;
+        @BindView(R.id.tv_days)
+        TextView tvDays;
+        @BindView(R.id.tv_pic_nums)
+        TextView tvPicNums;
+        @BindView(R.id.tv_relation)
+        TextView tvRelation;
+        @BindView(R.id.tv_title_content)
+        TextView tvTitleContent;
+        @BindView(R.id.cannel_text)
+        TextView cannelText;
+        @BindView(R.id.trip_text)
+        TextView tripText;
+        @BindView(R.id.rv_good)
+        RecyclerView rvGood;
+//        @BindView(R.id.content_pic_gridview)
+//        GridView contentPicGridview;
+        @BindView(R.id.iv_browse)
+        ImageView ivBrowse;
+        @BindView(R.id.browse_textView)
+        TextView browseTextView;
+        @BindView(R.id.iv_fabulous)
+        ImageView ivFabulous;
+        @BindView(R.id.fabulous_text)
+        TextView fabulousText;
+        @BindView(R.id.iv_comment)
+        ImageView ivComment;
+        @BindView(R.id.comment_text)
+        TextView commentText;
         @BindView(R.id.goods_cardView)
         CardView goodsCardView;
 

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
@@ -39,51 +40,81 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
     //MPAndroidChart（开源图表框架）
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
     //Fragmentation
     implementation 'me.yokeyword:fragmentation:1.3.6'
     implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
+
     //圆形图片控件 CircleImageView
     implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     //Glide(图片加载库)
 //    implementation('com.github.bumptech.glide:glide:4.9.0') {
 //        exclude group: "com.android.support"
 //    }
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
     //Retrofit（网络请求框架）
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
     //数据解析器（Converter）
+
     //Butter Knife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
     //OkHttp（网络请求框架）
     implementation 'com.squareup.okhttp3:okhttp:3.12.1'
     debugImplementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+
     //Gson(谷歌官方 Json 库)
     implementation 'com.google.code.gson:gson:2.8.5'
+
     //EventBus(Android 事件总线)
     implementation 'org.greenrobot:eventbus:3.1.1'
+
     //GreenDao(Android 数据库存储)
     implementation 'org.greenrobot:greendao:3.2.2'
+
     //第三方下拉刷新、上拉加载
     implementation 'com.liaoinstan.springview:library:1.2.6'
     implementation files('libs/nineoldandroids-2.4.0.jar')
+
     implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     //图片轮播banner 最新版
     implementation 'com.youth.banner:banner:1.4.10'
 
     //下拉刷新&上拉加载
-    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'      //核心必须依赖
-    implementation  'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'    //经典刷新头
-    implementation  'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'       //雷达刷新头
-    implementation  'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'     //虚拟刷新头
-    implementation  'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'    //谷歌刷新头
-    implementation  'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'   //二级刷新头
-    implementation  'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'        //球脉冲加载
-    implementation  'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'    //经典加载
-    implementation  'com.github.yalantis:taurus:1.0.2'
+    implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'
+
+    //核心必须依赖
+    implementation 'com.scwang.smart:refresh-header-classics:2.0.0-alpha-1'
+
+    //经典刷新头
+    implementation 'com.scwang.smart:refresh-header-radar:2.0.0-alpha-1'
+
+    //雷达刷新头
+    implementation 'com.scwang.smart:refresh-header-falsify:2.0.0-alpha-1'
+
+    //虚拟刷新头
+    implementation 'com.scwang.smart:refresh-header-material:2.0.0-alpha-1'
+
+    //谷歌刷新头
+    implementation 'com.scwang.smart:refresh-header-two-level:2.0.0-alpha-1'
+
+    //二级刷新头
+    implementation 'com.scwang.smart:refresh-footer-ball:2.0.0-alpha-1'
+
+    //球脉冲加载
+    implementation 'com.scwang.smart:refresh-footer-classics:2.0.0-alpha-1'
+
+    //经典加载
+    implementation 'com.github.yalantis:taurus:1.0.2'
+
     //image-loader图片加载框架
     implementation files('libs/universal-image-loader-1.9.5.jar')
 
@@ -94,4 +125,46 @@ dependencies {
     //开源搜索框
     implementation 'com.carson_ho:SearchLayout:1.0.1'
     implementation files('libs/BRTSDK-5.0.8.jar')
+    //网页数据抓取
+    implementation 'org.jsoup:jsoup:1.12.1'
+
+    //哔哩哔哩开源的弹幕效果库
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+}
+MobSDK {
+    appKey "2c75fba93b9b8"
+    appSecret "dfd706110af9dcb0a89123b68db48c1f"
+    SMSSDK {}
+    ShareSDK {
+        loopShare false
+        devInfo {
+            SinaWeibo {
+                appKey "1877060424"
+                appSecret "5a679cfff6b2c6c48444513449cb5c6c"
+                callbackUri "http://www.sharesdk.cn"
+            }
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+            }
+            WechatMoments {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            WechatFavorite {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+        }
+    }
+
 }

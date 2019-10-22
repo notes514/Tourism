@@ -3,6 +3,7 @@ package com.example.tourism.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +13,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.tourism.MainActivity;
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
 import com.example.tourism.ui.activity.PersonalMyCollection;
 import com.example.tourism.ui.activity.PersonalSubscriptions;
 import com.example.tourism.ui.activity.PersonalTalk;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
+import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +42,7 @@ import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 import static android.widget.Toast.LENGTH_LONG;
+import static com.example.tourism.MainActivity.user;
 
 /**
  * 个人中心
@@ -57,6 +67,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView userFans;
     @BindView(R.id.user_homepage)
     TextView userHomeage;
+    @BindView(R.id.user_arrow)
+    ImageView userarrow;
     @BindView(R.id.prl_view)
     PullRefreshLayout pullRefreshLayout;
     @BindView(R.id.btn_mycollection)
@@ -66,8 +78,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     @BindView(R.id.btn_mysubscriptions)
     FrameLayout btnMysubscriptions;
 
-
     private Unbinder unbinder;
+    public static final int Request_Code = 1;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -96,8 +108,13 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             }
         });
 
+        if (user == null){
+            userHomeage.setVisibility(View.GONE);
+            userarrow.setVisibility(View.GONE);
+        }
+
         initValidata();
-        initValidata();
+        initListener();
         bindData();
         return root;
     }
@@ -106,7 +123,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         Toast.makeText(getContext(), "刷新成功", LENGTH_LONG).show();
     }
 
-    @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem,R.id.btn_mysubscriptions,R.id.user_homepage})
+    @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem,R.id.btn_mysubscriptions,R.id.user_homepage,R.id.user_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
@@ -126,8 +143,14 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 startActivity(btn_my_subscriptions);
                 break;
             case R.id.user_homepage:
-                Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-                startActivity(btn_user_homepage);
+                    Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
+                    startActivity(btn_user_homepage);
+                break;
+            case R.id.user_name:
+                if (user == null){
+                    Intent i = new Intent(PersonerFragment.this.getActivity(), SignInActivity.class);
+                    startActivityForResult(i,Request_Code);
+                }
                 break;
 
         }
@@ -153,10 +176,46 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind(); //解绑
     }
 
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        switch (requestCode){
+//            case Request_Code:
+////                User user = (User) data.getSerializableExtra("data");
+////                Log.d("@@@@",data.getStringExtra("data"));
+//                userName.setText(user.getUserAccountName());
+//                break;
+//                default:
+//                    Log.d("@@@@",data.getStringExtra("无数据"));
+//                    break;
+//        }
+//    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("22222", "onStart: ");
+        if (user != null){
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(),hHead, InitApp.getOptions());
+            userName.setText(user.getUserAccountName());
+            userVal.setText(user.getUserTellphone());
+            userHomeage.setVisibility(View.VISIBLE);
+            userarrow.setVisibility(View.VISIBLE);
+        }
+    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        Log.d("22222", "onResume: ");
+//    }
 }

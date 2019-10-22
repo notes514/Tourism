@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toolbar;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
@@ -19,6 +19,7 @@ import com.example.tourism.widget.CustomToolbar;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -55,7 +56,12 @@ public class SecondaryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_secondary);
         unbinder = ButterKnife.bind(this, this);
-        setActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         //toolbar.setTitle(getIntent().getStringExtra("menu_name"));
         queryByTravelMode(getIntent().getIntExtra("travel_mode",0));

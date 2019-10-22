@@ -60,15 +60,11 @@ public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder
     }
 
     static class SpotViewHolder extends RecyclerView.ViewHolder {
-
          ImageView spotPic;
          TextView spotTitle;
          TextView spotStart;
          TextView spotEnd;
          TextView spotPrice;
-
-
-
 
         public SpotViewHolder(@NonNull View itemView) {
             super(itemView);

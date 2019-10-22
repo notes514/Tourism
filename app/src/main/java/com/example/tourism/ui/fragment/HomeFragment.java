@@ -94,17 +94,12 @@ public class HomeFragment extends BaseFragment implements DefineView {
     GridView gridView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.count)
-    TextView tv_count;
-    @BindView(R.id.distance)
-    TextView tv_distance;
 
     private List<String> images = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
     private List<ScenicSpot> allScenicSpots = new ArrayList<>();
     private List<ScenicSpot> secondaryScenicSpots = new ArrayList<>();
-    private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private SecondaryMenuItemAdapter adapter1;
     private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
@@ -128,8 +123,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
         initBanner();
         initSecondaryMenu();
         showNearby();
-        checkBluetoothValid();
-        startScan();
     }
 
     @Override
@@ -248,9 +241,9 @@ public class HomeFragment extends BaseFragment implements DefineView {
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569479180656&di=50f624a13bed482a50d36bdcf129b98a&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160927%2F25a93eefe4054ba6a78cf3a712a38402_th.jpg");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569479180656&di=cc55f3e8b1f43ec3e24c3febbe7a4874&imgtype=0&src=http%3A%2F%2Fm.tuniucdn.com%2Ffilebroker%2Fcdn%2Folb%2F65%2F0f%2F650fc903e6c5641063acafd392b10b45_w800_h0_c0_t0.jpg");
-        images.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1569479180655&di=64c3f08cafc98c73e64cf37c42193dca&imgtype=0&src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F80980a7239def04f2763601f340f8de11f3875e1d427c-zjtsfD_fw658");
+        images.add(RequestURL.ip_images+"/images/banner/banner1.jpg");
+        images.add(RequestURL.ip_images+"/images/banner/banner2.jpg");
+        images.add(RequestURL.ip_images+"/images/banner/banner3.jpg");
         banner.setImages(images);
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
@@ -350,86 +343,4 @@ public class HomeFragment extends BaseFragment implements DefineView {
         adapter2.notifyDataSetChanged();
     }
 
-    /**
-     * 检测手机蓝牙是否开启
-     */
-    private void checkBluetoothValid() {
-        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-        if(adapter == null) {
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("错误").setMessage("你的设备不具备蓝牙功能!").create();
-            dialog.show();
-            return;
-        }
-        if(!adapter.isEnabled()) {
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("提示")
-                    .setMessage("蓝牙设备未打开,请开启此功能后重试!")
-                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                            getActivity().startActivityForResult(intent,1);
-                        }
-                    })
-                    .create();
-            dialog.show();
-        }
-    }
-
-    /**
-     * 计算与BRTBeacon之间的距离
-     */
-    private double calculateDistance(int txPower,int rssi){
-        double distance = (double) rssi / (double) txPower;
-        return distance;
-    }
-
-    /**
-     *开始扫描周边Beacon
-     */
-    private void startScan(){
-        InitApp.getInstance().getBRTBeaconManager().setBRTBeaconManagerListener(beaconManagerListener);
-        InitApp.getInstance().getBRTBeaconManager().setPowerMode(BRTBeaconManager.POWER_MODE_LOW_POWER);
-        InitApp.getInstance().getBRTBeaconManager().startRanging();
-    }
-
-    private BRTBeaconManagerListener beaconManagerListener = new BRTBeaconManagerListener() {
-        @Override
-        public void onUpdateBeacon(ArrayList<BRTBeacon> arrayList) {
-            List<BRTBeacon> result = new ArrayList<>();
-            for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).isBrightBeacon()){
-                    result.add(arrayList.get(i));
-                }
-            }
-            // Beacon信息更新
-            if (result.size()==0){
-                tv_count.setText("获取位置失败~~~");
-            }else {
-                Collections.sort(result, new Comparator<BRTBeacon>() {
-                    @Override
-                    public int compare(BRTBeacon brtBeacon, BRTBeacon t1) {
-                        return brtBeacon.getRssi()*(-1)-t1.getRssi()*(-1);
-                    }
-                });
-                tv_count.setText("附近有"+result.size()+"处旅游景点");
-                tv_distance.setText("最近距您"+calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi())+"m");
-                InitApp.getInstance().getBRTBeaconManager().stopRanging();
-            }
-        }
-
-        @Override
-        public void onNewBeacon(BRTBeacon brtBeacon) {
-            // 发现一个新的Beacon
-        }
-
-        @Override
-        public void onGoneBeacon(BRTBeacon brtBeacon) {
-            // 一个Beacon消失
-        }
-
-        @Override
-        public void onError(BRTThrowable brtThrowable) {
-
-        }
-    };
 }

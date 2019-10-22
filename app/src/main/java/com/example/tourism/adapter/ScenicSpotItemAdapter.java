@@ -60,7 +60,10 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
 
 
     @Override
-    public int getItemCount() {
+    public int getItemCount(
+
+    )
+    {
         return objects.size();
     }
 

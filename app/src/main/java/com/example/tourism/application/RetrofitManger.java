@@ -40,8 +40,6 @@ public class RetrofitManger {
      * @return
      */
     public Retrofit getRetrofit(String url) {
-        //设置Gson解析时间格式
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").serializeNulls().create();
         //创建Retrofit请求对象
         retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(getGson()))
