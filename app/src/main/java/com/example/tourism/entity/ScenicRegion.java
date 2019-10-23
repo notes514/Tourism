@@ -2,7 +2,7 @@ package com.example.tourism.entity;
 
 import java.io.Serializable;
 
-public class ScenicRegion implements Serializable{
+public class ScenicRegion implements Serializable {
     private Integer regionId;
 
     private String regionName;

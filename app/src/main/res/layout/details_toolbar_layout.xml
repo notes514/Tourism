@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="49dp"
+    android:background="@color/color_blue">
+
+    <ImageView
+        android:id="@+id/imageView_one"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/select_bar_translucent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.461" />
+
+    <ImageView
+        android:id="@+id/imageView_two"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/select_bar_translucent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.529" />
+
+    <ImageView
+        android:id="@+id/imageView_three"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/select_bar_translucent"
+        app:layout_constraintBottom_toBottomOf="@+id/more_image"
+        app:layout_constraintEnd_toStartOf="@+id/more_image"
+        app:layout_constraintTop_toTopOf="@+id/more_image"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/back_left_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_one"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_one"
+        app:layout_constraintStart_toStartOf="@+id/imageView_one"
+        app:layout_constraintTop_toTopOf="@+id/imageView_one"
+        app:srcCompat="@drawable/icon_back_left" />
+
+    <TextView
+        android:id="@+id/details_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="景区详情"
+        android:textColor="@color/color_white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/shopping_chart_image"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_three"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_three"
+        app:layout_constraintStart_toStartOf="@+id/imageView_three"
+        app:layout_constraintTop_toTopOf="@+id/imageView_three"
+        app:srcCompat="@drawable/icon_shopping_while" />
+
+    <ImageView
+        android:id="@+id/more_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView_two"
+        app:layout_constraintEnd_toEndOf="@+id/imageView_two"
+        app:layout_constraintStart_toStartOf="@+id/imageView_two"
+        app:layout_constraintTop_toTopOf="@+id/imageView_two"
+        app:srcCompat="@drawable/icon_more_horiz" />
+</androidx.constraintlayout.widget.ConstraintLayout>
