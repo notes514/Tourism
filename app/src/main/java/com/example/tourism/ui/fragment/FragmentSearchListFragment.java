@@ -92,43 +92,56 @@ public class FragmentSearchListFragment extends Fragment {
                     searchListAdapter.setmOnItemClickListener(new SearchListAdapter.OnItemClickListener() {
                         @Override
                         public void onItemClick(int position) {
-                            RetrofitManger retrofit = RetrofitManger.getInstance();
-                            ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                            Map<String,Object> map=new HashMap<>();
-                            Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
-                            scenicRegionCall.enqueue(new Callback<ResponseBody>() {
-                                @Override
-                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                    try {
-                                        String m = response.body().string();
-                                        scenicRegions = new Gson().fromJson(m, new TypeToken<List<ScenicRegion>>() {
-                                        }.getType());
-                                        for (int i = 0; i < scenicRegions.size(); i++) {
-                                            ScenicRegion scenicRegion = scenicRegions.get(i);
-                                            String selectSql = "select * from " + Constant.TABLE_NAME;
-                                            Cursor cursor = DbManger.selectSQL(db, selectSql, null);
-                                            List<ScenicRegion> sc = DbManger.cursorToList(cursor);
-                                            for (int j = 0; j < sc.size(); j++) {
-                                                if (sc.get(j).getRegionId() == scenicRegion.getRegionId()) {
-                                                    DbManger.execSQL(db, "delete from ScenicRegion_Data where scenicRegionId = " + sc.get(j).getRegionId() + ";");
-                                                }
-                                            }
-                                            String sql = "insert into " + Constant.TABLE_NAME + " values (" + scenicRegion.getRegionId() + ",'" + scenicRegion.getRegionName() + "')";
-                                            DbManger.execSQL(db, sql);//执行语句
-                                            Log.e(ImageLoader.TAG, "ssssonResponse: " + cursor.getCount(), null);
-                                            break;
-                                        }
-
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+//                            RetrofitManger retrofit = RetrofitManger.getInstance();
+//                            ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+//                            Map<String,Object> map=new HashMap<>();
+//                            Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+//                            scenicRegionCall.enqueue(new Callback<ResponseBody>() {
+//                                @Override
+//                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                                    try {
+//                                        String m = response.body().string();
+//                                        scenicRegions = new Gson().fromJson(m, new TypeToken<List<ScenicRegion>>() {
+//                                        }.getType());
+//                                        for (int i = 0; i < scenicRegions.size(); i++) {
+//                                            ScenicRegion scenicRegion = scenicRegions.get(i);
+//                                            String selectSql = "select * from " + Constant.TABLE_NAME;
+//                                            Cursor cursor = DbManger.selectSQL(db, selectSql, null);
+//                                            List<ScenicRegion> sc = DbManger.cursorToList(cursor);
+//                                            for (int j = 0; j < sc.size(); j++) {
+//                                                if (sc.get(j).getRegionId() == scenicRegion.getRegionId()) {
+//                                                    DbManger.execSQL(db, "delete from ScenicRegion_Data where scenicRegionId = " + sc.get(j).getRegionId() + ";");
+//                                                    break;
+//                                                }
+//                                            }
+//                                            String sql = "insert into " + Constant.TABLE_NAME + " values (" + scenicRegion.getRegionId() + ",'" + scenicRegion.getRegionName() + "')";
+//                                            DbManger.execSQL(db, sql);//执行语句
+//                                            Log.e(ImageLoader.TAG, "ssssonResponse: " + cursor.getCount(), null);
+//                                            break;
+//                                        }
+//
+//                                    } catch (IOException e) {
+//                                        e.printStackTrace();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                                    Log.d(ImageLoader.TAG, "onFailure: "+t.getMessage());
+//                                }
+//                            });
+                            String selectSql = "select * from " + Constant.TABLE_NAME;
+                            Cursor cursor = DbManger.selectSQL(db, selectSql, null);
+                            List<ScenicRegion> sc = DbManger.cursorToList(cursor);
+                            for (int j = 0; j < sc.size(); j++) {
+                                if (sc.get(j).getRegionId() == temp.get(position).getRegionId()) {
+                                    DbManger.execSQL(db, "delete from ScenicRegion_Data where scenicRegionId = " + sc.get(j).getRegionId() + ";");
+                                    break;
                                 }
-
-                                @Override
-                                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                                    Log.d(ImageLoader.TAG, "onFailure: "+t.getMessage());
-                                }
-                            });
+                            }
+                            String sql = "insert into " + Constant.TABLE_NAME + " values (" + temp.get(position).getRegionId() + ",'" + temp.get(position).getRegionName() + "')";
+                            DbManger.execSQL(db, sql);//执行语句
+                            Log.e(ImageLoader.TAG, "ssssonResponse: " + cursor.getCount(), null);
                             Intent intent = new Intent(FragmentSearchListFragment.this.getContext(),ActivitySpotActivity.class);
                             intent.putExtra("country",temp.get(position));
                             FragmentSearchListFragment.this.getContext().startActivity(intent);
