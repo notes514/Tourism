@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.tourism.common.DefineView;
+import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -24,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity implements DefineView {
+    public static User user;
 
     private static final int BRTMAP_PERMISSION_CODE = 100;
     private static final List<String> permissionsNeedCheck;

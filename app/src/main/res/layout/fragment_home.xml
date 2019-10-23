@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-    android:id="@+id/include"
-    layout="@layout/top_bar_details_layout"
-    tools:layout_editor_absoluteX="8dp"
-    tools:layout_editor_absoluteY="341dp" />
+    android:layout_height="match_parent"
+    android:id="@+id/hfragment">
 
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -69,16 +66,13 @@
                             android:layout_marginLeft="6dp"
                             android:background="@drawable/ic_location" />
                         <TextView
-                            android:id="@+id/count"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
-                        <TextView
                             android:id="@+id/distance"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="right"/>
+                            android:layout_marginLeft="6dp"
+                            android:text="看看附近有什么~~~"
+                            android:gravity="left"/>
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -103,7 +97,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolBar"
-        android:background="@color/mask_tags_8"
+        android:background="@color/color_blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_collapseMode="pin"

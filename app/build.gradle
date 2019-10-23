@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 28
@@ -126,4 +127,44 @@ dependencies {
     implementation files('libs/BRTSDK-5.0.8.jar')
     //网页数据抓取
     implementation 'org.jsoup:jsoup:1.12.1'
+
+    //哔哩哔哩开源的弹幕效果库
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+}
+MobSDK {
+    appKey "2c75fba93b9b8"
+    appSecret "dfd706110af9dcb0a89123b68db48c1f"
+    SMSSDK {}
+    ShareSDK {
+        loopShare false
+        devInfo {
+            SinaWeibo {
+                appKey "1877060424"
+                appSecret "5a679cfff6b2c6c48444513449cb5c6c"
+                callbackUri "http://www.sharesdk.cn"
+            }
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                userName "gh_afb25ac019c9"
+                path "pages/index/index.html?id=1"
+                withShareTicket true
+                miniprogramType 2
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+            }
+            WechatMoments {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            WechatFavorite {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+        }
+    }
+
 }
