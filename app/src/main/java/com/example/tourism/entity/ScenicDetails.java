@@ -1,17 +1,19 @@
 package com.example.tourism.entity;
 
-import java.util.Date;
-
 public class ScenicDetails {
     private Integer scenicDetailsId;
 
     private Integer scenicSpotId;
 
-    private String detailsIntroduce;
+    private String consultTraffic;
+
+    private String travelDays;
+
+    private String departArrive;
+
+    private String stayStandard;
 
     private String containScenic;
-
-    private Integer scenicSelled;
 
     private Double userScore;
 
@@ -19,13 +21,7 @@ public class ScenicDetails {
 
     private String recommendReasons;
 
-    private Date departureTime;
-
-    private String departurePlace;
-
-    private String placeRemark;
-
-    private String detailsDescribe;
+    private String detailsIntroduce;
 
     public Integer getScenicDetailsId() {
         return scenicDetailsId;
@@ -43,12 +39,36 @@ public class ScenicDetails {
         this.scenicSpotId = scenicSpotId;
     }
 
-    public String getDetailsIntroduce() {
-        return detailsIntroduce;
+    public String getConsultTraffic() {
+        return consultTraffic;
     }
 
-    public void setDetailsIntroduce(String detailsIntroduce) {
-        this.detailsIntroduce = detailsIntroduce;
+    public void setConsultTraffic(String consultTraffic) {
+        this.consultTraffic = consultTraffic;
+    }
+
+    public String getTravelDays() {
+        return travelDays;
+    }
+
+    public void setTravelDays(String travelDays) {
+        this.travelDays = travelDays;
+    }
+
+    public String getDepartArrive() {
+        return departArrive;
+    }
+
+    public void setDepartArrive(String departArrive) {
+        this.departArrive = departArrive;
+    }
+
+    public String getStayStandard() {
+        return stayStandard;
+    }
+
+    public void setStayStandard(String stayStandard) {
+        this.stayStandard = stayStandard;
     }
 
     public String getContainScenic() {
@@ -57,14 +77,6 @@ public class ScenicDetails {
 
     public void setContainScenic(String containScenic) {
         this.containScenic = containScenic;
-    }
-
-    public Integer getScenicSelled() {
-        return scenicSelled;
-    }
-
-    public void setScenicSelled(Integer scenicSelled) {
-        this.scenicSelled = scenicSelled;
     }
 
     public Double getUserScore() {
@@ -91,35 +103,11 @@ public class ScenicDetails {
         this.recommendReasons = recommendReasons;
     }
 
-    public Date getDepartureTime() {
-        return departureTime;
+    public String getDetailsIntroduce() {
+        return detailsIntroduce;
     }
 
-    public void setDepartureTime(Date departureTime) {
-        this.departureTime = departureTime;
-    }
-
-    public String getDeparturePlace() {
-        return departurePlace;
-    }
-
-    public void setDeparturePlace(String departurePlace) {
-        this.departurePlace = departurePlace;
-    }
-
-    public String getPlaceRemark() {
-        return placeRemark;
-    }
-
-    public void setPlaceRemark(String placeRemark) {
-        this.placeRemark = placeRemark;
-    }
-
-    public String getDetailsDescribe() {
-        return detailsDescribe;
-    }
-
-    public void setDetailsDescribe(String detailsDescribe) {
-        this.detailsDescribe = detailsDescribe;
+    public void setDetailsIntroduce(String detailsIntroduce) {
+        this.detailsIntroduce = detailsIntroduce;
     }
 }

@@ -28,6 +28,7 @@ import com.example.tourism.adapter.BrowseRegionAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
 import com.example.tourism.ui.activity.SearchList;
@@ -305,11 +306,10 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                 }else {
                     replaceFragment(new SearchSpotAdapterFragment());
                 }
-                String url = "http://192.168.42.39:8080/api/";
                 RetrofitManger retrofit = RetrofitManger.getInstance();
-                ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+                ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
-                Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+                Call<ResponseBody> scenicRegionCall = serverApi.getASync("queryAllScenicRegion",map);
                 scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -347,13 +347,10 @@ public class DestinationFragment extends BaseFragment implements DefineView {
             @Override
             public void onClick(View v) {
                 if (temp!=null){
-
-
-                    String url = "http://192.168.42.39:8080/api/";
                     RetrofitManger retrofit = RetrofitManger.getInstance();
-                    ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+                    ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                     Map<String,Object> map=new HashMap<>();
-                    Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+                    Call<ResponseBody> scenicRegionCall = serverApi.getASync("queryAllScenicRegion",map);
                     scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

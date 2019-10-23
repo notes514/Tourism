@@ -39,6 +39,6 @@ public class NearbyActivity extends BaseActivity {
     }
 
     private void initMap(){
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images+"images/map.jpg",imageView, InitApp.getOptions());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images+"images/map.jpg", imageView, InitApp.getOptions());
     }
 }

@@ -5,19 +5,25 @@ import java.util.Date;
 public class Order {
     private Integer orderId;
 
-    private Integer userId;
+    private String orderContent;
 
-    private Integer scenicDetailsId;
+    private Integer orderNumber;
 
-    private String orderConsignee;
+    private Integer orderState;
 
-    private Integer orderMoney;
+    private String tripMode;
 
-    private Date orderTime;
+    private Date departDate;
 
-    private Integer orderStatus;
+    private String departDays;
 
-    private String orderDescribe;
+    private String tirpInformation;
+
+    private Double orderPrice;
+
+    private Date orderDate;
+
+    private String supplier;
 
     public Integer getOrderId() {
         return orderId;
@@ -27,59 +33,83 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getOrderContent() {
+        return orderContent;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setOrderContent(String orderContent) {
+        this.orderContent = orderContent;
     }
 
-    public Integer getScenicDetailsId() {
-        return scenicDetailsId;
+    public Integer getOrderNumber() {
+        return orderNumber;
     }
 
-    public void setScenicDetailsId(Integer scenicDetailsId) {
-        this.scenicDetailsId = scenicDetailsId;
+    public void setOrderNumber(Integer orderNumber) {
+        this.orderNumber = orderNumber;
     }
 
-    public String getOrderConsignee() {
-        return orderConsignee;
+    public Integer getOrderState() {
+        return orderState;
     }
 
-    public void setOrderConsignee(String orderConsignee) {
-        this.orderConsignee = orderConsignee;
+    public void setOrderState(Integer orderState) {
+        this.orderState = orderState;
     }
 
-    public Integer getOrderMoney() {
-        return orderMoney;
+    public String getTripMode() {
+        return tripMode;
     }
 
-    public void setOrderMoney(Integer orderMoney) {
-        this.orderMoney = orderMoney;
+    public void setTripMode(String tripMode) {
+        this.tripMode = tripMode;
     }
 
-    public Date getOrderTime() {
-        return orderTime;
+    public Date getDepartDate() {
+        return departDate;
     }
 
-    public void setOrderTime(Date orderTime) {
-        this.orderTime = orderTime;
+    public void setDepartDate(Date departDate) {
+        this.departDate = departDate;
     }
 
-    public Integer getOrderStatus() {
-        return orderStatus;
+    public String getDepartDays() {
+        return departDays;
     }
 
-    public void setOrderStatus(Integer orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setDepartDays(String departDays) {
+        this.departDays = departDays;
     }
 
-    public String getOrderDescribe() {
-        return orderDescribe;
+    public String getTirpInformation() {
+        return tirpInformation;
     }
 
-    public void setOrderDescribe(String orderDescribe) {
-        this.orderDescribe = orderDescribe;
+    public void setTirpInformation(String tirpInformation) {
+        this.tirpInformation = tirpInformation;
+    }
+
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public Date getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
 }
