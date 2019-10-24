@@ -5,9 +5,9 @@ public class OrderDetails {
 
     private Integer orderId;
 
-    private String orderDetailsContent;
+    private Integer contactsId;
 
-    private Integer orderNumber;
+    private Integer passengerId;
 
     private String orderDetailsDescribe;
 
@@ -27,20 +27,20 @@ public class OrderDetails {
         this.orderId = orderId;
     }
 
-    public String getOrderDetailsContent() {
-        return orderDetailsContent;
+    public Integer getContactsId() {
+        return contactsId;
     }
 
-    public void setOrderDetailsContent(String orderDetailsContent) {
-        this.orderDetailsContent = orderDetailsContent;
+    public void setContactsId(Integer contactsId) {
+        this.contactsId = contactsId;
     }
 
-    public Integer getOrderNumber() {
-        return orderNumber;
+    public Integer getPassengerId() {
+        return passengerId;
     }
 
-    public void setOrderNumber(Integer orderNumber) {
-        this.orderNumber = orderNumber;
+    public void setPassengerId(Integer passengerId) {
+        this.passengerId = passengerId;
     }
 
     public String getOrderDetailsDescribe() {

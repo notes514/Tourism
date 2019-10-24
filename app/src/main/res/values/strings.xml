@@ -5,6 +5,43 @@
     <string name="title_destination">攻略库</string>
     <string name="title_order">旅游订单</string>
     <string name="title_personer">我的</string>
+
+    <!--  首页  -->
+    <string name="menu_1">周边游</string>
+    <string name="menu_2">一日游</string>
+    <string name="menu_3">自由行</string>
+    <string name="menu_4">景点·门票</string>
+    <string name="menu_5">浪漫之旅</string>
+    <string name="menu_6">当地向导</string>
+    <string name="menu_7">定制旅行</string>
+    <string name="menu_8">亲子·游学</string>
+    <string name="showNearby">看看附近有什么~~~</string>
+    <string name="nearby_activity_title">附近</string>
+
+
+    <!--  地图  -->
+    <string name="exhibition_area_1">展览区一</string>
+    <string name="exhibition_area_2">展览区二</string>
+    <string name="exhibition_area_3">展览区三</string>
+    <string name="exhibition_area_4">展览区四</string>
+    <string name="exhibition_area_5">展览区五</string>
+    <string name="exhibition_area_6">展览区六</string>
+    <string name="conference_hall">会议厅</string>
+    <string name="leaderboard">排行榜</string>
+    <string-array name="exhibition_area">
+        <item>展览区一</item>
+        <item>展览区二</item>
+        <item>展览区三</item>
+        <item>展览区四</item>
+        <item>展览区五</item>
+        <item>展览区六</item>
+    </string-array>
+
+
+    <!--  跑马灯通知  -->
+    <string name="notice">热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！</string>
+
+
     <!--  景区详情页面加载模块  -->
     <string name="tourism_details_content">内容主题</string>
     <string name="tourism_details_price">景区价格</string>

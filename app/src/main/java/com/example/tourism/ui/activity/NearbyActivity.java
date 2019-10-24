@@ -1,9 +1,11 @@
 package com.example.tourism.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.brtbeacon.sdk.BRTBeacon;
 import com.brtbeacon.sdk.BRTBeaconManager;
@@ -22,6 +31,12 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.ui.fragment.BrowseFragment;
+import com.example.tourism.ui.fragment.BrowsePageFragment;
+import com.example.tourism.ui.fragment.HomeFragment;
+import com.example.tourism.ui.fragment.LeaderboardFragment;
+import com.example.tourism.utils.AppUtils;
+import com.google.android.material.tabs.TabLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
@@ -37,44 +52,113 @@ public class NearbyActivity extends BaseActivity {
 
     @BindView(R.id.toolBar)
     Toolbar toolbar;
-    @BindView(R.id.imageView)
-    ImageView imageView;
-    @BindView(R.id.view1)
-    TextView view1;
-    @BindView(R.id.view2)
-    TextView view2;
-    @BindView(R.id.view5)
-    TextView view5;
+    @BindView(R.id.notice)
+    TextView notice;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
+    @BindView(R.id.exhibition_area_1)
+    TextView exhibition_area_1;
+    @BindView(R.id.exhibition_area_2)
+    TextView exhibition_area_2;
+    @BindView(R.id.exhibition_area_3)
+    TextView exhibition_area_3;
+    @BindView(R.id.exhibition_area_4)
+    TextView exhibition_area_4;
+    @BindView(R.id.exhibition_area_5)
+    TextView exhibition_area_5;
+    @BindView(R.id.exhibition_area_6)
+    TextView exhibition_area_6;
+    @BindView(R.id.tabLayout)
+    TabLayout tabLayout;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
     private Unbinder unbinder;
     private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private List<String> macAddress = new ArrayList<>();
 
+    @SuppressLint("ResourceType")
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
         unbinder = ButterKnife.bind(this, this);
+
+        //初始化工具栏
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        //setSupportActionBar(toolbar);
-        //setActionBar(toolbar);
+        toolbar.setTitle(getString(R.string.nearby_activity_title));
+        toolbar.setTitleTextColor(getColor(R.color.color_white));
+        //跑马灯效果
+        notice.setSelected(true);
+
         macAddress.add("EF:D5:C7:C8:14:FB");
         macAddress.add("FE:CB:23:2A:B6:4B");
         macAddress.add("F9:50:C1:76:EC:5F");
-        //显示返回按钮 禁用标题
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         checkBluetoothValid();
         startScan();
         test();
-        initMap();
+        initViewPager();
     }
 
+    private void initViewPager(){
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
+        String[] tabName = AppUtils.getStringArray(R.array.exhibition_area);
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[0]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[1]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[2]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[3]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[4]));
+        tabLayout.addTab(tabLayout.newTab().setText(tabName[5]));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                AppUtils.getToast(tab.getText()+"");
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new LeaderboardFragment());
+        fragments.add(new LeaderboardFragment());
+        fragments.add(new LeaderboardFragment());
+        fragments.add(new LeaderboardFragment());
+        fragments.add(new LeaderboardFragment());
+        fragments.add(new LeaderboardFragment());
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return tabName[position];
+            }
+        });
+    }
 
     /**
      * 检测手机蓝牙是否开启
@@ -144,13 +228,13 @@ public class NearbyActivity extends BaseActivity {
                     if (result.get(i).macAddress.equals("F9:50:C1:76:EC:5F")){
 //                        view.setHeight((int) calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi()));
                         //Toast.makeText(NearbyActivity.this,"你目前正在展览区1",Toast.LENGTH_SHORT).show();
-                        view1.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
+                        exhibition_area_1.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
                     }else if (result.get(i).macAddress.equals("FE:CB:23:2A:B6:4B")){
                         //Toast.makeText(NearbyActivity.this,"你目前正在展览区2",Toast.LENGTH_SHORT).show();
-                        view2.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
+                        exhibition_area_2.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
                     }else if (result.get(i).macAddress.equals("EF:D5:C7:C8:14:FB")){
                         //Toast.makeText(NearbyActivity.this,"你目前正在展览区5",Toast.LENGTH_SHORT).show();
-                        view5.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
+                        exhibition_area_5.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
                     }
                 }
             }
@@ -173,17 +257,13 @@ public class NearbyActivity extends BaseActivity {
     };
 
     private void test(){
-        view1.setOnClickListener(new View.OnClickListener() {
+        exhibition_area_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
+//                startActivity(intent);
             }
         });
-    }
-
-    private void initMap(){
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images+"images/map.jpg",imageView, InitApp.getOptions());
     }
 
     @Override

@@ -52,4 +52,9 @@
     <color name="colorLineChoosedShadow">#8833B5E5</color>
     <!--灰色  未选中下划线 -->
     <color name="colorLineDefault">#FFAAAAAA</color>
+
+    <!-- 地图用到的背景颜色 -->
+    <color name="map_bg_1">#EFE3D5</color>
+    <color name="map_bg_2">#FFC8C8C8</color>
+    <color name="map_bg_3">#968267</color>
 </resources>

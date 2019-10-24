@@ -13,6 +13,7 @@
             <LinearLayout
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:padding="4dp"
                 android:orientation="vertical"
                 android:layout_gravity="center">
 
@@ -29,12 +30,16 @@
                     android:lines="2"
                     android:text="TextView"
                     android:textStyle="bold"
-                    android:textSize="14dp"/>
+                    android:textSize="14sp"
+                    android:singleLine="true"/>
 
                 <TextView
                     android:id="@+id/scenic_spot_describe"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="2dp"
+                    android:gravity="right"
                     android:lines="1"
                     android:text="TextView" />
 
@@ -46,7 +51,8 @@
                     android:gravity="right"
                     android:lines="1"
                     android:text="TextView"
-                    android:textSize="14dp"/>
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

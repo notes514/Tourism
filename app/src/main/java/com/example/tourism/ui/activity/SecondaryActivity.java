@@ -1,26 +1,21 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.tourism.R;
-import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryScenicSpotItemAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.widget.CustomToolbar;
 import com.google.gson.reflect.TypeToken;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -51,6 +46,7 @@ public class SecondaryActivity extends BaseActivity {
     private List<ScenicSpot> scenicSpots = new ArrayList<>();
     private SecondaryScenicSpotItemAdapter adapter;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +58,8 @@ public class SecondaryActivity extends BaseActivity {
                 finish();
             }
         });
-
-        //toolbar.setTitle(getIntent().getStringExtra("menu_name"));
+        toolbar.setTitle(getIntent().getStringExtra("menu_name"));
+        toolbar.setTitleTextColor(getColor(R.color.color_white));
         queryByTravelMode(getIntent().getIntExtra("travel_mode",0));
 
     }

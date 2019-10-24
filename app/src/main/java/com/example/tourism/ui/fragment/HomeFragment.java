@@ -1,8 +1,5 @@
 package com.example.tourism.ui.fragment;
 
-import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,24 +9,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-import com.brtbeacon.sdk.BRTBeacon;
-import com.brtbeacon.sdk.BRTBeaconManager;
-import com.brtbeacon.sdk.BRTThrowable;
-import com.brtbeacon.sdk.callback.BRTBeaconManagerListener;
 import com.example.tourism.R;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
@@ -39,11 +29,9 @@ import com.example.tourism.common.DefineView;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
-import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.GlideImageLoader;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
-import com.scwang.smart.refresh.header.BezierRadarHeader;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshFooter;
@@ -56,15 +44,9 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -96,7 +78,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     RecyclerView recyclerView;
 
     private List<String> images = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
     private List<ScenicSpot> allScenicSpots = new ArrayList<>();
     private List<ScenicSpot> secondaryScenicSpots = new ArrayList<>();
@@ -118,6 +99,12 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public void initView() {
         //默认初始工具栏为透明
         toolbar.setAlpha(0);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         initRefreshLayout();
         initScrollView();
         initBanner();
@@ -237,7 +224,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     private void initBanner(){
         //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
@@ -246,12 +233,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
         images.add(RequestURL.ip_images+"/images/banner/banner3.jpg");
         banner.setImages(images);
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
-        //设置标题集合（当banner样式有显示title时）
-        titles.add("1");
-        titles.add("2");
-        titles.add("3");
-        banner.setBannerTitles(titles);
+        banner.setBannerAnimation(Transformer.Default);
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
@@ -263,14 +245,14 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
     private void initSecondaryMenu(){
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_1,"周边游"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_2,"一日游"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_3,"自由行"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_4,"景点·门票"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_5,"浪漫之旅"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_6,"当地向导"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_7,"定制旅行"));
-        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_8,"亲子·游学"));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_1,getString(R.string.menu_1)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_2,getString(R.string.menu_2)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_3,getString(R.string.menu_3)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_4,getString(R.string.menu_4)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_5,getString(R.string.menu_5)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_6,getString(R.string.menu_6)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_7,getString(R.string.menu_7)));
+        secondaryMenuList.add(new SecondaryMenu(R.drawable.menu_8,getString(R.string.menu_8)));
         adapter1 = new SecondaryMenuItemAdapter(getContext(),secondaryMenuList);
         gridView.setAdapter(adapter1);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -296,9 +278,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     private void queryAllScenicSpot(){
         ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        HashMap hashMap = new HashMap();
-        hashMap.put("","");
-        Call<ResponseBody> scenicSpotCall = api.getASync("queryAllScenicSpot",hashMap);
+        Call<ResponseBody> scenicSpotCall = api.getNAsync("queryAllScenicSpot");
         scenicSpotCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
