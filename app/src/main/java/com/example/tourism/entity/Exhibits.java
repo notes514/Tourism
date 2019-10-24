@@ -13,6 +13,8 @@ public class Exhibits {
 
     private String exhibitsAuthor;
 
+    private Integer exhibitsPraisePoints;
+
     public Integer getExhibitsId() {
         return exhibitsId;
     }
@@ -59,5 +61,13 @@ public class Exhibits {
 
     public void setExhibitsAuthor(String exhibitsAuthor) {
         this.exhibitsAuthor = exhibitsAuthor;
+    }
+
+    public Integer getExhibitsPraisePoints() {
+        return exhibitsPraisePoints;
+    }
+
+    public void setExhibitsPraisePoints(Integer exhibitsPraisePoints) {
+        this.exhibitsPraisePoints = exhibitsPraisePoints;
     }
 }

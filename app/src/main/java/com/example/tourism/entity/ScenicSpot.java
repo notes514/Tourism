@@ -1,6 +1,8 @@
 package com.example.tourism.entity;
 
-public class ScenicSpot {
+import java.io.Serializable;
+
+public class ScenicSpot implements Serializable {
     private Integer scenicSpotId;
 
     private Integer regionId;
@@ -21,7 +23,9 @@ public class ScenicSpot {
 
     private String scenicSpotDescribe;
 
-    public ScenicSpot(Integer scenicSpotId, Integer regionId, String scenicSpotTheme, String scenicSpotPicUrl, Double scenicSpotPrice, Integer travelMode, String startLand, String endLand, Integer scenicSpotState, String scenicSpotDescribe) {
+    public ScenicSpot(Integer scenicSpotId, Integer regionId, String scenicSpotTheme,
+                      String scenicSpotPicUrl, Double scenicSpotPrice, Integer travelMode,
+                      String startLand, String endLand, Integer scenicSpotState, String scenicSpotDescribe) {
         this.scenicSpotId = scenicSpotId;
         this.regionId = regionId;
         this.scenicSpotTheme = scenicSpotTheme;

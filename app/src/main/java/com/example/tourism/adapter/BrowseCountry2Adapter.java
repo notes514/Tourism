@@ -20,6 +20,7 @@ import com.example.tourism.ui.activity.ActivitySpotActivity;
 import com.example.tourism.entity.RegionType;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,7 +134,7 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
                         listener.onClick(position);
                     }
                     Intent intent = new Intent(view.getContext(), ActivitySpotActivity.class);
-                    intent.putExtra("country",country);
+                    intent.putExtra("country", country);
                     view.getContext().startActivity(intent);
                 }
             });

@@ -201,4 +201,21 @@ public class CTextUtils {
         return pStr;
     }
 
+    /**
+     * 传入中间字符串截取一串字符，
+     * 并通过索引返回截取后指定的字符串
+     *
+     * @param pStr
+     * @param value
+     * @param type
+     * @return
+     */
+    public static String getAutomaticInterceptString(String pStr, String value, int type) {
+        if (pStr.contains(value)) {
+            String[] array = pStr.split(value);
+            return array[type];
+        }
+        return pStr;
+    }
+
 }

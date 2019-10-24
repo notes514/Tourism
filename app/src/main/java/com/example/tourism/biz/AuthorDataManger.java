@@ -11,11 +11,24 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 抓取攻略库列表信息管理类
+ * Name:laodai
+ * Time:2019.10.18
+ */
 public class AuthorDataManger {
 
+    /**
+     * 无参构造
+     */
     public AuthorDataManger() {
     }
 
+    /**
+     * 抓取攻略列表信息
+     * @param document
+     * @return
+     */
     public List<AuthorBean> getAurhorBeans(Document document) {
         List<AuthorBean> beanList = new ArrayList<>();
         Element element = document.select("div.qn-header").first();
