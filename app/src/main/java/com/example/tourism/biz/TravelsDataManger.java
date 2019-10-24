@@ -12,8 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 抓取游记列表信息
- *
+ * 抓取游记列表信息管理类
+ * Name:laodai
+ * Time:2019.10.18
  */
 public class TravelsDataManger {
 
@@ -23,6 +24,11 @@ public class TravelsDataManger {
     public TravelsDataManger() {
     }
 
+    /**
+     * 抓取文章列表信息
+     * @param document
+     * @return List<TravelsBean>
+     */
     public List<TravelsBean> getTravels(Document document) {
         List<TravelsBean> beanList = new ArrayList<>();
         Element element = document.select("ul.b_strategy_list").first();

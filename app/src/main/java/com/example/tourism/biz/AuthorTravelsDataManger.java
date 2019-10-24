@@ -11,11 +11,24 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 用户列表信息管理类
+ * Name:laodai
+ * Time:2019.10.18
+ */
 public class AuthorTravelsDataManger {
 
+    /**
+     * 无参构造
+     */
     public AuthorTravelsDataManger() {
     }
 
+    /**
+     * 抓取用户列表信息
+     * @param document
+     * @return
+     */
     public List<AuthorTravelsBean> getAuthorTravelsBeans(Document document) {
         List<AuthorTravelsBean> beanList = new ArrayList<>();
         Element element = document.select("ul.timeline-ct").first();

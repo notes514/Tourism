@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/iv_pic"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/icon_comment_black"/>
+    <TextView
+        android:id="@+id/tv_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/color_black"
+        android:textSize="14sp"
+        android:layout_marginTop="3dp"
+        android:text="2019.10.10"/>
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/color_black"
+        android:textSize="14sp"
+        android:layout_marginTop="3dp"
+        android:text="出发日期"/>
+
+</LinearLayout>

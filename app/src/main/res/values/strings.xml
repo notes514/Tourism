@@ -43,8 +43,10 @@
 
 
     <!--  景区详情页面加载模块  -->
-    <string name="tourism_details_content">内容主题</string>
-    <string name="tourism_details_price">景区价格</string>
+    <string name="tourism_details_content">跟团游·促销】漓悠悠纯玩！错峰特惠*蝴蝶泉侗王夜宴+象鼻山+船游四湖/桂林漓江阳朔3日游</string>
+    <string name="tourism_details_smbol">¥</string>
+    <string name="tourism_details_price">2250</string>
+    <string name="tourism_details_everyone">起/人</string>
     <string name="tourism_details_cash">现金红包</string>
     <string name="tourism_details_vip">专享红包</string>
     <string name="tourism_details_voucher">代金券</string>
@@ -59,4 +61,9 @@
     <string name="tourism_details_trip">行程信息</string>
     <string name="tourism_details_line">线路特色</string>
     <string name="tourism_details_reserve">预定通知</string>
+    <string name="tourism_details_traffic">参考交通</string>
+    <string name="tourism_details_tv_trip">行程天数</string>
+    <string name="tourism_details_tv_arrive">出发到达</string>
+    <string name="tourism_details_tv_stay">住宿标准</string>
+
 </resources>

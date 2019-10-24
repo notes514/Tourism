@@ -24,10 +24,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapter.ViewHolder> {
+public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapter.ViewHolder> implements View.OnClickListener {
     private List<TravelsBean> travelsBeans;
     private Context context;
     private LayoutInflater inflater;
+    private GoodAdapter goodAdapter;
 
     public PageRecyclerAdapter(Context context) {
         this.context = context;
@@ -43,6 +44,7 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.goods_layout, parent, false);
+        view.setOnClickListener(this::onClick);
         ViewHolder holder = new ViewHolder(view);
         return holder;
     }
@@ -51,6 +53,8 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         TravelsBean travels = travelsBeans.get(position);
+        //把TravelsBean数据设置到View中
+        holder.itemView.setTag(travels);
         //用户头像
         ImageLoader.getInstance().displayImage(travels.getUserPicUrl(), holder.headPortraitImage, InitApp.getOptions());
         //标题内容
@@ -102,8 +106,6 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         holder.rvGood.setAdapter(goodAdapter);
     }
 
-    private GoodAdapter goodAdapter;
-
     @Override
     public int getItemCount() {
         return travelsBeans == null ? 0 : travelsBeans.size();
@@ -153,6 +155,36 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    /**
+     * 重写onClick
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        if (onItemClickListener != null) {
+            onItemClickListener.onItemClick(v, v.getTag());
+        }
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    /**
+     * Item 添加类OnItemClickListener 时间监听方法
+     */
+    public interface OnItemClickListener {
+        /**
+         * 当内部的Item发生点击的时候 调用Item点击回调方法
+         * @param view    点击的View
+         * @param object  回调的数据
+         */
+        void onItemClick(View view, Object object);
     }
 
 }

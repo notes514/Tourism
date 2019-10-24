@@ -81,6 +81,7 @@
         </activity>
         <activity android:name=".ui.activity.SignInActivity"></activity>
         <activity android:name=".ui.activity.RegisterActivity"></activity>
+        <activity android:name=".ui.activity.StrategyDetailsActivity"></activity>
 
         <activity android:name=".ui.activity.ShowExhibitsDetialActivity">
         </activity>
@@ -153,6 +154,7 @@
         <service
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>

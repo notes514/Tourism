@@ -19,6 +19,7 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAdapter.ViewHolder> {
@@ -50,7 +51,7 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
         holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,objects.get(position).getScenicSpotId()+"",Toast.LENGTH_SHORT).show();
+                AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
             }
         });
         ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getScenicSpotPicUrl(),

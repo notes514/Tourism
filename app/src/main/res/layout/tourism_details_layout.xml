@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <!--  ScrollView滚动  -->
+    <com.example.laodai.widget.MyScrollView
+        android:id="@+id/my_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints">
+        <!--帧布局-->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--详情信息模块-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <!--头部信息栏-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/color_white">
+                    <!-- 图片轮播 -->
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <!-- 详情内容
+                         lineSpacingExtra:设置行间距
+                         -->
+                        <TextView
+                            android:id="@+id/tv_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/tourism_details_content"
+                            android:lineSpacingExtra="2dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/color_black"
+                            android:padding="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingLeft="10dp">
+                            <!-- 人民币符号 -->
+                            <TextView
+                                android:id="@+id/ty_smbol"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_smbol"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_orange"/>
+                            <!-- 价格 -->
+                            <TextView
+                                android:id="@+id/ty_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_price"
+                                android:textSize="18sp"
+                                android:textColor="@color/color_orange"/>
+                            <!-- 每人 -->
+                            <TextView
+                                android:id="@+id/ty_everyone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_everyone"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_gray"
+                                android:layout_marginLeft="2dp"/>
+                        </LinearLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"
+                            android:layout_marginTop="10dp"/>
+                        <!-- 特惠说明 -->
+                        <FrameLayout
+                            android:id="@+id/fl_red_envelopes"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical">
+                                <!-- 现金红包 -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/color_orange"
+                                    android:background="@drawable/tv_select_details_orange"
+                                    android:text="@string/tourism_details_cash"
+                                    android:textSize="12sp"/>
+                                <!-- 专享红包 -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/color_orange"
+                                    android:background="@drawable/tv_select_details_orange"
+                                    android:text="@string/tourism_details_vip"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="12sp"/>
+                                <!-- 代金券 -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/color_orange"
+                                    android:background="@drawable/tv_select_details_orange"
+                                    android:text="@string/tourism_details_voucher"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="12sp"/>
+                            </LinearLayout>
+                            <!-- 更多 -->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_more_horiz_gray"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_marginRight="10dp"/>
+                        </FrameLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"/>
+                        <!-- 店铺红包 -->
+                        <FrameLayout
+                            android:id="@+id/fl_shop_red_envelopes"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical">
+                                <!-- 店铺红包 -->
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/tv_select_details_red"
+                                    android:text="@string/tourism_details_shop"
+                                    android:textColor="@color/color_red"
+                                    android:textSize="12sp"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/color_black_translucent"
+                                    android:text="@string/tourism_details_explain"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="12sp"/>
+                            </LinearLayout>
+                            <!-- 更多 -->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_more_horiz_gray"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_marginRight="10dp"/>
+                        </FrameLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"/>
+                        <!-- 说明 -->
+                        <FrameLayout
+                            android:id="@+id/fl_explain"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginLeft="10dp"
+                                android:layout_gravity="center_vertical"
+                                android:gravity="center_vertical">
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    >
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:src="@drawable/icon_hook"/>
+                                    <!-- 店铺红包 -->
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/tourism_details_luxury"
+                                        android:textColor="@color/color_black"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="10dp">
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:src="@drawable/icon_hook"/>
+                                    <!-- 无自费 -->
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/tourism_details_expense"
+                                        android:textColor="@color/color_black"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="10dp">
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:src="@drawable/icon_hook"/>
+                                    <!-- 无购物 -->
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:text="@string/tourism_details_shopping"
+                                        android:textColor="@color/color_black"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:layout_marginLeft="10dp">
+                                    <ImageView
+                                        android:layout_width="18dp"
+                                        android:layout_height="18dp"
+                                        android:src="@drawable/icon_hook"/>
+                                    <!-- 铁定成团 -->
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/tourism_details_Ironclad"
+                                        android:textColor="@color/color_black"
+                                        android:textSize="12sp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                            <!-- 更多 -->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/icon_more_horiz_gray"
+                                android:layout_gravity="right|center_vertical"
+                                android:layout_marginRight="10dp"/>
+                        </FrameLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#F5F5F5" />
+                    <!--日期选择模块-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp">
+                        <!--日期选择模块-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <!-- 添加分割线 -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"/>
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="55dp" />
+                            <!-- 添加分割线 -->
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"/>
+                        </LinearLayout>
+                        <!--更多日期模块-->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_alignParentRight="true">
+                            <!-- 添加分割线 -->
+                            <View
+                                android:layout_width="0.5dp"
+                                android:layout_height="wrap_content"
+                                android:background="#dedede"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"/>
+                            <!-- 更多日期 -->
+                            <TextView
+                                android:id="@+id/tv_more_dates"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_date"
+                                android:drawableTop="@drawable/ic_more_dates"
+                                android:textSize="14sp"
+                                android:padding="10dp" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#F5F5F5" />
+                    <!--行程信息模块-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/icon_traffic"/>
+                            <!-- 参考交通 -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_traffic"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_gray"
+                                android:layout_marginLeft="10dp"/>
+                            <!-- 高铁往返 -->
+                            <TextView
+                                android:id="@+id/tv_traffic"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_traffic"
+                                android:textSize="14sp"
+                                android:textColor="@color/color_black"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"
+                            android:layout_marginTop="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/icon_trip"/>
+                            <!-- 参考交通 -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_trip"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_gray"
+                                android:layout_marginLeft="10dp"/>
+                            <!-- 高铁往返 -->
+                            <TextView
+                                android:id="@+id/tv_trip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_trip"
+                                android:textSize="14sp"
+                                android:textColor="@color/color_black"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"
+                            android:layout_marginTop="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/icon_arrive"/>
+                            <!-- 参考交通 -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_arrive"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_gray"
+                                android:layout_marginLeft="10dp"/>
+                            <!-- 高铁往返 -->
+                            <TextView
+                                android:id="@+id/tv_arrive"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_arrive"
+                                android:textSize="14sp"
+                                android:textColor="@color/color_black"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                        <!-- 添加分割线 -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="#dedede"
+                            android:layout_marginTop="10dp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:padding="10dp">
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:src="@drawable/icon_stay"/>
+                            <!-- 参考交通 -->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_stay"
+                                android:textSize="12sp"
+                                android:textColor="@color/color_gray"
+                                android:layout_marginLeft="10dp"/>
+                            <!-- 高铁往返 -->
+                            <TextView
+                                android:id="@+id/tv_stay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/tourism_details_tv_stay"
+                                android:textSize="14sp"
+                                android:textColor="@color/color_black"
+                                android:layout_marginLeft="10dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="#F5F5F5" />
+                    <!--只用于占位不显示-为浮动栏占位大小40dp跟浮动栏高度一致-->
+                    <TextView
+                        android:id="@+id/tv_show"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@android:color/transparent"
+                        android:visibility="invisible" />
+                </LinearLayout>
+                <!--底部viewPager-->
+                <com.example.laodai.widget.ChildAutoViewPager
+                    android:id="@+id/buttom_child_viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <!--中间浮动栏，同时设置到顶部的距离为0，因为顶部的toolbar的高度为73dp，所以设置layout_marginTop="50dp"-->
+            <LinearLayout
+                android:id="@+id/layout_classify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="73dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_white">
+                    <TextView
+                        android:id="@+id/tv_info_imagetext"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="图文详情"
+                        android:gravity="center"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_info_product"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="景区实拍"
+                        android:gravity="center"
+                        android:textSize="15sp"/>
+                    <TextView
+                        android:id="@+id/tv_info_evaluate"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="评价详情"
+                        android:gravity="center"
+                        android:textSize="15sp"/>
+                </LinearLayout>
+                <!-- 游标 -->
+                <ImageView
+                    android:id="@+id/iv_corsor"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/color_red"
+                    android:contentDescription="@null"/>
+            </LinearLayout>
+        </FrameLayout>
+    </com.example.laodai.widget.MyScrollView>
+    <!--详情页头部-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--状态栏-->
+        <View
+            android:id="@+id/status_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_blue"/>
+        <!--详情页toolbar-->
+        <include layout="@layout/details_toolbar_layout"/>
+    </LinearLayout>
+    <!-- 添加底部导航栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_white"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+        <!--  左边  -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+            <!-- 客服 -->
+            <LinearLayout
+                android:id="@+id/customer_service_line"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/icon_customer_service" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="客服"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+            <!-- 收藏-->
+            <LinearLayout
+                android:id="@+id/collection_line"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/collection_image"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/select_collection" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="收藏"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+            <!-- 店铺 -->
+            <LinearLayout
+                android:id="@+id/shop_line"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/icon_shop" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="店铺"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <!--  右边  -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:layout_margin="5dp">
+
+            <Button
+                android:id="@+id/btn_shapping_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加入购物车"
+                android:textSize="18sp"
+                android:textColor="@color/color_white"
+                android:background="@drawable/btn_shopping_chart_color"
+                android:layout_gravity="left"/>
+
+            <Button
+                android:id="@+id/btn_reserve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立即预定"
+                android:textSize="18sp"
+                android:textColor="@color/color_white"
+                android:background="@drawable/btn_reserve_color"
+                android:layout_gravity="right"/>
+        </FrameLayout>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/iv_back_top"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="80dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/select_arrow_upward"
+        android:src="@drawable/ic_arrow_upward_black_24dp"/>
+</RelativeLayout>

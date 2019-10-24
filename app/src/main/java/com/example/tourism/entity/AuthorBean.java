@@ -6,6 +6,7 @@ package com.example.tourism.entity;
  * Time:2019.10.17
  */
 public class AuthorBean {
+    private String authorId; //用户编号
     private String name; //作者名字
     private String avatarPic; //作者头像
     private String score; //积分
@@ -14,6 +15,14 @@ public class AuthorBean {
     private TrHeadBean trHeadBean;
 
     public AuthorBean() {
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getName() {
@@ -66,7 +75,7 @@ public class AuthorBean {
 
     @Override
     public String toString() {
-        return "[name="+name+", avatarPic="+avatarPic+", score="+score+", follow="+follow+", " +
-                "fans="+fans+", trHeadBean="+trHeadBean+"]";
+        return "[authorId="+authorId+", name="+name+", avatarPic="+avatarPic+", score="+score+", " +
+                "follow="+follow+", fans="+fans+", trHeadBean="+trHeadBean+"]";
     }
 }

@@ -1,10 +1,16 @@
 package com.example.tourism.ui.fragment;
 
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,16 +19,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tourism.R;
 import com.example.tourism.adapter.BrowseCountryAdapter;
 import com.example.tourism.adapter.BrowseRegionAdapter;
+import com.example.tourism.adapter.SearchListAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Constant;
 import com.example.tourism.entity.Region;
 import com.example.tourism.entity.RegionType;
 import com.example.tourism.entity.ScenicRegion;
+import com.example.tourism.ui.activity.ActivitySpotActivity;
+import com.example.tourism.ui.activity.SearchList;
+import com.example.tourism.utils.DbManger;
+import com.example.tourism.utils.MySqliteHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +54,18 @@ public class SearchSpotAdapterFragment extends Fragment {
     private RecyclerView countryRecycleView;
     List<Region> regions = new ArrayList<Region>();
     List<RegionType> mlist = new ArrayList<>();
+    List<ScenicRegion> temps = new ArrayList<>();
     BrowseCountryAdapter browseCountryAdapter;
     BrowseRegionAdapter browseRegionAdapter;
     List<ScenicRegion> scenicRegions = new ArrayList<>();
     String temp=null;
+    private TextView searchHistory;
+    private TextView historyDelete;
+    private RecyclerView searchHistoryRecycle;
+    private DbManger dbManger;
+    private MySqliteHelper helper;
+    private SQLiteDatabase db;
+    SearchListAdapter searchListAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,13 +74,34 @@ public class SearchSpotAdapterFragment extends Fragment {
         return root;
     }
 
+
+
+
+
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         regionRecycleView = (RecyclerView) view.findViewById(R.id.browse_region);
         countryRecycleView = (RecyclerView) view.findViewById(R.id.browse_country);
+        searchHistory = view.findViewById(R.id.search_history_text);
+        historyDelete = view.findViewById(R.id.delete_btn);
+        searchHistoryRecycle = view.findViewById(R.id.history_list);
+        helper = new MySqliteHelper(getActivity());
+        db = helper.getWritableDatabase();
         getData();
+
+        getHistory();
+
+        historyDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DbManger.execSQL(db,"delete from ScenicRegion_Data");
+                searchListAdapter.notifyDataSetChanged();
+                getHistory();
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -76,11 +119,11 @@ public class SearchSpotAdapterFragment extends Fragment {
                         regionTypes.add(mlist.get(i));
                     }
                 }
-                String url = "http://192.168.42.39:8080/api/";
+
                 RetrofitManger retrofit = RetrofitManger.getInstance();
-                ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
+                ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
-                Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+                Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
                 scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -121,11 +164,62 @@ public class SearchSpotAdapterFragment extends Fragment {
 
     }
 
+    public void getHistory(){
+        String selectSql = "select * from "+ Constant.TABLE_NAME;
+        Cursor cursor = DbManger.selectSQL(db,selectSql,null);//查询结果用cursor类型数据存储
+        temps = DbManger.cursorToList(cursor);
+        if (temps.size()>4){
+            temps.remove(0);
+        }
+        Collections.reverse(temps);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        searchHistoryRecycle.setLayoutManager(linearLayoutManager);
+        searchListAdapter = new SearchListAdapter(2,temps);
+        searchHistoryRecycle.setAdapter(searchListAdapter);
+        searchListAdapter.setmOnItemClickListener(new SearchListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                RetrofitManger retrofit = RetrofitManger.getInstance();
+                ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Map<String,Object> map=new HashMap<>();
+                Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+                scenicRegionCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String m = response.body().string();
+                            scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
+
+                            for (int i=0;i<scenicRegions.size();i++){
+                                ScenicRegion scenicRegion = scenicRegions.get(i);
+                                if (temps.get(position).getRegionName().equals(scenicRegion.getRegionName())){
+                                    Intent intent = new Intent(SearchSpotAdapterFragment.this.getContext(), ActivitySpotActivity.class);
+                                    intent.putExtra("country",scenicRegion);
+                                    SearchSpotAdapterFragment.this.getContext().startActivity(intent);
+                                    break;
+                                }
+                            }
+
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d(TAG, "onFailure: "+t.getMessage());
+                    }
+                });
+            }
+        });
+    }
+
     public void getData(){
 
         regions.add(new Region(0,"热门"));
         regions.add(new Region(1,"国内"));
-        regions.add(new Region(2,"港澳台"));
         regions.add(new Region(3,"日韩"));
         regions.add(new Region(4,"东南亚"));
         regions.add(new Region(5,"欧洲"));
@@ -135,12 +229,9 @@ public class SearchSpotAdapterFragment extends Fragment {
         mlist.add(new RegionType(0,"国内热门"));
         mlist.add(new RegionType(0,"国际热门"));
         mlist.add(new RegionType(1,"华东地区"));
-        mlist.add(new RegionType(1,"西南地区"));
-        mlist.add(new RegionType(1,"西北地区"));
+        mlist.add(new RegionType(1,"华中地区"));
         mlist.add(new RegionType(1,"华北地区"));
-        mlist.add(new RegionType(1,"东北地区"));
-        mlist.add(new RegionType(2,"港澳台推荐目的地"));
-        mlist.add(new RegionType(2,"港澳台玩法"));
+        mlist.add(new RegionType(1,"华南地区"));
 
 //        countries.add(new Country(0,"丽江",R.drawable.defaultbg,"西南地区 国内热门"));
 //        countries.add(new Country(1,"三亚",R.drawable.defaultbg,"华南地区 国内热门"));
@@ -161,11 +252,7 @@ public class SearchSpotAdapterFragment extends Fragment {
     }
 
     public void getType(){
-        String url = "http://192.168.42.39:8080/api/";
-        RetrofitManger retrofit = RetrofitManger.getInstance();
-        ServerApi serverApi = retrofit.getRetrofit(url).create(ServerApi.class);
-        Map<String,Object> map=new HashMap<>();
-        Call<ResponseBody> scenicRegionCall = serverApi.getASync(url+"queryAllScenicRegion",map);
+
         List<RegionType> temp = new ArrayList<>();
         temp.addAll(mlist);
         for (int i=temp.size()-1;i>0;i--) {
@@ -174,6 +261,10 @@ public class SearchSpotAdapterFragment extends Fragment {
                 temp.remove(regionType);
             }
         }
+        RetrofitManger retrofit = RetrofitManger.getInstance();
+        ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String,Object> map=new HashMap<>();
+        Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
         scenicRegionCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

@@ -3,6 +3,7 @@ package com.example.tourism.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,12 +15,14 @@ import com.example.tourism.entity.ScenicSpot;
 
 import java.util.List;
 
-public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.SearchListViewHolder> {
+public class SearchListAdapter extends RecyclerView.Adapter {
     List<ScenicRegion> scenicRegions;
 
     OnItemClickListener mOnItemClickListener;
+    int type;
 
-    public SearchListAdapter(List<ScenicRegion> scenicRegions) {
+    public SearchListAdapter(int type,List<ScenicRegion> scenicRegions) {
+        this.type = type;
         this.scenicRegions = scenicRegions;
     }
 
@@ -32,26 +35,47 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Se
     }
     @NonNull
     @Override
-    public SearchListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = null;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_list_adapter,parent,false);
-        return new SearchListViewHolder(view);
+        if (type==1){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_list_adapter,parent,false);
+            return new SearchListViewHolder(view);
+        }else if (type==2){
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.history_list_item,parent,false);
+            return new HistoryListViewHolder(view);
+        }else {
+            return null;
+        }
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SearchListViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScenicRegion scenicRegion = scenicRegions.get(position);
-        holder.searchHint.setText(scenicRegion.getRegionName());
-        if (mOnItemClickListener!=null) {
-            holder.searchHint.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //在TextView的地方进行监听点击事件，并且实现接口
-                    mOnItemClickListener.onItemClick(position);
-                }
-            });
+        if (holder instanceof SearchListViewHolder) {
+            ((SearchListViewHolder) holder).searchHint.setText(scenicRegion.getRegionName());
+            if (mOnItemClickListener != null) {
+                ((SearchListViewHolder) holder).searchHint.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //在TextView的地方进行监听点击事件，并且实现接口
+                        mOnItemClickListener.onItemClick(position);
+                    }
+                });
+            }
+        }else if (holder instanceof HistoryListViewHolder){
+            ((HistoryListViewHolder) holder).historyName.setText(scenicRegion.getRegionName());
+            if (mOnItemClickListener != null) {
+                ((HistoryListViewHolder) holder).historyName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //在TextView的地方进行监听点击事件，并且实现接口
+                        mOnItemClickListener.onItemClick(position);
+                    }
+                });
+            }
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -64,6 +88,15 @@ public class SearchListAdapter extends RecyclerView.Adapter<SearchListAdapter.Se
         public SearchListViewHolder(@NonNull View itemView) {
             super(itemView);
             searchHint = itemView.findViewById(R.id.search_hint);
+        }
+    }
+
+    static class HistoryListViewHolder extends RecyclerView.ViewHolder {
+        Button historyName;
+
+        public HistoryListViewHolder(@NonNull View itemView) {
+            super(itemView);
+            historyName = itemView.findViewById(R.id.history_name);
         }
     }
 }
