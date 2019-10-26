@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="222"
-        android:textSize="18dp"
+        android:textSize="15dp"
         android:layout_marginStart="55dp"
         android:background="@color/color_white"
         android:gravity="center_vertical">

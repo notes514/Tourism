@@ -57,6 +57,7 @@ public class ActivitySpotActivity extends Activity  {
     private List<TravelMode> travelModes = new ArrayList<>();
     private List<ScenicSpot> scenicSpots = new ArrayList<>();
     private ImageView imageView;
+    ScenicRegion country;
     TravelModeAdapter travelModeAdapter;
     SpotAdapter spotAdapter;
     Context context;
@@ -76,7 +77,7 @@ public class ActivitySpotActivity extends Activity  {
                 ActivitySpotActivity.this.finish();
             }
         });
-        ScenicRegion country = (ScenicRegion) getIntent().getSerializableExtra("country");
+        country = (ScenicRegion) getIntent().getSerializableExtra("country");
         searchView.setText(country.getRegionName());
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +102,7 @@ public class ActivitySpotActivity extends Activity  {
                 RetrofitManger retrofit = RetrofitManger.getInstance();
                 ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
-                map.put("regionId",1);
+                map.put("regionId",country.getRegionId());
                 Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryScenicByRegionId",map);
                 scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -123,7 +124,7 @@ public class ActivitySpotActivity extends Activity  {
                                 temp = new ArrayList<>();
                                 for (int i = 0; i < scenicSpots.size(); i++) {
                                     ScenicSpot scenicSpot = scenicSpots.get(i);
-                                    if (scenicSpot.getRegionId() == position) {
+                                    if (scenicSpot.getTravelMode() == position) {
                                         temp.add(scenicSpot);
                                     }
                                 }
@@ -172,7 +173,7 @@ public class ActivitySpotActivity extends Activity  {
         RetrofitManger retrofit = RetrofitManger.getInstance();
         ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String,Object> map=new HashMap<>();
-        map.put("regionId",1);
+        map.put("regionId",country.getRegionId());
         Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryScenicByRegionId",map);
         scenicRegionCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -181,9 +182,9 @@ public class ActivitySpotActivity extends Activity  {
                     String m = response.body().string();
 //                    Log.e(TAG, "axconResponse: "+m, null);
                     List<ScenicSpot> scenicSpots = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
-                    for (int i=scenicSpots.size()-1;i>0;i--){
+                    for (int i=scenicSpots.size()-1;i>=0;i--){
                         ScenicSpot scenicSpot=scenicSpots.get(i);
-                        if (scenicSpot.getScenicSpotDescribe().equals("非推荐")){
+                        if (!scenicSpot.getScenicSpotDescribe().equals("推荐")){
                             scenicSpots.remove(scenicSpot);
                         }
                     }

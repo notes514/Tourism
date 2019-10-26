@@ -20,7 +20,7 @@
             android:layout_marginStart="20dp"
             android:gravity="center_vertical"
             android:text="搜索历史"
-            android:textSize="24dp"
+            android:textSize="15dp"
             android:background="@color/color_white"
             app:layout_constraintEnd_toStartOf="@+id/delete_btn"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
             android:background="@color/color_white"
             android:gravity="center_vertical"
             android:text="删除"
-            android:textSize="24dp"
+            android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/search_history_text"
             app:layout_constraintTop_toTopOf="parent"></TextView>

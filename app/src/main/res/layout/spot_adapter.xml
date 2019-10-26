@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="5dp"
+    android:layout_marginTop="5dp">
 
 
     <ImageView
@@ -23,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="textview"
-            android:textSize="24dp"
+            android:textSize="15dp"
             android:textStyle="bold"
             android:textColor="@color/color_black"
             android:gravity="center_vertical"
@@ -42,9 +44,9 @@
         <TextView
             android:id="@+id/spot_start"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="35dp"
             android:text="textview"
-            android:textSize="17dp"
+            android:textSize="14dp"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:layout_marginEnd="20dp">
@@ -53,9 +55,9 @@
             <TextView
                 android:id="@+id/spot_end"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:text="textview"
-                android:textSize="17dp"
+                android:textSize="14dp"
                 android:maxLines="1"
                 android:gravity="center_vertical">
 
@@ -68,9 +70,9 @@
             android:id="@+id/spot_price"
 
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:text="textview"
-            android:textSize="28dp"
+            android:textSize="19dp"
             android:textStyle="bold"
             android:textColor="@color/color_red"
             android:gravity="center_vertical">
