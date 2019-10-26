@@ -1,7 +1,6 @@
 package com.example.tourism.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,35 +11,26 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.FixedPagerAdapter;
-import com.example.tourism.application.InitApp;
-import com.example.tourism.application.RetrofitManger;
-import com.example.tourism.application.ServerApi;
-import com.example.tourism.biz.HeadDataManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.entity.TrHeadBean;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.CustomToolbar;
 import com.google.android.material.tabs.TabLayout;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 目的地
  */
 public class BrowseFragment extends BaseFragment implements DefineView, ViewPager.OnPageChangeListener {
-
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
     @BindView(R.id.browse_tablayout)
     TabLayout browseTablayout;
     @BindView(R.id.browse_view_pager)
@@ -56,6 +46,7 @@ public class BrowseFragment extends BaseFragment implements DefineView, ViewPage
         unbinder = ButterKnife.bind(this, root);
         initView();
         initValidata();
+        initListener();
         return root;
     }
 
@@ -75,7 +66,8 @@ public class BrowseFragment extends BaseFragment implements DefineView, ViewPage
 
     @Override
     public void initListener() {
-
+        customToolbar.setOnLeftButtonClickLister(() -> AppUtils.getToast("点击了搜索"));
+        customToolbar.setOnRightButtonClickLister(() -> AppUtils.getToast("点击了用户"));
     }
 
     @Override

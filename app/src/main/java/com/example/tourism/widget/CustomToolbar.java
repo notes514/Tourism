@@ -88,9 +88,24 @@ public class CustomToolbar extends Toolbar {
      * 下拉监听
      */
     private void initListener() {
-        toolbarLeftButton.setOnClickListener(view -> onLeftButtonClickLister.OnClick());
+        toolbarLeftButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onLeftButtonClickLister != null) {
+                    onLeftButtonClickLister.OnClick();
+                }
+            }
+        });
 
-        toolbarRightButton.setOnClickListener(view -> onRightButtonClickLister.OnClick());
+        toolbarRightButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onRightButtonClickLister != null) {
+                    onRightButtonClickLister.OnClick();
+                }
+            }
+        });
+
     }
 
     public void setMyTitle(String title) {

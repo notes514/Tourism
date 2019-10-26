@@ -60,7 +60,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
-            android:drawableLeft="@drawable/ic_perm_identity_black_24dp"
+            android:drawableLeft="@drawable/ic_perm_identity_while_32dp"
             android:hint="请输入用户名"
             android:inputType="textPersonName"
             android:textColor="#303030"

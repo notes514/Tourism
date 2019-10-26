@@ -12,8 +12,8 @@
         <!--返回按钮-->
         <ImageView
             android:id="@+id/toolbar_leftButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginStart="10dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -25,15 +25,15 @@
         <!--显示更多-->
         <ImageView
             android:id="@+id/toolbar_rightButton"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginEnd="10dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/icon_more_horiz"
+            app:srcCompat="@drawable/icon_more_horiz_while_32dp"
             tools:ignore="MissingConstraints" />
         <!--标题栏-->
         <TextView

@@ -73,7 +73,6 @@ public class NearbyActivity extends BaseActivity {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
-    private Unbinder unbinder;
     private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private List<String> macAddress = new ArrayList<>();
 
@@ -83,7 +82,7 @@ public class NearbyActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
-        unbinder = ButterKnife.bind(this, this);
+        ButterKnife.bind(this);
 
         //初始化工具栏
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

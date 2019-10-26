@@ -1,18 +1,17 @@
 package com.example.tourism.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.entity.StrategyDetailsBean;
 import com.example.tourism.entity.TravelsBean;
 
 import java.util.List;
@@ -21,10 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    private static final int TYPE_ONE = 1;
-    private static final int TYPE_TWO = 2;
-    private List<TravelsBean> travelsBeans;
-    private List<String> stringList;
+    private List<String> stringList; //攻略用户日期详情数据集
+    private List<String> dDateList; //景区详情日期数据集
     private Context context;
     private int type;
     private LayoutInflater inflater;
@@ -36,29 +33,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.inflater = LayoutInflater.from(context);
     }
 
-    //设置数据
-    public void setTravelsBeans(List<TravelsBean> travelsBeans) {
-        this.travelsBeans = travelsBeans;
-    }
-
     //设置攻略详情数据
     public void setStringList(List<String> stringList) {
         this.stringList = stringList;
     }
 
+    //设置景区详情日期数据集
+    public void setdDateList(List<String> dDateList) {
+        this.dDateList = dDateList;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == TYPE_ONE) {
-            View view = inflater.inflate(R.layout.default_footer, parent, false);
-            view.setOnClickListener(this::onClick);
-            SViewHolder holder = new SViewHolder(view);
-            return holder;
-        }
-        if (viewType == TYPE_TWO) {
+        if (type == 0) {
             View view = inflater.inflate(R.layout.strategy_details_item_layout, parent, false);
             view.setOnClickListener(this::onClick);
             SViewHolder holder = new SViewHolder(view);
+            return holder;
+        } else if (type == 1) {
+            View view = inflater.inflate(R.layout.tourism_details_date_item_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            DViewHolder holder = new DViewHolder(view);
             return holder;
         }
         return null;
@@ -70,22 +66,48 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             String str = stringList.get(position);
             holder.itemView.setTag(str);
             //显示数据
-            ((SViewHolder) holder).ivPic.setImageResource(R.drawable.icon_comment_black);
             ((SViewHolder) holder).tvData.setText(str);
+            if (position == 0) {
+                ((SViewHolder) holder).ivPic.setImageResource(R.mipmap.icon_date_black);
+                ((SViewHolder) holder).tvName.setText("出发日期");
+            } else if (position == 1) {
+                ((SViewHolder) holder).ivPic.setImageResource(R.mipmap.icon_time_black);
+                //显示数据
+                ((SViewHolder) holder).tvData.setText(str + "天");
+                ((SViewHolder) holder).tvName.setText("出行天数");
+            } else if (position == 2) {
+                ((SViewHolder) holder).ivPic.setImageResource(R.mipmap.icon_wallet_black);
+                //显示数据
+                ((SViewHolder) holder).tvData.setText(str + "元");
+                ((SViewHolder) holder).tvName.setText("人均");
+            } else if (position == 3) {
+                ((SViewHolder) holder).ivPic.setImageResource(R.mipmap.icon_character_black);
+                ((SViewHolder) holder).tvName.setText("人物");
+            } else if (position == 4) {
+                ((SViewHolder) holder).ivPic.setImageResource(R.mipmap.icon_hot_ari_black);
+                ((SViewHolder) holder).tvName.setText("玩法");
+            } else {
+                ((SViewHolder) holder).ivPic.setVisibility(View.INVISIBLE);
+                ((SViewHolder) holder).tvName.setText("");
+            }
+        }
+        if (holder instanceof DViewHolder) {
+            String dData = dDateList.get(position);
+            //设置Tag以便响应适配器监听点击获取相应数据
+            holder.itemView.setTag(dData);
+            ((DViewHolder) holder).tvDateWeek.setText("");
         }
     }
 
     @Override
     public int getItemCount() {
-        if (type == TYPE_ONE) {
-            return travelsBeans == null ? 0 : travelsBeans.size();
+        if (type == 0) {
+            return stringList == null ? 0 : stringList.size();
         }
-        return stringList == null ? 0 : stringList.size();
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return super.getItemId(position);
+        if (type == 1) {
+            return dDateList == null ? 0 : dDateList.size();
+        }
+        return 0;
     }
 
     class SViewHolder extends RecyclerView.ViewHolder {
@@ -97,6 +119,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvName;
 
         public SViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class DViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_date_week)
+        TextView tvDateWeek;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+        @BindView(R.id.ll_details_date)
+        LinearLayout llDetailsDate;
+
+        public DViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -165,7 +165,7 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
                                 temp = new ArrayList<>();
                                 for (int i = 0; i < scenicSpots.size(); i++) {
                                     ScenicSpot scenicSpot = scenicSpots.get(i);
-                                    if (scenicSpot.getScenicSpotState() == position) {
+                                    if (scenicSpot.getTravelMode() == position) {
                                         temp.add(scenicSpot);
                                     }
                                 }

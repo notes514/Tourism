@@ -16,28 +16,50 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.VPagerFragmentAdapter;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.fragment.details.EvaluateFragment;
 import com.example.tourism.ui.fragment.details.PictureFragment;
 import com.example.tourism.ui.fragment.details.TourismRealFragment;
+import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.MyScrollView;
 import com.example.tourism.widget.ViewBundle;
 import com.youth.banner.Banner;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class TourismDetailsActivity extends AppCompatActivity {
+/**
+ * 商品详情类
+ * Name:laodai
+ * Time:2019.10.23
+ */
+public class TourismDetailsActivity extends AppCompatActivity implements DefineView {
     //图片轮播
     @BindView(R.id.banner)
     Banner banner;
@@ -130,8 +152,6 @@ public class TourismDetailsActivity extends AppCompatActivity {
     ImageView collectionImage;
     @BindView(R.id.collection_line)
     LinearLayout collectionLine;
-    @BindView(R.id.shop_line)
-    LinearLayout shopLine;
     @BindView(R.id.btn_shapping_chart)
     Button btnShappingChart;
     @BindView(R.id.btn_reserve)
@@ -166,10 +186,36 @@ public class TourismDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.tourism_details_layout);
         ButterKnife.bind(this);
         initView();
+        initValidata();
+        initValidata();
+        bindData();
         initImg();
     }
 
-    private void initView() {
+    /**
+     * 获取一个月内的日期和时间
+     */
+    private void getDate() {
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        System.out.println("年份: "+year);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        System.out.println("月份: "+month);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        System.out.println("月: "+day);
+        int week = calendar.get(Calendar.DAY_OF_WEEK);
+        String[] array = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        System.out.println(year+"年"+month+"月"+day+"日 "+array[week-1]);
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initValidata() {
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         //设置状态栏高度
@@ -184,6 +230,16 @@ public class TourismDetailsActivity extends AppCompatActivity {
         imageViewOne.setBackgroundResource(R.drawable.select_bar_translucent);
         imageViewTwo.setBackgroundResource(R.drawable.select_bar_translucent);
         imageViewThree.setBackgroundResource(R.drawable.select_bar_translucent);
+
+        //设置RecyclerView
+        //设置线性布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置Data横向显示
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        //将布局管理设置到控件中
+        rvDate.setLayoutManager(layoutManager);
+        //创建适配器对象
+
         //获取轮播图的高度
         //获取顶部标题栏的高度
         detailsToolbar.post(() -> toolbarHeight = detailsToolbar.getHeight() + statusHeight);
@@ -192,10 +248,6 @@ public class TourismDetailsActivity extends AppCompatActivity {
         bHeight = 500;
         //浮动栏初始化时隐藏
         layoutClassify.setVisibility(View.INVISIBLE);
-        //设置浮动栏距离顶部的高度
-//        LinearLayout.LayoutParams fyParams = new LinearLayout.LayoutParams(layoutClassify.getLayoutParams());
-//        fyParams.setMargins(0, 73, 0 ,0);
-//        layoutClassify.setLayoutParams(fyParams);
         //获取浮动栏控件的高度
         layoutClassify.post(() -> classifyHeight = layoutClassify.getHeight());
         //底部ViewPager
@@ -248,8 +300,57 @@ public class TourismDetailsActivity extends AppCompatActivity {
             }
         });
         myScrollview.smoothScrollTo(0, 0);
+
+        //获取景区详情图片
+        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Call<ResponseBody> picCall = api.getNAsync("");
+        picCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
+        //获取景区详情数据
+        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String, Object> map = new HashMap<>();
+        Call<ResponseBody> dataCall = api.getASync("", map);
+        dataCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
     }
 
+    private ServerApi api;
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void bindData() {
+
+    }
+
+    /**
+     * 设置状态栏和标题栏颜色渐变
+     * @param alpha
+     * @throws Exception
+     */
     private void setActionBar(int alpha) throws Exception {
         if (statusView != null && detailsToolbar == null) {
             throw new Exception("状态栏和标题栏为空！");
@@ -258,6 +359,11 @@ public class TourismDetailsActivity extends AppCompatActivity {
         detailsToolbar.getBackground().mutate().setAlpha(alpha);
     }
 
+    /**
+     * 实时更新状态栏标题栏颜色渐变
+     *
+     * @param alpha
+     */
     private void setUpdateActionBar(int alpha) {
         try { //捕获异常
             setActionBar(alpha);
@@ -280,11 +386,14 @@ public class TourismDetailsActivity extends AppCompatActivity {
                 buttomChildViewPager.setCurrentItem(2);
                 break;
             case R.id.btn_shapping_chart:
+                AppUtils.getToast("加入购物车成功！");
                 break;
             case R.id.btn_reserve:
+                AppUtils.getToast("立即购买！");
                 break;
             case R.id.iv_back_top:
                 //返回顶部
+                AppUtils.getToast("点击可返回顶部！");
                 break;
         }
     }

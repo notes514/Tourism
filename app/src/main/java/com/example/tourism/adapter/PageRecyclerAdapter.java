@@ -97,7 +97,7 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         holder.ivFabulous.setImageResource(R.drawable.icon_fabulous);
         holder.fabulousText.setText(travels.getFoubles());
         //评论
-        holder.ivComment.setImageResource(R.drawable.icon_comment);
+        holder.ivComment.setImageResource(R.drawable.icon_comment_gray);
         holder.commentText.setText(travels.getComment());
         //显示图片
         goodAdapter = new GoodAdapter(context);

@@ -128,13 +128,15 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
     @Override
     public void bindData() {
         if (travelsList != null && travelsList.size() > 0) {
-            loadingLine.setVisibility(View.INVISIBLE);
-            emptyLine.setVisibility(View.INVISIBLE);
-            errorLine.setVisibility(View.INVISIBLE);
-            pageRecyclerView.setVisibility(View.VISIBLE);
-            //设置数据
-            adapter.setTravelsBeans(travelsList);
-            pageRecyclerView.setAdapter(adapter);
+            if (loadingLine != null && emptyLine != null && errorLine != null && pageRecyclerView != null) {
+                loadingLine.setVisibility(View.INVISIBLE);
+                emptyLine.setVisibility(View.INVISIBLE);
+                errorLine.setVisibility(View.INVISIBLE);
+                pageRecyclerView.setVisibility(View.VISIBLE);
+                //设置数据
+                adapter.setTravelsBeans(travelsList);
+                pageRecyclerView.setAdapter(adapter);
+            }
         } else {
             pageRecyclerView.setVisibility(View.INVISIBLE);
             loadingLine.setVisibility(View.INVISIBLE);
@@ -171,10 +173,6 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        pageRecyclerView.setVisibility(View.INVISIBLE);
-        loadingLine.setVisibility(View.INVISIBLE);
-        emptyLine.setVisibility(View.INVISIBLE);
-        errorLine.setVisibility(View.INVISIBLE);
         unbinder.unbind(); //解绑
     }
 }

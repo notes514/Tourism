@@ -79,11 +79,15 @@
         </activity>
         <activity android:name=".ui.activity.PersonalhomepageActivity">
         </activity>
-        <activity android:name=".ui.activity.SignInActivity"></activity>
-        <activity android:name=".ui.activity.RegisterActivity"></activity>
-        <activity android:name=".ui.activity.StrategyDetailsActivity"></activity>
-
+        <activity android:name=".ui.activity.SignInActivity">
+        </activity>
+        <activity android:name=".ui.activity.RegisterActivity">
+        </activity>
+        <activity android:name=".ui.activity.StrategyDetailsActivity">
+        </activity>
         <activity android:name=".ui.activity.ShowExhibitsDetialActivity">
+        </activity>
+        <activity android:name=".ui.activity.TourismDetailsActivity">
         </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"

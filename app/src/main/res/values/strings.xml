@@ -66,4 +66,7 @@
     <string name="tourism_details_tv_arrive">出发到达</string>
     <string name="tourism_details_tv_stay">住宿标准</string>
 
+    <!--  攻略库模块  -->
+    <string name="tourism_strategy_details_title">攻略详情</string>
+
 </resources>
