@@ -107,7 +107,7 @@ public class NearbyActivity extends BaseActivity {
     }
 
     private void initViewPager(){
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager,true);
         tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
         String[] tabName = AppUtils.getStringArray(R.array.exhibition_area);
         tabLayout.addTab(tabLayout.newTab().setText(tabName[0]));
@@ -140,6 +140,9 @@ public class NearbyActivity extends BaseActivity {
         fragments.add(new LeaderboardFragment());
         fragments.add(new LeaderboardFragment());
         fragments.add(new LeaderboardFragment());
+        viewPager.setOffscreenPageLimit(6);
+        viewPager.setNestedScrollingEnabled(false);
+        viewPager.setKeepScreenOn(true);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
             @NonNull
             @Override

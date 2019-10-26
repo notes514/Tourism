@@ -9,10 +9,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.ExhibitsItemAdapter;
+import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -39,8 +42,8 @@ import retrofit2.Response;
 
 public class LeaderboardFragment extends BaseFragment implements DefineView {
 
-    @BindView(R.id.listView)
-    ListView listView;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
     private Unbinder unbinder;
     private static int exhibitionAreaId = 1;
     private List<Exhibits> exhibits;
@@ -101,7 +104,7 @@ public class LeaderboardFragment extends BaseFragment implements DefineView {
                             jsonObject.getString("ONE_DETAIL"),
                            new TypeToken<List<Exhibits>>(){}.getType());
                     Log.d("@@@", exhibits.size()+"");
-                    initListView();
+                    initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -116,8 +119,12 @@ public class LeaderboardFragment extends BaseFragment implements DefineView {
         });
     }
 
-    private void initListView(){
+    private void initRecyclerView(){
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),
+                RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         adapter = new ExhibitsItemAdapter(getContext(),exhibits);
-        listView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
     }
 }

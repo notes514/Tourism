@@ -8,13 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.tourism.R;
-import com.example.tourism.entity.Exhibits;
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ExhibitsItemAdapter extends BaseAdapter {
+import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Exhibits;
+import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.utils.AppUtils;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapter.ViewHolder> {
 
     private List<Exhibits> objects = new ArrayList<Exhibits>();
 
@@ -27,43 +36,48 @@ public class ExhibitsItemAdapter extends BaseAdapter {
         this.layoutInflater = LayoutInflater.from(context);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = layoutInflater.inflate(R.layout.exhibits_item,parent,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
+        holder.ranking.setText(position+1+"");
+        holder.exhibitsName.setText(objects.get(position).getExhibitsName());
+        //holder.exhibitsPraisePoints.setText(objects.get(position).getExhibitsPraisePoints()+"");
+        holder.like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.like.setImageResource(R.drawable.ic_favorite);
+                AppUtils.getToast("点赞成功！");
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
         return objects.size();
     }
 
-    @Override
-    public Exhibits getItem(int position) {
-        return objects.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            convertView = layoutInflater.inflate(R.layout.exhibits_item, null);
-            viewHolder.exhibitsId = (TextView) convertView.findViewById(R.id.exhibits_id);
-            viewHolder.exhibitsName = (TextView) convertView.findViewById(R.id.exhibits_name);
-            viewHolder.exhibitsPraisePoints = (TextView) convertView.findViewById(R.id.exhibits_praise_points);
-            convertView.setTag(viewHolder);
-        }else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-        viewHolder.exhibitsId.setText((position+1)+"");
-        viewHolder.exhibitsName.setText(objects.get(position).getExhibitsName());
-        viewHolder.exhibitsPraisePoints.setText(objects.get(position).getExhibitsPraisePoints()+"");
-        return convertView;
-    }
-
-    protected class ViewHolder {
-        private TextView exhibitsId;
+    protected class ViewHolder extends RecyclerView.ViewHolder {
+        private CardView exhibitsId;
+        private TextView ranking;
         private TextView exhibitsName;
+        private ImageView like;
         private TextView exhibitsPraisePoints;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.exhibitsId = (CardView) itemView.findViewById(R.id.exhibits_id);
+            this.ranking = (TextView) itemView.findViewById(R.id.ranking);
+            this.exhibitsName = (TextView) itemView.findViewById(R.id.exhibits_name);
+            this.like = (ImageView) itemView.findViewById(R.id.like);
+            this.exhibitsPraisePoints = (TextView) itemView.findViewById(R.id.exhibits_praise_points);
+        }
     }
 }

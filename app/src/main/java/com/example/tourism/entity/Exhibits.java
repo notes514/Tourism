@@ -1,5 +1,7 @@
 package com.example.tourism.entity;
 
+import java.util.List;
+
 public class Exhibits {
     private Integer exhibitsId;
 
@@ -13,7 +15,15 @@ public class Exhibits {
 
     private String exhibitsAuthor;
 
-    private Integer exhibitsPraisePoints;
+    private List<FabulousDetails> fabulousDetailsList;
+
+    public List<FabulousDetails> getFabulousDetailsList() {
+        return fabulousDetailsList;
+    }
+
+    public void setFabulousDetailsList(List<FabulousDetails> fabulousDetailsList) {
+        this.fabulousDetailsList = fabulousDetailsList;
+    }
 
     public Integer getExhibitsId() {
         return exhibitsId;
@@ -61,13 +71,5 @@ public class Exhibits {
 
     public void setExhibitsAuthor(String exhibitsAuthor) {
         this.exhibitsAuthor = exhibitsAuthor;
-    }
-
-    public Integer getExhibitsPraisePoints() {
-        return exhibitsPraisePoints;
-    }
-
-    public void setExhibitsPraisePoints(Integer exhibitsPraisePoints) {
-        this.exhibitsPraisePoints = exhibitsPraisePoints;
     }
 }
