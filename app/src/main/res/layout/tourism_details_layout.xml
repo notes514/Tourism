@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <!--  ScrollView滚动  -->
-    <com.example.laodai.widget.MyScrollView
+    <com.example.tourism.widget.MyScrollView
         android:id="@+id/my_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -527,7 +527,7 @@
                     android:contentDescription="@null"/>
             </LinearLayout>
         </FrameLayout>
-    </com.example.laodai.widget.MyScrollView>
+    </com.example.tourism.widget.MyScrollView>
     <!--详情页头部-->
     <LinearLayout
         android:layout_width="match_parent"

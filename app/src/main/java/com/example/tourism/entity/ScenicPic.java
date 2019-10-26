@@ -3,7 +3,7 @@ package com.example.tourism.entity;
 public class ScenicPic {
     private Integer scenicPicId;
 
-    private Integer scenicDetailsId;
+    private Integer scenicSpotId;
 
     private String scenicPicUrl;
 
@@ -15,12 +15,12 @@ public class ScenicPic {
         this.scenicPicId = scenicPicId;
     }
 
-    public Integer getScenicDetailsId() {
-        return scenicDetailsId;
+    public Integer getScenicSpotId() {
+        return scenicSpotId;
     }
 
-    public void setScenicDetailsId(Integer scenicDetailsId) {
-        this.scenicDetailsId = scenicDetailsId;
+    public void setScenicSpotId(Integer scenicSpotId) {
+        this.scenicSpotId = scenicSpotId;
     }
 
     public String getScenicPicUrl() {
