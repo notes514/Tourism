@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="150px"
         android:text="TextView"
-        android:textSize="20dp"
+        android:textSize="14dp"
         android:textAlignment="center"
         android:gravity="center|center_horizontal|center_vertical" />
 

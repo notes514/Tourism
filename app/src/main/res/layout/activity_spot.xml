@@ -26,7 +26,7 @@
             android:background="@drawable/layout_border"
             android:layout_gravity="center_vertical"
             android:hint="请输入文字"
-            android:textSize="25dp"
+            android:textSize="15dp"
             android:gravity="center_vertical"
             android:layout_marginEnd="10dp"
             android:paddingLeft="5dp">

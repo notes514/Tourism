@@ -14,6 +14,6 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/text_border"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="15dp"></Button>
+        android:textSize="14dp"></Button>
 
 </LinearLayout>

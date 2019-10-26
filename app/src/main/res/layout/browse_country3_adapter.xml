@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:text="hhh"
-        android:textSize="28dp"
+        android:textSize="15dp"
         android:layout_gravity="center"
         android:gravity="center_horizontal|center_vertical"
         android:background="@drawable/text_border"></TextView>
