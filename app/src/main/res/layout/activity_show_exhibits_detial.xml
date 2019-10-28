@@ -15,55 +15,135 @@
         android:gravity="center"
         app:popupTheme="@style/Widget.AppCompat.PopupMenu">
     </androidx.appcompat.widget.Toolbar>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="false">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-            </com.youth.banner.Banner>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2">
+
                 <VideoView
                     android:id="@+id/videoView"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
-                </VideoView>
+                    android:layout_height="250dp"></VideoView>
+
                 <master.flame.danmaku.ui.widget.DanmakuView
                     android:id="@+id/danmakuView"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </master.flame.danmaku.ui.widget.DanmakuView>
+                    android:layout_height="match_parent"></master.flame.danmaku.ui.widget.DanmakuView>
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:background="#00000000"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
                     <EditText
                         android:id="@+id/editText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="5">
-                    </EditText>
+                        android:layout_weight="5"></EditText>
+
                     <Button
                         android:id="@+id/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Send">
-                    </Button>
+                        android:text="Send"></Button>
                 </LinearLayout>
             </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_weight="2">
+                </com.youth.banner.Banner>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/exhibits_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="作品名"
+                        android:textColor="@color/color_black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/exhibits_author"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="作者" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/color_Pale"/>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/exhibits_information1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="展品简介" />
+
+                <TextView
+                    android:id="@+id/exhibits_information2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="展品信息000000032232323213313111132030323233333232"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_black"
+                    android:textSize="18sp"/>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"/>
 
 
         </LinearLayout>

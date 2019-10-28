@@ -87,6 +87,8 @@ dependencies {
     implementation 'com.baoyz.pullrefreshlayout:library:1.2.0'
     //图片轮播banner 最新版
     implementation 'com.youth.banner:banner:1.4.10'
+    //图片随手势放大缩小
+    implementation 'com.commit451:PhotoView:1.2.4'
 
     //下拉刷新&上拉加载
     implementation 'com.scwang.smart:refresh-layout-kernel:2.0.0-alpha-1'

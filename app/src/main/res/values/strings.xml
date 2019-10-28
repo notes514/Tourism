@@ -18,7 +18,6 @@
     <string name="showNearby">看看附近有什么~~~</string>
     <string name="nearby_activity_title">附近</string>
 
-
     <!--  地图  -->
     <string name="exhibition_area_1">展览区一</string>
     <string name="exhibition_area_2">展览区二</string>
@@ -37,10 +36,8 @@
         <item>展览区六</item>
     </string-array>
 
-
     <!--  跑马灯通知  -->
     <string name="notice">热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！</string>
-
 
     <!--  景区详情页面加载模块  -->
     <string name="tourism_details_content">跟团游·促销】漓悠悠纯玩！错峰特惠*蝴蝶泉侗王夜宴+象鼻山+船游四湖/桂林漓江阳朔3日游</string>

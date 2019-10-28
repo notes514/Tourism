@@ -71,6 +71,9 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     private View view;
     private Unbinder unbinder;
 
+    //private ServerApi serverApi;
+
+
     public SignIn2Fragment() {
         // Required empty public constructor
     }
@@ -144,6 +147,9 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     }
 
     private void login() {
+
+//        RetrofitManger retrofitManger = new RetrofitManger();
+//        serverApi = retrofitManger.getRetrofit(InitApp.ip_port).create(ServerApi.class);
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         //向上造型
         Map<String, Object> map = new HashMap<>();
@@ -158,7 +164,13 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                     String result = response.body().string();
                     JSONObject json = new JSONObject(result);
                     if (json.getString("RESULT").equals("S")) {
-                        MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
+                        Log.d(TAG, "onResponse: " + json.getString("User"));
+                        //User user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("User"),User.class);
+                        MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("User"),User.class);
+//                        Log.d(TAG, "User: " + user.getUserAccountName());
+//                        Intent intent = new Intent();
+//                        intent.putExtra("data","UserAccountName:" + user_name.getText().toString());
+//                        getActivity().setResult(0,intent);
                         getActivity().finish();
                         AppUtils.getToast(json.getString("TIPS"));
                     }else {
@@ -168,6 +180,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -205,6 +218,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     /**
      * 授权成功的回调
      */
+
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Message message = Message.obtain();
         message.what = 1;
@@ -219,6 +233,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
      * @param i
      * @param throwable
      */
+
     public void onError(Platform platform, int i, Throwable throwable) {
         Message message = Message.obtain();
         message.what = 2;
