@@ -131,6 +131,9 @@ dependencies {
     //哔哩哔哩开源的弹幕效果库
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
+
+    //日历选择器
+    implementation 'com.necer.ncalendar:ncalendar:4.3.9'
 }
 MobSDK {
     appKey "2c75fba93b9b8"
