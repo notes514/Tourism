@@ -127,7 +127,7 @@
                 android:id="@+id/rv_good"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/comment_text"
                     app:layout_constraintTop_toTopOf="@+id/comment_text"
                     app:layout_constraintVertical_bias="1.0"
-                    app:srcCompat="@drawable/icon_comment" />
+                    app:srcCompat="@drawable/icon_comment_gray" />
 
                 <TextView
                     android:id="@+id/comment_text"

@@ -295,7 +295,7 @@
                             <!-- 添加分割线 -->
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="10dp"/>
+                                android:layout_height="10dp" />
                         </LinearLayout>
                         <!--更多日期模块-->
                         <LinearLayout
@@ -477,7 +477,7 @@
                         android:visibility="invisible" />
                 </LinearLayout>
                 <!--底部viewPager-->
-                <com.example.laodai.widget.ChildAutoViewPager
+                <com.example.tourism.widget.ChildAutoViewPager
                     android:id="@+id/buttom_child_viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -592,7 +592,7 @@
                     android:id="@+id/collection_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:srcCompat="@drawable/select_collection" />
+                    app:srcCompat="@drawable/btn_select_collection" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -602,34 +602,12 @@
                     android:textSize="12sp"
                     android:layout_marginTop="2dp"/>
             </LinearLayout>
-            <!-- 店铺 -->
-            <LinearLayout
-                android:id="@+id/shop_line"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:srcCompat="@drawable/icon_shop" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="店铺"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:layout_marginTop="2dp"/>
-            </LinearLayout>
         </LinearLayout>
         <!--  右边  -->
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:layout_margin="5dp">
 
             <Button
@@ -662,5 +640,5 @@
         android:layout_marginBottom="80dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/select_arrow_upward"
-        android:src="@drawable/ic_arrow_upward_black_24dp"/>
+        android:src="@drawable/ic_arrow_upward_while_24dp"/>
 </RelativeLayout>

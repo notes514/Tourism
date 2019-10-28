@@ -17,12 +17,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/color_white">
+                <!--详情标题-->
                 <ImageView
                     android:id="@+id/iv_details"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"/>
-                <!--详情标题-->
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop" />
+
                 <TextView
                     android:id="@+id/tv_details_content"
                     android:layout_width="match_parent"
@@ -30,16 +33,16 @@
                     android:textSize="20sp"
                     android:textColor="@color/color_black"
                     android:text="去三亚还能玩什么？请收下这份不逛“景点”的小众玩法攻略！"
-                    android:padding="10dp"/>
+                    android:padding="16dp"/>
                 <!--用户信息、点关注-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp">
+                    android:layout_height="50dp">
                     <!--头像-->
-                    <ImageView
+                    <com.example.tourism.widget.CircleImageView
                         android:id="@+id/iv_user"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
                         android:layout_marginStart="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +56,7 @@
                         android:layout_marginStart="4dp"
                         android:text="TextView"
                         android:textColor="@color/color_black"
-                        android:textSize="12sp"
+                        android:textSize="14sp"
                         app:layout_constraintStart_toEndOf="@+id/iv_user"
                         app:layout_constraintTop_toTopOf="@+id/iv_user" />
                     <!--别称-->
@@ -74,23 +77,40 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:text="关注"
-                        android:textSize="18sp"
+                        android:textSize="14sp"
                         android:textColor="@color/color_white"
                         android:background="@drawable/select_tv_follow"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.512" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <!--流式布局-->
+                <!--间隔-->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_foreword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-                <!--间隔-->
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp" />
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="10dp"/>
+                <!--游记-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="游记"
+                    android:textSize="20sp"
+                    android:padding="16dp"
+                    android:textColor="@color/color_black"
+                    android:textStyle="bold"/>
+                <!--间隔-->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@color/color_lv_selector"/>
                 <WebView
                     android:id="@+id/details_content"
                     android:layout_width="match_parent"
@@ -113,50 +133,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/color_blue"/>
-        <!--用户详情toolbar-->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/details_toolbar"
+        <!--顶部标题栏-->
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="49dp"
-            android:background="@color/color_blue">
-
-            <ImageView
-                android:id="@+id/iv_details_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.48"
-                app:srcCompat="@drawable/ic_left_while_24dp" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TextView"
-                android:textSize="18sp"
-                android:textColor="@color/color_white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_details_more"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.47"
-                app:srcCompat="@drawable/icon_more_horiz" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            android:background="@color/color_blue"
+            app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+            app:rightButtonIcon="@drawable/btn_more_horiz_selector"
+            app:myTitle="@string/tourism_strategy_details_title"
+            />
     </LinearLayout>
     <!--底部buttom-->
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_alignParentBottom="true"
@@ -164,6 +154,7 @@
         android:background="@color/color_white">
         <!--分享-->
         <LinearLayout
+            android:id="@+id/ll_shape"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -174,7 +165,7 @@
                 android:id="@+id/iv_share"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/select_shape" />
+                android:src="@drawable/btn_shape_selector" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -185,7 +176,7 @@
                     android:layout_height="wrap_content"
                     android:text="分享"
                     android:textSize="14sp"
-                    android:textColor="@color/color_tab_title"/>
+                    android:textColor="@drawable/btn_text_black_selector"/>
                 <TextView
                     android:id="@+id/tv_share"
                     android:layout_width="wrap_content"
@@ -193,44 +184,48 @@
                     android:text="2"
                     android:textSize="14sp"
                     android:layout_marginLeft="3dp"
-                    android:textColor="@color/color_gray"/>
+                    android:textColor="@drawable/btn_text_gray_selector"/>
             </LinearLayout>
         </LinearLayout>
         <!--收藏-->
         <LinearLayout
+            android:id="@+id/ll_collection"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical"
             android:gravity="center">
+
             <ImageView
                 android:id="@+id/iv_collection"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/select_collection"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_select_collection" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="3dp">
+
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:text="收藏"
-                    android:textSize="14sp"
-                    android:textColor="@color/color_tab_title"/>
+                    android:textColor="@drawable/btn_text_black_selector"
+                    android:textSize="14sp" />
                 <TextView
-                    android:id="@+id/tv_cellotion"
+                    android:id="@+id/tv_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2"
                     android:textSize="14sp"
                     android:layout_marginLeft="3dp"
-                    android:textColor="@color/color_gray"/>
+                    android:textColor="@drawable/btn_text_gray_selector"/>
             </LinearLayout>
         </LinearLayout>
         <!--评论-->
         <LinearLayout
+            android:id="@+id/ll_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -241,7 +236,7 @@
                 android:id="@+id/iv_comment"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/icon_comment_black" />
+                android:src="@drawable/btn_comment_selector" />
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -252,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:text="评论"
                     android:textSize="14sp"
-                    android:textColor="@color/color_tab_title"/>
+                    android:textColor="@drawable/btn_text_black_selector"/>
                 <TextView
                     android:id="@+id/tv_comment"
                     android:layout_width="wrap_content"
@@ -260,21 +255,23 @@
                     android:text="2"
                     android:textSize="14sp"
                     android:layout_marginLeft="3dp"
-                    android:textColor="@color/color_gray"/>
+                    android:textColor="@drawable/btn_text_gray_selector"/>
             </LinearLayout>
         </LinearLayout>
         <!--点赞-->
         <LinearLayout
+            android:id="@+id/ll_foubles"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:clickable="false"
             android:orientation="vertical"
             android:gravity="center">
             <ImageView
                 android:id="@+id/iv_foubles"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@drawable/select_fabulous"/>
+                android:background="@drawable/icon_fabulous_black"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -285,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:text="点赞"
                     android:textSize="14sp"
-                    android:textColor="@color/color_tab_title"/>
+                    android:textColor="@drawable/btn_text_black_selector"/>
                 <TextView
                     android:id="@+id/tv_foubles"
                     android:layout_width="wrap_content"
@@ -293,10 +290,15 @@
                     android:text="2"
                     android:textSize="14sp"
                     android:layout_marginLeft="3dp"
-                    android:textColor="@color/color_gray"/>
+                    android:textColor="@drawable/btn_text_gray_selector"/>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
+    <!--正在加载-->
+    <include layout="@layout/loading_layout"/>
+    <!--暂无数据-->
+    <include layout="@layout/empty_layout"/>
+    <!--加载失败-->
+    <include layout="@layout/error_layout"/>
 
 </RelativeLayout>

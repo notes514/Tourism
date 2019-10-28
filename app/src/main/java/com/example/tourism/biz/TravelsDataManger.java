@@ -63,7 +63,7 @@ public class TravelsDataManger {
             //点赞数量
             String foubles = CTextUtils.getFoubles(ment.select("span.icon_love").text());
             //评论数量
-            String comment = CTextUtils.getComment(ment.select("span.icon_comment").text());
+            String comment = CTextUtils.getComment(ment.select("span.icon_comment_gray").text());
             //途径
             String channel = CTextUtils.getCannelStr(ment.select("p.places").text());
             //行程

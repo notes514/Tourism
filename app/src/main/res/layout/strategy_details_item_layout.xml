@@ -5,12 +5,14 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
 
     <ImageView
         android:id="@+id/iv_pic"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:src="@drawable/icon_comment_black"/>
     <TextView
         android:id="@+id/tv_data"
@@ -20,14 +22,15 @@
         android:textColor="@color/color_black"
         android:textSize="14sp"
         android:layout_marginTop="3dp"
+        android:textStyle="bold"
         android:text="2019.10.10"/>
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/color_black"
-        android:textSize="14sp"
+        android:textColor="@color/color_tab_title"
+        android:textSize="12sp"
         android:layout_marginTop="3dp"
         android:text="出发日期"/>
 

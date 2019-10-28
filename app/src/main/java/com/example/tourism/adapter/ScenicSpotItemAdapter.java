@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -19,13 +19,13 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.TourismDetailsActivity;
 import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAdapter.ViewHolder> {
 
     private List<ScenicSpot> objects = new ArrayList<ScenicSpot>();
-
     private Context context;
     private LayoutInflater layoutInflater;
 
@@ -45,6 +45,7 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
        // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
+        ScenicSpot scenicSpot = objects.get(position);
         holder.scenicSpotTheme.setText(objects.get(position).getScenicSpotTheme());
         holder.scenicSpotDescribe.setText(objects.get(position).getScenicSpotDescribe());
         holder.scenicSpotPrice.setText("¥:"+objects.get(position).getScenicSpotPrice());
@@ -52,6 +53,9 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
             @Override
             public void onClick(View view) {
                 AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("id", scenicSpot.getScenicSpotId());
+                context.startActivity(intent);
             }
         });
         ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getScenicSpotPicUrl(),

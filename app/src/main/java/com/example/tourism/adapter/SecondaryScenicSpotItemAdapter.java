@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.TourismDetailsActivity;
+import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<SecondaryScenicSpotItemAdapter.ViewHolder> {
@@ -65,7 +68,10 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
         holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,objects.get(position).getScenicSpotId()+"",Toast.LENGTH_SHORT).show();
+                AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("id", objects.get(position).getScenicSpotId());
+                context.startActivity(intent);
             }
         });
         ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getScenicSpotPicUrl(),
