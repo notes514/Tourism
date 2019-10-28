@@ -8,11 +8,9 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,19 +27,13 @@ import com.brtbeacon.sdk.BRTThrowable;
 import com.brtbeacon.sdk.callback.BRTBeaconManagerListener;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
-import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.ui.fragment.BrowseFragment;
-import com.example.tourism.ui.fragment.BrowsePageFragment;
-import com.example.tourism.ui.fragment.HomeFragment;
 import com.example.tourism.ui.fragment.LeaderboardFragment;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.CustomNestedScrollView;
 import com.google.android.material.tabs.TabLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,7 +47,7 @@ public class NearbyActivity extends BaseActivity {
     @BindView(R.id.notice)
     TextView notice;
     @BindView(R.id.scrollView)
-    NestedScrollView scrollView;
+    CustomNestedScrollView scrollView;
     @BindView(R.id.exhibition_area_1)
     TextView exhibition_area_1;
     @BindView(R.id.exhibition_area_2)
@@ -141,8 +133,6 @@ public class NearbyActivity extends BaseActivity {
         fragments.add(new LeaderboardFragment());
         fragments.add(new LeaderboardFragment());
         viewPager.setOffscreenPageLimit(6);
-        viewPager.setNestedScrollingEnabled(false);
-        viewPager.setKeepScreenOn(true);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
             @NonNull
             @Override

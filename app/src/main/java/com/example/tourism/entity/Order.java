@@ -13,7 +13,7 @@ public class Order {
 
     private String tripMode;
 
-    private Date departDate;
+    private String departDate;
 
     private String departDays;
 
@@ -65,11 +65,11 @@ public class Order {
         this.tripMode = tripMode;
     }
 
-    public Date getDepartDate() {
+    public String getDepartDate() {
         return departDate;
     }
 
-    public void setDepartDate(Date departDate) {
+    public void setDepartDate(String departDate) {
         this.departDate = departDate;
     }
 
