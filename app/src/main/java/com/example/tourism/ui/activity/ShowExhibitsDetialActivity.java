@@ -1,29 +1,40 @@
 package com.example.tourism.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 
 import com.example.tourism.R;
+import com.example.tourism.adapter.ExhibitsCommentItemsAdapter;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Exhibits;
+import com.example.tourism.entity.ExhibitsComment;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.widget.GlideImageLoader;
-import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -38,6 +49,10 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.ui.widget.DanmakuView;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ShowExhibitsDetialActivity extends BaseActivity {
 
@@ -57,12 +72,25 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     EditText editText;
     @BindView(R.id.button)
     Button button;
+    @BindView(R.id.exhibits_name)
+    TextView exhibitsname;
+    @BindView(R.id.exhibits_author)
+    TextView exhibitsauthor;
+    @BindView(R.id.linearLayout1)
+    LinearLayout linearLayout1;
+    @BindView(R.id.exhibits_information2)
+    TextView exhibitsinformation2;
+    @BindView(R.id.listView)
+    ListView listView;
+
 
     private Unbinder unbinder;
     private List<String> images = new ArrayList<>();
     private List<String> titles = new ArrayList<>();
+    private List<ExhibitsComment> exhibitsComments = new ArrayList<>();
     private boolean showDanmaku;
     private DanmakuContext danmakuContext;
+    private ExhibitsCommentItemsAdapter ecitemadapter;
 
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
@@ -82,9 +110,9 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
                 finish();
             }
         });
-
         initBanner();
         initVideoView();
+        queryAllExhibitsComments();
         send();
     }
 
@@ -111,8 +139,19 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         banner.setDelayTime(3000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
+        //设置内置样式
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = new Intent(ShowExhibitsDetialActivity.this, BigImageActivity.class);
+                intent.putStringArrayListExtra("imgData", (ArrayList<String>) images);
+                intent.putExtra("clickPosition", position);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initVideoView(){
@@ -150,6 +189,37 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         danmakuContext = DanmakuContext.create();
         danmakuView.prepare(parser, danmakuContext);
     }
+
+    private void initListView(){
+        ecitemadapter = new ExhibitsCommentItemsAdapter(ShowExhibitsDetialActivity.this,exhibitsComments);
+        listView.setAdapter(ecitemadapter);
+    }
+
+    private void queryAllExhibitsComments(){
+        ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("","");
+        Call<ResponseBody> exhibitsCommentsCall = serverApi.getASync("queryAllExhibitsComments",hashMap);
+        exhibitsCommentsCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    exhibitsComments = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
+                            new TypeToken<List<ExhibitsComment>>(){}.getType());
+                    initListView();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("!!!","请求失败！");
+                Log.d("!!!",t.getMessage());
+            }
+        });
+    }
+
+
 
     /**
      * 向弹幕View中添加一条弹幕
