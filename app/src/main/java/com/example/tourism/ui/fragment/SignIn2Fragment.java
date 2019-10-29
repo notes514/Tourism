@@ -164,13 +164,8 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                     String result = response.body().string();
                     JSONObject json = new JSONObject(result);
                     if (json.getString("RESULT").equals("S")) {
-                        Log.d(TAG, "onResponse: " + json.getString("User"));
-                        //User user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("User"),User.class);
-                        MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("User"),User.class);
-//                        Log.d(TAG, "User: " + user.getUserAccountName());
-//                        Intent intent = new Intent();
-//                        intent.putExtra("data","UserAccountName:" + user_name.getText().toString());
-//                        getActivity().setResult(0,intent);
+                        Log.d(TAG, "onResponse: " + json.getString("ONE_DETAIL"));
+                        MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
                         getActivity().finish();
                         AppUtils.getToast(json.getString("TIPS"));
                     }else {
