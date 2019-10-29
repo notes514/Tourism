@@ -105,6 +105,8 @@
         </activity>
         <activity android:name=".ui.activity.OrderCompletionActivity">
         </activity>
+        <activity android:name=".ui.activity.BigImageActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

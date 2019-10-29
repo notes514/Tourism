@@ -9,8 +9,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ExhibitsComment;
 import com.example.tourism.widget.CircleImageView;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ImageView;
 
@@ -46,27 +52,46 @@ public class ExhibitsCommentItemsAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.exhibits_comment_items, null);
             viewHolder = new ViewHolder();
-            viewHolder.textview = (TextView) convertView.findViewById(R.id.textview);
-            viewHolder.textview2 = (TextView) convertView.findViewById(R.id.textview2);
+            viewHolder.userPic = (CircleImageView) convertView.findViewById(R.id.user_pic);
             viewHolder.commentator = (TextView) convertView.findViewById(R.id.commentator);
             viewHolder.commentcontent = (TextView) convertView.findViewById(R.id.exhibits_comment_content);
-            viewHolder.browseTextView = (TextView) convertView.findViewById(R.id.browse_textView);
-            viewHolder.commentPraisePoints = (TextView) convertView.findViewById(R.id.comment_praise_points);
-            viewHolder.commentText = (TextView) convertView.findViewById(R.id.comment_text);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.textview.setText("展品评价(22)");
-        viewHolder.textview2.setText("查看全部 >");
+//        viewHolder.commentator.setText(objects.get(position).getUserId());
+//        ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getUserId(),
+//                viewHolder.userPic, InitApp.getOptions());
         viewHolder.commentcontent.setText(objects.get(position).getExhibitsCommentContent());
-        viewHolder.commentPraisePoints.setText(objects.get(position).getCommentPraisePoints()+"");
+        //viewHolder.commentPraisePoints.setText(objects.get(position).getCommentPraisePoints()+"");
         return convertView;
     }
 
+    //解决NestedScrollView嵌套Listview显示不全问题解决
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        //获取ListView对应的Adapter
+        ListAdapter ecitemadapter = listView.getAdapter();
+        if (ecitemadapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        for (int i = 0, len = ecitemadapter.getCount(); i < len; i++) {   //listAdapter.getCount()返回数据项的数目
+            View listItem = ecitemadapter.getView(i, null, listView);
+            listItem.measure(0, 0);  //计算子项View 的宽高
+            totalHeight += listItem.getMeasuredHeight();  //统计所有子项的总高度
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (ecitemadapter.getCount() - 1));
+        //listView.getDividerHeight()获取子项间分隔符占用的高度
+        //params.height最后得到整个ListView完整显示需要的高度
+        listView.setLayoutParams(params);
+    }
+
+
     protected class ViewHolder {
-        private TextView textview;
-        private TextView textview2;
         private CircleImageView userPic;
         private TextView commentator;
         private TextView commentcontent;

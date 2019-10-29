@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -24,6 +27,7 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
 import com.example.tourism.entity.ExhibitsComment;
+import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.widget.GlideImageLoader;
 import com.google.gson.reflect.TypeToken;
@@ -31,6 +35,9 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -86,7 +93,6 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
 
     private Unbinder unbinder;
     private List<String> images = new ArrayList<>();
-    private List<String> titles = new ArrayList<>();
     private List<ExhibitsComment> exhibitsComments = new ArrayList<>();
     private boolean showDanmaku;
     private DanmakuContext danmakuContext;
@@ -114,11 +120,13 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         initVideoView();
         queryAllExhibitsComments();
         send();
+        int exhibitsId = this.getIntent().getIntExtra("exhibitsId",1);
+        queryExhibitsDetails(exhibitsId);
     }
 
     private void initBanner(){
         //设置banner样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR_TITLE);
+        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
         //设置图片集合
@@ -127,20 +135,13 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         images.add(RequestURL.ip_images+"/images/banner/banner3.jpg");
         banner.setImages(images);
         //设置banner动画效果
-        banner.setBannerAnimation(Transformer.DepthPage);
-        //设置标题集合（当banner样式有显示title时）
-        titles.add("1");
-        titles.add("2");
-        titles.add("3");
-        banner.setBannerTitles(titles);
+        banner.setBannerAnimation(Transformer.Default);
         //设置自动轮播，默认为true
         banner.isAutoPlay(true);
         //设置轮播时间
         banner.setDelayTime(3000);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
-        //设置内置样式
-        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         //banner设置方法全部调用完毕时最后调用
         banner.start();
         banner.setOnBannerListener(new OnBannerListener() {
@@ -193,6 +194,39 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     private void initListView(){
         ecitemadapter = new ExhibitsCommentItemsAdapter(ShowExhibitsDetialActivity.this,exhibitsComments);
         listView.setAdapter(ecitemadapter);
+        ecitemadapter.setListViewHeightBasedOnChildren(listView);
+    }
+
+    private void queryExhibitsDetails(int exhibitsId){
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("exhibitsId",exhibitsId);
+        Call<ResponseBody> exhibitsCall = api.getASync("queryExhibitsDetails",hashMap);
+        exhibitsCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String mag = response.body().string();
+                    JSONObject json = new JSONObject(mag);
+                    Log.d("33333", "onResponse: " + mag);
+                    Exhibits exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
+                            new TypeToken<Exhibits>(){}.getType());
+                    Log.d("33333", "onResponse: " + exhibit.getExhibitsName());
+                    exhibitsname.setText(exhibit.getExhibitsName());
+                    exhibitsauthor.setText(exhibit.getExhibitsAuthor());
+                    exhibitsinformation2.setText(exhibit.getExhibitsInformation());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("@@@@","请求失败！");
+                Log.d("@@@@",t.getMessage());
+            }
+        });
     }
 
     private void queryAllExhibitsComments(){

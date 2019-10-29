@@ -262,8 +262,9 @@ public class NearbyActivity extends BaseActivity {
         exhibition_area_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
+                intent.putExtra("exhibitsId",1);
+                startActivity(intent);
             }
         });
     }
