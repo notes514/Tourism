@@ -18,8 +18,8 @@
         android:background="@color/color_white">
         <ImageView
             android:id="@+id/btn_return_arrow"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="20dp"
+            android:layout_height="20sp"
             android:layout_marginLeft="10dp"
             android:layout_gravity="center|left"
             android:onClick="my_holiday_problem_return_arrow"
@@ -31,14 +31,14 @@
             android:text="返回"
             android:layout_gravity="center|left"
             android:layout_marginLeft="40dp"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textColor="#04C0B7"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="度假问题"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textColor="@color/color_black"/>
     </FrameLayout>
            <LinearLayout

@@ -89,6 +89,17 @@
         </activity>
         <activity android:name=".ui.activity.TourismDetailsActivity">
         </activity>
+        <activity android:name=".ui.activity.PersonalCouponActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOpenmemberActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalDataActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
+        </activity>
+
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

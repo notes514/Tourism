@@ -13,20 +13,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
-import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.User;
+import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
 import com.example.tourism.ui.activity.PersonalMyCollection;
+import com.example.tourism.ui.activity.PersonalOpenmemberActivity;
 import com.example.tourism.ui.activity.PersonalSubscriptions;
 import com.example.tourism.ui.activity.PersonalTalk;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
@@ -77,6 +75,14 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     FrameLayout btnHolidayPrbolem;
     @BindView(R.id.btn_mysubscriptions)
     FrameLayout btnMysubscriptions;
+    @BindView(R.id.btn_coupon)
+    FrameLayout btnCoupon;
+    @BindView(R.id.btn_member)
+    FrameLayout btnMember;
+    @BindView(R.id.user_follow_num)
+    TextView userFollowNum;
+    @BindView(R.id.user_fans_num)
+    TextView userFansNum;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -108,9 +114,16 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             }
         });
 
-        if (user == null){
+        if (user == null) {
             userHomeage.setVisibility(View.GONE);
             userarrow.setVisibility(View.GONE);
+            userLine.setVisibility(View.GONE);
+            userVal.setVisibility(View.GONE);
+            userName.setVisibility(View.GONE);
+            userFans.setVisibility(View.GONE);
+            userFollow.setVisibility(View.GONE);
+            userFansNum.setVisibility(View.GONE);
+            userFollowNum.setVisibility(View.GONE);
         }
 
         initValidata();
@@ -123,7 +136,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         Toast.makeText(getContext(), "刷新成功", LENGTH_LONG).show();
     }
 
-    @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem,R.id.btn_mysubscriptions,R.id.user_homepage,R.id.user_name})
+    @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
+            , R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
@@ -142,14 +156,35 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 Intent btn_my_subscriptions = new Intent(PersonerFragment.this.getActivity(), PersonalSubscriptions.class);
                 startActivity(btn_my_subscriptions);
                 break;
-            case R.id.user_homepage:
-                    Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-                    startActivity(btn_user_homepage);
+
+            case R.id.btn_member:
+                Intent btn_member1 = new Intent(PersonerFragment.this.getActivity(), PersonalOpenmemberActivity.class);
+                startActivity(btn_member1);
                 break;
+            case R.id.btn_coupon:
+                Intent btn_coupon1 = new Intent(PersonerFragment.this.getActivity(), PersonalCouponActivity.class);
+                startActivity(btn_coupon1);
+                break;
+
+
+            case R.id.user_homepage:
+                Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
+                startActivity(btn_user_homepage);
+                break;
+            case R.id.user_follow:
+                Intent user_follow1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
+                startActivity(user_follow1);
+                break;
+            case R.id.user_fans:
+                Intent user_homepage1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
+                startActivity(user_homepage1);
+                break;
+
+
             case R.id.user_name:
-                if (user == null){
+                if (user == null) {
                     Intent i = new Intent(PersonerFragment.this.getActivity(), SignInActivity.class);
-                    startActivityForResult(i,Request_Code);
+                    startActivityForResult(i, Request_Code);
                 }
                 break;
 
@@ -204,12 +239,19 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     public void onStart() {
         super.onStart();
         Log.d("22222", "onStart: ");
-        if (user != null){
-            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(),hHead, InitApp.getOptions());
+        if (user != null) {
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
             userName.setText(user.getUserAccountName());
             userVal.setText(user.getUserTellphone());
             userHomeage.setVisibility(View.VISIBLE);
             userarrow.setVisibility(View.VISIBLE);
+            userLine.setVisibility(View.VISIBLE);
+            userVal.setVisibility(View.VISIBLE);
+            userName.setVisibility(View.VISIBLE);
+            userFans.setVisibility(View.VISIBLE);
+            userFollow.setVisibility(View.VISIBLE);
+            userFansNum.setVisibility(View.VISIBLE);
+            userFollowNum.setVisibility(View.VISIBLE);
         }
     }
 

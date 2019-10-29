@@ -1,0 +1,107 @@
+package com.example.tourism.ui.activity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.User;
+import com.example.tourism.ui.activity.base.BaseActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class PersonalDataActivity extends BaseActivity {
+
+    @BindView(R.id.btn_personal_return_arrow)
+    ImageView personalReturnArrow;
+    @BindView(R.id.user_head_portrait)
+    CircleImageView userHeadPortrait;
+    @BindView(R.id.tv_username)
+    TextView tvUsername;
+    @BindView(R.id.tv_tel)
+    TextView tvTel;
+    @BindView(R.id.tv_eamil)
+    TextView tvEamil;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.tv_sex)
+    TextView tvSex;
+    @BindView(R.id.btn_personal_Logout)
+    Button btnPersonalLogout;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_personal_data);
+        ButterKnife.bind(this);
+
+
+        //设置圆形图像
+        Glide.with(this).load(R.drawable.personal_talk_bj)
+                .bitmapTransform(new CropCircleTransformation(this))
+                .into(userHeadPortrait);
+
+
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_personal).create(ServerApi.class);
+        Map map = new HashMap();
+        map.put("userId", "1");
+        Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
+        personalData.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString("RESULT").equals("S")) {
+                        User user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"), User.class);
+                        Log.d(InitApp.TAG, "UserAccountName: " + user.getUserAccountName());
+                        tvUsername.setText(user.getUserAccountName());
+                        tvEamil.setText(user.getEmail());
+                        tvAddress.setText(user.getNagaiAddr());
+                        tvSex.setText(user.getUserSex());
+                        tvTel.setText(user.getUserTellphone());
+
+                        ImageLoader.getInstance().displayImage(RequestURL.ip_images1 + user.getUserPicUrl(), userHeadPortrait, InitApp.getOptions());
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    @OnClick(R.id.btn_personal_return_arrow)
+    public void onViewClicked() {
+        finish();
+    }
+}

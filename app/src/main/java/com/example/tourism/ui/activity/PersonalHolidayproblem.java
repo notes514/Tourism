@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.example.tourism.R;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonerFragment;
 
 import butterknife.BindView;
@@ -13,7 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class PersonalHolidayproblem extends Activity {
+public class PersonalHolidayproblem extends BaseActivity {
 
     @BindView(R.id.btn_return_arrow)
     ImageView btnReturnArrow;

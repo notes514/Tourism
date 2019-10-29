@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="我的内容"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/videoTv"
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="我的视频"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/friendTv"
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="我的结伴"
             android:textColor="@android:color/black"
-            android:textSize="18dp" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <ImageView
