@@ -19,6 +19,7 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
+import com.example.tourism.entity.FabulousDetails;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -49,7 +50,14 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
         // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
         holder.ranking.setText(position+1+"");
         holder.exhibitsName.setText(objects.get(position).getExhibitsName());
-        //holder.exhibitsPraisePoints.setText(objects.get(position).getExhibitsPraisePoints()+"");
+        int count = 0;
+        List<FabulousDetails> fabulousDetailsList = objects.get(position).getFabulousDetailsList();
+        for (FabulousDetails details:fabulousDetailsList) {
+            if (details.getFlag() == 1){
+                count = count+1;
+            }
+        }
+        holder.exhibitsPraisePoints.setText(count+"");
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

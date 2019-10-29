@@ -110,6 +110,10 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TranslucentTheme">
         </activity>
+        <activity android:name=".ui.activity.BigImageActivity">
+        </activity>
+        <activity android:name=".ui.activity.LeaderboardActivity">
+        </activity>
 
         <!-- 第三方登录需要额外添加的activity -->
         <activity
