@@ -9,31 +9,33 @@
     >
 
     <LinearLayout
-        android:layout_marginTop="2dp"
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@color/color_blue">
 
         <androidx.appcompat.widget.SearchView
+            android:layout_marginTop="2dp"
             android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:iconifiedByDefault="false"
             app:queryHint="请输入搜索内容"
-            android:background="@drawable/layout_border"/>
+            android:background="@null"/>
 
         <Button
             android:id="@+id/search"
+            android:layout_marginTop="2dp"
             android:layout_width="80dp"
             android:layout_height="47dp"
             android:text="搜索"
             android:textSize="12dp"
-            android:background="@drawable/layout_border">
+            android:background="@null">
 
         </Button>
 
