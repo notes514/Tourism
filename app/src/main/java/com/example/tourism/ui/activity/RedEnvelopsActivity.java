@@ -35,7 +35,6 @@ public class RedEnvelopsActivity extends BaseActivity {
 
     public void initToolBar(){
         toolBar.setTitle("");
-        toolBar.setTitleTextAppearance(RedEnvelopsActivity.this,R.style.MyBar);
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
