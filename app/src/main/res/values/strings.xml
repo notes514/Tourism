@@ -38,6 +38,11 @@
 
     <!--  跑马灯通知  -->
     <string name="notice">热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！</string>
+    <string name="exhibits_detial">作品详情</string>
+    <string name="comment_count">展品评价</string>
+    <string name="send_comment">发送</string>
+    <string name="default_text">点我发弹幕哦！</string>
+    <string name="no_more">没有更多了~~~</string>
 
     <!--  景区详情页面加载模块  -->
     <string name="tourism_details_content">跟团游·促销】漓悠悠纯玩！错峰特惠*蝴蝶泉侗王夜宴+象鼻山+船游四湖/桂林漓江阳朔3日游</string>

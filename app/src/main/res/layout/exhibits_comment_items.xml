@@ -2,127 +2,46 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="1dp"
-        app:cardMaxElevation="1dp"
-        app:cardCornerRadius="1dp">
+        android:orientation="vertical">
 
-        <LinearLayout
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.tourism.widget.CircleImageView
+                android:id="@+id/user_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/defaultbg" />
+
+            <TextView
+                android:id="@+id/commentator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@id/user_pic"
+                android:layout_centerVertical="true"
+                android:text="@string/showNearby"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <!--展品评论-->
+        <TextView
+            android:id="@+id/exhibits_comment_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:padding="10dp"
+            android:text="@string/notice"/>
 
+    </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.example.tourism.widget.CircleImageView
-                    android:id="@+id/user_pic"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/defaultbg" />
-
-                <TextView
-                    android:id="@+id/commentator"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/user_pic"
-                    android:layout_centerVertical="true"
-                    android:text="用户名" />
-            </RelativeLayout>
-
-            <!--展品评论-->
-            <TextView
-                android:id="@+id/exhibits_comment_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginBottom="1dp"-->
-<!--                    android:text="2019-10-24"-->
-<!--                    android:textColor="#bcbcbc"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent" />-->
-<!--                &lt;!&ndash; 用户浏览 &ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_browse"-->
-<!--                    android:layout_width="20sp"-->
-<!--                    android:layout_height="20sp"-->
-<!--                    android:layout_marginEnd="5dp"-->
-<!--                    android:src="@drawable/icon_browse"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/browse_textView"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/browse_textView"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/browse_textView" />-->
-<!--                <TextView-->
-<!--                    android:id="@+id/browse_textView"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:text="111"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/iv_fabulous"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/iv_fabulous"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/iv_fabulous"-->
-<!--                    app:layout_constraintVertical_bias="1.0" />-->
-<!--                &lt;!&ndash; 用户获得点赞数量 &ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_fabulous"-->
-<!--                    android:layout_width="20sp"-->
-<!--                    android:layout_height="20sp"-->
-<!--                    android:layout_marginEnd="5dp"-->
-<!--                    android:src="@drawable/icon_fabulous"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/comment_praise_points"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/comment_praise_points"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/comment_praise_points"-->
-<!--                    app:layout_constraintVertical_bias="1.0"-->
-<!--                    />-->
-<!--                &lt;!&ndash; 用户评论 &ndash;&gt;-->
-<!--                <TextView-->
-<!--                    android:id="@+id/comment_praise_points"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="10dp"-->
-<!--                    android:text="99"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/iv_comment"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/iv_comment"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/iv_comment"-->
-<!--                    app:layout_constraintVertical_bias="1.0" />-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/iv_comment"-->
-<!--                    android:layout_width="20sp"-->
-<!--                    android:layout_height="20sp"-->
-<!--                    android:layout_marginEnd="5dp"-->
-<!--                    android:src="@drawable/icon_comment_gray"-->
-<!--                    app:layout_constraintBottom_toBottomOf="@+id/comment_text"-->
-<!--                    app:layout_constraintEnd_toStartOf="@+id/comment_text"-->
-<!--                    app:layout_constraintTop_toTopOf="@+id/comment_text"-->
-<!--                    app:layout_constraintVertical_bias="1.0" />-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/comment_text"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginEnd="4dp"-->
-<!--                    android:text="111"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:layout_constraintVertical_bias="0.545" />-->
-<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -67,6 +67,16 @@ public class ExhibitsCommentItemsAdapter extends BaseAdapter {
         return convertView;
     }
 
+    @Override
+    public boolean areAllItemsEnabled() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
+
     //解决NestedScrollView嵌套Listview显示不全问题解决
     public static void setListViewHeightBasedOnChildren(ListView listView) {
         //获取ListView对应的Adapter
