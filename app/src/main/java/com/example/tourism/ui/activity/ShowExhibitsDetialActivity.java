@@ -5,15 +5,11 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -29,14 +25,13 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
 import com.example.tourism.entity.ExhibitsComment;
-import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.GlideImageLoader;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,7 +89,7 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     @BindView(R.id.listView)
     ListView listView;
 
-
+    private int exhibitsId;
     private Unbinder unbinder;
     private List<String> images = new ArrayList<>();
     private List<ExhibitsComment> exhibitsComments = new ArrayList<>();
@@ -115,11 +110,12 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_exhibits_detial);
         unbinder = ButterKnife.bind(this,this);
+        exhibitsId = (int) getIntent().getExtras().get("exhibitsId");
+
         initToolBar();
         initBanner();
         initVideoView();
-        send();
-        int exhibitsId = (int) getIntent().getExtras().get("exhibitsId");
+        sendComments();
         queryExhibitsDetails(exhibitsId);
         queryExhibitsComment(exhibitsId);
     }
@@ -263,6 +259,36 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         });
     }
 
+    private void sendExhibitsComment(int userId, int exhibitsId, String comment){
+        ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("userId",userId);
+        hashMap.put("exhibitsId",exhibitsId);
+        hashMap.put("exhibitsCommentContent",comment);
+        Call<ResponseBody> responseBodyCall = serverApi.postASync("sendExhibitsComment",hashMap);
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String data = response.body().string();
+                    JSONObject jsonObject = new JSONObject(data);
+                    if (jsonObject.getString("RESULT").equals("S")){
+                        AppUtils.getToast(jsonObject.getString("TIPS"));
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("!!!","请求失败！");
+                Log.d("!!!",t.getMessage());
+            }
+        });
+    }
+
 
 
     /**
@@ -291,11 +317,11 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     private void generateSomeDanmaku() {
         new Thread(() -> {
             while(showDanmaku) {
-                int time = new Random().nextInt(300);
+                int time = new Random().nextInt(1000);
                 //String content = "" + time + time;
                 for (int i = 0; i < exhibitsComments.size(); i++) {
-                    String c = exhibitsComments.get(i).getExhibitsCommentContent();
-                    addDanmaku(c,false);
+                    String content = exhibitsComments.get(i).getExhibitsCommentContent();
+                    addDanmaku(content,false);
                 }
                 //addDanmaku(content, false);
                 try {
@@ -318,15 +344,12 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     /**
      * 发送弹幕
      */
-    private void send(){
-        danmakuView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (linearLayout.getVisibility() == View.GONE) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                } else {
-                    linearLayout.setVisibility(View.GONE);
-                }
+    private void sendComments(){
+        danmakuView.setOnClickListener(view -> {
+            if (linearLayout.getVisibility() == View.GONE) {
+                linearLayout.setVisibility(View.VISIBLE);
+            } else {
+                linearLayout.setVisibility(View.GONE);
             }
         });
         button.setOnClickListener(new View.OnClickListener() {
@@ -334,6 +357,7 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
             public void onClick(View view) {
                 String content = editText.getText().toString();
                 if (!TextUtils.isEmpty(content)) {
+                    sendExhibitsComment(1,exhibitsId,content);
                     addDanmaku(content, true);
                     editText.setText("");
                 }
