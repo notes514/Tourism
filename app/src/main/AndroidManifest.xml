@@ -107,6 +107,10 @@
         </activity>
         <activity android:name=".ui.activity.BigImageActivity">
         </activity>
+        <activity android:name=".ui.activity.RedEnvelopsActivity">
+        </activity>
+        <activity android:name=".ui.activity.ServiceExplainActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -174,7 +174,7 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             travelSpot.setLayoutManager(linearLayoutManager);
-                            spotAdapter = new SpotAdapter(temp);
+                            spotAdapter = new SpotAdapter(ActivitySpotActivity.this,temp);
                             travelSpot.setAdapter(spotAdapter);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -232,7 +232,7 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
                     linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     travelSpot.setLayoutManager(linearLayoutManager);
-                    spotAdapter = new SpotAdapter(scenicSpots);
+                    spotAdapter = new SpotAdapter(ActivitySpotActivity.this,scenicSpots);
                     travelSpot.setAdapter(spotAdapter);
                 } catch (IOException e) {
                     e.printStackTrace();

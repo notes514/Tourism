@@ -1,5 +1,7 @@
 package com.example.tourism.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.TourismDetailsActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
@@ -20,13 +23,23 @@ import java.util.List;
 public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder> {
 
     private List<ScenicSpot> scenicSpots;
-    private BrowseCountry2Adapter.OnItemClickListener listener;
+    private Context context;
+    private OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onClick(int position);
     }
 
-    public SpotAdapter(List<ScenicSpot> scenicSpots) {
+
+
+
+    //第二步， 写一个公共的方法
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public SpotAdapter(Context context,List<ScenicSpot> scenicSpots) {
+        this.context = context;
         this.scenicSpots = scenicSpots;
     }
 
@@ -49,7 +62,12 @@ public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (listener!=null){
+                    listener.onClick(position);
+                }
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("id", scenicSpot.getScenicSpotId());
+                context.startActivity(intent);
             }
         });
     }

@@ -295,17 +295,7 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                                 Log.e(TAG, "abconResponse: "+newText, null);
                                 if (newText.equals(scenicRegion.getRegionName())){
                                     temp=newText;
-                                    String selectSql = "select * from "+ Constant.TABLE_NAME;
-                                    Cursor cursor = DbManger.selectSQL(db,selectSql,null);
-                                    List<ScenicRegion> sc = DbManger.cursorToList(cursor);
-                                    for (int j=0;j<sc.size();j++){
-                                        if (sc.get(j).getRegionId()==scenicRegion.getRegionId()){
-                                            DbManger.execSQL(db,"delete from ScenicRegion_Data where scenicRegionId = "+sc.get(j).getRegionId()+";");
-                                        }
-                                    }
-                                    String sql = "insert into " + Constant.TABLE_NAME +" values ("+scenicRegion.getRegionId()+",'"+scenicRegion.getRegionName()+"')";
-                                    DbManger.execSQL(db,sql);//执行语句
-                                    Log.e(TAG, "ssssonResponse: "+cursor.getCount(),null );
+
                                     break;
                                 }else{
                                     temp=null;
@@ -344,9 +334,22 @@ public class DestinationFragment extends BaseFragment implements DefineView {
                                 String m = response.body().string();
                                 scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
 
+
                                 for (int i = 0; i < scenicRegions.size(); i++) {
                                     ScenicRegion scenicRegion = scenicRegions.get(i);
                                     if (temp.equals(scenicRegion.getRegionName())){
+
+                                        String selectSql = "select * from "+ Constant.TABLE_NAME;
+                                        Cursor cursor = DbManger.selectSQL(db,selectSql,null);
+                                        List<ScenicRegion> sc = DbManger.cursorToList(cursor);
+                                        for (int j=0;j<sc.size();j++){
+                                            if (sc.get(j).getRegionId()==scenicRegion.getRegionId()){
+                                                DbManger.execSQL(db,"delete from ScenicRegion_Data where scenicRegionId = "+sc.get(j).getRegionId()+";");
+                                            }
+                                        }
+                                        String sql = "insert into " + Constant.TABLE_NAME +" values ("+scenicRegion.getRegionId()+",'"+scenicRegion.getRegionName()+"')";
+                                        DbManger.execSQL(db,sql);//执行语句
+                                        Log.e(TAG, "ssssonResponse: "+cursor.getCount(),null );
                                         Intent intent = new Intent(DestinationFragment.this.getContext(),ActivitySpotActivity.class);
                                         intent.putExtra("country",scenicRegion);
                                         DestinationFragment.this.getContext().startActivity(intent);

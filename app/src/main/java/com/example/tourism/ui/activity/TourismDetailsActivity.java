@@ -1,5 +1,7 @@
 package com.example.tourism.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -179,6 +181,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     private EvaluateFragment evaluateFragment;
     // 记录底部ViewPager距离顶部的高度
     private int vpagerTopDistance;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -373,7 +376,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     }
 
     @OnClick({R.id.tv_info_imagetext, R.id.tv_info_product, R.id.tv_info_evaluate, R.id.btn_shapping_chart,
-            R.id.btn_reserve, R.id.iv_back_top})
+            R.id.btn_reserve, R.id.iv_back_top,R.id.fl_red_envelopes})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_info_imagetext:
@@ -395,6 +398,9 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 //返回顶部
                 AppUtils.getToast("点击可返回顶部！");
                 break;
+            case R.id.fl_red_envelopes:
+                Intent intent = new Intent(TourismDetailsActivity.this,RedEnvelopsActivity.class);
+                startActivity(intent);
         }
     }
 
@@ -483,5 +489,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         }
         mCurrentIndex = position;
     }
+
 
 }
