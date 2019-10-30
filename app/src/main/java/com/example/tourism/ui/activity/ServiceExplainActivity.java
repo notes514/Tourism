@@ -38,7 +38,6 @@ public class ServiceExplainActivity extends BaseActivity {
 
     public void initToolBar(){
         toolBar.setTitle("");
-        toolBar.setTitleTextAppearance(ServiceExplainActivity.this,R.style.MyBar);
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
