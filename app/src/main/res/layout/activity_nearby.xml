@@ -11,229 +11,204 @@
         android:layout_height="wrap_content"
         android:background="@color/color_blue"
         app:navigationIcon="@drawable/ic_arrow_back"
+        app:menu="@menu/toolbar_right_menu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
+        android:orientation="vertical"
+        android:background="@color/map_bg_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBar">
+
+        <!-- 跑马灯 -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <!-- 地图 -->
-            <LinearLayout
+            android:layout_height="30dp"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent">
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_notice">
+            </ImageView>
+            <TextView
+                android:id="@+id/notice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@color/colorAccent">
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_notice">
-                </ImageView>
-                <TextView
-                    android:id="@+id/notice"
+                android:layout_height="match_parent"
+                android:paddingLeft="4dp"
+                android:text="@string/notice"
+                android:textColor="@color/color_white"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:gravity="center_vertical">
+            </TextView>
+        </LinearLayout>
+        <!-- 地图 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:background="@color/map_bg_1">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:orientation="vertical">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="4dp"
-                    android:text="@string/notice"
-                    android:textColor="@color/color_white"
-                    android:textSize="18sp"
-                    android:singleLine="true"
-                    android:ellipsize="marquee"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:gravity="center_vertical">
-                </TextView>
-            </LinearLayout>
-
-            <!-- 地图 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
-                android:background="@color/map_bg_1">
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="4"
-                    android:orientation="vertical">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/exhibition_area_6"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_6"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/exhibition_area_5"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_5"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/exhibition_area_4"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_4"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:gravity="center">
-                        <TextView
-                            android:id="@+id/exhibition_area_3"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_3"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/exhibition_area_2"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_2"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-
-                        <TextView
-                            android:id="@+id/exhibition_area_1"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_margin="15dp"
-                            android:background="@color/map_bg_3"
-                            android:ems="1"
-                            android:gravity="center"
-                            android:text="@string/exhibition_area_1"
-                            android:textColor="@color/color_white"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:gravity="center"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center">
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_margin="2dp"
-                        android:gravity="center"
+                        android:id="@+id/exhibition_area_6"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
                         android:ems="1"
-                        android:text="@string/conference_hall"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_6"
                         android:textColor="@color/color_white"
-                        android:background="@color/map_bg_2"/>
+                        android:textStyle="bold"/>
+
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:layout_margin="2dp"
-                        android:gravity="center"
+                        android:id="@+id/exhibition_area_5"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
                         android:ems="1"
-                        android:text="@string/conference_hall"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_5"
                         android:textColor="@color/color_white"
-                        android:background="@color/map_bg_2"/>
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/exhibition_area_4"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
+                        android:ems="1"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_4"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold"/>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/exhibition_area_3"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
+                        android:ems="1"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_3"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/exhibition_area_2"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
+                        android:ems="1"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_2"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/exhibition_area_1"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_margin="15dp"
+                        android:background="@color/map_bg_3"
+                        android:ems="1"
+                        android:gravity="center"
+                        android:text="@string/exhibition_area_1"
+                        android:textColor="@color/color_white"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
 
             </LinearLayout>
 
-            <!-- 排行榜 -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp"
                     android:gravity="center"
-                    android:textSize="20sp"
+                    android:ems="1"
+                    android:text="@string/conference_hall"
+                    android:textSize="16sp"
                     android:textStyle="bold"
-                    android:text="@string/leaderboard"
                     android:textColor="@color/color_white"
-                    android:background="@color/color_Pale">
-                </TextView>
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabLayout"
+                    android:background="@color/map_bg_2"/>
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </com.google.android.material.tabs.TabLayout>
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/viewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                </androidx.viewpager.widget.ViewPager>
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp"
+                    android:gravity="center"
+                    android:ems="1"
+                    android:text="@string/conference_hall"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/color_white"
+                    android:background="@color/map_bg_2"/>
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

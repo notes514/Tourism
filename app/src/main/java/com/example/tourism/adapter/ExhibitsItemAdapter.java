@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,11 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
+import com.example.tourism.entity.FabulousDetails;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.NearbyActivity;
+import com.example.tourism.ui.activity.ShowExhibitsDetialActivity;
+import com.example.tourism.ui.fragment.LeaderboardDetailFragment;
 import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -46,16 +51,24 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
         holder.ranking.setText(position+1+"");
         holder.exhibitsName.setText(objects.get(position).getExhibitsName());
-        //holder.exhibitsPraisePoints.setText(objects.get(position).getExhibitsPraisePoints()+"");
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.like.setImageResource(R.drawable.ic_favorite);
-                AppUtils.getToast("点赞成功！");
+        int count = 0;
+        List<FabulousDetails> fabulousDetailsList = objects.get(position).getFabulousDetailsList();
+        for (FabulousDetails details:fabulousDetailsList) {
+            if (details.getFlag() == 1){
+                count = count+1;
             }
+        }
+        holder.exhibitsPraisePoints.setText(count+"");
+        holder.exhibitsId.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ShowExhibitsDetialActivity.class);
+            intent.putExtra("exhibitsId",objects.get(position).getExhibitsId());
+            context.startActivity(intent);
+        });
+        holder.like.setOnClickListener(view -> {
+            holder.like.setImageResource(R.drawable.ic_favorite);
+            AppUtils.getToast("点赞成功！");
         });
     }
 

@@ -18,7 +18,6 @@
     <string name="showNearby">看看附近有什么~~~</string>
     <string name="nearby_activity_title">附近</string>
 
-
     <!--  地图  -->
     <string name="exhibition_area_1">展览区一</string>
     <string name="exhibition_area_2">展览区二</string>
@@ -37,10 +36,13 @@
         <item>展览区六</item>
     </string-array>
 
-
     <!--  跑马灯通知  -->
     <string name="notice">热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！</string>
-
+    <string name="exhibits_detial">作品详情</string>
+    <string name="comment_count">展品评价</string>
+    <string name="send_comment">发送</string>
+    <string name="default_text">点我发弹幕哦！</string>
+    <string name="no_more">没有更多了~~~</string>
 
     <!--  景区详情页面加载模块  -->
     <string name="tourism_details_content">跟团游·促销】漓悠悠纯玩！错峰特惠*蝴蝶泉侗王夜宴+象鼻山+船游四湖/桂林漓江阳朔3日游</string>
@@ -65,8 +67,39 @@
     <string name="tourism_details_tv_trip">行程天数</string>
     <string name="tourism_details_tv_arrive">出发到达</string>
     <string name="tourism_details_tv_stay">住宿标准</string>
+    <!--  立即预定 日期选择 模块  -->
+    <string name="tourism_order_calendar_title">选择日期/出行人数</string>
+    <string name="tourism_order_calendar_trip_number">请选择出行人数</string>
+    <string name="tourism_order_calendar_adult">成人</string>
+    <string name="tourism_order_calendar_children">儿童</string>
+    <string name="tourism_order_calendar_add">＋</string>
+    <string name="tourism_order_calendar_reduce">－</string>
+    <string name="tourism_order_calendar_completion_order">下一步，填写订单</string>
+    <!--  立即预定 订单填写 模块  -->
+    <string name="tourism_order_completion_title">订单填写</string>
+    <string name="tourism_order_date_place_days">2019年10月28日 南宁出发 3天2晚</string>
+    <string name="tourism_order_room_difference">房差</string>
+    <string name="tourism_order_contacts">联系人</string>
+    <string name="tourism_order_choice_contacts">选择联系人</string>
+    <string name="tourism_order_name">姓名</string>
+    <string name="tourism_order_name_content">必填，用于供应商与您联系</string>
+    <string name="tourism_order_phone">手机</string>
+    <string name="tourism_order_phone_content">必填，用于接收订单确认信息</string>
+    <string name="tourism_order_qq">QQ号</string>
+    <string name="tourism_order_qq_content">选填，请输入QQ号</string>
+    <string name="tourism_order_wechat">微信号</string>
+    <string name="tourism_order_wechat_content">选填，请输入微信号</string>
+    <string name="tourism_order_trip">出行人</string>
+    <string name="tourism_order_choice_trip">选择出行人</string>
+    <string name="tourism_order_trip_name">成人</string>
+    <string name="tourism_order_trip_name_content">请务必保证所填项与出游所持证件一致</string>
+    <string name="tourism_order_discount">使用优惠</string>
+    <string name="tourism_order_nothing_discount">没有可用的优惠</string>
+    <string name="tourism_order_special_requirements">是否有特殊要求</string>
+    <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
 
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>
+
 
 </resources>

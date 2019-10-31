@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--视图滚动-->
+    <com.example.tourism.widget.MyScrollView
+        android:id="@+id/order_scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/color_white">
+            <!-- 订单内容 -->
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_details_content"
+                android:lineSpacingExtra="6dp"
+                android:textSize="16sp"
+                android:textColor="@color/color_black"
+                android:padding="10dp"
+                android:layout_marginTop="80dp"/>
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 时间地点天数 -->
+            <TextView
+                android:id="@+id/tv_date_place_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_date_place_days"
+                android:textSize="14sp"
+                android:textColor="@color/color_black"
+                android:padding="10dp"/>
+            <!-- 添加分隔行 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row" />
+            <TextView
+                android:id="@+id/tv_room_difference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_room_difference"
+                android:textSize="14sp"
+                android:textColor="@color/color_black"
+                android:padding="10dp"/>
+            <!-- 添加分隔行 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_contacts"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_choice_contacts"
+                    android:textSize="12sp"
+                    android:background="@drawable/btn_text_shape"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#00BCD4"/>
+
+            </FrameLayout>
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 姓名子模块 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tourism_order_name"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:textSize="14sp"
+                    android:background="@color/color_white"
+                    android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                    android:hint="@string/tourism_order_name_content"/>
+
+            </LinearLayout>
+
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 手机子模块 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tourism_order_phone"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:textSize="14sp"
+                    android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                    android:background="@color/color_white"
+                    android:hint="@string/tourism_order_name_content"/>
+
+            </LinearLayout>
+
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- QQ子模块 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tourism_order_qq"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_qq"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:textSize="14sp"
+                    android:background="@color/color_white"
+                    android:hint="@string/tourism_order_qq_content"/>
+
+            </LinearLayout>
+
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 微信子模块 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tourism_order_wechat"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_wechat"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:textSize="14sp"
+                    android:background="@color/color_white"
+                    android:hint="@string/tourism_order_wechat_content"/>
+
+            </LinearLayout>
+
+            <!-- 添加分隔行 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_trip"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:id="@+id/tv_trip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_choice_trip"
+                    android:textSize="12sp"
+                    android:background="@drawable/btn_text_shape"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:textColor="#00BCD4"/>
+
+            </FrameLayout>
+
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 姓名子模块 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tourism_order_trip_name"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/et_adult"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:textSize="14sp"
+                    android:background="@color/color_white"
+                    android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                    android:hint="@string/tourism_order_trip_name_content"/>
+
+            </LinearLayout>
+
+            <!-- 添加分隔行 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row" />
+
+            <!-- 使用优惠 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_discount"
+                android:padding="10dp"
+                android:textColor="@color/color_black"/>
+
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_nothing_discount"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_forward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_chevron_right_gray_24dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"/>
+
+            </FrameLayout>
+
+            <!-- 添加分隔行 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row" />
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_special_requirements"
+                android:padding="10dp"/>
+
+            <!-- 添加分割线 -->
+            <View
+                android:id="@+id/view_requirement"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:visibility="gone"
+                android:background="@color/color_dividing_line"/>
+
+            <EditText
+                android:id="@+id/et_requirement"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:hint="@string/tourism_order_requirements"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:padding="10dp"
+                android:gravity="top|center_vertical|center_horizontal">
+
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_details_content"
+                    android:textColor="@color/color_black"
+                    android:lineSpacingExtra="6dp"
+                    android:layout_marginLeft="4dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="49dp"/>
+        </LinearLayout>
+    </com.example.tourism.widget.MyScrollView>
+
+    <!--顶部标题栏-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+        app:rightButtonIcon="@null"
+        app:myTitle="@string/tourism_order_completion_title"
+        />
+
+    <!--底部导航栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_white"
+        android:orientation="vertical">
+        <!-- 添加分割线 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/color_dividing_line"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="总价"
+                    android:textSize="16dp"
+                    android:textColor="@color/color_black"
+                    android:layout_marginRight="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="¥"
+                    android:textSize="12dp"
+                    android:textColor="@color/color_orange_red"
+                    android:layout_marginRight="2dp"/>
+
+                <TextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="16dp"
+                    android:textColor="@color/color_orange_red"
+                    android:text="9000"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_cost_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#00BCD4"
+                android:text="费用明细"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
+                <Button
+                    android:id="@+id/btn_reserve"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/color_white"
+                    android:background="@drawable/btn_shape_orange_red"
+                    android:text="立即预定"
+                    android:layout_margin="6dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

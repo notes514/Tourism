@@ -71,6 +71,9 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     private View view;
     private Unbinder unbinder;
 
+    //private ServerApi serverApi;
+
+
     public SignIn2Fragment() {
         // Required empty public constructor
     }
@@ -144,6 +147,9 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     }
 
     private void login() {
+
+//        RetrofitManger retrofitManger = new RetrofitManger();
+//        serverApi = retrofitManger.getRetrofit(InitApp.ip_port).create(ServerApi.class);
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         //向上造型
         Map<String, Object> map = new HashMap<>();
@@ -158,6 +164,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                     String result = response.body().string();
                     JSONObject json = new JSONObject(result);
                     if (json.getString("RESULT").equals("S")) {
+                        Log.d(TAG, "onResponse: " + json.getString("ONE_DETAIL"));
                         MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
                         getActivity().finish();
                         AppUtils.getToast(json.getString("TIPS"));
@@ -168,6 +175,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
             }
 
             @Override
@@ -205,6 +213,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     /**
      * 授权成功的回调
      */
+
     public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
         Message message = Message.obtain();
         message.what = 1;
@@ -219,6 +228,7 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
      * @param i
      * @param throwable
      */
+
     public void onError(Platform platform, int i, Throwable throwable) {
         Message message = Message.obtain();
         message.what = 2;

@@ -8,7 +8,8 @@
     <color name="color_Palegrey">#F3F3F3</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_Pale">#CFCFCF</color>
-    <color name="color_red">#F44336</color>
+    <color name="color_red">#E24F00</color>
+    <color name="color_orange_red">#F78122</color>
     <color name="color_navy_blue">#3F51B5</color>
     <color name="color_blue">#2196F3</color>
     <color name="color_wathet_blue">#03A9F4</color>
@@ -17,6 +18,10 @@
     <color name="color_dark_grey">#868686</color>
     <color name="color_dark_grey_two">#616161</color>
     <color name="color_cyan_green">#00BCD4</color>
+    <!--分割线颜色-->
+    <color name="color_dividing_line">#dedede</color>
+    <!--分隔行颜色-->
+    <color name="color_separator_row">#dedede</color>
 
     <!--personal-->
     <color name="color_dark_black">#201C1C</color>

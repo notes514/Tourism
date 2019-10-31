@@ -9,19 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.brtbeacon.sdk.BRTBeacon;
 import com.brtbeacon.sdk.BRTBeaconManager;
@@ -29,33 +20,20 @@ import com.brtbeacon.sdk.BRTThrowable;
 import com.brtbeacon.sdk.callback.BRTBeaconManagerListener;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
-import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.ui.fragment.BrowseFragment;
-import com.example.tourism.ui.fragment.BrowsePageFragment;
-import com.example.tourism.ui.fragment.HomeFragment;
-import com.example.tourism.ui.fragment.LeaderboardFragment;
-import com.example.tourism.utils.AppUtils;
-import com.google.android.material.tabs.TabLayout;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
-public class NearbyActivity extends BaseActivity {
+public class NearbyActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.toolBar)
     Toolbar toolbar;
     @BindView(R.id.notice)
     TextView notice;
-    @BindView(R.id.scrollView)
-    NestedScrollView scrollView;
     @BindView(R.id.exhibition_area_1)
     TextView exhibition_area_1;
     @BindView(R.id.exhibition_area_2)
@@ -68,10 +46,6 @@ public class NearbyActivity extends BaseActivity {
     TextView exhibition_area_5;
     @BindView(R.id.exhibition_area_6)
     TextView exhibition_area_6;
-    @BindView(R.id.tabLayout)
-    TabLayout tabLayout;
-    @BindView(R.id.viewPager)
-    ViewPager viewPager;
 
     private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private List<String> macAddress = new ArrayList<>();
@@ -83,82 +57,36 @@ public class NearbyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
         ButterKnife.bind(this);
+        exhibition_area_1.setOnClickListener(this);
+        exhibition_area_2.setOnClickListener(this);
+        exhibition_area_3.setOnClickListener(this);
+        exhibition_area_4.setOnClickListener(this);
+        exhibition_area_5.setOnClickListener(this);
+        exhibition_area_6.setOnClickListener(this);
 
-        //初始化工具栏
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        toolbar.setTitle(getString(R.string.nearby_activity_title));
-        toolbar.setTitleTextColor(getColor(R.color.color_white));
         //跑马灯效果
         notice.setSelected(true);
-
+        initToolbar();
         macAddress.add("EF:D5:C7:C8:14:FB");
         macAddress.add("FE:CB:23:2A:B6:4B");
         macAddress.add("F9:50:C1:76:EC:5F");
         checkBluetoothValid();
         startScan();
-        test();
-        initViewPager();
     }
 
-    private void initViewPager(){
-        tabLayout.setupWithViewPager(viewPager,true);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-        String[] tabName = AppUtils.getStringArray(R.array.exhibition_area);
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[0]));
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[1]));
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[2]));
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[3]));
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[4]));
-        tabLayout.addTab(tabLayout.newTab().setText(tabName[5]));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                AppUtils.getToast(tab.getText()+"");
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void initToolbar(){
+        //初始化工具栏
+        toolbar.setTitle(getString(R.string.nearby_activity_title));
+        toolbar.setTitleTextColor(getColor(R.color.color_white));
+        toolbar.setNavigationOnClickListener(view -> finish());
+        toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            switch (id){
+                case R.id.leaderboard:
+                    showLeaderboard(0);
             }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new LeaderboardFragment());
-        fragments.add(new LeaderboardFragment());
-        fragments.add(new LeaderboardFragment());
-        fragments.add(new LeaderboardFragment());
-        fragments.add(new LeaderboardFragment());
-        fragments.add(new LeaderboardFragment());
-        viewPager.setOffscreenPageLimit(6);
-        viewPager.setNestedScrollingEnabled(false);
-        viewPager.setKeepScreenOn(true);
-        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),1) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                return fragments.get(position);
-            }
-
-            @Override
-            public int getCount() {
-                return fragments.size();
-            }
-
-            @Nullable
-            @Override
-            public CharSequence getPageTitle(int position) {
-                return tabName[position];
-            }
+            return false;
         });
     }
 
@@ -262,8 +190,9 @@ public class NearbyActivity extends BaseActivity {
         exhibition_area_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
+                intent.putExtra("exhibitsId",1);
+                startActivity(intent);
             }
         });
     }
@@ -272,5 +201,38 @@ public class NearbyActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         InitApp.getInstance().getBRTBeaconManager().stopRanging();
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id  = view.getId();
+        switch (id){
+            case R.id.exhibition_area_1:
+                showLeaderboard(0);
+                break;
+            case R.id.exhibition_area_2:
+                showLeaderboard(1);
+                break;
+            case R.id.exhibition_area_3:
+                showLeaderboard(2);
+                break;
+            case R.id.exhibition_area_4:
+                showLeaderboard(3);
+                break;
+            case R.id.exhibition_area_5:
+                showLeaderboard(4);
+                break;
+            case R.id.exhibition_area_6:
+                showLeaderboard(5);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void showLeaderboard(int page){
+        Intent intent = new Intent(this,LeaderboardActivity.class);
+        intent.putExtra("page",page);
+        startActivity(intent);
     }
 }

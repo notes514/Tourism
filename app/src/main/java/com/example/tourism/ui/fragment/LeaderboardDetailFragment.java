@@ -5,23 +5,18 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.ExhibitsItemAdapter;
-import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
-import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,18 +35,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LeaderboardFragment extends BaseFragment implements DefineView {
+public class LeaderboardDetailFragment extends BaseFragment implements DefineView {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
     private Unbinder unbinder;
-    private static int exhibitionAreaId = 1;
+    private int exhibitionAreaId;
     private List<Exhibits> exhibits;
     private ExhibitsItemAdapter adapter;
 
+    public LeaderboardDetailFragment(int exhibitionAreaId) {
+        this.exhibitionAreaId = exhibitionAreaId;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        View root = inflater.inflate(R.layout.fragment_leaderboard_detail, container, false);
         unbinder = ButterKnife.bind(this, root);
         initView();
         initValidata();
@@ -59,8 +58,6 @@ public class LeaderboardFragment extends BaseFragment implements DefineView {
         bindData();
         return root;
     }
-
-
 
     @Override
     public void onDestroy() {

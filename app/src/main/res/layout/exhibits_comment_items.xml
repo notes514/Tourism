@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.example.tourism.widget.CircleImageView
+                android:id="@+id/user_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="6dp"
+                android:src="@drawable/defaultbg" />
+
+            <TextView
+                android:id="@+id/commentator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@id/user_pic"
+                android:layout_centerVertical="true"
+                android:text="@string/showNearby"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <!--展品评论-->
+        <TextView
+            android:id="@+id/exhibits_comment_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/notice"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
