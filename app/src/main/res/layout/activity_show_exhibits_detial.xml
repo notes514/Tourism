@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue"
-        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIcon="@drawable/ic_arrow_back_while_32dp"
         android:gravity="center"
         app:popupTheme="@style/Widget.AppCompat.PopupMenu">
     </androidx.appcompat.widget.Toolbar>

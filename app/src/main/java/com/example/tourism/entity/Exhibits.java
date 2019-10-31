@@ -15,6 +15,8 @@ public class Exhibits {
 
     private String exhibitsAuthor;
 
+    private String cellPhoneNumber;
+
     private List<FabulousDetails> fabulousDetailsList;
 
     public List<FabulousDetails> getFabulousDetailsList() {
@@ -71,5 +73,13 @@ public class Exhibits {
 
     public void setExhibitsAuthor(String exhibitsAuthor) {
         this.exhibitsAuthor = exhibitsAuthor;
+    }
+
+    public String getCellPhoneNumber() {
+        return cellPhoneNumber;
+    }
+
+    public void setCellPhoneNumber(String cellPhoneNumber) {
+        this.cellPhoneNumber = cellPhoneNumber;
     }
 }

@@ -99,12 +99,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public void initView() {
         //默认初始工具栏为透明
         toolbar.setAlpha(0);
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
         initRefreshLayout();
         initScrollView();
         initBanner();
