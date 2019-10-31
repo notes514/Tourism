@@ -7,28 +7,15 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <FrameLayout
+
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/color_white">
-            <ImageView
-                android:id="@+id/btn_return_arrow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|left"
-                android:onClick="btn_return_arrow"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/personal_arrow_black_left"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="我的度假优惠卷"
-                android:layout_gravity="center"
-                android:textColor="@color/color_black"
-                android:textSize="20sp" />
-        </FrameLayout>
-
-
+            android:background="@color/color_blue"
+            app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
+            app:myTitle="@string/title_personal_coupon"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"

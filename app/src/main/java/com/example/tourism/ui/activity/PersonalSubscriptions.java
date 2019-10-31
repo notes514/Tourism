@@ -1,31 +1,50 @@
 package com.example.tourism.ui.activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.example.tourism.R;
-import com.example.tourism.ui.fragment.PersonerFragment;
+import com.example.tourism.common.DefineView;
+import com.example.tourism.widget.CustomToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PersonalSubscriptions extends Activity {
+public class PersonalSubscriptions extends Activity implements DefineView {
 
-    @BindView(R.id.btn_return_arrow)
-    ImageView btnReturnArrow;
+
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_subscriptions);
         ButterKnife.bind(this);
+        initListener();
     }
 
-    @OnClick(R.id.btn_return_arrow)
-    public void onViewClicked() {
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initValidata() {
+
+    }
+
+    @Override
+    public void initListener() {
+        customToolbar.setOnLeftButtonClickLister(() -> show());
+    }
+
+    @Override
+    public void bindData() {
+
+    }
+
+    public void show() {
         finish();
     }
 }

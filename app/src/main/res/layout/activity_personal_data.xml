@@ -9,27 +9,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/color_blue">
-
-            <ImageView
-                android:id="@+id/btn_personal_return_arrow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center|left"
-                android:onClick="btn_personal_return_arrow"
-                android:src="@drawable/personal_arrow_white_left1" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="个人资料"
-                android:textColor="@color/color_white"
-                android:textSize="22sp" />
-        </FrameLayout>
+            android:background="@color/color_blue"
+            app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
+            app:myTitle="@string/title_personal_data"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,7 +55,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="0.1dp"
+                android:layout_marginTop="1dp"
                 android:background="@color/color_white">
                 <TextView
                     android:layout_width="wrap_content"
@@ -151,7 +138,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/color_white">
                 <TextView
                     android:layout_width="wrap_content"
@@ -200,7 +187,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:background="@color/color_white">
                 <TextView
                     android:layout_width="wrap_content"
@@ -279,28 +266,30 @@
                     android:src="@drawable/personal_arrow_black_right"/>
             </FrameLayout>
 
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/color_gray">
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <Button
-                        android:id="@+id/btn_personal_Logout"
+
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_red"
-                        android:background="@color/color_white"
-                        android:text="退出登录"
-                        android:textSize="18sp"/>
-                </FrameLayout>
-
-
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:id="@+id/btn_personal_Logout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_red"
+                            android:background="@color/color_white"
+                            android:text="退出登录"
+                            android:textSize="18sp"/>
+                    </FrameLayout>
             </FrameLayout>
-
+            </ScrollView>
         </LinearLayout>
 
     </LinearLayout>

@@ -29,11 +29,11 @@
 
             <ImageView
                 android:id="@+id/user_message"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center|right"
-                android:src="@drawable/personal_message_white" />
+                android:src="@drawable/ic_perm_identity_while_32dp" />
         </FrameLayout>
 
         <ImageView

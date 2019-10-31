@@ -10,27 +10,28 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
+import com.example.tourism.common.DefineView;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonalEdenvelopesFragment;
 import com.example.tourism.ui.fragment.PersonalFailureFragment;
 import com.example.tourism.ui.fragment.PersonalVolumereductionFragment;
 import com.example.tourism.ui.fragment.PersonalVoucherFragment;
 import com.example.tourism.ui.fragment.PersonerFragment;
+import com.example.tourism.widget.CustomToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PersonalCouponActivity extends BaseActivity {
-    @BindView(R.id.btn_return_arrow)
-    ImageView btnReturnArrow;
+public class PersonalCouponActivity extends BaseActivity implements DefineView {
+
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
     private ViewPager viewPager;
     private List<Fragment> mFragmentList = new ArrayList<Fragment>();
     private PersonalFragmentAdapter mFragmentAdapter;
@@ -60,6 +61,7 @@ public class PersonalCouponActivity extends BaseActivity {
         findById();
         init();
         initTabLineWidth();
+        initListener();
     }
 
     private void findById() {
@@ -128,7 +130,7 @@ public class PersonalCouponActivity extends BaseActivity {
                     lp.leftMargin = (int) (-(1 - offset)
                             * (screenWidth * 1.0 / 4) + currentIndex
                             * (screenWidth / 4));
-                }else if (currentIndex == 3 && position == 2) // 2->1
+                } else if (currentIndex == 3 && position == 2) // 2->1
                 {
                     lp.leftMargin = (int) (-(1 - offset)
                             * (screenWidth * 1.0 / 4) + currentIndex
@@ -183,8 +185,28 @@ public class PersonalCouponActivity extends BaseActivity {
         failureTv.setTextColor(Color.BLACK);
     }
 
-    @OnClick(R.id.btn_return_arrow)
-    public void onViewClicked() {
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initValidata() {
+
+    }
+
+    @Override
+    public void initListener() {
+        customToolbar.setOnLeftButtonClickLister(() -> show());
+    }
+
+    @Override
+    public void bindData() {
+
+    }
+
+    public void show() {
         finish();
     }
+
 }

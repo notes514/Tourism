@@ -102,4 +102,11 @@
     <string name="tourism_strategy_details_title">攻略详情</string>
 
 
+    <string name="title_personal_data">个人资料</string>
+    <string name="title_personal_coupon">我的度假优惠卷</string>
+    <string name="title_personal_collection">我的收藏</string>
+    <string name="title_personal_hoilday_problem">度假问题</string>
+    <string name="title_personal_subscriptions">我的订阅</string>
+
+
 </resources>

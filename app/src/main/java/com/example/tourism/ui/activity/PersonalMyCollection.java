@@ -14,10 +14,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
+import com.example.tourism.common.DefineView;
 import com.example.tourism.ui.fragment.PersonalProductFragment;
 import com.example.tourism.ui.fragment.PersonalShopFragment;
 import com.example.tourism.ui.fragment.PersonalTripFragment;
 import com.example.tourism.ui.fragment.PersonerFragment;
+import com.example.tourism.widget.CustomToolbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,9 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PersonalMyCollection extends FragmentActivity {
-    @BindView(R.id.btn_return_arrow)
-    ImageView btnReturnArrow;
+public class PersonalMyCollection extends FragmentActivity implements DefineView {
+
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
     private ViewPager viewPager;
     private List<Fragment> mFragmentList = new ArrayList<Fragment>();
     private PersonalFragmentAdapter mFragmentAdapter;
@@ -57,6 +60,7 @@ public class PersonalMyCollection extends FragmentActivity {
         findById();
         init();
         initTabLineWidth();
+        initListener();
 
     }
 
@@ -168,11 +172,33 @@ public class PersonalMyCollection extends FragmentActivity {
         shopTv.setTextColor(Color.BLACK);
     }
 
-    @OnClick(R.id.btn_return_arrow)
-    public void onViewClicked() {
-        Intent intent = new Intent(PersonalMyCollection.this,PersonerFragment.class);
+//    @OnClick(R.id.btn_return_arrow)
+//    public void onViewClicked() {
+//        Intent intent = new Intent(PersonalMyCollection.this, PersonerFragment.class);
+//        finish();
+//    }
+    public void show() {
         finish();
     }
 
 
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initValidata() {
+
+    }
+
+    @Override
+    public void initListener() {
+        customToolbar.setOnLeftButtonClickLister(() -> show());
+    }
+
+    @Override
+    public void bindData() {
+
+    }
 }

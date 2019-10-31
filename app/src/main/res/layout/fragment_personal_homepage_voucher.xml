@@ -32,13 +32,13 @@
             android:gravity="center"
             android:text="您还没有代金卷哦"
             android:textColor="@color/color_black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="65dp"
             android:gravity="center"
             android:text="请点击下方“领卷中心”领取优惠卷"
             android:textColor="@color/color_dark_grey"

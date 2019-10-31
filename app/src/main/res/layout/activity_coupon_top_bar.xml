@@ -21,7 +21,7 @@
             android:gravity="center"
             android:text="红包"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/volumereductionTv"
@@ -31,7 +31,7 @@
             android:gravity="center"
             android:text="店铺满减卷"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/voucherTv"
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="代金卷"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/failureTv"
             android:layout_width="match_parent"
@@ -50,7 +50,7 @@
             android:gravity="center"
             android:text="已失效"
             android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <ImageView

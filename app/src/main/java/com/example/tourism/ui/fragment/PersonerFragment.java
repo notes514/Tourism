@@ -22,11 +22,11 @@ import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
+import com.example.tourism.ui.activity.PersonalDataActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
 import com.example.tourism.ui.activity.PersonalMyCollection;
 import com.example.tourism.ui.activity.PersonalOpenmemberActivity;
 import com.example.tourism.ui.activity.PersonalSubscriptions;
-import com.example.tourism.ui.activity.PersonalTalk;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
 import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
@@ -145,7 +145,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 startActivity(intent);
                 break;
             case R.id.user_message:
-                Intent btn_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalTalk.class);
+                Intent btn_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
                 startActivity(btn_homepage);
                 break;
             case R.id.btn_holidayprbolem:

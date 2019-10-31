@@ -41,14 +41,14 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:layout_marginBottom="250dp"
+                    android:layout_marginBottom="230dp"
                     android:textSize="45dp"
                     android:textColor="@color/color_white"
                     android:text="会员激活"/>
                 <ImageView
                     android:layout_width="225dp"
                     android:layout_height="120dp"
-                    android:layout_marginBottom="150dp"
+                    android:layout_marginBottom="130dp"
                     android:layout_gravity="center"
                     android:src="@drawable/personal_vip"/>
 
@@ -74,9 +74,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="输入大写兑换码,立即激活即可兑换"
-                    android:textSize="15sp"
+                    android:textSize="12sp"
                     android:textColor="@color/color_black"
-                    android:layout_marginTop="220dp"/>
+                    android:layout_marginTop="210dp"/>
             </FrameLayout>
         </LinearLayout>
 
