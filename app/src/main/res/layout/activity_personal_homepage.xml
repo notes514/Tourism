@@ -30,17 +30,17 @@
 
             <ImageView
                 android:id="@+id/user_return_arrow"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center|left"
                 android:onClick="my_personal_homepage_return_arrow"
-                android:src="@drawable/personal_arrow_white_left1"
+                android:src="@drawable/personal_arrow_left_24dp"
                 tools:ignore="OnClick" />
 
             <ImageView
                 android:id="@+id/personal_user_export"
-                android:layout_width="wrap_content"
+                android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center|right"

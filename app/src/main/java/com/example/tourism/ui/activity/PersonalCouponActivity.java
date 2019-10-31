@@ -10,14 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
 import com.example.tourism.common.DefineView;
-import com.example.tourism.ui.fragment.PersonalProductFragment;
-import com.example.tourism.ui.fragment.PersonalShopFragment;
-import com.example.tourism.ui.fragment.PersonalTripFragment;
+import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.ui.fragment.PersonalEdenvelopesFragment;
+import com.example.tourism.ui.fragment.PersonalFailureFragment;
+import com.example.tourism.ui.fragment.PersonalVolumereductionFragment;
+import com.example.tourism.ui.fragment.PersonalVoucherFragment;
 import com.example.tourism.ui.fragment.PersonerFragment;
 import com.example.tourism.widget.CustomToolbar;
 
@@ -26,9 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PersonalMyCollection extends FragmentActivity implements DefineView {
+public class PersonalCouponActivity extends BaseActivity implements DefineView {
 
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
@@ -37,14 +37,15 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
     private PersonalFragmentAdapter mFragmentAdapter;
 
     //Tab显示内容TextView
-    private TextView productTv, tripTv, shopTv;
+    private TextView edenvelopesTv, volumereductionTv, voucherTv, failureTv;
     //Tab的那个引导线
     private ImageView tablineIv;
 
-    //三个Fragment页面
-    private PersonalProductFragment productFg;
-    private PersonalTripFragment tripFg;
-    private PersonalShopFragment shopFg;
+    //四个Fragment页面
+    private PersonalEdenvelopesFragment edenvelopesFg;
+    private PersonalVolumereductionFragment volumereductionFg;
+    private PersonalVoucherFragment voucherFg;
+    private PersonalFailureFragment failureFg;
 
     //ViewPager的当前选中页
     private int currentIndex;
@@ -55,31 +56,34 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_personal_my_collection);
+        setContentView(R.layout.activity_personal_coupon);
         ButterKnife.bind(this);
         findById();
         init();
         initTabLineWidth();
         initListener();
-
     }
 
     private void findById() {
-        productTv = (TextView) this.findViewById(R.id.productTv);
-        tripTv = (TextView) this.findViewById(R.id.tripTv);
-        shopTv = (TextView) this.findViewById(R.id.shopTv);
+        edenvelopesTv = (TextView) this.findViewById(R.id.edenvelopesTv);
+        volumereductionTv = (TextView) this.findViewById(R.id.volumereductionTv);
+        voucherTv = (TextView) this.findViewById(R.id.voucherTv);
+        failureTv = (TextView) this.findViewById(R.id.failureTv);
+
         tablineIv = (ImageView) this.findViewById(R.id.iv_tabline);
         viewPager = (ViewPager) this.findViewById(R.id.viewpager);
     }
 
     private void init() {
-        productFg = new PersonalProductFragment();
-        tripFg = new PersonalTripFragment();
-        shopFg = new PersonalShopFragment();
-        //将三个页面添加到容器里面
-        mFragmentList.add(productFg);
-        mFragmentList.add(tripFg);
-        mFragmentList.add(shopFg);
+        edenvelopesFg = new PersonalEdenvelopesFragment();
+        volumereductionFg = new PersonalVolumereductionFragment();
+        voucherFg = new PersonalVoucherFragment();
+        failureFg = new PersonalFailureFragment();
+        //将四个页面添加到容器里面
+        mFragmentList.add(edenvelopesFg);
+        mFragmentList.add(volumereductionFg);
+        mFragmentList.add(voucherFg);
+        mFragmentList.add(failureFg);
 
         //重写一个FragmentAdapter继承FragmentPagerAdapter，需要FragmentManager和存放页面的容器过去
         mFragmentAdapter = new PersonalFragmentAdapter(this.getSupportFragmentManager(), mFragmentList);
@@ -108,24 +112,29 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
                  */
                 if (currentIndex == 0 && position == 0)// 0->1
                 {
-                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
+                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 4) + currentIndex
+                            * (screenWidth / 4));
 
                 } else if (currentIndex == 1 && position == 0) // 1->0
                 {
                     lp.leftMargin = (int) (-(1 - offset)
-                            * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
+                            * (screenWidth * 1.0 / 4) + currentIndex
+                            * (screenWidth / 4));
 
                 } else if (currentIndex == 1 && position == 1) // 1->2
                 {
-                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
+                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 4) + currentIndex
+                            * (screenWidth / 4));
                 } else if (currentIndex == 2 && position == 1) // 2->1
                 {
                     lp.leftMargin = (int) (-(1 - offset)
-                            * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
+                            * (screenWidth * 1.0 / 4) + currentIndex
+                            * (screenWidth / 4));
+                } else if (currentIndex == 3 && position == 2) // 2->1
+                {
+                    lp.leftMargin = (int) (-(1 - offset)
+                            * (screenWidth * 1.0 / 4) + currentIndex
+                            * (screenWidth / 4));
                 }
                 tablineIv.setLayoutParams(lp);
             }
@@ -139,13 +148,16 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
                 resetTextView();
                 switch (position) {
                     case 0:
-                        productTv.setTextColor(Color.BLUE);
+                        edenvelopesTv.setTextColor(Color.BLUE);
                         break;
                     case 1:
-                        tripTv.setTextColor(Color.BLUE);
+                        volumereductionTv.setTextColor(Color.BLUE);
                         break;
                     case 2:
-                        shopTv.setTextColor(Color.BLUE);
+                        voucherTv.setTextColor(Color.BLUE);
+                        break;
+                    case 3:
+                        failureTv.setTextColor(Color.BLUE);
                         break;
                 }
                 currentIndex = position;
@@ -159,7 +171,7 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(dpMetrics);
         screenWidth = dpMetrics.widthPixels;
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tablineIv.getLayoutParams();
-        lp.width = screenWidth / 3;
+        lp.width = screenWidth / 4;
         tablineIv.setLayoutParams(lp);
     }
 
@@ -167,20 +179,11 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
      * 重置颜色
      */
     private void resetTextView() {
-        productTv.setTextColor(Color.BLACK);
-        tripTv.setTextColor(Color.BLACK);
-        shopTv.setTextColor(Color.BLACK);
+        edenvelopesTv.setTextColor(Color.BLACK);
+        volumereductionTv.setTextColor(Color.BLACK);
+        voucherTv.setTextColor(Color.BLACK);
+        failureTv.setTextColor(Color.BLACK);
     }
-
-//    @OnClick(R.id.btn_return_arrow)
-//    public void onViewClicked() {
-//        Intent intent = new Intent(PersonalMyCollection.this, PersonerFragment.class);
-//        finish();
-//    }
-    public void show() {
-        finish();
-    }
-
 
     @Override
     public void initView() {
@@ -201,4 +204,9 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
     public void bindData() {
 
     }
+
+    public void show() {
+        finish();
+    }
+
 }

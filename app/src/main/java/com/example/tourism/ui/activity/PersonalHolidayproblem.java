@@ -1,33 +1,58 @@
 package com.example.tourism.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.example.tourism.R;
+import com.example.tourism.common.DefineView;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonerFragment;
+import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.CustomToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class PersonalHolidayproblem extends Activity {
+public class PersonalHolidayproblem extends BaseActivity implements DefineView {
 
-    @BindView(R.id.btn_return_arrow)
-    ImageView btnReturnArrow;
+//    @BindView(R.id.btn_return_arrow)
+//    ImageView btnReturnArrow;
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_holiday_problem);
         ButterKnife.bind(this);
+        initListener();
     }
 
-    @OnClick(R.id.btn_return_arrow)
-    public void onViewClicked() {
-        Intent intent = new Intent(PersonalHolidayproblem.this, PersonerFragment.class);
+    public void show() {
         finish();
+    }
+
+    @Override
+    public void initView() {
+
+    }
+
+    @Override
+    public void initValidata() {
+
+    }
+
+    @Override
+    public void initListener() {
+        customToolbar.setOnLeftButtonClickLister(() -> show());
+
+    }
+
+    @Override
+    public void bindData() {
+
     }
 }

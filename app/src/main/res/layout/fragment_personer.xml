@@ -29,11 +29,11 @@
 
             <ImageView
                 android:id="@+id/user_message"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
                 android:layout_gravity="center|right"
-                android:src="@drawable/personal_message_white" />
+                android:src="@drawable/ic_perm_identity_while_32dp" />
         </FrameLayout>
 
         <ImageView
@@ -43,12 +43,11 @@
             android:layout_centerInParent="true"
             tools:ignore="MissingConstraints" />
 
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/h_back"
             android:layout_marginBottom="40dp"
-            android:orientation="horizontal"
             tools:ignore="MissingConstraints">
 
             <ImageView
@@ -57,15 +56,15 @@
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
-                android:layout_marginLeft="15dp"
                 android:background="@android:color/white" />
 
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/user_line"
                 android:text="账号"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
                 android:textColor="@android:color/white"
                 android:textSize="17sp" />
 
@@ -73,12 +72,20 @@
                 android:id="@+id/user_val"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@id/user_line"
+                android:layout_gravity="center"
+                android:layout_marginLeft="45dp"
                 android:text="电话号码"
                 android:textColor="@android:color/white"
                 android:textSize="17sp" />
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/re"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录 / 注册 "
+                android:layout_gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="17sp" />
+        </FrameLayout>
 
         <FrameLayout
             android:layout_width="match_parent"

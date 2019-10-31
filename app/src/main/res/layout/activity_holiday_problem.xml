@@ -12,38 +12,18 @@
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
            android:orientation="vertical">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/color_white">
-        <ImageView
-            android:id="@+id/btn_return_arrow"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginLeft="10dp"
-            android:layout_gravity="center|left"
-            android:onClick="my_holiday_problem_return_arrow"
-            android:src="@drawable/personal_blue_left"
-            tools:ignore="OnClick" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="返回"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="40dp"
-            android:textSize="20sp"
-            android:textColor="#04C0B7"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="度假问题"
-            android:textSize="24sp"
-            android:textColor="@color/color_black"/>
-    </FrameLayout>
+
+           <com.example.tourism.widget.CustomToolbar
+               android:id="@+id/custom_toolbar"
+               android:layout_width="match_parent"
+               android:layout_height="50dp"
+               android:background="@color/color_blue"
+               app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
+               app:myTitle="@string/title_personal_hoilday_problem"
+               />
            <LinearLayout
                android:layout_width="match_parent"
-               android:layout_height="100dp"
+               android:layout_height="80dp"
                android:layout_marginTop="1dp"
                android:orientation="horizontal">
 
@@ -55,8 +35,8 @@
                    android:layout_weight="1"
                    android:background="@color/color_white">
                    <ImageView
-                       android:layout_width="40dp"
-                       android:layout_height="40dp"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
                        android:src="@drawable/personal_insurance_problem"/>
@@ -66,7 +46,7 @@
                        android:layout_gravity="center"
                        android:layout_marginTop="10dp"
                        android:text="保险问题"
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:textColor="@color/color_gray"/>
 
                </LinearLayout>
@@ -78,8 +58,8 @@
                    android:layout_weight="1"
                    android:background="@color/color_white">
                    <ImageView
-                       android:layout_width="40dp"
-                       android:layout_height="40dp"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
                        android:src="@drawable/personal_predetermined_problem"/>
@@ -89,7 +69,7 @@
                        android:layout_gravity="center"
                        android:layout_marginTop="10dp"
                        android:text="预定问题"
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:textColor="@color/color_gray"/>
 
                </LinearLayout>
@@ -102,8 +82,8 @@
                    android:layout_marginLeft="1dp"
                    android:layout_weight="1">
                    <ImageView
-                       android:layout_width="40dp"
-                       android:layout_height="40dp"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
                        android:src="@drawable/personal_travel_problem"/>
@@ -113,7 +93,7 @@
                        android:layout_gravity="center"
                        android:layout_marginTop="10dp"
                        android:text="出行问题"
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:textColor="@color/color_gray"/>
 
                </LinearLayout>
@@ -125,8 +105,8 @@
                    android:layout_weight="1"
                    android:background="@color/color_white">
                    <ImageView
-                       android:layout_width="40dp"
-                       android:layout_height="40dp"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
                        android:src="@drawable/personal_refund_invoice"/>
@@ -136,7 +116,7 @@
                        android:layout_gravity="center"
                        android:layout_marginTop="10dp"
                        android:text="退款发票"
-                       android:textSize="15sp"
+                       android:textSize="12sp"
                        android:textColor="@color/color_gray"/>
 
                </LinearLayout>
@@ -147,7 +127,7 @@
                android:layout_height="50dp"
                android:background="@color/color_white"
                android:orientation="horizontal"
-               android:layout_marginTop="20dp">
+               android:layout_marginTop="10dp">
                <ImageView
                    android:layout_width="12dp"
                    android:layout_height="12dp"
@@ -159,7 +139,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="度假产品供应商一直未确定订单"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout
@@ -190,7 +170,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="我的度假订单无法支付"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout
@@ -220,7 +200,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="如何变更出行时间"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout
@@ -250,7 +230,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="度假产品保险能退吗"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout
@@ -280,7 +260,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="未收到消费码"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout
@@ -310,7 +290,7 @@
                    android:layout_height="wrap_content"
                    android:layout_marginLeft="10dp"
                    android:text="我要退度假产品"
-                   android:textSize="18sp"
+                   android:textSize="15sp"
                    android:textColor="@color/color_black"
                    android:layout_gravity="center"/>
                <FrameLayout

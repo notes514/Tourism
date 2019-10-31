@@ -83,8 +83,6 @@
         </activity>
         <activity android:name=".ui.activity.PersonalMyCollection">
         </activity>
-        <activity android:name=".ui.activity.PersonalTalk">
-        </activity>
         <activity android:name=".ui.activity.PersonalHolidayproblem">
         </activity>
         <activity android:name=".ui.activity.PersonalSubscriptions">
@@ -101,22 +99,20 @@
         </activity>
         <activity android:name=".ui.activity.TourismDetailsActivity">
         </activity>
-        <activity android:name=".ui.activity.CalendarActivity">
+        <activity android:name=".ui.activity.PersonalCouponActivity">
         </activity>
-        <activity android:name=".ui.activity.OrderCompletionActivity">
+        <activity android:name=".ui.activity.PersonalOpenmemberActivity">
         </activity>
-        <activity android:name=".ui.activity.BigImageActivity">
+        <activity android:name=".ui.activity.PersonalDataActivity">
         </activity>
-        <activity android:name=".ui.activity.RedEnvelopsActivity">
+        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity">
         </activity>
-        <activity android:name=".ui.activity.ServiceExplainActivity">
+        <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
         </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TranslucentTheme">
-        </activity>
-        <activity android:name=".ui.activity.LeaderboardActivity">
         </activity>
 
         <!-- 第三方登录需要额外添加的activity -->

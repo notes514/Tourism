@@ -7,32 +7,34 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <com.example.tourism.widget.CustomToolbar
             android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/color_blue"
             app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
-            app:myTitle="@string/title_personal_collection" />
+            app:myTitle="@string/title_personal_coupon"
+            />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
-
-        <!-- 顶部的内容 -->
-        <include layout="@layout/activity_mycollection_top_bar" />
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/color_white">
+            android:layout_height="match_parent"
+            android:layout_marginTop="50dp"
+            android:orientation="vertical">
 
-        </androidx.viewpager.widget.ViewPager>
+            <!-- 顶部的内容 -->
+            <include layout="@layout/activity_coupon_top_bar" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/color_white">
 
-    </LinearLayout>
-</FrameLayout>
+            </androidx.viewpager.widget.ViewPager>
+
+        </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
