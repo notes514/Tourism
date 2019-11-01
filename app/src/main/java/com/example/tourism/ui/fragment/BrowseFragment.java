@@ -52,6 +52,7 @@ public class BrowseFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initView() {
+
     }
 
     @Override

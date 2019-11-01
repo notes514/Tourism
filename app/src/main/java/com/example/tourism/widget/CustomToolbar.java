@@ -26,6 +26,7 @@ public class CustomToolbar extends Toolbar {
     private Drawable rightButtonIcon;
     private String title;
     private String rightTitle;
+    private OnRightTitleClickLister onRightTitleClickLister;
     private OnLeftButtonClickLister onLeftButtonClickLister;
     private OnRightButtonClickLister onRightButtonClickLister;
 
@@ -33,6 +34,14 @@ public class CustomToolbar extends Toolbar {
      * 返回按钮监听接口
      */
     public interface OnLeftButtonClickLister {
+        void OnClick();
+    }
+
+    /**
+     * 右边文字接口
+     */
+
+    public interface OnRightTitleClickLister {
         void OnClick();
     }
 
@@ -113,6 +122,14 @@ public class CustomToolbar extends Toolbar {
             }
         });
 
+        toolbarRightTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onRightTitleClickLister != null) {
+                    onRightTitleClickLister.OnClick();
+                }
+            }
+        });
     }
 
     public void setMyTitle(String title) {
@@ -154,6 +171,10 @@ public class CustomToolbar extends Toolbar {
 
     public void setOnRightButtonClickLister(OnRightButtonClickLister onRightButtonClickLister) {
         this.onRightButtonClickLister = onRightButtonClickLister;
+    }
+
+    public void setOnRightTitleClickLister(OnRightTitleClickLister onRightTitleClickLister) {
+        this.onRightTitleClickLister = onRightTitleClickLister;
     }
 
 }
