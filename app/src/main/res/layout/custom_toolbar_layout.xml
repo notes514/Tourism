@@ -51,6 +51,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.6"
             tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/toolbar_right_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.6"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

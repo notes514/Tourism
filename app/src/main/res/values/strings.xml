@@ -101,6 +101,7 @@
     <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
     <!--  立即预定 全部 模块  -->
     <string name="tourism_all_order_title">度假旅游/团购订单</string>
+
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>
 
@@ -111,5 +112,10 @@
     <string name="title_personal_hoilday_problem">度假问题</string>
     <string name="title_personal_subscriptions">我的订阅</string>
 
+    <!--  订单取消 -->
+    <string name="tourism_order_cancel_productname">产品名称</string>
+    <string name="tourism_order_cancel_tripmode">出行方式</string>
+    <string name="tourism_order_cancel_departureperiod">出发团期</string>
+    <string name="tourism_order_cancel_amountpayable">应付金额</string>
 
 </resources>

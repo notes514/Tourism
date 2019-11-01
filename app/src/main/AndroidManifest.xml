@@ -120,6 +120,8 @@
         </activity>
         <activity android:name=".ui.activity.ServiceExplainActivity">
         </activity>
+        <activity android:name=".ui.activity.OrderCancelLayoutActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
