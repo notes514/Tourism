@@ -28,7 +28,7 @@ import butterknife.Unbinder;
 /**
  * 目的地
  */
-public class BrowseFragment extends BaseFragment implements DefineView, ViewPager.OnPageChangeListener {
+public class BrowseFragment extends BaseFragment implements DefineView {
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
     @BindView(R.id.browse_tablayout)
@@ -72,7 +72,7 @@ public class BrowseFragment extends BaseFragment implements DefineView, ViewPage
 
     @Override
     public void bindData() {
-        adapter = new FixedPagerAdapter(getChildFragmentManager());
+        adapter = new FixedPagerAdapter(getChildFragmentManager(), 0);
         adapter.setHeadBeanList(headBeanList);
         fragmentList = new ArrayList<>();
         for (int i = 0; i < headBeanList.size(); i++) {
@@ -85,21 +85,6 @@ public class BrowseFragment extends BaseFragment implements DefineView, ViewPage
         browseTablayout.setupWithViewPager(browseViewPager);
         //设置TabLayout的模式（MODE_SCROLLABLE：可进行滑动）
 //        browseTablayout.setTabMode(TabLayout.MODE_FIXED);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 
     @Override

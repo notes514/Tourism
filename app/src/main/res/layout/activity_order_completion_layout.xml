@@ -26,7 +26,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/color_black"
                 android:padding="10dp"
-                android:layout_marginTop="80dp"/>
+                android:layout_marginTop="60dp"/>
             <!-- 添加分割线 -->
             <View
                 android:layout_width="match_parent"
@@ -317,7 +317,7 @@
                 android:background="@color/color_separator_row" />
 
             <Switch
-                android:id="@+id/switch1"
+                android:id="@+id/switch_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tourism_order_special_requirements"
@@ -328,7 +328,7 @@
                 android:id="@+id/view_requirement"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@color/color_dividing_line"/>
 
             <EditText
@@ -336,7 +336,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:textSize="14sp"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:padding="10dp"
+                android:background="@color/color_white"
                 android:hint="@string/tourism_order_requirements"/>
 
             <LinearLayout
@@ -344,7 +346,6 @@
                 android:layout_height="100dp"
                 android:padding="10dp"
                 android:gravity="top|center_vertical|center_horizontal">
-
 
                 <CheckBox
                     android:id="@+id/checkBox"

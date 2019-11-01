@@ -1,6 +1,7 @@
 package com.example.tourism.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.entity.TravelsBean;
+import com.example.tourism.entity.MonthDayBean;
+import com.example.tourism.entity.Order;
 
 import java.util.List;
 
@@ -20,8 +22,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
-    private List<String> stringList; //攻略用户日期详情数据集
-    private List<String> dDateList; //景区详情日期数据集
+    //攻略用户日期详情数据集
+    private List<String> stringList;
+    //景区详情日期数据集
+    private List<MonthDayBean> monthDayBeanList;
+    //订单信息数据集
+    private List<Order> orderList;
     private Context context;
     private int type;
     private LayoutInflater inflater;
@@ -39,8 +45,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     //设置景区详情日期数据集
-    public void setdDateList(List<String> dDateList) {
-        this.dDateList = dDateList;
+    public void setMonthDayBeanList(List<MonthDayBean> monthDayBeanList) {
+        this.monthDayBeanList = monthDayBeanList;
+    }
+
+    //设置订单信息数据集
+    public void setOrderList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
     @NonNull
@@ -49,13 +60,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (type == 0) {
             View view = inflater.inflate(R.layout.strategy_details_item_layout, parent, false);
             view.setOnClickListener(this::onClick);
-            SViewHolder holder = new SViewHolder(view);
-            return holder;
+            return new SViewHolder(view);
         } else if (type == 1) {
             View view = inflater.inflate(R.layout.tourism_details_date_item_layout, parent, false);
             view.setOnClickListener(this::onClick);
-            DViewHolder holder = new DViewHolder(view);
-            return holder;
+            return new DViewHolder(view);
+        } else if (type == 2) {
+            View view = inflater.inflate(R.layout.item_all_order_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new AllOrderViewHolder(view);
         }
         return null;
     }
@@ -92,10 +105,51 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             }
         }
         if (holder instanceof DViewHolder) {
-            String dData = dDateList.get(position);
+            MonthDayBean monthDayBean = monthDayBeanList.get(position);
             //设置Tag以便响应适配器监听点击获取相应数据
-            holder.itemView.setTag(dData);
-            ((DViewHolder) holder).tvDateWeek.setText("");
+            holder.itemView.setTag(monthDayBean);
+            ((DViewHolder) holder).tvDateWeek.setText(monthDayBean.getMonth());
+            ((DViewHolder) holder).tvPrice.setText("¥" + monthDayBean.getPrice());
+            if (position == 0) {
+                ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
+                ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
+                ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
+            }
+            ((DViewHolder) holder).llDetailsDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
+                    ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
+                    ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
+                }
+            });
+
+        }
+        if (holder instanceof AllOrderViewHolder) {
+            Order order = orderList.get(position);
+            holder.itemView.setTag(order);
+            ((AllOrderViewHolder) holder).tvTips.setVisibility(View.GONE);
+            ((AllOrderViewHolder) holder).tvOrderContent.setText(order.getOrderContent());
+            if (order.getOrderState() == 0) {
+                ((AllOrderViewHolder) holder).tvOrderState.setText("订单取消");
+            } else if (order.getOrderState() == 1) {
+                ((AllOrderViewHolder) holder).tvOrderState.setText("待付款");
+            } else if (order.getOrderState() == 2) {
+                ((AllOrderViewHolder) holder).tvOrderState.setText("待消费");
+            } else if (order.getOrderState() == 3) {
+                ((AllOrderViewHolder) holder).tvOrderState.setText("待评价");
+            } else if (order.getOrderState() == 4) {
+                ((AllOrderViewHolder) holder).tvOrderState.setText("退款中");
+            }
+            ((AllOrderViewHolder) holder).tvDate.setText("出发日期 " + order.getDepartDate());
+            ((AllOrderViewHolder) holder).tvTripDay.setText("行程天数 " + order.getDepartDays());
+            ((AllOrderViewHolder) holder).tvTripInformtion.setText("出行信息 " + order.getTirpInformation());
+            ((AllOrderViewHolder) holder).tvPrice.setText("¥" + order.getOrderPrice());
+            Log.d("onBindViewHolder", "onBindViewHolder: " + getItemCount());
+            if (position == getItemCount() - 1) {
+                ((AllOrderViewHolder) holder).tvTips.setVisibility(View.VISIBLE);
+                ((AllOrderViewHolder) holder).tvTips.setText("没有更多了...");
+            }
         }
     }
 
@@ -105,7 +159,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             return stringList == null ? 0 : stringList.size();
         }
         if (type == 1) {
-            return dDateList == null ? 0 : dDateList.size();
+            return monthDayBeanList == null ? 0 : monthDayBeanList.size();
+        } if (type == 2) {
+            return orderList == null ? 0 : orderList.size();
         }
         return 0;
     }
@@ -133,6 +189,31 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         LinearLayout llDetailsDate;
 
         public DViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class AllOrderViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_order_content)
+        TextView tvOrderContent;
+        @BindView(R.id.tv_order_state)
+        TextView tvOrderState;
+        @BindView(R.id.tv_date)
+        TextView tvDate;
+        @BindView(R.id.tv_trip_day)
+        TextView tvTripDay;
+        @BindView(R.id.tv_trip_informtion)
+        TextView tvTripInformtion;
+        @BindView(R.id.iv_forward)
+        ImageView ivForward;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+        @BindView(R.id.tv_tips)
+        TextView tvTips;
+
+
+        public AllOrderViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

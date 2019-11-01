@@ -152,18 +152,15 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
 
         int bHeight = 500;
         //设置scrollView滚动监听
-        detailsScrollview.setOnScrollListener(new MyScrollView.OnScrollListener() {
-            @Override
-            public void onScrollView(int l, int t, int oldl, int oldt) {
-                //设置status，toobar颜色透明渐变
-                float detalis = t > bHeight ? bHeight : (t > 30 ? t : 0);
-                int alpha = (int) (detalis / bHeight * 255);
-                setUpdateActionBar(alpha);
-                if (alpha > 100) {
-                    customToolbar.setMyTitle("攻略详情");
-                } else {
-                    customToolbar.setMyTitle("");
-                }
+        detailsScrollview.setOnScrollListener((l, t, oldl, oldt) -> {
+            //设置status，toobar颜色透明渐变
+            float detalis = t > bHeight ? bHeight : (t > 30 ? t : 0);
+            int alpha = (int) (detalis / bHeight * 255);
+            setUpdateActionBar(alpha);
+            if (alpha > 100) {
+                customToolbar.setMyTitle("攻略详情");
+            } else {
+                customToolbar.setMyTitle("");
             }
         });
 

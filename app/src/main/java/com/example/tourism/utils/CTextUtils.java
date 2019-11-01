@@ -205,15 +205,15 @@ public class CTextUtils {
      * 传入中间字符串截取一串字符，
      * 并通过索引返回截取后指定的字符串
      *
-     * @param pStr
-     * @param value
-     * @param type
+     * @param pStr 传入需要截取的字符串
+     * @param value 哪个字符截取
+     * @param index 截取索引
      * @return
      */
-    public static String getAutomaticInterceptString(String pStr, String value, int type) {
+    public static String getAutomaticInterceptString(String pStr, String value, int index) {
         if (pStr.contains(value)) {
             String[] array = pStr.split(value);
-            return array[type];
+            return array[index];
         }
         return pStr;
     }

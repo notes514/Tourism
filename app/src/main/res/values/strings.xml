@@ -67,6 +67,8 @@
     <string name="tourism_details_tv_trip">行程天数</string>
     <string name="tourism_details_tv_arrive">出发到达</string>
     <string name="tourism_details_tv_stay">住宿标准</string>
+    <string name="tourism_details_add_trip">加入行程</string>
+    <string name="tourism_details_reserves">立即预定</string>
     <!--  立即预定 日期选择 模块  -->
     <string name="tourism_order_calendar_title">选择日期/出行人数</string>
     <string name="tourism_order_calendar_trip_number">请选择出行人数</string>
@@ -97,7 +99,8 @@
     <string name="tourism_order_nothing_discount">没有可用的优惠</string>
     <string name="tourism_order_special_requirements">是否有特殊要求</string>
     <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
-
+    <!--  立即预定 全部 模块  -->
+    <string name="tourism_all_order_title">度假旅游/团购订单</string>
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>
 

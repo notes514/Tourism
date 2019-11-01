@@ -17,132 +17,188 @@
         app:myTitle="@string/tourism_order_calendar_title"
         />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="月份"
-        android:textSize="20sp"
-        android:textColor="@color/color_black"/>
-
-    <!-- 添加分隔行 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/color_separator_row" />
-
-    <com.necer.view.WeekBar
-        android:id="@+id/week_bar"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
-
-    <!-- 月周切换 -->
-    <com.necer.calendar.MonthCalendar
-        android:id="@+id/monthCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
-    <!-- 添加分隔行 -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/color_separator_row" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <!-- 添加分割线 -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_dividing_line"/>
-        <!-- 时间地点天数 -->
+        android:background="@android:color/white"
+        android:padding="16dp">
+
         <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="一"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="二"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="三"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="四"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="五"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="六"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_light"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="七"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@android:color/holo_red_light"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_calender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tourism_order_calendar_trip_number"
-            android:textSize="14sp"
-            android:textColor="@color/color_black"
-            android:padding="10dp"/>
-        <!-- 添加分割线 -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/color_dividing_line"/>
+            android:layout_above="@+id/ll_buttoms"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="0dp" />
 
         <LinearLayout
+            android:id="@+id/ll_buttoms"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <!-- 成人 -->
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_white"
+            android:orientation="vertical">
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
+            <!-- 时间地点天数 -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="成人"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_calendar_trip_number"
                 android:textSize="14sp"
-                android:gravity="center"
-                android:padding="10dp"
-                android:textColor="@color/color_black"/>
+                android:textColor="@color/color_black"
+                android:padding="10dp"/>
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_dividing_line"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
                 android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/select_text_add">
-                <!-- 减 -->
-                <TextView
-                    android:id="@+id/tv_reduse"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="➖"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:textColor="@color/color_gray"/>
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/color_gray"
-                    android:layout_marginRight="10dp"/>
+                android:gravity="center_vertical">
+
                 <!-- 成人 -->
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:textColor="@color/color_black"/>
-                <View
-                    android:layout_width="1dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@color/color_gray"
-                    android:layout_marginLeft="10dp"/>
-                <!-- 加 -->
-                <TextView
-                    android:id="@+id/tv_add"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="➕"
+                    android:text="成人"
                     android:textSize="14sp"
                     android:gravity="center"
-                    android:textColor="#00BCD4"/>
+                    android:padding="10dp"
+                    android:textColor="@color/color_black"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/select_text_add">
+                    <!-- 减 -->
+                    <ImageView
+                        android:id="@+id/tv_removes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_remove_gray_28dp"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_gray"
+                        android:layout_marginRight="10dp"/>
+                    <!-- 成人 -->
+                    <TextView
+                        android:id="@+id/tv_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:textColor="@color/color_tab_title"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_gray"
+                        android:layout_marginLeft="10dp"/>
+                    <!-- 加 -->
+                    <ImageView
+                        android:id="@+id/iv_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_add_cyan_green_28dp"/>
+                </LinearLayout>
+
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_completion_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_order_calendar_completion_order"
+                android:textColor="@color/color_white"
+                android:background="@drawable/btn_shape_orange_red"
+                android:layout_margin="6dp"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_completion_order"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tourism_order_calendar_completion_order"
-            android:textColor="@color/color_white"
-            android:background="@drawable/btn_shape_orange_red"
-            android:layout_margin="6dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
