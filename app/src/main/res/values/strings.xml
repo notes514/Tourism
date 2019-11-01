@@ -111,6 +111,8 @@
     <string name="title_personal_collection">我的收藏</string>
     <string name="title_personal_hoilday_problem">度假问题</string>
     <string name="title_personal_subscriptions">我的订阅</string>
+    <string name="title_personal_member">爱旅行VIP会员</string>
+    <string name="title_personal_member_shop">兑换会员</string>
 
     <!--  订单取消 -->
     <string name="tourism_order_cancel_productname">产品名称</string>

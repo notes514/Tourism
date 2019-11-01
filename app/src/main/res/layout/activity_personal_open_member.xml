@@ -4,43 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:background="@color/color_blue"-->
+<!--        tools:ignore="MissingConstraints">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/btn_member_arrow"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_gravity="center|left"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:src="@drawable/personal_arrow_left_24dp" />-->
+
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:text="爱旅行VIP会员"-->
+<!--            android:textColor="@color/color_dark_black"-->
+<!--            android:textSize="18sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_exchange"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center|right"-->
+<!--            android:layout_marginRight="10dp"-->
+<!--            android:text="兑换会员"-->
+<!--            android:textColor="@color/color_dark_black"-->
+<!--            android:textSize="15sp" />-->
+<!--    </FrameLayout>-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_dark_black"
-        tools:ignore="MissingConstraints">
-        <ImageView
-            android:id="@+id/btn_member_return_arrow"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/personal_arrow_yellow_left" />
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
+        app:myTitle="@string/title_personal_member"
+        app:myRightTitle="@string/title_personal_member_shop"
+        tools:ignore="MissingConstraints" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="爱旅行VIP会员"
-            android:textColor="@color/color_yellow"
-            android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/tv_exchange_member"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|right"
-            android:layout_marginRight="10dp"
-            android:text="兑换会员"
-            android:textColor="@color/color_yellow"
-            android:textSize="15sp" />
-    </FrameLayout>
     <ScrollView
         android:id="@+id/scr"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         tools:ignore="MissingConstraints"
-        android:layout_marginTop="40dp">
+        android:layout_marginTop="50dp">
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -53,7 +64,7 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:layout_margin="15dp"
+                android:layout_margin="5dp"
                 android:background="@drawable/personal_fillet">
                 <LinearLayout
                     android:id="@+id/linearlayout"

@@ -43,12 +43,12 @@
                             android:layout_gravity="center|left"
                             android:src="@drawable/personal_shop_car" />
                         <TextView
-                            android:id="@+id/personal_Shopping_Cart_Text"
+                            android:id="@+id/personal_Trip_Text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
-                            android:text="购物车"
+                            android:text="我的行程"
                             android:textSize="12sp"
                             android:textColor="@color/color_black"/>
 

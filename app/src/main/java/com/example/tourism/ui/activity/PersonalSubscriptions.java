@@ -1,16 +1,15 @@
 package com.example.tourism.ui.activity;
-
-import android.app.Activity;
 import android.os.Bundle;
 
 import com.example.tourism.R;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.widget.CustomToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PersonalSubscriptions extends Activity implements DefineView {
+public class PersonalSubscriptions extends BaseActivity implements DefineView {
 
 
     @BindView(R.id.custom_toolbar)

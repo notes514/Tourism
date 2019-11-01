@@ -18,10 +18,10 @@ public class PersonalOpenmemberActivity extends BaseActivity {
 
     @BindView(R.id.btn_open)
     Button btnOpen;
-    @BindView(R.id.tv_exchange_member)
-    TextView tvExchangeMember;
-    @BindView(R.id.btn_member_return_arrow)
-    ImageView btnMemberReturnArrow;
+//    @BindView(R.id.tv_exchange)
+//    TextView tvExchangeMember;
+//    @BindView(R.id.btn_member_arrow)
+//    ImageView btnMemberReturnArrow;
     private TextView tvNums2;
 
 
@@ -33,21 +33,21 @@ public class PersonalOpenmemberActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_open, R.id.tv_exchange_member,R.id.btn_member_return_arrow})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_open:
-                Intent intent = new Intent(PersonalOpenmemberActivity.this, PersonalOpenmembershipActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.tv_exchange_member:
-                Intent intent1 = new Intent(PersonalOpenmemberActivity.this, PersonalOnpenMemberExchangeActivity.class);
-                startActivity(intent1);
-                break;
-            case R.id.btn_member_return_arrow:
-                finish();
-                break;
-        }
-    }
+//    @OnClick({R.id.btn_open, R.id.tv_exchange,R.id.btn_member_arrow})
+//    public void onViewClicked(View view) {
+//        switch (view.getId()) {
+//            case R.id.btn_open:
+//                Intent intent = new Intent(PersonalOpenmemberActivity.this, PersonalOpenmembershipActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.tv_exchange:
+//                Intent intent1 = new Intent(PersonalOpenmemberActivity.this, PersonalOnpenMemberExchangeActivity.class);
+//                startActivity(intent1);
+//                break;
+//            case R.id.btn_member_arrow:
+//                finish();
+//                break;
+//        }
+//    }
 
 }

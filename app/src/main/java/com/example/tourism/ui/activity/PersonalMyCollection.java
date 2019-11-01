@@ -171,12 +171,6 @@ public class PersonalMyCollection extends FragmentActivity implements DefineView
         tripTv.setTextColor(Color.BLACK);
         shopTv.setTextColor(Color.BLACK);
     }
-
-//    @OnClick(R.id.btn_return_arrow)
-//    public void onViewClicked() {
-//        Intent intent = new Intent(PersonalMyCollection.this, PersonerFragment.class);
-//        finish();
-//    }
     public void show() {
         finish();
     }

@@ -127,7 +127,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFansNum.setVisibility(View.GONE);
             userFollowNum.setVisibility(View.GONE);
         }
-
         initValidata();
         initListener();
         bindData();
