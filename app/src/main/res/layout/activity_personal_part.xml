@@ -49,7 +49,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="我的行程"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView
@@ -81,7 +81,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="度假全部订单"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView
@@ -210,7 +210,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="我的优惠卷"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView
@@ -249,7 +249,7 @@
                             android:layout_marginLeft="70dp"
                             android:text="我的收藏"
                             android:textColor="@color/color_black"
-                            android:textSize="12sp" />
+                            android:textSize="15sp" />
 
                         <ImageView
                             android:id="@+id/persongal_Collection_arrow"
@@ -283,7 +283,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="我的订阅"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView
@@ -314,7 +314,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="会员充值"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView
@@ -351,7 +351,7 @@
                             android:layout_marginLeft="70dp"
                             android:layout_gravity="center|left"
                             android:text="意见反馈"
-                            android:textSize="12sp"
+                            android:textSize="15sp"
                             android:textColor="@color/color_black"/>
 
                         <ImageView

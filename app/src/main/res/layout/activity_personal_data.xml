@@ -37,7 +37,7 @@
                 android:layout_gravity="center|left"
                 android:text="头像"
                 android:textColor="@color/color_black"
-                android:textSize="18sp"/>
+                android:textSize="15sp"/>
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/user_head_portrait"
                 android:layout_width="60dp"
@@ -64,13 +64,14 @@
                     android:layout_gravity="center|left"
                     android:text="昵称"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
+                    android:textSize="13.5sp"
                     android:text="用户名"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -92,13 +93,14 @@
                     android:layout_gravity="center|left"
                     android:text="手机"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/tv_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
+                    android:textSize="13.5sp"
                     android:text="电话号码"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -119,7 +121,7 @@
                     android:layout_gravity="center|left"
                     android:text="邮箱"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/tv_eamil"
                     android:layout_width="wrap_content"
@@ -127,6 +129,7 @@
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
                     android:text="邮箱名"
+                    android:textSize="13.5sp"
                     android:textColor="#FF0000"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -147,13 +150,14 @@
                     android:layout_gravity="center|left"
                     android:text="实名认证"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
                     android:text="去实名"
+                    android:textSize="13.5sp"
                     android:textColor="#FF0000"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -175,7 +179,7 @@
                     android:layout_gravity="center|left"
                     android:text="学生认证"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,13 +200,14 @@
                     android:layout_gravity="center|left"
                     android:text="常居地"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/tv_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
+                    android:textSize="13.5sp"
                     android:text="未知"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -223,13 +228,14 @@
                     android:layout_gravity="center|left"
                     android:text="性别"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <TextView
                     android:id="@+id/tv_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_marginRight="40dp"
+                    android:textSize="13.5sp"
                     android:text="保密"/>
                 <ImageView
                     android:layout_width="wrap_content"
@@ -250,7 +256,7 @@
                     android:layout_gravity="center|left"
                     android:text="出生日期"
                     android:textColor="@color/color_black"
-                    android:textSize="18sp"/>
+                    android:textSize="15sp"/>
                 <LinearLayout
                     android:id="@+id/ll_date"
                     android:layout_width="wrap_content"
