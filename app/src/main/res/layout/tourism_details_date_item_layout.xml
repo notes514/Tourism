@@ -19,16 +19,17 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingTop="4dp"
-        android:paddingBottom="4dp">
+        android:paddingBottom="4dp"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/tv_date_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_dark_grey_two"
+            android:gravity="center"
             android:text="@string/tourism_details_tv_arrive"
-            android:textSize="14sp"
-            android:gravity="center"/>
+            android:textColor="@color/color_dark_grey_two"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_price"

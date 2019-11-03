@@ -1,10 +1,12 @@
 package com.example.tourism.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,8 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
+import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.entity.Trip;
+import com.example.tourism.ui.activity.TourismDetailsActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -28,6 +36,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<MonthDayBean> monthDayBeanList;
     //订单信息数据集
     private List<Order> orderList;
+    //行程信息数据集
+    private List<ScenicSpot> scenicSpotList;
     private Context context;
     private int type;
     private LayoutInflater inflater;
@@ -54,6 +64,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.orderList = orderList;
     }
 
+    //设置行程信息数据集
+    public void setScenicSpotList(List<ScenicSpot> scenicSpotList) {
+        this.scenicSpotList = scenicSpotList;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,6 +84,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_all_order_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new AllOrderViewHolder(view);
+        } else if (type == 3) {
+            View view = inflater.inflate(R.layout.item_trip_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new TripViewHolder(view);
         }
         return null;
     }
@@ -110,18 +129,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.itemView.setTag(monthDayBean);
             ((DViewHolder) holder).tvDateWeek.setText(monthDayBean.getMonth());
             ((DViewHolder) holder).tvPrice.setText("¥" + monthDayBean.getPrice());
+            holder.itemView.setClickable(false);
             if (position == 0) {
                 ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
                 ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
                 ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
             }
-            ((DViewHolder) holder).llDetailsDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
-                    ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
-                    ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
-                }
+            ((DViewHolder) holder).llDetailsDate.setOnClickListener(v -> {
+                ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
+                ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
+                ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
             });
 
         }
@@ -151,6 +168,39 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((AllOrderViewHolder) holder).tvTips.setText("没有更多了...");
             }
         }
+        if (holder instanceof TripViewHolder) {
+            ScenicSpot scenicSpot = scenicSpotList.get(position);
+            holder.itemView.setTag(scenicSpot);
+            if (position == 0) ((TripViewHolder) holder).viewTop.setVisibility(View.VISIBLE);
+            else ((TripViewHolder) holder).viewTop.setVisibility(View.GONE);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + scenicSpot.getScenicSpotPicUrl(),
+                    ((TripViewHolder) holder).ivTourismPic, InitApp.getOptions());
+            ((TripViewHolder) holder).tvTourismContent.setText(scenicSpot.getScenicSpotTheme());
+            if (scenicSpot.getTravelMode() == 0) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("国内游");
+            } else if (scenicSpot.getTravelMode() == 1) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("出境游");
+            } else if (scenicSpot.getTravelMode() == 2) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("自由行");
+            } else if (scenicSpot.getTravelMode() == 3) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("跟团游");
+            } else if (scenicSpot.getTravelMode() == 4) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("主题游");
+            } else if (scenicSpot.getTravelMode() == 5) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("周边游");
+            } else if (scenicSpot.getTravelMode() == 6) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("一日游");
+            } else if (scenicSpot.getTravelMode() == 7) {
+                ((TripViewHolder) holder).tvTripInformtion.setText("自由行");
+            }
+            ((TripViewHolder) holder).tvPrice.setText(scenicSpot.getScenicSpotPrice() + "");
+            //去预定
+            ((TripViewHolder) holder).btnReserve.setOnClickListener(v -> {
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+                context.startActivity(intent);
+            });
+        }
     }
 
     @Override
@@ -160,8 +210,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         if (type == 1) {
             return monthDayBeanList == null ? 0 : monthDayBeanList.size();
-        } if (type == 2) {
+        }
+        if (type == 2) {
             return orderList == null ? 0 : orderList.size();
+        }
+        if (type == 3) {
+            return scenicSpotList == null ? 0 : scenicSpotList.size();
         }
         return 0;
     }
@@ -214,6 +268,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
         public AllOrderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class TripViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_tourism_pic)
+        ImageView ivTourismPic;
+        @BindView(R.id.tv_tourism_content)
+        TextView tvTourismContent;
+        @BindView(R.id.tv_trip_informtion)
+        TextView tvTripInformtion;
+        @BindView(R.id.tv_symbol)
+        TextView tvSymbol;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+        @BindView(R.id.btn_reserve)
+        Button btnReserve;
+        @BindView(R.id.view_top)
+        View viewTop;
+
+        public TripViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

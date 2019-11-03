@@ -51,6 +51,7 @@ import com.youth.banner.loader.ImageLoader;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -213,6 +214,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     private List<MonthDayBean> monthDayBeanList = new ArrayList<>();
     //收藏、取消判断
     private boolean flag = false;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -433,116 +435,74 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
      * 获取一个月内的日期和时间
      */
     private void getMonthDays() {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
         Calendar calendar = Calendar.getInstance();
-        //年份
-        int year = calendar.get(Calendar.YEAR);
-        //月
         int month = calendar.get(Calendar.MONTH) + 1;
-        //日
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        //星期
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
-        //获取当月总天数
-        int currentDays = getMonthLastDay(year, month);
-        //获取当月剩余的天数
-        int currentDR = currentDays - day;
-        //获取月份和日期
-        String mDate = "";
-        //起始天数往后延长2天
-        int startDays = day + 2;
-        //使用集合状态一个月内的日期
-        List<String> list = new ArrayList<>();
-        //String数组表示星期
         String[] array = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-        //当前日
-        int currentDay = 0;
-        //使用循环获取月份日期
-        for (int i = 1; i <= currentDR; i++) {
-            if (startDays <= currentDays) {
-                if (month < 10 && startDays < 10) {
-                    mDate = "0" + month + "/0" + startDays;
-                }
-                if (month < 10 && startDays >= 10) {
-                    mDate = "0" + month + "/" + startDays;
-                }
-                if (month >= 10 && startDays < 10) {
-                    mDate = month + "/0" + startDays;
-                }
-                if (month >= 10 && startDays >= 10) {
-                    mDate = month + "/" + startDays;
-                }
-                if (startDays == currentDays) {
-                    month = month + 1;
-                }
-                list.add(mDate);
-            }
-            if (month < 10 && i < 10) {
-                mDate = "0" + month + "/0" + i;
-                currentDay = i;
-            }
-            if (month < 10 && i >= 10) {
-                mDate = "0" + month + "/" + i;
-                currentDay = i;
-            }
-            if (month >= 10 && i < 10) {
-                mDate = month + "/0" + i;
-                currentDay = i;
-            }
-            if (month >= 10 && i >= 10) {
-                mDate = month + "/" + i;
-                currentDay = i;
-            }
-            startDays++;
-            list.add(mDate);
-        }
-        for (int i = currentDay; i < day; i++) {
+        //获取当月天数
+        int currentDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //当月剩余天数
+        int remainingMonth = currentDays - day;
+        //可预订起始时间 当前日期往后延长1天
+        int startDays = day + 1;
+        //天数
+        String mDate = "";
+        //集合存储天数
+        List<String> dList = new ArrayList<>();
+        for (int i = startDays; i <= remainingMonth + day; i++) {
+            if (currentDays - day == 1 ) break;
             calendar.set(Calendar.DAY_OF_MONTH, i);
-            week = calendar.get(Calendar.DAY_OF_WEEK);
+            int weeks = calendar.get(Calendar.DAY_OF_WEEK);
             if (month < 10 && i < 10) {
-                mDate = "0" + month + "/0" + i;
+                mDate = "0" + month + "/0" + i + " " + array[weeks - 1];
             }
             if (month < 10 && i >= 10) {
-                mDate = "0" + month + "/" + i;
+                mDate = "0" + month + "/" + i + " " + array[weeks - 1];
             }
             if (month >= 10 && i < 10) {
-                mDate = month + "/0" + i;
+                mDate = month + "/0" + i + " " + array[weeks - 1];
             }
             if (month >= 10 && i >= 10) {
-                mDate = month + "/" + i;
+                mDate = month + "/" + i + " " + array[weeks - 1];
             }
-            list.add(mDate);
+            dList.add(mDate);
         }
-        for (int i = 0; i < list.size(); i++) {
-            MonthDayBean monthDayBean = new MonthDayBean(list.get(i), String.valueOf(scenicSpot.getScenicSpotPrice()));
+
+        if (day >= 1) {
+            //设置月份为下个月，从0开始算起
+            calendar.set(Calendar.MONTH, month);
+            //获取下个月的月份
+            int months = calendar.get(Calendar.MONTH) + 1;
+            for (int i = 1; i <= day; i++) {
+                calendar.set(Calendar.DAY_OF_MONTH, i);
+                int weeks = calendar.get(Calendar.DAY_OF_WEEK);
+                if (months < 10 && i < 10) {
+                    mDate = "0" + months + "/0" + i + " " + array[weeks - 1];
+                }
+                if (months < 10 && i >= 10) {
+                    mDate = "0" + months + "/" + i + " " + array[weeks - 1];
+                }
+                if (months >= 10 && i < 10) {
+                    mDate = months + "/0" + i + " " + array[weeks - 1];
+                }
+                if (months >= 10 && i >= 10) {
+                    mDate = months + "/" + i + " " + array[weeks - 1];
+                }
+                dList.add(mDate);
+            }
+        }
+
+        for (int i = 0; i < dList.size(); i++) {
+            MonthDayBean monthDayBean = new MonthDayBean(dList.get(i), String.valueOf(scenicSpot.getScenicSpotPrice()));
             monthDayBeanList.add(monthDayBean);
         }
+
         if (monthDayBeanList != null) {
             //设置数据
             rvAdapter.setMonthDayBeanList(monthDayBeanList);
             //设置适配器
             rvDate.setAdapter(rvAdapter);
         }
-        Log.d("monthDayBeanList", "monthDayBeanList: " + list.size());
-        Log.d("TWO_DETAIL", "InitApp" + year + "年" + month + "月" + day + "日 " + array[week - 1]);
-        Log.d("TWO_DETAIL", "getDate: " + list.toString());
-    }
-
-    /**
-     * 获取指定月份总天数
-     *
-     * @param year  传入的年份
-     * @param month 传入的月份
-     * @return
-     */
-    public int getMonthLastDay(int year, int month) {
-        Calendar a = Calendar.getInstance();
-        a.set(Calendar.YEAR, year);
-        a.set(Calendar.MONTH, month - 1);
-        a.set(Calendar.DATE, 1);//把日期设置为当月第一天
-        a.roll(Calendar.DATE, -1);//日期回滚一天，也就是最后一天
-        int maxDate = a.get(Calendar.DATE);
-        return maxDate;
     }
 
     /**
@@ -597,10 +557,37 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 buttomChildViewPager.setCurrentItem(2);
                 break;
             case R.id.btn_shapping_chart:
-                AppUtils.getToast("加入行程！");
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", 1);
+                map.put("scenicSpotId", scenicDetails.getScenicSpotId());
+                Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
+                tripCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                AppUtils.getToast(json.getString(RequestURL.TIPS));
+                            } else {
+                                AppUtils.getToast(RequestURL.TIPS);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
                 break;
             case R.id.btn_reserve:
-                Intent intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                //指定类型，0表示立即预定
+                intent.putExtra("type", 0);
                 intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
                 startActivity(intent);
                 break;
@@ -609,8 +596,10 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 AppUtils.getToast("点击可返回顶部！");
                 break;
             case R.id.tv_more_dates:
-                //更多日期
-                AppUtils.getToast("更多日期");
+                intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                //指定类型，1表示更多日期
+                intent.putExtra("type", 1);
+                startActivity(intent);
                 break;
             case R.id.ll_collection:
                 if (flag) {

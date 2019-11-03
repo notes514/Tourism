@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white">
+    android:background="@color/color_separator_row">
 
     <com.example.tourism.widget.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_white">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,8 +65,20 @@
         android:background="@color/color_blue"
         app:leftButtonIcon="@mipmap/icon_all_order_while"
         app:rightButtonIcon="@drawable/btn_perm_identity_selector"
-        app:myTitle="@string/title_destination"
+        app:myTitle="@string/title_order"
         />
 
+    <Button
+        android:id="@+id/btn_add_trip"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circular_frame"
+        android:text="＋"
+        android:textColor="@color/color_white"
+        android:textSize="28sp" />
 
 </RelativeLayout>

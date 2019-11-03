@@ -30,6 +30,8 @@
     <color name="color_dividing_line">#dedede</color>
     <!--分隔行颜色-->
     <color name="color_separator_row">#F5F5F5</color>
+    <!--分割线颜色-->
+    <color name="color_seach_separator_row">#ECECEC</color>
 
     <!--personal-->
     <color name="color_dark_black">#201C1C</color>

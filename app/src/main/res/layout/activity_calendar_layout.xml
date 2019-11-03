@@ -117,6 +117,7 @@
                 android:background="@color/color_dividing_line"/>
             <!-- 时间地点天数 -->
             <TextView
+                android:id="@+id/tv_date_days"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tourism_order_calendar_trip_number"
@@ -130,6 +131,7 @@
                 android:background="@color/color_dividing_line"/>
 
             <LinearLayout
+                android:id="@+id/ll_date_days"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:orientation="horizontal"

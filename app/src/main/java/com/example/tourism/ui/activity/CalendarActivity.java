@@ -2,10 +2,10 @@ package com.example.tourism.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -21,6 +21,7 @@ import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.Lunar;
 import com.example.tourism.widget.CustomToolbar;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,7 +49,14 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
     ImageView ivAdd;
     @BindView(R.id.btn_completion_order)
     Button btnCompletionOrder;
+    @BindView(R.id.tv_date_days)
+    TextView tvDateDays;
+    @BindView(R.id.ll_date_days)
+    LinearLayout llDateDays;
+    @BindView(R.id.ll_buttoms)
+    LinearLayout llButtoms;
 
+    private int type;
     private int scenicSpotId;
     private final int CALENDAR_TODAY = 77; //今天的日历
     private MonthAdapter adapter;
@@ -80,8 +88,18 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
 
     @Override
     public void initValidata() {
-        //获取商品详情编号
-        scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
+        //获取指定类型
+        type = this.getIntent().getIntExtra("type", 0);
+        if (type == 0) {
+            //获取商品详情编号
+            scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
+            btnCompletionOrder.setText(R.string.tourism_order_calendar_completion_order);
+        } else {
+            btnCompletionOrder.setText(R.string.tourism_order_calendar_determine);
+            tvDateDays.setVisibility(View.GONE);
+            llDateDays.setVisibility(View.GONE);
+        }
+
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
@@ -89,7 +107,7 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
         nowDay = day;
         calendar.set(year, month, 1);
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             List<DateBean> deList = new ArrayList<>();
             MonthBean monthEntity = new MonthBean();
             int maxDayOfMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -103,7 +121,7 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
             for (int j = 1; j <= maxDayOfMonth; j++) {
                 DateBean de = new DateBean();
                 if (i == 0) {
-                    de.setType(j < nowDay + 2 ? 4 : 0);
+                    de.setType(j < nowDay + 1 ? 4 : 0);
                 } else {
                     de.setType(0);
                 }
@@ -158,15 +176,19 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
                 tvNumber.setText(number + "");
                 break;
             case R.id.btn_completion_order:
-                if (flag) {
-                    Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
-                    intent.putExtra("scenicSpotId", scenicSpotId);
-                    intent.putExtra("number", tvNumber.getText().toString());
-                    intent.putExtra("date", dateStr);
-                    this.startActivity(intent);
-                    break;
+                if (type == 0) {
+                    if (flag) {
+                        Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
+                        intent.putExtra("scenicSpotId", scenicSpotId);
+                        intent.putExtra("number", tvNumber.getText().toString());
+                        intent.putExtra("date", dateStr);
+                        this.startActivity(intent);
+                        break;
+                    } else {
+                        AppUtils.getToast("请先选择出行日期");
+                    }
                 } else {
-                    AppUtils.getToast("请先选择出行日期");
+                    finish();
                 }
                 break;
         }
