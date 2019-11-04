@@ -21,6 +21,7 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.ui.activity.AllOrderActivity;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalDataActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
@@ -46,7 +47,6 @@ import static com.example.tourism.MainActivity.user;
  * 个人中心
  */
 public class PersonerFragment extends BaseFragment implements DefineView {
-
     @BindView(R.id.h_back)
     ImageView hBack;
     @BindView(R.id.h_head)
@@ -75,6 +75,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     FrameLayout btnHolidayPrbolem;
     @BindView(R.id.btn_mysubscriptions)
     FrameLayout btnMysubscriptions;
+    @BindView(R.id.fl_all_order)
+    FrameLayout flAllOrder;
     @BindView(R.id.btn_coupon)
     FrameLayout btnCoupon;
     @BindView(R.id.btn_member)
@@ -125,7 +127,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFansNum.setVisibility(View.GONE);
             userFollowNum.setVisibility(View.GONE);
         }
-
         initValidata();
         initListener();
         bindData();
@@ -137,7 +138,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     }
 
     @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
-            , R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans})
+            , R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
@@ -156,7 +157,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 Intent btn_my_subscriptions = new Intent(PersonerFragment.this.getActivity(), PersonalSubscriptions.class);
                 startActivity(btn_my_subscriptions);
                 break;
-
             case R.id.btn_member:
                 Intent btn_member1 = new Intent(PersonerFragment.this.getActivity(), PersonalOpenmemberActivity.class);
                 startActivity(btn_member1);
@@ -165,8 +165,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 Intent btn_coupon1 = new Intent(PersonerFragment.this.getActivity(), PersonalCouponActivity.class);
                 startActivity(btn_coupon1);
                 break;
-
-
             case R.id.user_homepage:
                 Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
                 startActivity(btn_user_homepage);
@@ -179,15 +177,15 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 Intent user_homepage1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
                 startActivity(user_homepage1);
                 break;
-
-
             case R.id.user_name:
                 if (user == null) {
                     Intent i = new Intent(PersonerFragment.this.getActivity(), SignInActivity.class);
                     startActivityForResult(i, Request_Code);
                 }
                 break;
-
+            case R.id.fl_all_order: //点击全部订单
+                openActivity(AllOrderActivity.class);
+                break;
         }
     }
 
@@ -254,6 +252,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFollowNum.setVisibility(View.VISIBLE);
         }
     }
+
 
 //    @Override
 //    public void onResume() {

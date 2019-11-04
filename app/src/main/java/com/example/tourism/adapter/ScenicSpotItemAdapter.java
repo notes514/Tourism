@@ -54,7 +54,7 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
             public void onClick(View view) {
                 AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
                 Intent intent = new Intent(context, TourismDetailsActivity.class);
-                intent.putExtra("id", scenicSpot.getScenicSpotId());
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
                 context.startActivity(intent);
             }
         });

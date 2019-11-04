@@ -19,7 +19,7 @@
         android:layout_marginTop="10dp">
         <!--  文字显示  -->
         <TextView
-            android:id="@+id/tv_loading_content"
+            android:id="@+id/tv_erro_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"

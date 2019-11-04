@@ -54,7 +54,7 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
     @BindView(R.id.error_line)
     LinearLayout errorLine;
     private Unbinder unbinder;
-    private static final String KEY = "EXART";
+    private static final String KEY = "BrowsePage";
     private TrHeadBean trHeadBean;
     private LinearLayoutManager layoutManager;
     private PageRecyclerAdapter adapter;

@@ -14,13 +14,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FixedPagerAdapter extends FragmentStatePagerAdapter {
+    //字符串数组
+    private List<String> sList = new ArrayList<>();
     //数组标签
     private List<TrHeadBean> headBeanList = new ArrayList<>();
     //集合碎片
     private List<Fragment> fragmentList = new ArrayList<>();
+    //类型
+    private int type;
 
-    public FixedPagerAdapter(@NonNull FragmentManager fm) {
+    public FixedPagerAdapter(@NonNull FragmentManager fm, int type) {
         super(fm);
+        this.type = type;
     }
 
     @NonNull
@@ -37,7 +42,13 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return headBeanList.get(position).getTitle();
+        if (type == 0) {
+            return headBeanList.get(position).getTitle();
+        }
+        if (type == 1) {
+            return sList.get(position);
+        }
+        return null;
     }
 
     /**
@@ -76,5 +87,9 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
 
     public void setHeadBeanList(List<TrHeadBean> headBeanList) {
         this.headBeanList = headBeanList;
+    }
+
+    public void setsList(List<String> sList) {
+        this.sList = sList;
     }
 }

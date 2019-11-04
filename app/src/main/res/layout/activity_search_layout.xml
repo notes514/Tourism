@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 搜索栏 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:background="@color/color_white">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:padding="4dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_search_gray_24dp"
+                android:background="@drawable/select_search"
+                android:hint="南宁周边热门景点"
+                android:textSize="14sp"
+                android:layout_marginLeft="16dp"/>
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="4dp"
+                android:visibility="gone"
+                android:background="@drawable/ic_clear_gray_24dp"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="@color/color_tab_title"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </LinearLayout>
+    <!-- 最近搜索 -->
+    <LinearLayout
+        android:id="@+id/ll_lately"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最近搜索"
+                android:textSize="16dp"
+                android:textColor="@color/color_black"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/iv_delete"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/icon_delete_dark_gray"/>
+
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <!-- 旅拍热搜 -->
+    <LinearLayout
+        android:id="@+id/ll_hot_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="旅拍热搜"
+            android:textSize="16dp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:padding="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <!-- 附近大家都在搜 -->
+    <LinearLayout
+        android:id="@+id/ll_are_searching"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="附近大家都在搜"
+            android:textSize="16dp"
+            android:textColor="@color/color_black"
+            android:textStyle="bold"
+            android:padding="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

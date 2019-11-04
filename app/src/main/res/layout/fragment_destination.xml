@@ -24,8 +24,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            app:searchIcon="@drawable/btn_serach_selector"
             app:iconifiedByDefault="false"
-            app:queryHint="请输入搜索内容"
+            app:queryHint="请输入相应关键词"
             android:background="@null"/>
 
         <Button
@@ -35,6 +36,7 @@
             android:layout_height="47dp"
             android:text="搜索"
             android:textSize="12dp"
+            android:textColor="@color/color_white"
             android:background="@null">
 
         </Button>

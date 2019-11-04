@@ -1,20 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_separator_row">
 
-    <TextView
-        android:id="@+id/text_order"
+    <com.example.tourism.widget.MyScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:background="@color/color_white"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_separator_row"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="------ 专属推荐 ------"
+                    android:gravity="center"
+                    android:textColor="@color/color_black"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:padding="20dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.example.tourism.widget.MyScrollView>
+
+    <!--顶部标题栏-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@mipmap/icon_all_order_while"
+        app:rightButtonIcon="@drawable/btn_perm_identity_selector"
+        app:myTitle="@string/title_order"
+        />
+
+    <Button
+        android:id="@+id/btn_add_trip"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/circular_frame"
+        android:text="＋"
+        android:textColor="@color/color_white"
+        android:textSize="28sp" />
+
+</RelativeLayout>

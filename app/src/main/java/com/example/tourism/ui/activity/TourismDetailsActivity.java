@@ -1,5 +1,6 @@
 package com.example.tourism.ui.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -22,13 +23,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.tourism.R;
+import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.adapter.VPagerFragmentAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.MonthDayBean;
+import com.example.tourism.entity.ScenicDetails;
+import com.example.tourism.entity.ScenicPic;
+import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.fragment.details.EvaluateFragment;
 import com.example.tourism.ui.fragment.details.PictureFragment;
 import com.example.tourism.ui.fragment.details.TourismRealFragment;
@@ -37,12 +43,17 @@ import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.MyScrollView;
 import com.example.tourism.widget.ViewBundle;
+import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
+import com.youth.banner.BannerConfig;
+import com.youth.banner.Transformer;
+import com.youth.banner.loader.ImageLoader;
 
-import java.time.ZonedDateTime;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,8 +82,8 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     @BindView(R.id.ty_smbol)
     TextView tySmbol;
     //价格
-    @BindView(R.id.ty_price)
-    TextView tyPrice;
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
     //人数
     @BindView(R.id.ty_everyone)
     TextView tyEveryone;
@@ -152,16 +163,26 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     LinearLayout customerServiceLine;
     @BindView(R.id.collection_image)
     ImageView collectionImage;
-    @BindView(R.id.collection_line)
-    LinearLayout collectionLine;
+    @BindView(R.id.ll_service)
+    LinearLayout llService;
+    @BindView(R.id.ll_collection)
+    LinearLayout llCollection;
     @BindView(R.id.btn_shapping_chart)
     Button btnShappingChart;
     @BindView(R.id.btn_reserve)
     Button btnReserve;
     @BindView(R.id.iv_back_top)
     ImageView ivBackTop;
-
-    Intent intent;
+    @BindView(R.id.loading_line)
+    LinearLayout loadingLine;
+    @BindView(R.id.empty_line)
+    LinearLayout emptyLine;
+    @BindView(R.id.error_line)
+    LinearLayout errorLine;
+    @BindView(R.id.ll_toolbar)
+    LinearLayout llToolbar;
+    @BindView(R.id.ll_buttom)
+    LinearLayout llButtom;
     //保存顶部状态栏的高度
     private int statusHeight;
     //保存顶部标题栏的高度
@@ -183,7 +204,17 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     private EvaluateFragment evaluateFragment;
     // 记录底部ViewPager距离顶部的高度
     private int vpagerTopDistance;
-
+    //请求API
+    private ServerApi api;
+    private ScenicSpot scenicSpot;
+    private ScenicDetails scenicDetails;
+    private List<ScenicPic> scenicPicList;
+    //日期适配器
+    private RecyclerViewAdapter rvAdapter;
+    private List<MonthDayBean> monthDayBeanList = new ArrayList<>();
+    //收藏、取消判断
+    private boolean flag = false;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,26 +223,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         ButterKnife.bind(this);
         initView();
         initValidata();
-        initValidata();
-        bindData();
         initImg();
-    }
-
-    /**
-     * 获取一个月内的日期和时间
-     */
-    private void getDate() {
-        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        System.out.println("年份: "+year);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        System.out.println("月份: "+month);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        System.out.println("月: "+day);
-        int week = calendar.get(Calendar.DAY_OF_WEEK);
-        String[] array = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
-        System.out.println(year+"年"+month+"月"+day+"日 "+array[week-1]);
     }
 
     @Override
@@ -221,6 +233,14 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
     @Override
     public void initValidata() {
+        //设置中间内容隐藏
+        myScrollview.setVisibility(View.GONE);
+        llToolbar.setVisibility(View.GONE);
+        llButtom.setVisibility(View.GONE);
+        ivBackTop.setVisibility(View.GONE);
+        loadingLine.setVisibility(View.VISIBLE);
+        emptyLine.setVisibility(View.GONE);
+        errorLine.setVisibility(View.GONE);
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         //设置状态栏高度
@@ -305,30 +325,33 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
             }
         });
         myScrollview.smoothScrollTo(0, 0);
-
-        //获取景区详情图片
-        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Call<ResponseBody> picCall = api.getNAsync("");
-        picCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-
+        //获取传入的景区编号
+        int scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
         //获取景区详情数据
         api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String, Object> map = new HashMap<>();
-        Call<ResponseBody> dataCall = api.getASync("", map);
+        map.put("scenicSpotId", scenicSpotId);
+        Call<ResponseBody> dataCall = api.getASync("queryByScenicDetailsAndPic", map);
         dataCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        scenicSpot = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA), ScenicSpot.class);
+                        scenicDetails = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA), ScenicDetails.class);
+                        scenicPicList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.THREE_DATA),
+                                new TypeToken<List<ScenicPic>>() {
+                                }.getType());
+                        if (scenicSpot != null && scenicDetails != null && scenicPicList != null) {
+                            bindData();
+                        }
 
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -336,23 +359,155 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
             }
         });
-
     }
-
-    private ServerApi api;
 
     @Override
     public void initListener() {
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void bindData() {
+        //设置中间内容隐藏
+        myScrollview.setVisibility(View.VISIBLE);
+        llToolbar.setVisibility(View.VISIBLE);
+        llButtom.setVisibility(View.VISIBLE);
+        ivBackTop.setVisibility(View.VISIBLE);
+        loadingLine.setVisibility(View.GONE);
+        emptyLine.setVisibility(View.GONE);
+        errorLine.setVisibility(View.GONE);
+        //banner图片轮播
+        List<String> list_path = new ArrayList<>();
+        List<String> list_title = new ArrayList<>();
+        //添加数据
+        for (ScenicPic scenicPic : scenicPicList) {
+            list_path.add(RequestURL.ip_images + scenicPic.getScenicPicUrl());
+        }
+        list_title.add("产品编号 3524985628");
+        list_title.add("产品编号 3524985629");
+        list_title.add("产品编号 3524985630");
+        list_title.add("产品编号 3524985631");
+        list_title.add("产品编号 3524985632");
+        //设置内置样式，共有六种可以点入方法内逐一体验使用。
+        banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
+        //设置图片加载器，图片加载器在下方
+        banner.setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                Glide.with(context).load(path).into(imageView);
+            }
+        });
+        //设置图片网址或地址的集合
+        banner.setImages(list_path);
+        //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
+        banner.setBannerAnimation(Transformer.Default);
+        //设置轮播图的标题集合
+        banner.setBannerTitles(list_title);
+        //设置轮播间隔时间
+        banner.setDelayTime(3000);
+        //设置是否为自动轮播，默认是“是”。
+        banner.isAutoPlay(true);
+        //设置指示器的位置，小点点，左中右。
+        banner.setIndicatorGravity(BannerConfig.CENTER)
+                //必须最后调用的方法，启动轮播图。
+                .start();
+        //显示详情页数据
+        tvContent.setText(scenicSpot.getScenicSpotTheme());
+        tvPrice.setText(scenicSpot.getScenicSpotPrice() + "");
+        tvTraffic.setText(scenicDetails.getConsultTraffic());
+        tvTrip.setText(scenicDetails.getTravelDays());
+        tvStay.setText(scenicDetails.getStayStandard());
+        tvArrive.setText(scenicDetails.getDepartArrive());
 
+        //设置线性布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //横向显示
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        //设置管理器
+        rvDate.setLayoutManager(layoutManager);
+        //创新适配器对象，并指定子布局
+        rvAdapter = new RecyclerViewAdapter(this, 1);
+        getMonthDays();
+    }
+
+    /**
+     * 获取一个月内的日期和时间
+     */
+    private void getMonthDays() {
+        Calendar calendar = Calendar.getInstance();
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        String[] array = new String[]{"周日", "周一", "周二", "周三", "周四", "周五", "周六"};
+        //获取当月天数
+        int currentDays = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        //当月剩余天数
+        int remainingMonth = currentDays - day;
+        //可预订起始时间 当前日期往后延长1天
+        int startDays = day + 1;
+        //天数
+        String mDate = "";
+        //集合存储天数
+        List<String> dList = new ArrayList<>();
+        for (int i = startDays; i <= remainingMonth + day; i++) {
+            if (currentDays - day == 1 ) break;
+            calendar.set(Calendar.DAY_OF_MONTH, i);
+            int weeks = calendar.get(Calendar.DAY_OF_WEEK);
+            if (month < 10 && i < 10) {
+                mDate = "0" + month + "/0" + i + " " + array[weeks - 1];
+            }
+            if (month < 10 && i >= 10) {
+                mDate = "0" + month + "/" + i + " " + array[weeks - 1];
+            }
+            if (month >= 10 && i < 10) {
+                mDate = month + "/0" + i + " " + array[weeks - 1];
+            }
+            if (month >= 10 && i >= 10) {
+                mDate = month + "/" + i + " " + array[weeks - 1];
+            }
+            dList.add(mDate);
+        }
+
+        if (day >= 1) {
+            //设置月份为下个月，从0开始算起
+            calendar.set(Calendar.MONTH, month);
+            //获取下个月的月份
+            int months = calendar.get(Calendar.MONTH) + 1;
+            for (int i = 1; i <= day; i++) {
+                calendar.set(Calendar.DAY_OF_MONTH, i);
+                int weeks = calendar.get(Calendar.DAY_OF_WEEK);
+                if (months < 10 && i < 10) {
+                    mDate = "0" + months + "/0" + i + " " + array[weeks - 1];
+                }
+                if (months < 10 && i >= 10) {
+                    mDate = "0" + months + "/" + i + " " + array[weeks - 1];
+                }
+                if (months >= 10 && i < 10) {
+                    mDate = months + "/0" + i + " " + array[weeks - 1];
+                }
+                if (months >= 10 && i >= 10) {
+                    mDate = months + "/" + i + " " + array[weeks - 1];
+                }
+                dList.add(mDate);
+            }
+        }
+
+        for (int i = 0; i < dList.size(); i++) {
+            MonthDayBean monthDayBean = new MonthDayBean(dList.get(i), String.valueOf(scenicSpot.getScenicSpotPrice()));
+            monthDayBeanList.add(monthDayBean);
+        }
+
+        if (monthDayBeanList != null) {
+            //设置数据
+            rvAdapter.setMonthDayBeanList(monthDayBeanList);
+            //设置适配器
+            rvDate.setAdapter(rvAdapter);
+        }
     }
 
     /**
      * 设置状态栏和标题栏颜色渐变
+     *
      * @param alpha
      * @throws Exception
      */
@@ -377,10 +532,21 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         }
     }
 
-    @OnClick({R.id.tv_info_imagetext, R.id.tv_info_product, R.id.tv_info_evaluate, R.id.btn_shapping_chart,
-            R.id.btn_reserve, R.id.iv_back_top,R.id.fl_red_envelopes,R.id.fl_explain})
+    @OnClick({R.id.back_left_image, R.id.shopping_chart_image, R.id.more_image,
+            R.id.tv_info_imagetext, R.id.tv_info_product, R.id.tv_info_evaluate,
+            R.id.btn_shapping_chart, R.id.btn_reserve, R.id.iv_back_top,
+            R.id.tv_more_dates, R.id.ll_collection, R.id.ll_service})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.back_left_image:
+                finish();
+                break;
+            case R.id.shopping_chart_image:
+                AppUtils.getToast("加入行程");
+                break;
+            case R.id.more_image:
+                AppUtils.getToast("点击了更多");
+                break;
             case R.id.tv_info_imagetext:
                 buttomChildViewPager.setCurrentItem(0);
                 break;
@@ -391,22 +557,64 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 buttomChildViewPager.setCurrentItem(2);
                 break;
             case R.id.btn_shapping_chart:
-                AppUtils.getToast("加入购物车成功！");
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", 1);
+                map.put("scenicSpotId", scenicDetails.getScenicSpotId());
+                Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
+                tripCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                AppUtils.getToast(json.getString(RequestURL.TIPS));
+                            } else {
+                                AppUtils.getToast(RequestURL.TIPS);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
                 break;
             case R.id.btn_reserve:
-                AppUtils.getToast("立即购买！");
+                intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                //指定类型，0表示立即预定
+                intent.putExtra("type", 0);
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+                startActivity(intent);
                 break;
             case R.id.iv_back_top:
                 //返回顶部
                 AppUtils.getToast("点击可返回顶部！");
                 break;
-            case R.id.fl_red_envelopes:
-                intent = new Intent(TourismDetailsActivity.this,RedEnvelopsActivity.class);
+            case R.id.tv_more_dates:
+                intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                //指定类型，1表示更多日期
+                intent.putExtra("type", 1);
                 startActivity(intent);
                 break;
-            case R.id.fl_explain:
-                intent = new Intent(TourismDetailsActivity.this,ServiceExplainActivity.class);
-                startActivity(intent);
+            case R.id.ll_collection:
+                if (flag) {
+                    flag = false;
+                    collectionImage.setBackgroundResource(R.drawable.ic_collection_gray_24dp);
+                    AppUtils.getToast("取消收藏");
+                } else {
+                    flag = true;
+                    AppUtils.getToast("收藏成功");
+                    collectionImage.setBackgroundResource(R.drawable.ic_collection_red_24dp);
+                }
+                break;
+            case R.id.ll_service:
+                //客服
+                AppUtils.getToast("客服");
                 break;
         }
     }
@@ -418,6 +626,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
         /**
          * 滑动的过程
+         *
          * @param position
          * @param positionOffset
          * @param positionOffsetPixels
@@ -427,16 +636,16 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
             // 滑动过程
             if (mCurrentIndex == 0 && position == 0) {
                 params.leftMargin = (int) (mCurrentIndex * bmpw + positionOffset * bmpw)
-                                        +fixLeftMargin;
+                        + fixLeftMargin;
             } else if (mCurrentIndex == 1 && position == 0) {
                 params.leftMargin = (int) (mCurrentIndex * bmpw + (positionOffset - 1) * bmpw)
-                                        +fixLeftMargin;
+                        + fixLeftMargin;
             } else if (mCurrentIndex == 1 && position == 1) {
                 params.leftMargin = (int) (mCurrentIndex * bmpw + positionOffset * bmpw)
-                                        +fixLeftMargin;
+                        + fixLeftMargin;
             } else if (mCurrentIndex == 2 && position == 1) {
-                params.leftMargin = (int) (mCurrentIndex * bmpw + (positionOffset -1 ) * bmpw)
-                                        +fixLeftMargin;
+                params.leftMargin = (int) (mCurrentIndex * bmpw + (positionOffset - 1) * bmpw)
+                        + fixLeftMargin;
             }
             ivCorsor.setLayoutParams(params);
             //重置当前高度
@@ -477,6 +686,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
     /**
      * 改变游动条颜色
+     *
      * @param position
      */
     private void setChangeTv(int position) {
@@ -496,6 +706,5 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         }
         mCurrentIndex = position;
     }
-
 
 }

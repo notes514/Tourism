@@ -3,7 +3,7 @@
     <string name="title_home">首页</string>
     <string name="title_browse">目的地</string>
     <string name="title_destination">攻略库</string>
-    <string name="title_order">旅游订单</string>
+    <string name="title_order">行程</string>
     <string name="title_personer">我的</string>
 
     <!--  首页  -->
@@ -67,6 +67,8 @@
     <string name="tourism_details_tv_trip">行程天数</string>
     <string name="tourism_details_tv_arrive">出发到达</string>
     <string name="tourism_details_tv_stay">住宿标准</string>
+    <string name="tourism_details_add_trip">加入行程</string>
+    <string name="tourism_details_reserves">立即预定</string>
     <!--  立即预定 日期选择 模块  -->
     <string name="tourism_order_calendar_title">选择日期/出行人数</string>
     <string name="tourism_order_calendar_trip_number">请选择出行人数</string>
@@ -75,6 +77,7 @@
     <string name="tourism_order_calendar_add">＋</string>
     <string name="tourism_order_calendar_reduce">－</string>
     <string name="tourism_order_calendar_completion_order">下一步，填写订单</string>
+    <string name="tourism_order_calendar_determine">确定</string>
     <!--  立即预定 订单填写 模块  -->
     <string name="tourism_order_completion_title">订单填写</string>
     <string name="tourism_order_date_place_days">2019年10月28日 南宁出发 3天2晚</string>
@@ -97,16 +100,24 @@
     <string name="tourism_order_nothing_discount">没有可用的优惠</string>
     <string name="tourism_order_special_requirements">是否有特殊要求</string>
     <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
+    <!--  立即预定 全部 模块  -->
+    <string name="tourism_all_order_title">度假旅游/团购订单</string>
 
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>
-
 
     <string name="title_personal_data">个人资料</string>
     <string name="title_personal_coupon">我的度假优惠卷</string>
     <string name="title_personal_collection">我的收藏</string>
     <string name="title_personal_hoilday_problem">度假问题</string>
     <string name="title_personal_subscriptions">我的订阅</string>
+    <string name="title_personal_member">爱旅行VIP会员</string>
+    <string name="title_personal_member_shop">兑换会员</string>
 
+    <!--  订单取消 -->
+    <string name="tourism_order_cancel_productname">产品名称</string>
+    <string name="tourism_order_cancel_tripmode">出行方式</string>
+    <string name="tourism_order_cancel_departureperiod">出发团期</string>
+    <string name="tourism_order_cancel_amountpayable">应付金额</string>
 
 </resources>

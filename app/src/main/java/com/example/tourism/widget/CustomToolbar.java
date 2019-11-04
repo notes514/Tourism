@@ -20,10 +20,13 @@ public class CustomToolbar extends Toolbar {
     private ImageView toolbarRightButton;
     private ImageView toolbarLeftButton;
     private TextView toolbarTitle;
+    private TextView toolbarRightTitle;
     private View mChildView;
     private Drawable leftButtonIcon;
     private Drawable rightButtonIcon;
     private String title;
+    private String rightTitle;
+    private OnRightTitleClickLister onRightTitleClickLister;
     private OnLeftButtonClickLister onLeftButtonClickLister;
     private OnRightButtonClickLister onRightButtonClickLister;
 
@@ -31,6 +34,14 @@ public class CustomToolbar extends Toolbar {
      * 返回按钮监听接口
      */
     public interface OnLeftButtonClickLister {
+        void OnClick();
+    }
+
+    /**
+     * 右边文字接口
+     */
+
+    public interface OnRightTitleClickLister {
         void OnClick();
     }
 
@@ -56,6 +67,7 @@ public class CustomToolbar extends Toolbar {
         leftButtonIcon = ta.getDrawable(R.styleable.CustomToolbar_leftButtonIcon);
         rightButtonIcon = ta.getDrawable(R.styleable.CustomToolbar_rightButtonIcon);
         title = ta.getString(R.styleable.CustomToolbar_myTitle);
+        rightTitle = ta.getString(R.styleable.CustomToolbar_myRightTitle);
         ta.recycle();
         initView(); //初始化视图
         initListener(); //初始化监听器
@@ -70,6 +82,7 @@ public class CustomToolbar extends Toolbar {
             toolbarRightButton = mChildView.findViewById(R.id.toolbar_rightButton);
             toolbarLeftButton = mChildView.findViewById(R.id.toolbar_leftButton);
             toolbarTitle = mChildView.findViewById(R.id.toolbar_title);
+            toolbarRightTitle = mChildView.findViewById(R.id.toolbar_right_title);
             addView(mChildView);
             if (leftButtonIcon != null) {
                 toolbarLeftButton.setImageDrawable(leftButtonIcon);
@@ -79,6 +92,9 @@ public class CustomToolbar extends Toolbar {
             }
             if (title != null) {
                 toolbarTitle.setText(title);
+            }
+            if (rightTitle != null) {
+                toolbarRightTitle.setText(rightTitle);
             }
         }
 
@@ -106,6 +122,14 @@ public class CustomToolbar extends Toolbar {
             }
         });
 
+        toolbarRightTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onRightTitleClickLister != null) {
+                    onRightTitleClickLister.OnClick();
+                }
+            }
+        });
     }
 
     public void setMyTitle(String title) {
@@ -114,6 +138,14 @@ public class CustomToolbar extends Toolbar {
 
     public void setMyTitle(int resId) {
         toolbarTitle.setText(resId);
+    }
+
+    public void setMyRightTitle(String rightTitle) {
+        toolbarRightTitle.setText(rightTitle);
+    }
+
+    public void setMyRightTitle(int resId) {
+        toolbarRightTitle.setText(resId);
     }
 
     /**
@@ -139,6 +171,10 @@ public class CustomToolbar extends Toolbar {
 
     public void setOnRightButtonClickLister(OnRightButtonClickLister onRightButtonClickLister) {
         this.onRightButtonClickLister = onRightButtonClickLister;
+    }
+
+    public void setOnRightTitleClickLister(OnRightTitleClickLister onRightTitleClickLister) {
+        this.onRightTitleClickLister = onRightTitleClickLister;
     }
 
 }

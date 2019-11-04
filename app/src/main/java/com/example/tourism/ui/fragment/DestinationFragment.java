@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -97,6 +98,9 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         searchView = (SearchView) root.findViewById(R.id.search_view);
         searchView.findViewById(R.id.search_plate).setBackground(null);
         searchView.findViewById(R.id.submit_area).setBackground(null);
+        TextView textView = searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+        textView.setTextSize(15);
+        textView.setHintTextColor(Color.WHITE);
 //        regionRecycleView = (RecyclerView) root.findViewById(R.id.browse_region);
 //        countryRecycleView = root.findViewById(R.id.browse_country);
         search = root.findViewById(R.id.search);

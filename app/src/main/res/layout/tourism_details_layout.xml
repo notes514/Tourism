@@ -64,7 +64,7 @@
                                 android:textColor="@color/color_orange"/>
                             <!-- 价格 -->
                             <TextView
-                                android:id="@+id/ty_price"
+                                android:id="@+id/tv_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/tourism_details_price"
@@ -274,33 +274,37 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
-                        android:background="#F5F5F5" />
+                        android:background="@color/color_separator_row" />
                     <!--日期选择模块-->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="60dp">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
                         <!--日期选择模块-->
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_weight="4"
                             android:orientation="vertical">
                             <!-- 添加分割线 -->
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="15dp"/>
+                                android:layout_height="10dp"/>
+                            <!-- 添加分割线 -->
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rv_date"
                                 android:layout_width="match_parent"
-                                android:layout_height="55dp" />
-                            <!-- 添加分割线 -->
+                                android:layout_height="wrap_content" />
+
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="10dp" />
                         </LinearLayout>
                         <!--更多日期模块-->
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:orientation="horizontal"
                             android:gravity="center_vertical"
                             android:layout_alignParentRight="true">
@@ -318,10 +322,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/tourism_details_date"
                                 android:drawableTop="@drawable/ic_more_dates"
-                                android:textSize="14sp"
+                                android:textSize="12sp"
                                 android:padding="10dp" />
                         </LinearLayout>
-                    </RelativeLayout>
+                    </LinearLayout>
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
@@ -530,6 +534,7 @@
     </com.example.tourism.widget.MyScrollView>
     <!--详情页头部-->
     <LinearLayout
+        android:id="@+id/ll_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -544,6 +549,7 @@
     </LinearLayout>
     <!-- 添加底部导航栏 -->
     <LinearLayout
+        android:id="@+id/ll_buttom"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:background="@color/color_white"
@@ -551,6 +557,7 @@
         android:orientation="horizontal">
         <!--  左边  -->
         <LinearLayout
+            android:id="@+id/ll_service"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
@@ -576,12 +583,16 @@
                     android:layout_height="wrap_content"
                     android:text="客服"
                     android:gravity="center"
-                    android:textSize="12sp"
-                    android:layout_marginTop="2dp"/>
+                    android:textSize="12sp"/>
             </LinearLayout>
+            <!-- 添加分割线 -->
+            <View
+                android:layout_width="0.2dp"
+                android:layout_height="match_parent"
+                android:background="#dedede"/>
             <!-- 收藏-->
             <LinearLayout
-                android:id="@+id/collection_line"
+                android:id="@+id/ll_collection"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -592,29 +603,30 @@
                     android:id="@+id/collection_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    app:srcCompat="@drawable/btn_select_collection" />
+                    android:background="@drawable/ic_collection_gray_24dp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="收藏"
                     android:gravity="center"
-                    android:textSize="12sp"
-                    android:layout_marginTop="2dp"/>
+                    android:textSize="12sp"/>
             </LinearLayout>
         </LinearLayout>
         <!--  右边  -->
-        <FrameLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="5"
+            android:orientation="horizontal"
             android:layout_margin="5dp">
 
             <Button
                 android:id="@+id/btn_shapping_chart"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="加入购物车"
+                android:layout_weight="1"
+                android:text="@string/tourism_details_add_trip"
                 android:textSize="18sp"
                 android:textColor="@color/color_white"
                 android:background="@drawable/btn_shopping_chart_color"
@@ -622,14 +634,16 @@
 
             <Button
                 android:id="@+id/btn_reserve"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="立即预定"
+                android:layout_weight="1"
+                android:text="@string/tourism_details_reserves"
                 android:textSize="18sp"
                 android:textColor="@color/color_white"
                 android:background="@drawable/btn_reserve_color"
+                android:layout_marginLeft="10dp"
                 android:layout_gravity="right"/>
-        </FrameLayout>
+        </LinearLayout>
     </LinearLayout>
     <ImageView
         android:id="@+id/iv_back_top"
@@ -641,4 +655,11 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/select_arrow_upward"
         android:src="@drawable/ic_arrow_upward_while_24dp"/>
+
+    <include layout="@layout/loading_layout"/>
+    <!--暂无数据-->
+    <include layout="@layout/empty_layout"/>
+    <!--加载失败-->
+    <include layout="@layout/error_layout"/>
+
 </RelativeLayout>
