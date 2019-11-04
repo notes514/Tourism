@@ -246,49 +246,14 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
         });
     }
 
-    public void getData(){
-        travelModes.add(new TravelMode(0,"推荐"));
-        travelModes.add(new TravelMode(1,"跟团游"));
-        travelModes.add(new TravelMode(2,"自由行"));
-        travelModes.add(new TravelMode(3,"当地玩乐"));
-        travelModes.add(new TravelMode(4,"包车游"));
-        travelModes.add(new TravelMode(5,"门票"));
+    public void getData() {
+        travelModes.add(new TravelMode(0, "推荐"));
+        travelModes.add(new TravelMode(1, "跟团游"));
+        travelModes.add(new TravelMode(2, "自由行"));
+        travelModes.add(new TravelMode(3, "当地玩乐"));
+        travelModes.add(new TravelMode(4, "包车游"));
+        travelModes.add(new TravelMode(5, "门票"));
 
-//        scenicSpots.add(new ScenicSpot(0,0,"0自费0差评 豪华五星+海景温泉酒店 祭火大典+雪山印象丽江表演+冰川公园","hhhhhh",1557.0,1,"南宁","玉龙雪山 游双古城",1,"推荐"));
-//        scenicSpots.add(new ScenicSpot(1,0,"国旅国庆庆典预售开始 下单就减，儿童更优惠！送娱乐项目 私人游艇+敞篷吉普","hhhhhh",1604.0,1,"南宁","游艇 玉龙雪山",1,"推荐"));
-//        scenicSpots.add(new ScenicSpot(2,0,"云南大理丽江5+N天自由行 特色客栈 增Jeep旅拍+接送机+土鸡火锅","hhhhhh",1800.0,2,"南宁","游艇 玉龙雪山",1,"非推荐"));
-//        scenicSpots.add(new ScenicSpot(3,1,"国庆特卖双飞三亚5日 下单立减 五星海景房蜈支洲+南山+天涯海角 排队","hhhhhh",1980.0,1,"南宁","海景房",1,"推荐"));
-//        scenicSpots.add(new ScenicSpot(4,1,"三亚5日0购物0自费海景房+赠：486/人表演+车技+蜈支洲南山天涯天堂","hhhhhh",2417.0,1,"南宁","海景房",1,"推荐"));
-//        scenicSpots.add(new ScenicSpot(5,1,"三亚亚龙湾5天4万连住天域/美高梅/瑞吉/喜来登/红树林等可选 含多项赠送","hhhhhh",1503.0,2,"南宁","豪华型 亚龙湾",1,"非推荐"));
-//        scenicSpots.add(new ScenicSpot(6,2,"0自费！美食！住五星！成都-峨眉山-乐山-都江堰-熊猫乐园-黄龙溪古镇5日游","hhhhhh",1859.0,1,"南宁","峨眉山 都江堰",1,"推荐"));
-//        scenicSpots.add(new ScenicSpot(7,2,"成都+重庆五日自由行；含机票+动车票+酒店+景区接送车，送两江夜游+长江索道","hhhhhh",2230.0,2,"南宁","城市夜游 多商圈",1,"非推荐"));
-//        scenicSpots.add(new ScenicSpot(8,2,"100%纯玩团！0自费0购物！九寨沟+黄龙2日游！一价全包+颜值导游+三环接送","hhhhhh",300.0,1,"南宁","九寨沟",1,"非推荐"));
-        RetrofitManger retrofit = RetrofitManger.getInstance();
-        ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Map<String,Object> map=new HashMap<>();
-        map.put("regionId",1);
-        Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryScenicByRegionId",map);
-        scenicRegionCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                      String m = response.body().string();
-//                    Log.e(TAG, "axconResponse: "+m, null);
-                    List<ScenicSpot> spot = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
-                    scenicSpots.addAll(spot);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d(ImageLoader.TAG, "onFailure: "+t.getMessage());
-            }
-        });
     }
-
-
 
 }
