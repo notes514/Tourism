@@ -94,12 +94,6 @@ public class BrowseRegionAdapter extends RecyclerView.Adapter<BrowseRegionAdapte
 
 
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
 
     }
 

@@ -198,16 +198,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
         startRecommand();
     }
 
-//    private Integer scenicSpotId;
-//    private Integer regionId;
-//    private String scenicSpotTheme;
-//    private String scenicSpotPicUrl;
-//    private Double scenicSpotPrice;
-//    private Integer travelMode;
-//    private String startLand;
-//    private String endLand;
-//    private Integer scenicSpotState;
-//    private String scenicSpotDescribe;
 
     public void startRecommand(){
 
