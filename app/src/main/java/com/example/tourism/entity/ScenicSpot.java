@@ -7,19 +7,31 @@ public class ScenicSpot implements Serializable {
 
     private Integer regionId;
 
+    private String scenicSpotPicUrl;
+
     private String scenicSpotTheme;
 
-    private String scenicSpotPicUrl;
+    private Integer travelMode;
 
     private Double scenicSpotPrice;
 
-    private Integer travelMode;
+    private Double scenicSpotScore;
+
+    private Integer numberOfTourists;
+
+    private Integer scenicSpotSold;
 
     private String startLand;
 
     private String endLand;
 
+    private String tourCity;
+
+    private String scenicSpotShop;
+
     private Integer scenicSpotState;
+
+    private String scenicSpotExplain;
 
     private String scenicSpotDescribe;
 
@@ -54,6 +66,14 @@ public class ScenicSpot implements Serializable {
         this.regionId = regionId;
     }
 
+    public String getScenicSpotPicUrl() {
+        return scenicSpotPicUrl;
+    }
+
+    public void setScenicSpotPicUrl(String scenicSpotPicUrl) {
+        this.scenicSpotPicUrl = scenicSpotPicUrl;
+    }
+
     public String getScenicSpotTheme() {
         return scenicSpotTheme;
     }
@@ -62,12 +82,12 @@ public class ScenicSpot implements Serializable {
         this.scenicSpotTheme = scenicSpotTheme;
     }
 
-    public String getScenicSpotPicUrl() {
-        return scenicSpotPicUrl;
+    public Integer getTravelMode() {
+        return travelMode;
     }
 
-    public void setScenicSpotPicUrl(String scenicSpotPicUrl) {
-        this.scenicSpotPicUrl = scenicSpotPicUrl;
+    public void setTravelMode(Integer travelMode) {
+        this.travelMode = travelMode;
     }
 
     public Double getScenicSpotPrice() {
@@ -78,12 +98,28 @@ public class ScenicSpot implements Serializable {
         this.scenicSpotPrice = scenicSpotPrice;
     }
 
-    public Integer getTravelMode() {
-        return travelMode;
+    public Double getScenicSpotScore() {
+        return scenicSpotScore;
     }
 
-    public void setTravelMode(Integer travelMode) {
-        this.travelMode = travelMode;
+    public void setScenicSpotScore(Double scenicSpotScore) {
+        this.scenicSpotScore = scenicSpotScore;
+    }
+
+    public Integer getNumberOfTourists() {
+        return numberOfTourists;
+    }
+
+    public void setNumberOfTourists(Integer numberOfTourists) {
+        this.numberOfTourists = numberOfTourists;
+    }
+
+    public Integer getScenicSpotSold() {
+        return scenicSpotSold;
+    }
+
+    public void setScenicSpotSold(Integer scenicSpotSold) {
+        this.scenicSpotSold = scenicSpotSold;
     }
 
     public String getStartLand() {
@@ -102,12 +138,36 @@ public class ScenicSpot implements Serializable {
         this.endLand = endLand;
     }
 
+    public String getTourCity() {
+        return tourCity;
+    }
+
+    public void setTourCity(String tourCity) {
+        this.tourCity = tourCity;
+    }
+
+    public String getScenicSpotShop() {
+        return scenicSpotShop;
+    }
+
+    public void setScenicSpotShop(String scenicSpotShop) {
+        this.scenicSpotShop = scenicSpotShop;
+    }
+
     public Integer getScenicSpotState() {
         return scenicSpotState;
     }
 
     public void setScenicSpotState(Integer scenicSpotState) {
         this.scenicSpotState = scenicSpotState;
+    }
+
+    public String getScenicSpotExplain() {
+        return scenicSpotExplain;
+    }
+
+    public void setScenicSpotExplain(String scenicSpotExplain) {
+        this.scenicSpotExplain = scenicSpotExplain;
     }
 
     public String getScenicSpotDescribe() {

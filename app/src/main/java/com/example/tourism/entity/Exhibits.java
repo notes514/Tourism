@@ -17,6 +17,10 @@ public class Exhibits {
 
     private String cellPhoneNumber;
 
+    private String guidanceTeacher;
+
+    private String teamMembers;
+
     private List<FabulousDetails> fabulousDetailsList;
 
     private int likeCount;
@@ -96,5 +100,21 @@ public class Exhibits {
 
     public void setCellPhoneNumber(String cellPhoneNumber) {
         this.cellPhoneNumber = cellPhoneNumber;
+    }
+
+    public String getGuidanceTeacher() {
+        return guidanceTeacher;
+    }
+
+    public void setGuidanceTeacher(String guidanceTeacher) {
+        this.guidanceTeacher = guidanceTeacher;
+    }
+
+    public String getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(String teamMembers) {
+        this.teamMembers = teamMembers;
     }
 }
