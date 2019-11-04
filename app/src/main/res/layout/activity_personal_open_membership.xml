@@ -165,6 +165,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="61dp">
                 <Button
+                    android:id="@+id/btn_zhifu"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

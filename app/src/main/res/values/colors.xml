@@ -43,6 +43,14 @@
     <color name="color_gray_two">#E9E7E7</color>
     <color name="color_shallow_gray">#DDDDDD</color>
     <color name="color_light_gray_two">#696969</color>
+    <color name="personal_line">#eeeeee</color>
+    <color name="personal_text_color_grey">#777777</color>
+    <color name="personal_bg_btn">#237aec</color>
+    <color name="personal_blue_light">#2e88ff</color>
+    <color name="personal_colorstatus">#3da1ff</color>
+    <color name="personal_load_success">#03a44e</color>
+    <color name="personal_load_failure">#de0e26</color>
+    <color name="personal_load">#f506d9</color>
 
     <!--黑色半透明-->
     <color name="color_black_translucent">#80000000</color>
