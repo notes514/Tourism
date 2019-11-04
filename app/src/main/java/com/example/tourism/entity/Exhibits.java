@@ -19,6 +19,21 @@ public class Exhibits {
 
     private List<FabulousDetails> fabulousDetailsList;
 
+    private int likeCount;
+
+    public int getLikeCount() {
+        for (int i = 0; i < getFabulousDetailsList().size(); i++) {
+            if (getFabulousDetailsList().get(i).getFlag()==1){
+                likeCount++;
+            }
+        }
+        return likeCount;
+    }
+
+    public void setLikeCount(int likeCount) {
+        this.likeCount = likeCount;
+    }
+
     public List<FabulousDetails> getFabulousDetailsList() {
         return fabulousDetailsList;
     }

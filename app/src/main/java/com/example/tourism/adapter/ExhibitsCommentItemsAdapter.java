@@ -3,6 +3,7 @@ package com.example.tourism.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class ExhibitsCommentItemsAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.exhibits_comment_items, null);
             viewHolder = new ViewHolder();
             viewHolder.userPic = (CircleImageView) convertView.findViewById(R.id.user_pic);
-            viewHolder.commentator = (TextView) convertView.findViewById(R.id.commentator);
+            viewHolder.userName = (TextView) convertView.findViewById(R.id.user_name);
             viewHolder.commentcontent = (TextView) convertView.findViewById(R.id.exhibits_comment_content);
             convertView.setTag(viewHolder);
         }else {
@@ -62,7 +63,10 @@ public class ExhibitsCommentItemsAdapter extends BaseAdapter {
 //        viewHolder.commentator.setText(objects.get(position).getUserId());
 //        ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getUserId(),
 //                viewHolder.userPic, InitApp.getOptions());
+        viewHolder.userName.setText(objects.get(position).getUserInfo().getUserAccountName());
         viewHolder.commentcontent.setText(objects.get(position).getExhibitsCommentContent());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getUserInfo().getUserPicUrl(),
+                viewHolder.userPic,InitApp.getOptions());
         //viewHolder.commentPraisePoints.setText(objects.get(position).getCommentPraisePoints()+"");
         return convertView;
     }
@@ -103,14 +107,7 @@ public class ExhibitsCommentItemsAdapter extends BaseAdapter {
 
     protected class ViewHolder {
         private CircleImageView userPic;
-        private TextView commentator;
+        private TextView userName;
         private TextView commentcontent;
-        private ImageView ivBrowse;
-        private TextView browseTextView;
-        private ImageView ivFabulous;
-        private TextView commentPraisePoints;
-        private ImageView ivComment;
-        private TextView commentText;
-
     }
 }

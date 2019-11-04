@@ -23,7 +23,7 @@
                 android:src="@drawable/defaultbg" />
 
             <TextView
-                android:id="@+id/commentator"
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4dp"

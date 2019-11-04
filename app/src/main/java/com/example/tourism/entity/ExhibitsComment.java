@@ -11,6 +11,16 @@ public class ExhibitsComment {
 
     private Integer commentPraisePoints;
 
+    private User userInfo;
+
+    public User getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(User userInfo) {
+        this.userInfo = userInfo;
+    }
+
     public Integer getExhibitsCommentId() {
         return exhibitsCommentId;
     }

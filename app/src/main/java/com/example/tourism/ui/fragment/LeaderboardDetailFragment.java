@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,6 +103,12 @@ public class LeaderboardDetailFragment extends BaseFragment implements DefineVie
                             jsonObject.getString("ONE_DETAIL"),
                            new TypeToken<List<Exhibits>>(){}.getType());
                     Log.d("@@@", exhibits.size()+"");
+                    Collections.sort(exhibits, new Comparator<Exhibits>() {
+                        @Override
+                        public int compare(Exhibits exhibits, Exhibits t1) {
+                            return t1.getLikeCount()-exhibits.getLikeCount();
+                        }
+                    });
                     initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();
