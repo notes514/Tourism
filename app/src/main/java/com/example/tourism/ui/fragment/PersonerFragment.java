@@ -1,6 +1,7 @@
 package com.example.tourism.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.widget.NestedScrollView;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
@@ -34,6 +36,15 @@ import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.scwang.smart.refresh.footer.BallPulseFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +78,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView userHomeage;
     @BindView(R.id.user_arrow)
     ImageView userarrow;
-    @BindView(R.id.prl_view)
-    PullRefreshLayout pullRefreshLayout;
+    //    @BindView(R.id.prl_view)
+//    PullRefreshLayout pullRefreshLayout;
     @BindView(R.id.btn_mycollection)
     FrameLayout btnMycollection;
     @BindView(R.id.btn_holidayprbolem)
@@ -89,6 +100,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     CustomToolbar customToolbar;
     @BindView(R.id.status_view)
     View statusView;
+    @BindView(R.id.scrollView)
+    NestedScrollView scrollView;
+    @BindView(R.id.prl_view)
+    SmartRefreshLayout smartRefreshLayout;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -106,19 +121,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 .bitmapTransform(new CropCircleTransformation(getContext()))
                 .into(hHead);
 
-        pullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        //修改数据的代码，最后记得填上此行代码
-                        pullRefreshLayout.setRefreshing(false);
-                        show();
-                    }
-                }, 2000);
-            }
-        });
 
         if (user == null) {
             userHomeage.setVisibility(View.GONE);
@@ -134,11 +136,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         initValidata();
         initListener();
         bindData();
+        initRefreshLayout();
         return root;
-    }
-
-    public void show() {
-        Toast.makeText(getContext(), "刷新成功", LENGTH_LONG).show();
     }
 
     @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
@@ -170,12 +169,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 startActivity(btn_user_homepage);
                 break;
             case R.id.user_follow:
-                Intent user_follow1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-                startActivity(user_follow1);
+                show1();
                 break;
             case R.id.user_fans:
-                Intent user_homepage1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-                startActivity(user_homepage1);
+                show1();
                 break;
             case R.id.user_name:
                 if (user == null) {
@@ -189,9 +186,14 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         }
     }
 
-    private void show1() {
+    private void show() {
         Intent btn_data = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
         startActivity(btn_data);
+    }
+
+    private void show1() {
+        Intent user_homepage1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
+        startActivity(user_homepage1);
     }
 
     @Override
@@ -205,11 +207,27 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         int statusHeight = AppUtils.getStatusBarHeight(getActivity());
         //设置状态栏高度
         AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
+
+
+        //设置透明度为0
+//        statusView.getBackground().mutate().setAlpha(0);
+//        customToolbar.getBackground().mutate().setAlpha(0);
+        int bHeight = 400;
+        //设置滚动监听
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            scrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                //设置status，toobar颜色透明渐变
+                float detalis = scrollY > bHeight ? bHeight : (scrollY > 400 ? scrollY : 400);
+                int alpha = (int) (detalis / bHeight * 255);
+                AppUtils.setUpdateActionBar(statusView, customToolbar, alpha);
+            });
+        }
+
     }
 
     @Override
     public void initListener() {
-        customToolbar.setOnRightButtonClickLister(() -> show1());
+        customToolbar.setOnRightButtonClickLister(() -> show());
     }
 
     @Override
@@ -223,23 +241,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         super.onDestroy();
         unbinder.unbind(); //解绑
     }
-
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch (requestCode){
-//            case Request_Code:
-////                User user = (User) data.getSerializableExtra("data");
-////                Log.d("@@@@",data.getStringExtra("data"));
-//                userName.setText(user.getUserAccountName());
-//                break;
-//                default:
-//                    Log.d("@@@@",data.getStringExtra("无数据"));
-//                    break;
-//        }
-//    }
 
     @Override
     public void onStart() {
@@ -260,11 +261,67 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFollowNum.setVisibility(View.VISIBLE);
         }
     }
+    //刷新头
+    private void initRefreshLayout() {
+        smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        //设置 Footer 为 球脉冲 样式
+        smartRefreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
+                .setAnimatingColor(0xFF1DA8FE));
+        smartRefreshLayout.setOnMultiListener(new OnMultiListener() {
+            @Override
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+                Log.d(InitApp.TAG, "offset: " + offset + "headerHeight: " + headerHeight + "maxDragHeight: " + maxDragHeight);
+            }
 
+            @Override
+            public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        Log.d("22222", "onResume: ");
-//    }
+            }
+
+            @Override
+            public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onHeaderFinish(RefreshHeader header, boolean success) {
+                Log.d("@@@", "刷新完成！");
+            }
+
+            @Override
+            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterReleased(RefreshFooter footer, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterStartAnimator(RefreshFooter footer, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+                //add();
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishLoadMore(1000);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishRefresh(3000);
+            }
+
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+
+            }
+        });
+    }
 }
