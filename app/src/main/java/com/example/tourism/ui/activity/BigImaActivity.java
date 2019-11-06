@@ -1,5 +1,6 @@
 package com.example.tourism.ui.activity;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.tourism.R;
 import com.example.tourism.adapter.PhotoPagerAdapter;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.ViewPagerFixed;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -23,7 +25,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static com.example.tourism.utils.AppUtils.getColor;
 
-public class BigImaActivity extends BaseActivity{
+public class BigImaActivity extends BaseActivity {
 
     private PhotoView photoView;
 
@@ -32,7 +34,6 @@ public class BigImaActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_ima);
-        StatusBarUtil.setColor(this,getColor(R.color.color_black_translucent));
         initView();
 
     }
