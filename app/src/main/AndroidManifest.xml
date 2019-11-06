@@ -122,6 +122,8 @@
         </activity>
         <activity android:name=".ui.activity.OrderCancelLayoutActivity">
         </activity>
+        <activity android:name=".ui.activity.BigImaActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

@@ -15,15 +15,15 @@
         <ImageView
             android:layout_gravity="center_vertical"
             android:id="@+id/back"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:background="@drawable/ic_arrow_back"
             android:layout_marginEnd="10dp"/>
 
         <TextView
             android:id="@+id/search_view"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
+            android:layout_height="31dp"
             android:background="@drawable/layout_border"
             android:layout_gravity="center_vertical"
             android:hint="请输入文字"

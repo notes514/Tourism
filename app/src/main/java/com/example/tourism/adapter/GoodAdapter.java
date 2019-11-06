@@ -1,6 +1,7 @@
 package com.example.tourism.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
+import com.example.tourism.ui.activity.BigImaActivity;
 import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -46,6 +48,14 @@ public class GoodAdapter extends RecyclerView.Adapter<GoodAdapter.ViewHolder> {
         String pic = picList.get(position);
         ImageLoader.getInstance().displayImage(pic, holder.imageView, InitApp.getOptions());
         holder.imageView.setOnClickListener(v -> AppUtils.getToast("你点击了第" + position + "张图片"));
+        holder.imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BigImaActivity.class);
+                intent.putExtra("pic",pic);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
