@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 目的地
+ * 攻略库
  */
 public class BrowseFragment extends BaseFragment implements DefineView {
     @BindView(R.id.custom_toolbar)
@@ -35,6 +35,8 @@ public class BrowseFragment extends BaseFragment implements DefineView {
     TabLayout browseTablayout;
     @BindView(R.id.browse_view_pager)
     ViewPager browseViewPager;
+    @BindView(R.id.status_view)
+    View statusView;
     private Unbinder unbinder;
     private FixedPagerAdapter adapter;
     private List<Fragment> fragmentList;
@@ -57,6 +59,11 @@ public class BrowseFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initValidata() {
+        //获取状态栏高度
+        int statusHeight = AppUtils.getStatusBarHeight(getActivity());
+        //设置状态栏高度
+        AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
+
         //不进行网络请求抓取数据，直接设置数据
         headBeanList = new ArrayList<>();
         headBeanList.add(new TrHeadBean("热门游记", "travelbook/list.htm?order=hot_heat"));

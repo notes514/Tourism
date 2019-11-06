@@ -141,11 +141,11 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         errorLine.setVisibility(View.INVISIBLE);
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
+        //获取状态栏高度
+        statusHeight = AppUtils.getStatusBarHeight(this);
         //设置状态栏高度
-        statusHeight = this.getResources().getDimensionPixelSize(this.getResources().getIdentifier("status_bar_height", "dimen", "android"));
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusHeight);
-        statusView.setLayoutParams(params);
-        statusView.setBackgroundResource(R.color.color_blue);
+        AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
+        //设置透明度为0
         statusView.getBackground().mutate().setAlpha(0);
         customToolbar.getBackground().mutate().setAlpha(0);
         customToolbar.setMyTitle("");
@@ -156,7 +156,7 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
             //设置status，toobar颜色透明渐变
             float detalis = t > bHeight ? bHeight : (t > 30 ? t : 0);
             int alpha = (int) (detalis / bHeight * 255);
-            setUpdateActionBar(alpha);
+            AppUtils.setUpdateActionBar(statusView, customToolbar, alpha);
             if (alpha > 100) {
                 customToolbar.setMyTitle("攻略详情");
             } else {
@@ -249,7 +249,7 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         webSettings.setAppCacheEnabled(true);
 
         //加载数据
-        detailsContent.loadDataWithBaseURL(null, getNewContent(strategy.getContent()), "text/html", "UTF-8", null);
+        detailsContent.loadDataWithBaseURL(null, getNewContent(strategy.getContent()), "text_seach_layout/html", "UTF-8", null);
 
         if (strategy != null) {
             detailsContent.setWebViewClient(new WebViewClient() {

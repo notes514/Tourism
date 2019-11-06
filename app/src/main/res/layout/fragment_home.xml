@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -97,14 +96,74 @@
 
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolBar"
-        android:background="@color/color_blue"
+    <!--首页页头部-->
+    <LinearLayout
+        android:id="@+id/ll_state_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </androidx.appcompat.widget.Toolbar>
+        android:orientation="vertical">
+        <!--状态栏-->
+        <View
+            android:id="@+id/status_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_blue"/>
+        <LinearLayout
+            android:id="@+id/ll_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@color/color_blue"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/tv_diqu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="南宁"
+                android:padding="6dp"
+                android:textSize="16sp"
+                android:textColor="@color/color_white"
+                android:drawableRight="@drawable/ic_expand_more_while_24dp"/>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:padding="4dp">
+
+                <EditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_search_gray_24dp"
+                    android:background="@drawable/select_search_while"
+                    android:hint="南宁周边热门景点"
+                    android:textSize="14sp"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:maxLines="1"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="4dp"
+                    android:visibility="gone"
+                    android:background="@drawable/ic_clear_gray_24dp"/>
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/iv_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="6dp"
+                android:src="@drawable/icon_more_horiz_while_32dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

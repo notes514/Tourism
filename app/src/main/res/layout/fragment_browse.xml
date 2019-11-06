@@ -5,6 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <!--状态栏-->
+    <View
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/color_blue"/>
     <!--顶部标题栏-->
     <com.example.tourism.widget.CustomToolbar
         android:id="@+id/custom_toolbar"

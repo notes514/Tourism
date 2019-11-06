@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
 
     <!-- 搜索栏 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:background="@color/color_white">
+        android:background="@color/color_blue">
 
         <FrameLayout
             android:layout_width="0dp"
@@ -18,12 +20,17 @@
             android:padding="4dp">
 
             <EditText
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_search_gray_24dp"
-                android:background="@drawable/select_search"
+                android:background="@drawable/select_search_while"
                 android:hint="南宁周边热门景点"
                 android:textSize="14sp"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:layout_marginLeft="16dp"/>
 
             <ImageView
@@ -38,11 +45,12 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/tv_delete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="取消"
-            android:textColor="@color/color_tab_title"
+            android:textColor="@color/color_white"
             android:textSize="16sp"
             android:gravity="center"/>
 
@@ -77,9 +85,13 @@
 
         </FrameLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tfl_lately"
+            zhy:max_select="-1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
     </LinearLayout>
     <!-- 旅拍热搜 -->
@@ -98,9 +110,13 @@
             android:textStyle="bold"
             android:padding="10dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tfl_hot_search"
+            zhy:max_select="-1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
     </LinearLayout>
     <!-- 附近大家都在搜 -->
@@ -119,10 +135,20 @@
             android:textStyle="bold"
             android:padding="10dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tfl_are_searching"
+            zhy:max_select="-1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+        </com.zhy.view.flowlayout.TagFlowLayout>
 
     </LinearLayout>
+    <!-- 搜索数据显示 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_seach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
 
 </LinearLayout>
