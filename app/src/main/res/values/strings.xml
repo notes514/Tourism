@@ -16,7 +16,7 @@
     <string name="menu_7">定制旅行</string>
     <string name="menu_8">亲子·游学</string>
     <string name="showNearby">看看附近有什么~~~</string>
-    <string name="nearby_activity_title">附近</string>
+    <string name="nearby_activity_title">NCVT</string>
 
     <!--  地图  -->
     <string name="exhibition_area_1">展览区一</string>
@@ -34,6 +34,20 @@
         <item>展览区四</item>
         <item>展览区五</item>
         <item>展览区六</item>
+    </string-array>
+
+    <string name="exhibition_area_name">软件技术专业</string>
+    <string name="exhibits_name">旅游App</string>
+    <string name="exhibits_author">小组组长：</string>
+    <string name="guidance_teacher">指导老师：</string>
+    <string name="exhibits_comment_count">条评论</string>
+    <string name="likeCount">人喜欢</string>
+    <string name="team_members">小组成员：</string>
+    <string name="cell_phone_number">联系方式：</string>
+
+    <string-array name="spinner_item">
+        <item>评论降序</item>
+        <item>喜欢降序</item>
     </string-array>
 
     <!--  跑马灯通知  -->

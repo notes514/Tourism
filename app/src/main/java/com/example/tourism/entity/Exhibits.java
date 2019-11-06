@@ -25,13 +25,34 @@ public class Exhibits {
 
     private int likeCount;
 
+    private List<ExhibitsPic> exhibitsPicList;
+
+    private List<ExhibitsComment> exhibitsCommentList;
+
+    public List<ExhibitsComment> getExhibitsCommentList() {
+        return exhibitsCommentList;
+    }
+
+    public void setExhibitsCommentList(List<ExhibitsComment> exhibitsCommentList) {
+        this.exhibitsCommentList = exhibitsCommentList;
+    }
+
+    public List<ExhibitsPic> getExhibitsPicList() {
+        return exhibitsPicList;
+    }
+
+    public void setExhibitsPicList(List<ExhibitsPic> exhibitsPicList) {
+        this.exhibitsPicList = exhibitsPicList;
+    }
+
     public int getLikeCount() {
+        int sum = 0;
         for (int i = 0; i < getFabulousDetailsList().size(); i++) {
             if (getFabulousDetailsList().get(i).getFlag()==1){
-                likeCount++;
+                sum++;
             }
         }
-        return likeCount;
+        return sum;
     }
 
     public void setLikeCount(int likeCount) {

@@ -20,13 +20,31 @@ import com.brtbeacon.sdk.BRTThrowable;
 import com.brtbeacon.sdk.callback.BRTBeaconManagerListener;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.ExhibitionArea;
+import com.example.tourism.entity.Exhibits;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.utils.AppUtils;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class NearbyActivity extends BaseActivity implements View.OnClickListener {
 
@@ -67,9 +85,12 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
         //跑马灯效果
         notice.setSelected(true);
         initToolbar();
-        macAddress.add("EF:D5:C7:C8:14:FB");
-        macAddress.add("FE:CB:23:2A:B6:4B");
-        macAddress.add("F9:50:C1:76:EC:5F");
+        macAddress.add("F9:50:C1:76:EC:5F");//1
+        macAddress.add("FE:CB:23:2A:B6:4B");//2
+        macAddress.add("E7:44:02:EA:FE:A9");//3
+        macAddress.add("C0:74:27:97:83:AD");//4
+        macAddress.add("EF:D5:C7:C8:14:FB");//5
+        macAddress.add("E7:87:4D:07:1A:47");//黑色1
         checkBluetoothValid();
         startScan();
     }
@@ -84,7 +105,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             int id = item.getItemId();
             switch (id){
                 case R.id.leaderboard:
-                    showLeaderboard(0);
+                    //showLeaderboard(0);
             }
             return false;
         });
@@ -135,49 +156,51 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
     private BRTBeaconManagerListener beaconManagerListener = new BRTBeaconManagerListener() {
         @Override
         public void onUpdateBeacon(ArrayList<BRTBeacon> arrayList) {
-            List<BRTBeacon> result = new ArrayList<>();
-            for (int i = 0; i < arrayList.size(); i++) {
-                if (arrayList.get(i).isBrightBeacon()){
-                    result.add(arrayList.get(i));
-                }
-            }
-            // Beacon信息更新
-            if (result.size()==0){
-                Log.d("message", "附近没有Beacon ~ ~ ~");
-            }else {
-//                Collections.sort(result, new Comparator<BRTBeacon>() {
-//                    @Override
-//                    public int compare(BRTBeacon brtBeacon, BRTBeacon t1) {
-//                        return brtBeacon.getRssi()*(-1)-t1.getRssi()*(-1);
+//            List<BRTBeacon> result = new ArrayList<>();
+//            for (int i = 0; i < arrayList.size(); i++) {
+//                if (arrayList.get(i).isBrightBeacon()){
+//                    result.add(arrayList.get(i));
+//                }
+//            }
+//            // Beacon信息更新
+//            if (result.size()==0){
+//                Log.d("message", "附近没有Beacon ~ ~ ~");
+//            }else {
+//                Log.d("message", result.size()+"");
+//                for (int i = 0; i < result.size(); i++) {
+//                    if (result.get(i).macAddress.equals("F9:50:C1:76:EC:5F")){
+////                        view.setHeight((int) calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi()));
+//                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区1",Toast.LENGTH_SHORT).show();
+//                        exhibition_area_1.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
+//                    }else if (result.get(i).macAddress.equals("FE:CB:23:2A:B6:4B")){
+//                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区2",Toast.LENGTH_SHORT).show();
+//                        exhibition_area_2.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
+//                    }else if (result.get(i).macAddress.equals("EF:D5:C7:C8:14:FB")){
+//                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区5",Toast.LENGTH_SHORT).show();
+//                        exhibition_area_5.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
 //                    }
-//                });
-//                tv_count.setText("附近有"+result.size()+"处旅游景点");
-//                tv_distance.setText("最近距您"+calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi())+"m");
-                Log.d("message", result.size()+"");
-                for (int i = 0; i < result.size(); i++) {
-                    if (result.get(i).macAddress.equals("F9:50:C1:76:EC:5F")){
-//                        view.setHeight((int) calculateDistance(result.get(0).getMeasuredPower(),result.get(0).getRssi()));
-                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区1",Toast.LENGTH_SHORT).show();
-                        exhibition_area_1.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
-                    }else if (result.get(i).macAddress.equals("FE:CB:23:2A:B6:4B")){
-                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区2",Toast.LENGTH_SHORT).show();
-                        exhibition_area_2.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
-                    }else if (result.get(i).macAddress.equals("EF:D5:C7:C8:14:FB")){
-                        //Toast.makeText(NearbyActivity.this,"你目前正在展览区5",Toast.LENGTH_SHORT).show();
-                        exhibition_area_5.setAlpha((float) calculateDistance(result.get(i).getMeasuredPower(),result.get(i).getRssi()));
-                    }
-                }
-            }
+//                }
+//            }
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onNewBeacon(BRTBeacon brtBeacon) {
             // 发现一个新的Beacon
+            if (brtBeacon.getMacAddress().equals("F9:50:C1:76:EC:5F")){
+                AppUtils.getToast("进入"+brtBeacon.getName());
+                exhibition_area_1.setBackgroundColor(getColor(R.color.color_blue));
+            }
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void onGoneBeacon(BRTBeacon brtBeacon) {
             // 一个Beacon消失
+            if (brtBeacon.getMacAddress().equals("F9:50:C1:76:EC:5F")){
+                AppUtils.getToast("离开"+brtBeacon.getName());
+                exhibition_area_1.setBackgroundColor(getColor(R.color.map_bg_3));
+            }
         }
 
         @Override
@@ -185,17 +208,6 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
 
         }
     };
-
-    private void test(){
-        exhibition_area_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(NearbyActivity.this,ShowExhibitsDetialActivity.class);
-                intent.putExtra("exhibitsId",1);
-                startActivity(intent);
-            }
-        });
-    }
 
     @Override
     protected void onDestroy() {
@@ -208,31 +220,62 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
         int id  = view.getId();
         switch (id){
             case R.id.exhibition_area_1:
-                showLeaderboard(0);
-                break;
-            case R.id.exhibition_area_2:
                 showLeaderboard(1);
                 break;
-            case R.id.exhibition_area_3:
+            case R.id.exhibition_area_2:
                 showLeaderboard(2);
                 break;
-            case R.id.exhibition_area_4:
+            case R.id.exhibition_area_3:
                 showLeaderboard(3);
                 break;
-            case R.id.exhibition_area_5:
+            case R.id.exhibition_area_4:
                 showLeaderboard(4);
                 break;
-            case R.id.exhibition_area_6:
+            case R.id.exhibition_area_5:
                 showLeaderboard(5);
+                break;
+            case R.id.exhibition_area_6:
+                showLeaderboard(6);
                 break;
             default:
                 break;
         }
     }
 
-    private void showLeaderboard(int page){
+    private void showLeaderboard(int exhibitionAreaId){
+        queryExhibitionArea(exhibitionAreaId);
         Intent intent = new Intent(this,LeaderboardActivity.class);
-        intent.putExtra("page",page);
+        intent.putExtra("exhibitionAreaId",exhibitionAreaId);
         startActivity(intent);
+    }
+
+    private void queryExhibitionArea(int exhibitionAreaId){
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("exhibitionAreaId",exhibitionAreaId+"");
+        Call<ResponseBody> exhibitsCall = api.getASync("queryExhibitionArea",hashMap);
+        exhibitsCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String data = response.body().string();
+                    Log.d("@@@",data);
+                    JSONObject jsonObject = new JSONObject(data);
+                    ExhibitionArea exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
+                            jsonObject.getString("ONE_DETAIL"),
+                            new TypeToken<ExhibitionArea>(){}.getType());
+                    Log.d("@@@", exhibitionArea.getExhibitionAreaName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("@@@","请求失败！");
+                Log.d("@@@",t.getMessage());
+            }
+        });
     }
 }

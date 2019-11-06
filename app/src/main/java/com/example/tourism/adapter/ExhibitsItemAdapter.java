@@ -1,6 +1,8 @@
 package com.example.tourism.adapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import android.content.Context;
@@ -20,6 +22,7 @@ import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
+import com.example.tourism.entity.ExhibitsPic;
 import com.example.tourism.entity.FabulousDetails;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.NearbyActivity;
@@ -31,7 +34,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapter.ViewHolder> {
 
     private List<Exhibits> objects = new ArrayList<Exhibits>();
-
     private Context context;
     private LayoutInflater layoutInflater;
 
@@ -39,6 +41,26 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
         this.context = context;
         this.objects = exhibits;
         this.layoutInflater = LayoutInflater.from(context);
+    }
+
+    public void orderByCommentCount(List<Exhibits> exhibits){
+        Collections.sort(exhibits, new Comparator<Exhibits>() {
+            @Override
+            public int compare(Exhibits exhibits, Exhibits t1) {
+                return t1.getExhibitsCommentList().size() - exhibits.getExhibitsCommentList().size();
+            }
+        });
+        notifyDataSetChanged();
+    }
+
+    public void orderByLikeCount(List<Exhibits> exhibits){
+        Collections.sort(exhibits, new Comparator<Exhibits>() {
+            @Override
+            public int compare(Exhibits exhibits, Exhibits t1) {
+                return t1.getLikeCount() - exhibits.getLikeCount();
+            }
+        });
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -51,24 +73,19 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.ranking.setText(position+1+"");
-        holder.exhibitsName.setText(objects.get(position).getExhibitsName());
-        int count = 0;
-        List<FabulousDetails> fabulousDetailsList = objects.get(position).getFabulousDetailsList();
-        for (FabulousDetails details:fabulousDetailsList) {
-            if (details.getFlag() == 1){
-                count = count+1;
-            }
-        }
-        holder.exhibitsPraisePoints.setText(count+"");
+        Exhibits exhibits = objects.get(position);
+        holder.exhibitsName.setText(exhibits.getExhibitsName());
+        holder.exhibitionAreaName.setText(AppUtils.getStringArray(R.array.exhibition_area)[exhibits.getExhibitionAreaId()-1]);
+        holder.exhibitsAuthor.setText(AppUtils.getString(R.string.exhibits_author)+exhibits.getExhibitsAuthor());
+        holder.teamMembers.setText(AppUtils.getString(R.string.team_members)+exhibits.getTeamMembers());
+        holder.exhibitsCommentCount.setText(exhibits.getExhibitsCommentList().size()+"");
+        holder.likeCount.setText(exhibits.getLikeCount()+"");
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images+exhibits.getExhibitsPicList().get(0).getExhibitsPicUrl(),
+                holder.exhibitsPic, InitApp.getOptions());
         holder.exhibitsId.setOnClickListener(view -> {
             Intent intent = new Intent(context, ShowExhibitsDetialActivity.class);
             intent.putExtra("exhibitsId",objects.get(position).getExhibitsId());
             context.startActivity(intent);
-        });
-        holder.like.setOnClickListener(view -> {
-            holder.like.setImageResource(R.drawable.ic_favorite);
-            AppUtils.getToast("点赞成功！");
         });
     }
 
@@ -79,18 +96,24 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
 
     protected class ViewHolder extends RecyclerView.ViewHolder {
         private CardView exhibitsId;
-        private TextView ranking;
+        private ImageView exhibitsPic;
         private TextView exhibitsName;
-        private ImageView like;
-        private TextView exhibitsPraisePoints;
+        private TextView exhibitionAreaName;
+        private TextView exhibitsAuthor;
+        private TextView exhibitsCommentCount;
+        private TextView likeCount;
+        private TextView teamMembers;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            this.exhibitsId = (CardView) itemView.findViewById(R.id.exhibits_id);
-            this.ranking = (TextView) itemView.findViewById(R.id.ranking);
-            this.exhibitsName = (TextView) itemView.findViewById(R.id.exhibits_name);
-            this.like = (ImageView) itemView.findViewById(R.id.like);
-            this.exhibitsPraisePoints = (TextView) itemView.findViewById(R.id.exhibits_praise_points);
+        public ViewHolder(View view) {
+            super(view);
+            exhibitsId = (CardView) view.findViewById(R.id.exhibits_id);
+            exhibitsPic = (ImageView) view.findViewById(R.id.exhibits_pic);
+            exhibitsName = (TextView) view.findViewById(R.id.exhibits_name);
+            exhibitionAreaName = (TextView) view.findViewById(R.id.exhibition_area_name);
+            exhibitsAuthor = (TextView) view.findViewById(R.id.exhibits_author);
+            exhibitsCommentCount = (TextView) view.findViewById(R.id.exhibits_comment_count);
+            likeCount = (TextView) view.findViewById(R.id.likeCount);
+            teamMembers = (TextView) view.findViewById(R.id.team_members);
         }
     }
 }

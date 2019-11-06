@@ -2,6 +2,7 @@ package com.example.tourism.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,12 +10,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 
@@ -27,7 +30,10 @@ import com.example.tourism.entity.Exhibits;
 import com.example.tourism.entity.ExhibitsComment;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.GlideImageLoader;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -58,7 +64,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ShowExhibitsDetialActivity extends BaseActivity {
+public class ShowExhibitsDetialActivity extends AppCompatActivity {
 
     @BindView(R.id.toolBar)
     Toolbar toolbar;
@@ -77,15 +83,27 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
     @BindView(R.id.button)
     Button button;
     @BindView(R.id.exhibits_name)
-    TextView exhibitsname;
+    TextView exhibitsName;
+    @BindView(R.id.exhibition_area_name)
+    TextView exhibitionAreaName;
+    @BindView(R.id.guidance_teacher)
+    TextView guidanceTeacher;
+    @BindView(R.id.team_members)
+    TextView teamMembers;
+    @BindView(R.id.cell_phone_number)
+    TextView cellPhoneNumber;
     @BindView(R.id.exhibits_author)
-    TextView exhibitsauthor;
-    @BindView(R.id.linearLayout1)
-    LinearLayout linearLayout1;
-    @BindView(R.id.exhibits_information2)
-    TextView exhibitsinformation2;
+    TextView exhibitsAuthor;
+    @BindView(R.id.exhibits_information)
+    TextView exhibitsInformation;
     @BindView(R.id.comment_count)
-    TextView comment_count;
+    TextView commentCount;
+    @BindView(R.id.call_up)
+    ImageView callUp;
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.floatingActionButton)
+    FloatingActionButton floatingActionButton;
     @BindView(R.id.listView)
     ListView listView;
 
@@ -111,19 +129,24 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         setContentView(R.layout.activity_show_exhibits_detial);
         unbinder = ButterKnife.bind(this,this);
         exhibitsId = (int) getIntent().getExtras().get("exhibitsId");
-
+        queryExhibitsDetails(exhibitsId);
+        queryExhibitsComment(exhibitsId);
         initToolBar();
         initBanner();
         initVideoView();
         sendComments();
-        queryExhibitsDetails(exhibitsId);
-        queryExhibitsComment(exhibitsId);
+        callUp();
+        floatingActionButton();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void initToolBar(){
+        StatusBarUtil.setTransparentForWindow(this);
+        //扩张时候的title颜色
+        collapsingToolbarLayout.setExpandedTitleColor(getColor(R.color.color_transparent));
+        //收缩后在Toolbar上显示时的title的颜色
+        collapsingToolbarLayout.setCollapsedTitleTextColor(getColor(R.color.color_white));
         toolbar.setTitle(getString(R.string.exhibits_detial));
-        toolbar.setTitleTextColor(getColor(R.color.color_white));
         toolbar.setNavigationOnClickListener(v -> finish());
     }
 
@@ -196,7 +219,22 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
         listView.setAdapter(ecitemadapter);
         listView.setDividerHeight(0);
         ecitemadapter.setListViewHeightBasedOnChildren(listView);
-        comment_count.setText(getString(R.string.comment_count)+"("+ecitemadapter.getCount()+")");
+        commentCount.setText(getString(R.string.comment_count)+"("+ecitemadapter.getCount()+")");
+    }
+
+    private void callUp(){
+        callUp.setOnClickListener(view -> {
+            Intent intent=new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+cellPhoneNumber.getText()));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
+    }
+
+    private void floatingActionButton(){
+        floatingActionButton.setOnClickListener(view -> {
+            floatingActionButton.setImageResource(R.drawable.ic_favorite);
+            AppUtils.getToast("点赞成功");
+        });
     }
 
     private void queryExhibitsDetails(int exhibitsId){
@@ -214,9 +252,12 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
                     Exhibits exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
                             new TypeToken<Exhibits>(){}.getType());
                     Log.d("33333", "onResponse: " + exhibit.getExhibitsName());
-                    exhibitsname.setText(exhibit.getExhibitsName());
-                    exhibitsauthor.setText(exhibit.getExhibitsAuthor());
-                    exhibitsinformation2.setText(exhibit.getExhibitsInformation());
+                    exhibitsName.setText(exhibit.getExhibitsName());
+                    guidanceTeacher.setText(exhibit.getGuidanceTeacher());
+                    exhibitsAuthor.setText(exhibit.getExhibitsAuthor());
+                    teamMembers.setText(exhibit.getTeamMembers());
+                    cellPhoneNumber.setText(exhibit.getCellPhoneNumber());
+                    exhibitsInformation.setText(exhibit.getExhibitsInformation());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -288,8 +329,6 @@ public class ShowExhibitsDetialActivity extends BaseActivity {
             }
         });
     }
-
-
 
     /**
      * 向弹幕View中添加一条弹幕
