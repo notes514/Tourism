@@ -7,7 +7,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/color_white_f2">
 
         <com.example.tourism.widget.CustomToolbar
             android:id="@+id/custom_toolbar"
@@ -17,11 +18,15 @@
             app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
             app:myTitle="@string/title_personal_data"
             />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_white_f2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_light_gray"
+            android:background="@color/color_white_f2"
             android:orientation="vertical">
 
 
@@ -284,10 +289,7 @@
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_white_f2">
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -306,8 +308,9 @@
                             android:textSize="18sp"/>
                     </FrameLayout>
             </FrameLayout>
-            </ScrollView>
-        </LinearLayout>
 
+        </LinearLayout>
+        </ScrollView>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

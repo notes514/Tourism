@@ -31,6 +31,7 @@ import com.example.tourism.ui.activity.PersonalSubscriptions;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
 import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.BindView;
@@ -53,8 +54,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     ImageView hHead;
     @BindView(R.id.user_line)
     ImageView userLine;
-    @BindView(R.id.user_message)
-    ImageView userMessage;
     @BindView(R.id.user_name)
     TextView userName;
     @BindView(R.id.user_val)
@@ -85,6 +84,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView userFollowNum;
     @BindView(R.id.user_fans_num)
     TextView userFansNum;
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -137,17 +138,13 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         Toast.makeText(getContext(), "刷新成功", LENGTH_LONG).show();
     }
 
-    @OnClick({R.id.user_message, R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
+    @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
             , R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
                 Intent intent = new Intent(PersonerFragment.this.getActivity(), PersonalMyCollection.class);
                 startActivity(intent);
-                break;
-            case R.id.user_message:
-                Intent btn_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
-                startActivity(btn_homepage);
                 break;
             case R.id.btn_holidayprbolem:
                 Intent btn_holiday_prbolem = new Intent(PersonerFragment.this.getActivity(), PersonalHolidayproblem.class);
@@ -188,6 +185,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 break;
         }
     }
+    private void show1(){
+        Intent btn_data = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
+        startActivity(btn_data);
+    }
 
     @Override
     public void initView() {
@@ -201,7 +202,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-
+        customToolbar.setOnRightButtonClickLister(() -> show1());
     }
 
     @Override
