@@ -31,6 +31,7 @@ import com.example.tourism.ui.activity.PersonalSubscriptions;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
 import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -86,6 +87,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView userFansNum;
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
+    @BindView(R.id.status_view)
+    View statusView;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -185,7 +188,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 break;
         }
     }
-    private void show1(){
+
+    private void show1() {
         Intent btn_data = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
         startActivity(btn_data);
     }
@@ -197,7 +201,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initValidata() {
-
+        //获取状态栏高度
+        int statusHeight = AppUtils.getStatusBarHeight(getActivity());
+        //设置状态栏高度
+        AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
     }
 
     @Override
