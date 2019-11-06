@@ -7,4 +7,13 @@
         <attr name="myTitle" format="string"/>
         <attr name="myRightTitle" format="string"/>
     </declare-styleable>
+    //支付弹框
+    <declare-styleable name="PersonalCustomStatusViewActivity">
+        <attr name="progress_color" format="color" />
+        <attr name="progress_width" format="dimension" />
+        <attr name="progress_radius" format="dimension" />
+        <attr name="load_success_color" format="color" />
+        <attr name="load_failure_color" format="color" />
+    </declare-styleable>
+
 </resources>

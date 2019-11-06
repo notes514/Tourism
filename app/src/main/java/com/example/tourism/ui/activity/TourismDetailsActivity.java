@@ -243,11 +243,11 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         errorLine.setVisibility(View.GONE);
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
+        //获取状态栏高度
+        statusHeight = AppUtils.getStatusBarHeight(this);
         //设置状态栏高度
-        statusHeight = this.getResources().getDimensionPixelSize(this.getResources().getIdentifier("status_bar_height", "dimen", "android"));
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusHeight);
-        statusView.setLayoutParams(params);
-        statusView.setBackgroundResource(R.color.color_blue);
+        AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
+        //设置透明度为0
         statusView.getBackground().mutate().setAlpha(0);
         detailsToolbar.getBackground().mutate().setAlpha(0);
         //设置标题栏隐藏
@@ -268,7 +268,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         //获取轮播图的高度
         //获取顶部标题栏的高度
         detailsToolbar.post(() -> toolbarHeight = detailsToolbar.getHeight() + statusHeight);
-        Log.d("initView", "initView: " + statusHeight);
         toolbarHeight = 89;
         bHeight = 500;
         //浮动栏初始化时隐藏
@@ -298,7 +297,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 //设置status，toobar颜色透明渐变
                 float detalis = t > bHeight ? bHeight : (t > 30 ? t : 0);
                 int alpha = (int) (detalis / bHeight * 255);
-                setUpdateActionBar(alpha);
+                AppUtils.setUpdateActionBar(statusView, detailsToolbar, alpha);
                 if (alpha < 200) {
                     imageViewOne.setBackgroundResource(R.drawable.select_bar_translucent);
                     imageViewTwo.setBackgroundResource(R.drawable.select_bar_translucent);

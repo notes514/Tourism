@@ -4,37 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<!--    <FrameLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:background="@color/color_blue"-->
-<!--        tools:ignore="MissingConstraints">-->
-<!--        <ImageView-->
-<!--            android:id="@+id/btn_member_arrow"-->
-<!--            android:layout_width="30dp"-->
-<!--            android:layout_height="30dp"-->
-<!--            android:layout_gravity="center|left"-->
-<!--            android:layout_marginLeft="10dp"-->
-<!--            android:src="@drawable/personal_arrow_left_24dp" />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:text="爱旅行VIP会员"-->
-<!--            android:textColor="@color/color_dark_black"-->
-<!--            android:textSize="18sp" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/tv_exchange"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center|right"-->
-<!--            android:layout_marginRight="10dp"-->
-<!--            android:text="兑换会员"-->
-<!--            android:textColor="@color/color_dark_black"-->
-<!--            android:textSize="15sp" />-->
-<!--    </FrameLayout>-->
     <com.example.tourism.widget.CustomToolbar
         android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"

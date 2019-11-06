@@ -11,18 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
@@ -33,13 +28,12 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Constant;
-import com.example.tourism.entity.ScenicRegion;
-import com.example.tourism.ui.activity.ActivitySpotActivity;
-import com.example.tourism.ui.activity.SearchList;
-import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.entity.Country;
 import com.example.tourism.entity.Region;
 import com.example.tourism.entity.RegionType;
+import com.example.tourism.entity.ScenicRegion;
+import com.example.tourism.ui.activity.ActivitySpotActivity;
+import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.DbManger;
 import com.example.tourism.utils.MySqliteHelper;
@@ -52,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.ResponseBody;
@@ -65,9 +60,9 @@ import static com.nostra13.universalimageloader.core.ImageLoader.TAG;
  * 浏览历史
  */
 public class DestinationFragment extends BaseFragment implements DefineView {
-
-
     TextView textDestination;
+    @BindView(R.id.status_view)
+    View statusView;
     private Unbinder unbinder;
     private SearchView searchView;
     private RecyclerView regionRecycleView;
@@ -81,7 +76,7 @@ public class DestinationFragment extends BaseFragment implements DefineView {
     List<Country> cc = new ArrayList<>();
     BrowseRegionAdapter browseRegionAdapter;
     List<ScenicRegion> scenicRegions = new ArrayList<>();
-    String temp=null;
+    String temp = null;
     private MySqliteHelper helper;
     private SQLiteDatabase db;
 
@@ -108,10 +103,6 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         // 参数 = 搜索框输入的内容
         helper = new MySqliteHelper(getActivity());
         db = helper.getWritableDatabase();
-
-
-
-
 
 
 //        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
@@ -176,61 +167,57 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         replaceFragment(new SearchSpotAdapterFragment());
 
 
-
         return root;
     }
 
 
-    public void getData(){
+    public void getData() {
 
-        regions.add(new Region(0,"热门"));
-        regions.add(new Region(1,"国内"));
-        regions.add(new Region(2,"港澳台"));
-        regions.add(new Region(3,"日韩"));
-        regions.add(new Region(4,"东南亚"));
-        regions.add(new Region(5,"欧洲"));
-        regions.add(new Region(6,"美洲"));
+        regions.add(new Region(0, "热门"));
+        regions.add(new Region(1, "国内"));
+        regions.add(new Region(2, "港澳台"));
+        regions.add(new Region(3, "日韩"));
+        regions.add(new Region(4, "东南亚"));
+        regions.add(new Region(5, "欧洲"));
+        regions.add(new Region(6, "美洲"));
 
 
-        mlist.add(new RegionType(0,"国内热门"));
-        mlist.add(new RegionType(0,"国际热门"));
-        mlist.add(new RegionType(1,"华东地区"));
-        mlist.add(new RegionType(1,"西南地区"));
-        mlist.add(new RegionType(1,"西北地区"));
-        mlist.add(new RegionType(1,"华北地区"));
-        mlist.add(new RegionType(1,"东北地区"));
-        mlist.add(new RegionType(2,"港澳台推荐目的地"));
-        mlist.add(new RegionType(2,"港澳台玩法"));
+        mlist.add(new RegionType(0, "国内热门"));
+        mlist.add(new RegionType(0, "国际热门"));
+        mlist.add(new RegionType(1, "华东地区"));
+        mlist.add(new RegionType(1, "西南地区"));
+        mlist.add(new RegionType(1, "西北地区"));
+        mlist.add(new RegionType(1, "华北地区"));
+        mlist.add(new RegionType(1, "东北地区"));
+        mlist.add(new RegionType(2, "港澳台推荐目的地"));
+        mlist.add(new RegionType(2, "港澳台玩法"));
 
-        countries.add(new Country(0,"丽江",R.drawable.defaultbg,"西南地区 国内热门"));
-        countries.add(new Country(1,"三亚",R.drawable.defaultbg,"华南地区 国内热门"));
-        countries.add(new Country(2,"成都",R.drawable.defaultbg,"西南地区 国内热门"));
-        countries.add(new Country(3,"日本",R.drawable.defaultbg,"日韩 国际热门"));
-        countries.add(new Country(4,"越南",0,"东南亚 国际热门"));
-        countries.add(new Country(5,"泰国",0,"东南亚 国际热门"));
-        countries.add(new Country(6,"厦门",R.drawable.defaultbg,"华东地区"));
-        countries.add(new Country(7,"上海",R.drawable.defaultbg,"华东地区"));
+        countries.add(new Country(0, "丽江", R.drawable.defaultbg, "西南地区 国内热门"));
+        countries.add(new Country(1, "三亚", R.drawable.defaultbg, "华南地区 国内热门"));
+        countries.add(new Country(2, "成都", R.drawable.defaultbg, "西南地区 国内热门"));
+        countries.add(new Country(3, "日本", R.drawable.defaultbg, "日韩 国际热门"));
+        countries.add(new Country(4, "越南", 0, "东南亚 国际热门"));
+        countries.add(new Country(5, "泰国", 0, "东南亚 国际热门"));
+        countries.add(new Country(6, "厦门", R.drawable.defaultbg, "华东地区"));
+        countries.add(new Country(7, "上海", R.drawable.defaultbg, "华东地区"));
 
-        countries.add(new Country(8,"青海湖",0,"西北地区"));
-        countries.add(new Country(9,"西宁",0,"西北地区"));
-        countries.add(new Country(10,"北海道",0,"日韩"));
-        countries.add(new Country(11,"澳门",0,"港澳台推荐目的地"));
+        countries.add(new Country(8, "青海湖", 0, "西北地区"));
+        countries.add(new Country(9, "西宁", 0, "西北地区"));
+        countries.add(new Country(10, "北海道", 0, "日韩"));
+        countries.add(new Country(11, "澳门", 0, "港澳台推荐目的地"));
 
         //getRetr("");
 
     }
 
 
-
-
-
-    private void replaceFragment(Fragment fragment){
+    private void replaceFragment(Fragment fragment) {
         //1.实例化FragmentManager对象
-        FragmentManager fragmentManager=getFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
         //2.实例化FragmentTransaction对象
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         //3.设置事务运用
-        fragmentTransaction.replace(R.id.body_layout,fragment);
+        fragmentTransaction.replace(R.id.body_layout, fragment);
         //4.提交事务
         fragmentTransaction.commit();
     }
@@ -242,7 +229,10 @@ public class DestinationFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initValidata() {
-
+        //获取状态栏高度
+        int statusHeight = AppUtils.getStatusBarHeight(getActivity());
+        //设置状态栏高度
+        AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
     }
 
     @Override
@@ -275,34 +265,35 @@ public class DestinationFragment extends BaseFragment implements DefineView {
             public boolean onQueryTextChange(String newText) {
                 FragmentSearchListFragment fragmentSearchListFragment = new FragmentSearchListFragment();
                 Bundle data = new Bundle();
-                data.putString("newText",newText);
-                if(newText.length()>0) {
+                data.putString("newText", newText);
+                if (newText.length() > 0) {
                     fragmentSearchListFragment.setArguments(data);
                     replaceFragment(fragmentSearchListFragment);
-                }else {
+                } else {
                     replaceFragment(new SearchSpotAdapterFragment());
                 }
 
                 RetrofitManger retrofit = RetrofitManger.getInstance();
                 ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                Map<String,Object> map=new HashMap<>();
-                Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+                Map<String, Object> map = new HashMap<>();
+                Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port + "queryAllScenicRegion", map);
                 scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
                             String m = response.body().string();
-                            scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
+                            scenicRegions = new Gson().fromJson(m, new TypeToken<List<ScenicRegion>>() {
+                            }.getType());
 
                             for (int i = 0; i < scenicRegions.size(); i++) {
                                 ScenicRegion scenicRegion = scenicRegions.get(i);
-                                Log.e(TAG, "abconResponse: "+newText, null);
-                                if (newText.equals(scenicRegion.getRegionName())){
-                                    temp=newText;
+                                Log.e(TAG, "abconResponse: " + newText, null);
+                                if (newText.equals(scenicRegion.getRegionName())) {
+                                    temp = newText;
 
                                     break;
-                                }else{
-                                    temp=null;
+                                } else {
+                                    temp = null;
                                 }
                             }
 
@@ -313,7 +304,7 @@ public class DestinationFragment extends BaseFragment implements DefineView {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        Log.d(TAG, "onFailure: "+t.getMessage());
+                        Log.d(TAG, "onFailure: " + t.getMessage());
                     }
                 });
                 return false;
@@ -323,39 +314,39 @@ public class DestinationFragment extends BaseFragment implements DefineView {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (temp!=null){
-
+                if (temp != null) {
 
 
                     RetrofitManger retrofit = RetrofitManger.getInstance();
                     ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                    Map<String,Object> map=new HashMap<>();
-                    Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+                    Map<String, Object> map = new HashMap<>();
+                    Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port + "queryAllScenicRegion", map);
                     scenicRegionCall.enqueue(new Callback<ResponseBody>() {
                         @Override
                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                             try {
                                 String m = response.body().string();
-                                scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
+                                scenicRegions = new Gson().fromJson(m, new TypeToken<List<ScenicRegion>>() {
+                                }.getType());
 
 
                                 for (int i = 0; i < scenicRegions.size(); i++) {
                                     ScenicRegion scenicRegion = scenicRegions.get(i);
-                                    if (temp.equals(scenicRegion.getRegionName())){
+                                    if (temp.equals(scenicRegion.getRegionName())) {
 
-                                        String selectSql = "select * from "+ Constant.TABLE_NAME;
-                                        Cursor cursor = DbManger.selectSQL(db,selectSql,null);
+                                        String selectSql = "select * from " + Constant.TABLE_NAME;
+                                        Cursor cursor = DbManger.selectSQL(db, selectSql, null);
                                         List<ScenicRegion> sc = DbManger.cursorToList(cursor);
-                                        for (int j=0;j<sc.size();j++){
-                                            if (sc.get(j).getRegionId()==scenicRegion.getRegionId()){
-                                                DbManger.execSQL(db,"delete from ScenicRegion_Data where scenicRegionId = "+sc.get(j).getRegionId()+";");
+                                        for (int j = 0; j < sc.size(); j++) {
+                                            if (sc.get(j).getRegionId() == scenicRegion.getRegionId()) {
+                                                DbManger.execSQL(db, "delete from ScenicRegion_Data where scenicRegionId = " + sc.get(j).getRegionId() + ";");
                                             }
                                         }
-                                        String sql = "insert into " + Constant.TABLE_NAME +" values ("+scenicRegion.getRegionId()+",'"+scenicRegion.getRegionName()+"')";
-                                        DbManger.execSQL(db,sql);//执行语句
-                                        Log.e(TAG, "ssssonResponse: "+cursor.getCount(),null );
-                                        Intent intent = new Intent(DestinationFragment.this.getContext(),ActivitySpotActivity.class);
-                                        intent.putExtra("country",scenicRegion);
+                                        String sql = "insert into " + Constant.TABLE_NAME + " values (" + scenicRegion.getRegionId() + ",'" + scenicRegion.getRegionName() + "')";
+                                        DbManger.execSQL(db, sql);//执行语句
+                                        Log.e(TAG, "ssssonResponse: " + cursor.getCount(), null);
+                                        Intent intent = new Intent(DestinationFragment.this.getContext(), ActivitySpotActivity.class);
+                                        intent.putExtra("country", scenicRegion);
                                         DestinationFragment.this.getContext().startActivity(intent);
                                     }
                                 }
@@ -367,11 +358,11 @@ public class DestinationFragment extends BaseFragment implements DefineView {
 
                         @Override
                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            Log.d(TAG, "onFailure: "+t.getMessage());
+                            Log.d(TAG, "onFailure: " + t.getMessage());
                         }
                     });
 
-                }else {
+                } else {
 //                    Toast t;
 ////                    t = Toast.makeText(getActivity(),null,Toast.LENGTH_SHORT);
 ////                    t.setText("无法找到你想找的");
@@ -381,7 +372,7 @@ public class DestinationFragment extends BaseFragment implements DefineView {
             }
 
         });
-        Log.e(TAG, "abconStart: ",null );
+        Log.e(TAG, "abconStart: ", null);
     }
 
 }

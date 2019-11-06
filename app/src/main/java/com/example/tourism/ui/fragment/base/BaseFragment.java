@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.tourism.R;
+import com.example.tourism.utils.AppUtils;
+import com.example.tourism.utils.StatusBarUtil;
+
 /**
  * 基类fragment
  *
@@ -20,7 +24,9 @@ public class BaseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        StatusBarUtil.setColor(getActivity(), AppUtils.getColor(R.color.color_blue));
+        return view;
     }
 
     /**
@@ -29,7 +35,7 @@ public class BaseFragment extends Fragment {
      * @param tClass
      */
     protected void openActivity(Class<?> tClass) {
-        Intent intent = new Intent(getContext(), tClass);
+        Intent intent = new Intent(getActivity(), tClass);
         this.startActivity(intent);
     }
 

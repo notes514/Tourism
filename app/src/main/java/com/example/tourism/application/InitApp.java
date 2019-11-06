@@ -8,6 +8,7 @@ import com.brtbeacon.sdk.IBle;
 import com.brtbeacon.sdk.utils.L;
 import com.example.tourism.R;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.utils.DaoManger;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -30,6 +31,7 @@ public class InitApp extends Application {
         super.onCreate();
         this.instance = this;
         AppUtils.init(this);
+        DaoManger.getInstance().init(this);
         // 开启log打印
         L.enableDebugLogging(true);
         //获取单例

@@ -7,11 +7,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
+
+import com.example.tourism.R;
 
 import java.util.Locale;
 
@@ -183,6 +188,56 @@ public class AppUtils {
      */
     public static String getDeviceBrand() {
         return Build.BRAND;
+    }
+
+    /**
+     * 获取状态栏高度
+     *
+     * @param context 目标Context
+     */
+    public static int getStatusBarHeight(Context context) {
+        // 获得状态栏高度
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        return context.getResources().getDimensionPixelSize(resourceId);
+    }
+
+    /**
+     * 设置状态栏高度，并设置其主题颜色
+     * @param sView 状态栏
+     * @param statusHeight 高度
+     * @param color 颜色
+     */
+    public static void setStatusBarColor(View sView, int statusHeight, int color) {
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, statusHeight);
+        sView.setLayoutParams(params);
+        sView.setBackgroundResource(color);
+    }
+
+    /**
+     * 设置状态栏和标题栏颜色渐变
+     *
+     * @param alpha 透明度值
+     * @throws Exception
+     */
+    private static void setActionBar(View sView, View tView, int alpha) throws Exception {
+        if (sView != null && tView == null) {
+            throw new Exception("状态栏和标题栏为空！");
+        }
+        sView.getBackground().mutate().setAlpha(alpha);
+        tView.getBackground().mutate().setAlpha(alpha);
+    }
+
+    /**
+     * 实时更新状态栏标题栏颜色渐变
+     *
+     * @param alpha
+     */
+    public static void setUpdateActionBar(View sView, View tView, int alpha) {
+        try { //捕获异常
+            setActionBar(sView, tView, alpha);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

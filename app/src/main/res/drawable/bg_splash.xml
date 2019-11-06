@@ -7,7 +7,7 @@
         <bitmap android:gravity="fill_vertical|fill_horizontal"
             android:antialias="true"
             android:filter="true"
-            android:src="@drawable/splash"/>
+            android:src="@drawable/tourism_background"/>
     </item>
 
 </layer-list>
