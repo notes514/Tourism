@@ -231,12 +231,14 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
 
     public void getData() {
         travelModes.add(new TravelMode(0, "推荐"));
-        travelModes.add(new TravelMode(1, "跟团游"));
-        travelModes.add(new TravelMode(2, "自由行"));
-        travelModes.add(new TravelMode(3, "当地玩乐"));
-        travelModes.add(new TravelMode(4, "包车游"));
-        travelModes.add(new TravelMode(5, "门票"));
-
+        travelModes.add(new TravelMode(1, "周边游"));
+        travelModes.add(new TravelMode(2, "一日游"));
+        travelModes.add(new TravelMode(3, "自由行"));
+        travelModes.add(new TravelMode(4, "景点"));
+        travelModes.add(new TravelMode(5, "浪漫之旅"));
+        travelModes.add(new TravelMode(6, "当地向导"));
+        travelModes.add(new TravelMode(7, "定制旅行"));
+        travelModes.add(new TravelMode(8, "亲子"));
     }
 
 }
