@@ -115,6 +115,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
         unbinder = ButterKnife.bind(this, root);
         initView();
         initValidata();
+        initListener();
         bindData();
         return root;
     }
@@ -340,7 +341,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
 
     }
-
 
     private void showNearby() {
         linearLayout.setOnClickListener(new View.OnClickListener() {

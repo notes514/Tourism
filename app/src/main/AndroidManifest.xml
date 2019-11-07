@@ -61,7 +61,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
         <activity
             android:name=".ui.activity.StartPageActivity"
             android:label="@string/app_name"
@@ -127,6 +126,8 @@
         <activity android:name=".ui.activity.SeachActivity">
         </activity>
         <activity android:name=".ui.activity.BigImaActivity">
+        </activity>
+        <activity android:name=".ui.activity.SeachDetailsActivity">
         </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"

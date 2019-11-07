@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.app.Activity;
 
 import com.example.tourism.R;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.MyScrollView;
@@ -11,7 +15,15 @@ import com.example.tourism.widget.MyScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class OrderCancelLayoutActivity extends BaseActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class OrderCancelLayoutActivity extends BaseActivity implements DefineView {
 
     private CustomToolbar customToolbar;
     private MyScrollView scroll;
@@ -48,12 +60,20 @@ public class OrderCancelLayoutActivity extends BaseActivity {
     private TextView orderTime;
     //提供商
     private TextView supplier;
+    //
+    private ServerApi api;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.order_cancel_layout);
+        initView();
+        initValidata();
+        initListener();
+    }
 
+    @Override
+    public void initView() {
         customToolbar = (CustomToolbar) findViewById(R.id.custom_toolbar);
         scroll = (MyScrollView) findViewById(R.id.scroll);
         contactsupplier = findViewById(R.id.lianxigongyingshang);
@@ -74,9 +94,33 @@ public class OrderCancelLayoutActivity extends BaseActivity {
         orderNumber = (TextView) findViewById(R.id.orderNumber);
         orderTime = (TextView) findViewById(R.id.orderTime);
         supplier = (TextView) findViewById(R.id.supplier);
+    }
 
+    @Override
+    public void initValidata() {
+        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String, Object> map = new HashMap<>();
+        Call<ResponseBody> oCall = api.getASync("", map);
+        oCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    @Override
+    public void initListener() {
 
     }
 
+    @Override
+    public void bindData() {
+
+    }
 }

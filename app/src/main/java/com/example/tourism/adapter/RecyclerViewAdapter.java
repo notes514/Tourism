@@ -2,7 +2,6 @@ package com.example.tourism.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +96,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_recommend_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new RecommendViewHolder(view);
+        } else if (type == 6) {
+            View view = inflater.inflate(R.layout.item_seach_details_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new SeachDetailsViewHolder(view);
         }
         return null;
     }
@@ -154,7 +157,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof AllOrderViewHolder) {
             Order order = orderList.get(position);
             holder.itemView.setTag(order);
-            ((AllOrderViewHolder) holder).tvTips.setVisibility(View.GONE);
             ((AllOrderViewHolder) holder).tvOrderContent.setText(order.getOrderContent());
             if (order.getOrderState() == 0) {
                 ((AllOrderViewHolder) holder).tvOrderState.setText("订单取消");
@@ -171,11 +173,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((AllOrderViewHolder) holder).tvTripDay.setText("行程天数 " + order.getDepartDays());
             ((AllOrderViewHolder) holder).tvTripInformtion.setText("出行信息 " + order.getTirpInformation());
             ((AllOrderViewHolder) holder).tvPrice.setText("¥" + order.getOrderPrice());
-            Log.d("onBindViewHolder", "onBindViewHolder: " + getItemCount());
-            if (position == getItemCount() - 1) {
-                ((AllOrderViewHolder) holder).tvTips.setVisibility(View.VISIBLE);
-                ((AllOrderViewHolder) holder).tvTips.setText("没有更多了...");
-            }
         }
         if (holder instanceof TripViewHolder) {
             ScenicSpot scenicSpot = scenicSpotList.get(position);
@@ -243,7 +240,49 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((RecommendViewHolder) holder).tvContentTheme.setText(scenicSpot.getScenicSpotTheme());
             ((RecommendViewHolder) holder).tvExplainOne.setText("环球影城");
             ((RecommendViewHolder) holder).tvExplainTwo.setText("精选酒店");
-            ((RecommendViewHolder) holder).tvPrice.setText(scenicSpot.getScenicSpotPrice() + "");
+            int price = (int) (scenicSpot.getScenicSpotPrice() + 0);
+            ((RecommendViewHolder) holder).tvPrice.setText(price + "起");
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+                context.startActivity(intent);
+            });
+        }
+        if (holder instanceof SeachDetailsViewHolder) {
+            ScenicSpot scenicSpot = scenicSpotList.get(position);
+            holder.itemView.setTag(scenicSpot);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + scenicSpot.getScenicSpotPicUrl(),
+                    ((SeachDetailsViewHolder) holder).ivTourismPic, InitApp.getOptions());
+            if (scenicSpot.getTravelMode() == 0) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("国内游");
+            } else if (scenicSpot.getTravelMode() == 1) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("出境游");
+            } else if (scenicSpot.getTravelMode() == 2) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("自由行");
+            } else if (scenicSpot.getTravelMode() == 3) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("跟团游");
+            } else if (scenicSpot.getTravelMode() == 4) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("主题游");
+            } else if (scenicSpot.getTravelMode() == 5) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("周边游");
+            } else if (scenicSpot.getTravelMode() == 6) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("一日游");
+            } else if (scenicSpot.getTravelMode() == 7) {
+                ((SeachDetailsViewHolder) holder).tvTravelMode.setText("定制游");
+            }
+            ((SeachDetailsViewHolder) holder).tvEndLand.setText(scenicSpot.getStartLand() + "出发");
+            ((SeachDetailsViewHolder) holder).tvTourismContent.setText(scenicSpot.getScenicSpotTheme());
+            ((SeachDetailsViewHolder) holder).tvScore.setText(scenicSpot.getScenicSpotScore() + "分");
+            ((SeachDetailsViewHolder) holder).tvNumber.setText(scenicSpot.getScenicSpotSold() + "人已出行");
+            ((SeachDetailsViewHolder) holder).tvTourCity.setText(scenicSpot.getTourCity());
+            ((SeachDetailsViewHolder) holder).tvExplain.setText(scenicSpot.getScenicSpotExplain());
+            int price = (int) (scenicSpot.getScenicSpotPrice() + 0);
+            ((SeachDetailsViewHolder) holder).tvPrice.setText(price + "");
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, TourismDetailsActivity.class);
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+                context.startActivity(intent);
+            });
         }
     }
 
@@ -258,7 +297,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (type == 2) {
             return orderList == null ? 0 : orderList.size();
         }
-        if (type == 3 || type == 4 || type == 5) {
+        if (type == 3 || type == 4 || type == 5 || type == 6) {
             return scenicSpotList == null ? 0 : scenicSpotList.size();
         }
         return 0;
@@ -307,8 +346,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivForward;
         @BindView(R.id.tv_price)
         TextView tvPrice;
-        @BindView(R.id.tv_tips)
-        TextView tvTips;
 
         public AllOrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -367,6 +404,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvPrice;
 
         public RecommendViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class SeachDetailsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_tourism_pic)
+        ImageView ivTourismPic;
+        @BindView(R.id.tv_travel_mode)
+        TextView tvTravelMode;
+        @BindView(R.id.tv_end_land)
+        TextView tvEndLand;
+        @BindView(R.id.tv_tourism_content)
+        TextView tvTourismContent;
+        @BindView(R.id.tv_score)
+        TextView tvScore;
+        @BindView(R.id.tv_number)
+        TextView tvNumber;
+        @BindView(R.id.tv_explain)
+        TextView tvExplain;
+        @BindView(R.id.tv_tour_city)
+        TextView tvTourCity;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+
+        public SeachDetailsViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

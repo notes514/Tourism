@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/color_blue"
-        app:leftButtonIcon="@drawable/personal_arrow_left_24dp"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
         app:myTitle="@string/title_personal_member"
         app:myRightTitle="@string/title_personal_member_shop"
         tools:ignore="MissingConstraints" />

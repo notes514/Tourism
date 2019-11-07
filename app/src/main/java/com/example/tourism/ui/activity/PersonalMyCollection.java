@@ -15,6 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonalProductFragment;
 import com.example.tourism.ui.fragment.PersonalShopFragment;
 import com.example.tourism.ui.fragment.PersonalTripFragment;
@@ -28,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PersonalMyCollection extends FragmentActivity implements DefineView {
+public class PersonalMyCollection extends BaseActivity implements DefineView {
 
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;

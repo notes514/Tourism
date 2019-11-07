@@ -1,31 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-        <!--状态栏-->
-        <View
-            android:id="@+id/status_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/color_blue"/>
-        <com.example.tourism.widget.CustomToolbar
-            android:id="@+id/custom_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/color_blue"
-            app:rightButtonIcon="@drawable/ic_perm_identity_while_32dp"
-            app:myTitle="@string/title_personer"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/prl_view"
         android:layout_width="match_parent"
@@ -533,4 +513,27 @@
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 <!--    </com.baoyz.widget.PullRefreshLayout>-->
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_state_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <!--状态栏-->
+        <View
+            android:id="@+id/status_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_blue"/>
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/color_blue"
+            app:rightButtonIcon="@drawable/ic_perm_identity_while_32dp"
+            app:myTitle="@string/title_personer"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
+
+</RelativeLayout>

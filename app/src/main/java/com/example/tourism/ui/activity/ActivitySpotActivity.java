@@ -138,8 +138,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
             @Override
             public void onItemClick(int position) {
 
-
-
                 RetrofitManger retrofit = RetrofitManger.getInstance();
                 ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
@@ -150,7 +148,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
                             String m = response.body().string();
-//                    Log.e(TAG, "axconResponse: "+m, null);
                             List<ScenicSpot> scenicSpots = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
                             List<ScenicSpot> temp = null;
                             if (position==0){
@@ -192,9 +189,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
         });
         travelMode.setAdapter(travelModeAdapter);
 
-
-
-
         startRecommand();
     }
 
@@ -211,7 +205,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String m = response.body().string();
-//                    Log.e(TAG, "axconResponse: "+m, null);
                     List<ScenicSpot> scenicSpots = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
                     for (int i=scenicSpots.size()-1;i>=0;i--){
                         ScenicSpot scenicSpot=scenicSpots.get(i);

@@ -13,6 +13,8 @@ import com.example.tourism.R;
 import com.example.tourism.adapter.FixedPagerAdapter;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.entity.TrHeadBean;
+import com.example.tourism.ui.activity.PersonalDataActivity;
+import com.example.tourism.ui.activity.SeachActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
@@ -74,8 +76,8 @@ public class BrowseFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(() -> AppUtils.getToast("点击了搜索"));
-        customToolbar.setOnRightButtonClickLister(() -> AppUtils.getToast("点击了用户"));
+        customToolbar.setOnLeftButtonClickLister(() -> openActivity(SeachActivity.class));
+        customToolbar.setOnRightButtonClickLister(() -> openActivity(PersonalDataActivity.class));
     }
 
     @Override
