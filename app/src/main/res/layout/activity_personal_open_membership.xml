@@ -4,26 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
+
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/color_white"
-        tools:ignore="MissingConstraints">
-        <ImageView
-            android:id="@+id/btn_re"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center|left"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/personal_arrow_black_left"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开通会员"
-            android:layout_gravity="center"
-            android:textColor="@color/color_black"
-            android:textSize="18sp" />
-    </FrameLayout>
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+        app:myTitle="开通会员"
+        tools:ignore="MissingConstraints" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

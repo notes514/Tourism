@@ -18,8 +18,6 @@ import butterknife.OnClick;
 
 public class PersonalHolidayproblem extends BaseActivity implements DefineView {
 
-//    @BindView(R.id.btn_return_arrow)
-//    ImageView btnReturnArrow;
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
 
@@ -29,10 +27,6 @@ public class PersonalHolidayproblem extends BaseActivity implements DefineView {
         setContentView(R.layout.activity_holiday_problem);
         ButterKnife.bind(this);
         initListener();
-    }
-
-    public void show() {
-        finish();
     }
 
     @Override
@@ -47,8 +41,7 @@ public class PersonalHolidayproblem extends BaseActivity implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(() -> show());
-
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
     }
 
     @Override

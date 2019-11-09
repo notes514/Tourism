@@ -172,11 +172,6 @@ public class PersonalMyCollection extends BaseActivity implements DefineView {
         tripTv.setTextColor(Color.BLACK);
         shopTv.setTextColor(Color.BLACK);
     }
-    public void show() {
-        finish();
-    }
-
-
     @Override
     public void initView() {
 
@@ -189,7 +184,7 @@ public class PersonalMyCollection extends BaseActivity implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(() -> show());
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
     }
 
     @Override

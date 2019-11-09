@@ -48,13 +48,13 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center|right"
-                android:layout_marginRight="45dp"
+                android:layout_marginRight="30dp"
                 android:src="@drawable/ic_launcher_background"/>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_gravity="center|right"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/personal_arrow_white_right"/>
         </FrameLayout>
             <FrameLayout
@@ -75,14 +75,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:textSize="13.5sp"
                     android:text="用户名"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
 
@@ -104,14 +104,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:textSize="13.5sp"
                     android:text="电话号码"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
             <FrameLayout
@@ -132,15 +132,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:text="邮箱名"
                     android:textSize="13.5sp"
                     android:textColor="#FF0000"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
             <FrameLayout
@@ -160,15 +160,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:text="去实名"
                     android:textSize="13.5sp"
                     android:textColor="#FF0000"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
 
@@ -186,10 +186,10 @@
                     android:textColor="@color/color_black"
                     android:textSize="15sp"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
 
@@ -211,14 +211,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:textSize="13.5sp"
                     android:text="未知"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
             <FrameLayout
@@ -239,14 +239,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="30dp"
                     android:textSize="13.5sp"
                     android:text="保密"/>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
             <FrameLayout
@@ -267,7 +267,7 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="center|right"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp">
+                    android:layout_marginRight="30dp">
 
                     <TextView
                         android:id="@+id/tv_date"
@@ -282,10 +282,10 @@
 
                 </LinearLayout>
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center|right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
 

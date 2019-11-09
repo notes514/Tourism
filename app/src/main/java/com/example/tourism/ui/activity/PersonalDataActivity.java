@@ -3,6 +3,7 @@ package com.example.tourism.ui.activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.ResponseBody;
@@ -39,8 +41,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PersonalDataActivity extends BaseActivity implements DefineView , View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+import static com.example.tourism.MainActivity.user;
 
+public class PersonalDataActivity extends BaseActivity implements DefineView, View.OnClickListener, DatePicker.OnDateChangedListener, TimePicker.OnTimeChangedListener {
+
+    @BindView(R.id.btn_personal_Logout)
+    Button btnPersonalLogout;
     private Context context;
     private LinearLayout llDate, llTime;
     private TextView tvDate, tvTime;
@@ -60,8 +66,6 @@ public class PersonalDataActivity extends BaseActivity implements DefineView , V
     TextView tvAddress;
     @BindView(R.id.tv_sex)
     TextView tvSex;
-    @BindView(R.id.btn_personal_Logout)
-    Button btnPersonalLogout;
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
 
@@ -83,44 +87,43 @@ public class PersonalDataActivity extends BaseActivity implements DefineView , V
                 .bitmapTransform(new CropCircleTransformation(this))
                 .into(userHeadPortrait);
 
+        if (user == null) {
+            btnPersonalLogout.setVisibility(View.GONE);
+        }else if (user != null){
+            ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+            Map map = new HashMap();
+            map.put("userId", "1");
+            Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
+            personalData.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        String message = response.body().string();
+                        JSONObject json = new JSONObject(message);
+                        if (json.getString("RESULT").equals("S")) {
+                            User user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"), User.class);
+                            Log.d(InitApp.TAG, "UserAccountName: " + user.getUserAccountName());
+                            tvUsername.setText(user.getUserAccountName());
+                            tvEamil.setText(user.getEmail());
+                            tvAddress.setText(user.getNagaiAddr());
+                            tvSex.setText(user.getUserSex());
+                            tvTel.setText(user.getUserTellphone());
 
-        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Map map = new HashMap();
-        map.put("userId", "1");
-        Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
-        personalData.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String message = response.body().string();
-                    JSONObject json = new JSONObject(message);
-                    if (json.getString("RESULT").equals("S")) {
-                        User user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"), User.class);
-                        Log.d(InitApp.TAG, "UserAccountName: " + user.getUserAccountName());
-                        tvUsername.setText(user.getUserAccountName());
-                        tvEamil.setText(user.getEmail());
-                        tvAddress.setText(user.getNagaiAddr());
-                        tvSex.setText(user.getUserSex());
-                        tvTel.setText(user.getUserTellphone());
-
-                        ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), userHeadPortrait, InitApp.getOptions());
+                            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), userHeadPortrait, InitApp.getOptions());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+
                 }
 
-            }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }
-
-
-    public void show() {
-        finish();
+                }
+            });
+            btnPersonalLogout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -137,7 +140,7 @@ public class PersonalDataActivity extends BaseActivity implements DefineView , V
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(() -> show());
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
     }
 
     @Override
@@ -191,6 +194,7 @@ public class PersonalDataActivity extends BaseActivity implements DefineView , V
         this.hour = hourOfDay;
         this.minute = minute;
     }
+
     /**
      * 获取当前的日期和时间
      */
@@ -201,6 +205,13 @@ public class PersonalDataActivity extends BaseActivity implements DefineView , V
         day = calendar.get(Calendar.DAY_OF_MONTH);
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
-
+    }
+    @OnClick(R.id.btn_personal_Logout)
+    public void onViewClicked() {
+        Intent intent_login = new Intent();
+        intent_login.setClass(PersonalDataActivity.this,SignInActivity.class);
+        intent_login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //关键的一句，将新的activity置为栈顶
+        startActivity(intent_login);
+        finish();
     }
 }

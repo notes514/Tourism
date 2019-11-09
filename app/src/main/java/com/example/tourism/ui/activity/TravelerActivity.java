@@ -12,12 +12,10 @@ import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.database.bean.TripBean;
+import com.example.tourism.entity.Constant;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
-import com.yzq.zxinglibrary.android.CaptureActivity;
-import com.yzq.zxinglibrary.bean.ZxingConfig;
-import com.yzq.zxinglibrary.common.Constant;
 
 import java.util.List;
 
@@ -72,15 +70,15 @@ public class TravelerActivity extends BaseActivity implements DefineView {
     public void initListener() {
         customToolbar.setOnLeftButtonClickLister(() -> this.finish());
 
-        tvScanDocuments.setOnClickListener(view -> {
-            Intent intent = new Intent(TravelerActivity.this, CaptureActivity.class);
-            ZxingConfig config = new ZxingConfig();
-            config.setPlayBeep(false);//是否播放扫描声音 默认为true
-            config.setShake(true);//是否震动 默认为true
-            config.setShowFlashLight(true);//是否全屏扫描 默认为true 设为false则只会在扫描框中扫描
-            intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
-            startActivityForResult(intent, REQUEST_CODE_SCAN);
-        });
+//        tvScanDocuments.setOnClickListener(view -> {
+//            Intent intent = new Intent(TravelerActivity.this, CaptureActivity.class);
+//            ZxingConfig config = new ZxingConfig();
+//            config.setPlayBeep(false);//是否播放扫描声音 默认为true
+//            config.setShake(true);//是否震动 默认为true
+//            config.setShowFlashLight(true);//是否全屏扫描 默认为true 设为false则只会在扫描框中扫描
+//            intent.putExtra(Constant.INTENT_ZXING_CONFIG, config);
+//            startActivityForResult(intent, REQUEST_CODE_SCAN);
+//        });
 
         tvManually.setOnClickListener(view ->
         {

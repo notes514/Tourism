@@ -20,10 +20,6 @@ public class PersonalOpenmemberActivity extends BaseActivity implements DefineVi
     Button btnOpen;
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
-    //    @BindView(R.id.tv_exchange)
-//    TextView tvExchangeMember;
-//    @BindView(R.id.btn_member_arrow)
-//    ImageView btnMemberReturnArrow;
     private TextView tvNums2;
 
 
@@ -34,16 +30,10 @@ public class PersonalOpenmemberActivity extends BaseActivity implements DefineVi
         ButterKnife.bind(this);
         initListener();
     }
-    private void show1(){
-        Intent intent = new Intent(PersonalOpenmemberActivity.this,PersonalOnpenMemberExchangeActivity.class);
-        startActivity(intent);
-    }
-    private void show2(){
-        finish();
-    }
     @Override
     public void initView() {
-
+        Intent intent = new Intent(PersonalOpenmemberActivity.this,PersonalOnpenMemberExchangeActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -53,8 +43,8 @@ public class PersonalOpenmemberActivity extends BaseActivity implements DefineVi
 
     @Override
     public void initListener() {
-        customToolbar.setOnRightTitleClickLister(() -> show1());
-        customToolbar.setOnLeftButtonClickLister(() -> show2());
+        customToolbar.setOnRightTitleClickLister(() -> initView());
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
 
     }
 
