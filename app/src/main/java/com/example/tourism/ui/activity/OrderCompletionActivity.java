@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -20,7 +21,9 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.Contacts;
 import com.example.tourism.entity.Order;
+import com.example.tourism.entity.Passenger;
 import com.example.tourism.entity.ScenicDetails;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
@@ -28,11 +31,9 @@ import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.MyScrollView;
-import com.github.mikephil.charting.formatter.IFillFormatter;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,18 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     TextView tvTrip;
     @BindView(R.id.et_adult)
     EditText etAdult;
+    @BindView(R.id.tv_identify_cardId)
+    TextView tvIdentifyCardId;
+    @BindView(R.id.ll_identify_cardid)
+    LinearLayout llIdentifyCardid;
+    @BindView(R.id.et_adult2)
+    EditText etAdult2;
+    @BindView(R.id.tv_identify_cardId2)
+    TextView tvIdentifyCardId2;
+    @BindView(R.id.ll_identify_cardid2)
+    LinearLayout llIdentifyCardid2;
+    @BindView(R.id.ll_trips2)
+    LinearLayout llTrips2;
     @BindView(R.id.iv_forward)
     ImageView ivForward;
     @BindView(R.id.switch_order)
@@ -87,7 +100,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     TextView tvCostDetails;
     @BindView(R.id.btn_reserve)
     Button btnReserve;
-
     //请求api
     private ServerApi api;
     private ScenicSpot scenicSpot;
@@ -110,6 +122,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private String identfityCardId;
     //备注（留言）
     private String remarks;
+    private Contacts contacts;
+    private Passenger passenger;
+    private Order order;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,7 +203,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 CTextUtils.getAutomaticInterceptString(scenicDetails.getDepartArrive(), "-", 0) +
                 " " + scenicDetails.getTravelDays());
         //总价
-        tvPrice.setText("¥"+scenicSpot.getScenicSpotPrice());
+        tvPrice.setText("¥" + scenicSpot.getScenicSpotPrice());
     }
 
     @OnClick({R.id.tv_choice, R.id.tv_trip, R.id.switch_order, R.id.checkBox, R.id.tv_cost_details, R.id.btn_reserve})
@@ -220,7 +235,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 phoneNumber = etPhoneNumber.getText().toString();
                 qq = etQq.getText().toString();
                 wechat = etWechat.getText().toString();
+                //获取出行人信息
                 identfityCardId = etAdult.getText().toString();
+                //备注信息可选
                 remarks = etRequirement.getText().toString();
                 if (checkBox.isChecked()) {
                     if (TextUtils.isEmpty(name) || TextUtils.isEmpty(phoneNumber)) {
@@ -232,7 +249,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         return;
                     }
                     if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(identfityCardId)) {
-                        Log.d("cellPhoneNumber", "onViewClicked: " + name + ", "+ phoneNumber + ", "+ identfityCardId);
                         //生成联系人信息
                         Map<String, Object> map = new HashMap<>();
                         map.put("contactsName", name);
@@ -248,7 +264,33 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                                     String message = response.body().string();
                                     JSONObject json = new JSONObject(message);
                                     if (json.getString(RequestURL.RESULT).equals("S")) {
-                                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+
+                        //生成出行人信息
+                        map.clear();
+                        map.put("passengerName", "代合行");
+                        map.put("passengerType", "学生");
+                        map.put("identityCard", identfityCardId);
+                        Call<ResponseBody> pCall = api.postASync("addByPassenger", map);
+                        pCall.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    String message = response.body().string();
+                                    JSONObject json = new JSONObject(message);
+                                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                                    } else {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -298,7 +340,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                                     String message = response.body().string();
                                     JSONObject json = new JSONObject(message);
                                     if (json.getString(RequestURL.RESULT).equals("S")) {
-                                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                        queryNewestByOCP();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -317,4 +359,80 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 break;
         }
     }
+
+    /**
+     * 获取订单、联系人、出行人信息
+     */
+    private void queryNewestByOCP() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("contactsName", name);
+        map.put("identityCard", identfityCardId);
+        Call<ResponseBody> oCall = api.getASync("queryNewestByOCP", map);
+        oCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        order = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                Order.class);
+                        contacts = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
+                                Contacts.class);
+                        passenger = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.THREE_DATA),
+                                Passenger.class);
+                        if (order != null && contacts != null && passenger != null) {
+                            addByOrderDedails();
+                        }
+                    } else {
+                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /**
+     * 新增订单详情
+     */
+    private void addByOrderDedails() {
+        //生成订单详情
+        Map<String, Object> map = new HashMap<>();
+        map.put("orderId", order.getOrderId());
+        map.put("contactsId", contacts.getContactsId());
+        map.put("passengerId", passenger.getPassengerId());
+        map.put("orderDetailsDescribe", "订单明细描述");
+        Call<ResponseBody> dCall = api.postASync("addByOrderDedails", map);
+        dCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                        //执行跳转
+                        openActivity(AllOrderActivity.class);
+                    } else {
+                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

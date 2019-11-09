@@ -41,7 +41,7 @@
                             android:layout_height="240dp"
                             tools:ignore="MissingConstraints" />
 
-                        <ImageView
+                        <com.example.tourism.widget.CircleImageView
                             android:id="@+id/h_head"
                             android:layout_width="90dp"
                             android:layout_height="90dp"

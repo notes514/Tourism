@@ -557,7 +557,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
             case R.id.btn_shapping_chart:
                 api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String, Object> map = new HashMap<>();
-                map.put("userId", 1);
+                map.put("userId", RequestURL.vUserId);
                 map.put("scenicSpotId", scenicDetails.getScenicSpotId());
                 Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
                 tripCall.enqueue(new Callback<ResponseBody>() {

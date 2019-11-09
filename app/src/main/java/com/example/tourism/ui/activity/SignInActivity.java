@@ -36,12 +36,9 @@ public class SignInActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SignInActivity.this, PersonerFragment.class);
-                finish();
-            }
+        textView.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInActivity.this, PersonerFragment.class);
+            finish();
         });
         SignInFragmentViewpageAdapter signInFragmentViewpageAdapter = new SignInFragmentViewpageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();

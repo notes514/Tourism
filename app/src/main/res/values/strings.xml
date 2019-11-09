@@ -114,6 +114,26 @@
     <string name="tourism_order_nothing_discount">没有可用的优惠</string>
     <string name="tourism_order_special_requirements">是否有特殊要求</string>
     <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
+    <!--  订单支付  -->
+    <string name="tourism_order_payment_title">确认订单</string>
+    <string name="tourism_order_payment_number">订单号：</string>
+    <string name="tourism_order_payment_date">出行时间</string>
+    <string name="tourism_order_payment_trip_number">出行人数</string>
+    <string name="tourism_remark">备注</string>
+    <string name="tourism_order_adult_cost">成人费用：</string>
+    <string name="tourism_order_adult_cost1">¥1999*2</string>
+    <string name="tourism_order_children_cost">儿童费用：</string>
+    <string name="tourism_order_children_cost1">¥199*2</string>
+    <string name="tourism_order_coupon">优惠卷：</string>
+    <string name="tourism_order_coupon_price">-30</string>
+    <string name="tourism_order_price">¥4999</string>
+    <string name="tourism_order_cancel">取消</string>
+    <string name="tourism_order_payment">支付</string>
+    <string name="tourism_order_paymentq">去支付</string>
+    <string name="tourism_order_details">查看详情</string>
+    <string name="tourism_order_cancel1">取消支付</string>
+    <string name="tourism_order_payment1">立即支付</string>
+
     <!--  立即预定 全部 模块  -->
     <string name="tourism_all_order_title">度假旅游/团购订单</string>
 

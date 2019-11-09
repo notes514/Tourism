@@ -376,7 +376,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
     private void sendExhibitsComment(int userId, int exhibitsId, String comment){
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         HashMap hashMap = new HashMap();
-        hashMap.put("userId",userId);
+        hashMap.put("userId", RequestURL.vUserId);
         hashMap.put("exhibitsId",exhibitsId);
         hashMap.put("exhibitsCommentContent",comment);
         Call<ResponseBody> responseBodyCall = serverApi.postASync("sendExhibitsComment",hashMap);

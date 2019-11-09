@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/iv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_clear_gray_24dp"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单支付"
+            android:textColor="@color/color_black"
+            android:layout_gravity="center"
+            android:textSize="20sp"/>
+
+    </FrameLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_dividing_line"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="付款方式"
+            android:textSize="18sp"
+            android:textColor="@color/color_dark_grey"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_payment_method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="支付宝"
+            android:gravity="center"
+            android:textColor="@color/color_black_2c"
+            android:layout_gravity="right"
+            android:drawableRight="@drawable/ic_chevron_right_cyan_green_24dp"
+            android:textSize="18sp"/>
+
+    </FrameLayout>
+
+    <!--分割线-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_dividing_line"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginBottom="300dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="需付款"
+            android:textSize="18sp"
+            android:textColor="@color/color_black_2c"
+            android:layout_gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥3382"
+            android:textColor="@color/color_black"
+            android:layout_gravity="right"
+            android:textSize="20sp"/>
+
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btn_payment"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="立即支付"
+        android:textSize="18sp"
+        android:textColor="@color/color_white"
+        android:background="@drawable/btn_shape_orange_red"
+        android:layout_margin="10dp"/>
+
+</LinearLayout>

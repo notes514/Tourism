@@ -19,6 +19,7 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.OrderCancelLayoutActivity;
 import com.example.tourism.ui.activity.TourismDetailsActivity;
 import com.example.tourism.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -173,6 +174,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((AllOrderViewHolder) holder).tvTripDay.setText("行程天数 " + order.getDepartDays());
             ((AllOrderViewHolder) holder).tvTripInformtion.setText("出行信息 " + order.getTirpInformation());
             ((AllOrderViewHolder) holder).tvPrice.setText("¥" + order.getOrderPrice());
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, OrderCancelLayoutActivity.class);
+                intent.putExtra("orderId", order.getOrderId());
+                context.startActivity(intent);
+            });
         }
         if (holder instanceof TripViewHolder) {
             ScenicSpot scenicSpot = scenicSpotList.get(position);

@@ -242,29 +242,125 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:background="@color/color_dividing_line"/>
-            <!-- 姓名子模块 -->
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
+                <!-- 姓名子模块 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tourism_order_trip_name"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"
+                        android:padding="10dp"/>
+
+                    <EditText
+                        android:id="@+id/et_adult"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"
+                        android:background="@color/color_white"
+                        android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                        android:hint="@string/tourism_order_trip_name_content"/>
+
+                </LinearLayout>
+
+                <!-- 身份证模块 -->
+                <LinearLayout
+                    android:id="@+id/ll_identify_cardid"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tourism_order_trip_name"
-                    android:textSize="14sp"
-                    android:textColor="@color/color_black"
-                    android:padding="10dp"/>
+                    android:visibility="gone">
 
-                <EditText
-                    android:id="@+id/et_adult"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
-                    android:textSize="14sp"
-                    android:background="@color/color_white"
-                    android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
-                    android:hint="@string/tourism_order_trip_name_content"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"/>
+
+                    <TextView
+                        android:id="@+id/tv_identify_cardId"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:text="452228199810085514"
+                        android:textSize="14sp"
+                        android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                        android:textColor="@color/color_black"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_trips2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <!-- 姓名子模块 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tourism_order_trip_name"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"
+                        android:padding="10dp"/>
+
+                    <EditText
+                        android:id="@+id/et_adult2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"
+                        android:background="@color/color_white"
+                        android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                        android:hint="@string/tourism_order_trip_name_content"/>
+
+                </LinearLayout>
+
+                <!-- 身份证模块 -->
+                <LinearLayout
+                    android:id="@+id/ll_identify_cardid2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/color_black"/>
+
+                    <TextView
+                        android:id="@+id/tv_identify_cardId2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:text="452228199810085514"
+                        android:textSize="14sp"
+                        android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                        android:textColor="@color/color_black"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
