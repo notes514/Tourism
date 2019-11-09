@@ -78,7 +78,7 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
         holder.exhibitionAreaName.setText(AppUtils.getStringArray(R.array.exhibition_area)[exhibits.getExhibitionAreaId()-1]);
         holder.exhibitsAuthor.setText(AppUtils.getString(R.string.exhibits_author)+exhibits.getExhibitsAuthor());
         holder.teamMembers.setText(AppUtils.getString(R.string.team_members)+exhibits.getTeamMembers());
-        holder.exhibitsCommentCount.setText(exhibits.getExhibitsCommentList().size()+"");
+        //holder.exhibitsCommentCount.setText(exhibits.getExhibitsCommentList().size()+"");
         holder.likeCount.setText(exhibits.getLikeCount()+"");
         ImageLoader.getInstance().displayImage(RequestURL.ip_images+exhibits.getExhibitsPicList().get(0).getExhibitsPicUrl(),
                 holder.exhibitsPic, InitApp.getOptions());
@@ -100,7 +100,7 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
         private TextView exhibitsName;
         private TextView exhibitionAreaName;
         private TextView exhibitsAuthor;
-        private TextView exhibitsCommentCount;
+        //private TextView exhibitsCommentCount;
         private TextView likeCount;
         private TextView teamMembers;
 
@@ -111,7 +111,7 @@ public class ExhibitsItemAdapter extends RecyclerView.Adapter<ExhibitsItemAdapte
             exhibitsName = (TextView) view.findViewById(R.id.exhibits_name);
             exhibitionAreaName = (TextView) view.findViewById(R.id.exhibition_area_name);
             exhibitsAuthor = (TextView) view.findViewById(R.id.exhibits_author);
-            exhibitsCommentCount = (TextView) view.findViewById(R.id.exhibits_comment_count);
+            //exhibitsCommentCount = (TextView) view.findViewById(R.id.exhibits_comment_count);
             likeCount = (TextView) view.findViewById(R.id.likeCount);
             teamMembers = (TextView) view.findViewById(R.id.team_members);
         }

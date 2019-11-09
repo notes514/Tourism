@@ -7,6 +7,8 @@ public class ExhibitionArea {
 
     private String exhibitionAreaAddress;
 
+    private String exhibitionAreaPic;
+
     public Integer getExhibitionAreaId() {
         return exhibitionAreaId;
     }
@@ -29,5 +31,13 @@ public class ExhibitionArea {
 
     public void setExhibitionAreaAddress(String exhibitionAreaAddress) {
         this.exhibitionAreaAddress = exhibitionAreaAddress;
+    }
+
+    public String getExhibitionAreaPic() {
+        return exhibitionAreaPic;
+    }
+
+    public void setExhibitionAreaPic(String exhibitionAreaPic) {
+        this.exhibitionAreaPic = exhibitionAreaPic;
     }
 }

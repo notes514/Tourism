@@ -180,27 +180,23 @@ public class HomeFragment extends BaseFragment implements DefineView {
         refreshLayout.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                //toolbar.setAlpha(1 - Math.min(percent, 1));
-                //工具栏透明处理
-                //toolbar.setAlpha(1 - Math.min(percent, 1));
-
-                //状态栏透明处理
-                //StatusBarUtil.setTranslucentStatus(HomeFragment.this.getActivity());
+                llStateToolbar.setVisibility(View.INVISIBLE);
                 Log.d(InitApp.TAG, "offset: " + offset + "headerHeight: " + headerHeight + "maxDragHeight: " + maxDragHeight);
             }
 
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
-
+                llStateToolbar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int maxDragHeight) {
-
+                llStateToolbar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
+                llStateToolbar.setVisibility(View.INVISIBLE);
                 Log.d("@@@", "刷新完成！");
             }
 
@@ -236,7 +232,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
-
+                llStateToolbar.setVisibility(View.VISIBLE);
             }
         });
     }

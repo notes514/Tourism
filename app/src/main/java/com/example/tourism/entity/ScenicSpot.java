@@ -27,6 +27,8 @@ public class ScenicSpot implements Serializable {
 
     private String tourCity;
 
+    private Integer scenicSpotNumber;
+
     private String scenicSpotShop;
 
     private Integer scenicSpotState;
@@ -144,6 +146,14 @@ public class ScenicSpot implements Serializable {
 
     public void setTourCity(String tourCity) {
         this.tourCity = tourCity;
+    }
+
+    public Integer getScenicSpotNumber() {
+        return scenicSpotNumber;
+    }
+
+    public void setScenicSpotNumber(Integer scenicSpotNumber) {
+        this.scenicSpotNumber = scenicSpotNumber;
     }
 
     public String getScenicSpotShop() {

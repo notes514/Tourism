@@ -9,6 +9,8 @@ public class Order {
 
     private Integer orderNumber;
 
+    private Integer passengerNumber;
+
     private Integer orderState;
 
     private String tripMode;
@@ -22,6 +24,8 @@ public class Order {
     private Double orderPrice;
 
     private Date orderDate;
+
+    private Integer roomDifference;
 
     private String supplier;
 
@@ -47,6 +51,14 @@ public class Order {
 
     public void setOrderNumber(Integer orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public Integer getPassengerNumber() {
+        return passengerNumber;
+    }
+
+    public void setPassengerNumber(Integer passengerNumber) {
+        this.passengerNumber = passengerNumber;
     }
 
     public Integer getOrderState() {
@@ -103,6 +115,14 @@ public class Order {
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public Integer getRoomDifference() {
+        return roomDifference;
+    }
+
+    public void setRoomDifference(Integer roomDifference) {
+        this.roomDifference = roomDifference;
     }
 
     public String getSupplier() {

@@ -28,6 +28,7 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
 import com.example.tourism.entity.ExhibitsComment;
+import com.example.tourism.entity.FabulousDetails;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
@@ -114,6 +115,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
     private boolean showDanmaku;
     private DanmakuContext danmakuContext;
     private ExhibitsCommentItemsAdapter ecitemadapter;
+    private int defaultFlag,likeFlag = 0;
 
     private BaseDanmakuParser parser = new BaseDanmakuParser() {
         @Override
@@ -131,6 +133,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
         exhibitsId = (int) getIntent().getExtras().get("exhibitsId");
         queryExhibitsDetails(exhibitsId);
         queryExhibitsComment(exhibitsId);
+        queryFabulousDetailsFlag(1,exhibitsId);
         initToolBar();
         initBanner();
         initVideoView();
@@ -232,8 +235,15 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
 
     private void floatingActionButton(){
         floatingActionButton.setOnClickListener(view -> {
-            floatingActionButton.setImageResource(R.drawable.ic_favorite);
-            AppUtils.getToast("点赞成功");
+            if (defaultFlag == 0){
+                defaultFlag = 1;
+                floatingActionButton.setImageResource(R.drawable.ic_favorite);
+                AppUtils.getToast("点赞成功！");
+            }else {
+                defaultFlag = 0;
+                floatingActionButton.setImageResource(R.drawable.ic_unfavorite);
+                AppUtils.getToast("点赞取消！");
+            }
         });
     }
 
@@ -286,6 +296,69 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
                     exhibitsComments = RetrofitManger.getInstance().getGson().fromJson(jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<List<ExhibitsComment>>(){}.getType());
                     initListView();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("!!!","请求失败！");
+                Log.d("!!!",t.getMessage());
+            }
+        });
+    }
+
+    private void setFabulousDetailsFlag(int userId, int exhibitsId){
+        ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("userId",userId);
+        hashMap.put("exhibitsId",exhibitsId);
+        Call<ResponseBody> exhibitsCommentsCall = serverApi.getASync("setFabulousDetailsFlag",hashMap);
+        exhibitsCommentsCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String data = response.body().string();
+                    JSONObject jsonObject = new JSONObject(data);
+                    FabulousDetails fabulousDetails = RetrofitManger.getInstance().getGson().fromJson(
+                            jsonObject.getString("ONE_DETAIL"), new TypeToken<FabulousDetails>(){}.getType());
+                    likeFlag = fabulousDetails.getFlag();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("!!!","请求失败！");
+                Log.d("!!!",t.getMessage());
+            }
+        });
+    }
+
+    private void queryFabulousDetailsFlag(int userId, int exhibitsId){
+        ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        HashMap hashMap = new HashMap();
+        hashMap.put("userId",userId);
+        hashMap.put("exhibitsId",exhibitsId);
+        Call<ResponseBody> exhibitsCommentsCall = serverApi.getASync("queryFabulousDetailsFlag",hashMap);
+        exhibitsCommentsCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String data = response.body().string();
+                    JSONObject jsonObject = new JSONObject(data);
+                    defaultFlag = jsonObject.getInt("ONE_DETAIL");
+                    likeFlag = jsonObject.getInt("ONE_DETAIL");
+                    Log.d("@@@", "likeFlag: "+likeFlag);
+                    if (defaultFlag == 0) {
+                        floatingActionButton.setImageResource(R.drawable.ic_unfavorite);
+                    }else {
+                        floatingActionButton.setImageResource(R.drawable.ic_favorite);
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -435,6 +508,9 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
         if (danmakuView != null) {
             danmakuView.release();
             danmakuView = null;
+        }
+        if (likeFlag != defaultFlag){
+            setFabulousDetailsFlag(1,exhibitsId);
         }
     }
 }
