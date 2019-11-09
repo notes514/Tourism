@@ -98,6 +98,7 @@
         <activity android:name=".ui.activity.PersonalDataActivity" />
         <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity" />
         <activity android:name=".ui.activity.PersonalOpenmembershipActivity" />
+        <activity android:name=".ui.activity.PersonalSystemSetupActivity"/>
         <activity android:name=".ui.activity.CalendarActivity" />
         <activity android:name=".ui.activity.OrderCompletionActivity" />
         <activity android:name=".ui.activity.AllOrderActivity" />
