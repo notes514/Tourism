@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.AddContactActivity">
+    <!--顶部标题栏-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+        app:rightButtonIcon="@drawable/complete_icon"
+        app:myTitle="添加联系人" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/color_dividing_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tourism_order_name"
+            android:textSize="14sp"
+            android:textColor="@color/color_black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:textSize="14sp"
+            android:background="@color/color_white"
+            android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+            android:hint="@string/tourism_order_name_content"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_dividing_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tourism_order_phone"
+            android:textSize="14sp"
+            android:textColor="@color/color_black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/et_phone_number"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:textSize="14sp"
+            android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+            android:background="@color/color_white"
+            android:hint="@string/tourism_order_name_content"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_dividing_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tourism_order_qq"
+            android:textSize="14sp"
+            android:textColor="@color/color_black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/et_qq"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:textSize="14sp"
+            android:background="@color/color_white"
+            android:hint="@string/tourism_order_qq_content"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/color_dividing_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/tourism_order_wechat"
+            android:textSize="14sp"
+            android:textColor="@color/color_black"
+            android:padding="10dp"/>
+
+        <EditText
+            android:id="@+id/et_wechat"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:textSize="14sp"
+            android:background="@color/color_white"
+            android:hint="@string/tourism_order_wechat_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>

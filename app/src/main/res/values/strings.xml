@@ -98,6 +98,8 @@
     <string name="tourism_order_room_difference">房差</string>
     <string name="tourism_order_contacts">联系人</string>
     <string name="tourism_order_choice_contacts">选择联系人</string>
+    <string name="tourism_order_scan_documents">扫描证件</string>
+    <string name="tourism_order_manually"> 手动填写</string>
     <string name="tourism_order_name">姓名</string>
     <string name="tourism_order_name_content">必填，用于供应商与您联系</string>
     <string name="tourism_order_phone">手机</string>
@@ -109,7 +111,7 @@
     <string name="tourism_order_trip">出行人</string>
     <string name="tourism_order_choice_trip">选择出行人</string>
     <string name="tourism_order_trip_name">成人</string>
-    <string name="tourism_order_trip_name_content">请务必保证所填项与出游所持证件一致</string>
+    <string name="tourism_order_trip_name_content">为了您顺利出行，请务必保证所填项与出游所持证件一致</string>
     <string name="tourism_order_discount">使用优惠</string>
     <string name="tourism_order_nothing_discount">没有可用的优惠</string>
     <string name="tourism_order_special_requirements">是否有特殊要求</string>
@@ -136,6 +138,7 @@
 
     <!--  立即预定 全部 模块  -->
     <string name="tourism_all_order_title">度假旅游/团购订单</string>
+
 
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>

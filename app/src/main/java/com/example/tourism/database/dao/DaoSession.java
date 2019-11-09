@@ -1,6 +1,8 @@
 package com.example.tourism.database.dao;
 
+import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.database.bean.SeachContent;
+import com.example.tourism.database.bean.TripBean;
 
 import org.greenrobot.greendao.AbstractDao;
 import org.greenrobot.greendao.AbstractDaoSession;
@@ -19,28 +21,52 @@ import java.util.Map;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig contactsBeanDaoConfig;
     private final DaoConfig seachContentDaoConfig;
+    private final DaoConfig tripBeanDaoConfig;
 
+    private final ContactsBeanDao contactsBeanDao;
     private final SeachContentDao seachContentDao;
+    private final TripBeanDao tripBeanDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
 
+        contactsBeanDaoConfig = daoConfigMap.get(ContactsBeanDao.class).clone();
+        contactsBeanDaoConfig.initIdentityScope(type);
+
         seachContentDaoConfig = daoConfigMap.get(SeachContentDao.class).clone();
         seachContentDaoConfig.initIdentityScope(type);
 
-        seachContentDao = new SeachContentDao(seachContentDaoConfig, this);
+        tripBeanDaoConfig = daoConfigMap.get(TripBeanDao.class).clone();
+        tripBeanDaoConfig.initIdentityScope(type);
 
+        contactsBeanDao = new ContactsBeanDao(contactsBeanDaoConfig, this);
+        seachContentDao = new SeachContentDao(seachContentDaoConfig, this);
+        tripBeanDao = new TripBeanDao(tripBeanDaoConfig, this);
+
+        registerDao(ContactsBean.class, contactsBeanDao);
         registerDao(SeachContent.class, seachContentDao);
+        registerDao(TripBean.class, tripBeanDao);
     }
     
     public void clear() {
+        contactsBeanDaoConfig.clearIdentityScope();
         seachContentDaoConfig.clearIdentityScope();
+        tripBeanDaoConfig.clearIdentityScope();
+    }
+
+    public ContactsBeanDao getContactsBeanDao() {
+        return contactsBeanDao;
     }
 
     public SeachContentDao getSeachContentDao() {
         return seachContentDao;
+    }
+
+    public TripBeanDao getTripBeanDao() {
+        return tripBeanDao;
     }
 
 }

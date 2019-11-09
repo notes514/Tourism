@@ -12,6 +12,8 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -414,6 +416,7 @@
 
             <Switch
                 android:id="@+id/switch_order"
+                android:theme="@style/CheckBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/tourism_order_special_requirements"
@@ -445,6 +448,7 @@
 
                 <CheckBox
                     android:id="@+id/checkBox"
+                    android:theme="@style/CheckBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

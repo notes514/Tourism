@@ -45,7 +45,6 @@ public class BaseActivity extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return 0;
     }
 
