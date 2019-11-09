@@ -138,8 +138,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
             @Override
             public void onItemClick(int position) {
 
-
-
                 RetrofitManger retrofit = RetrofitManger.getInstance();
                 ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                 Map<String,Object> map=new HashMap<>();
@@ -150,7 +148,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         try {
                             String m = response.body().string();
-//                    Log.e(TAG, "axconResponse: "+m, null);
                             List<ScenicSpot> scenicSpots = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
                             List<ScenicSpot> temp = null;
                             if (position==0){
@@ -192,9 +189,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
         });
         travelMode.setAdapter(travelModeAdapter);
 
-
-
-
         startRecommand();
     }
 
@@ -211,7 +205,6 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String m = response.body().string();
-//                    Log.e(TAG, "axconResponse: "+m, null);
                     List<ScenicSpot> scenicSpots = new Gson().fromJson(m,new TypeToken<List<ScenicSpot>>(){}.getType());
                     for (int i=scenicSpots.size()-1;i>=0;i--){
                         ScenicSpot scenicSpot=scenicSpots.get(i);
@@ -238,12 +231,14 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
 
     public void getData() {
         travelModes.add(new TravelMode(0, "推荐"));
-        travelModes.add(new TravelMode(1, "跟团游"));
-        travelModes.add(new TravelMode(2, "自由行"));
-        travelModes.add(new TravelMode(3, "当地玩乐"));
-        travelModes.add(new TravelMode(4, "包车游"));
-        travelModes.add(new TravelMode(5, "门票"));
-
+        travelModes.add(new TravelMode(1, "周边游"));
+        travelModes.add(new TravelMode(2, "一日游"));
+        travelModes.add(new TravelMode(3, "自由行"));
+        travelModes.add(new TravelMode(4, "景点"));
+        travelModes.add(new TravelMode(5, "浪漫之旅"));
+        travelModes.add(new TravelMode(6, "当地向导"));
+        travelModes.add(new TravelMode(7, "定制旅行"));
+        travelModes.add(new TravelMode(8, "亲子"));
     }
 
 }

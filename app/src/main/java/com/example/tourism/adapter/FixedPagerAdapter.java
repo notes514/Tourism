@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.tourism.entity.SeachBean;
 import com.example.tourism.entity.TrHeadBean;
 
 import java.util.ArrayList;
@@ -18,6 +19,8 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
     private List<String> sList = new ArrayList<>();
     //数组标签
     private List<TrHeadBean> headBeanList = new ArrayList<>();
+    //搜索集合
+    private List<SeachBean> seachBeanList = new ArrayList<>();
     //集合碎片
     private List<Fragment> fragmentList = new ArrayList<>();
     //类型
@@ -47,6 +50,9 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
         }
         if (type == 1) {
             return sList.get(position);
+        }
+        if (type == 2) {
+            return seachBeanList.get(position).getsTitle();
         }
         return null;
     }
@@ -91,5 +97,9 @@ public class FixedPagerAdapter extends FragmentStatePagerAdapter {
 
     public void setsList(List<String> sList) {
         this.sList = sList;
+    }
+
+    public void setSeachBeanList(List<SeachBean> seachBeanList) {
+        this.seachBeanList = seachBeanList;
     }
 }

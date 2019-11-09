@@ -116,13 +116,6 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-        adapter.setOnItemClickListener((view, object) -> {
-            TravelsBean travels = (TravelsBean) object;
-            Intent intent = new Intent(getActivity(), StrategyDetailsActivity.class);
-            intent.putExtra("travelsId", travels.getTravelsId());
-            getActivity().startActivity(intent);
-            Log.d(InitApp.TAG, "bean: " + travels.getUserName());
-        });
     }
 
     @Override

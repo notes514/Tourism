@@ -1,6 +1,7 @@
 package com.example.tourism.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -89,6 +90,10 @@ public class SeachActivity extends BaseActivity implements DefineView {
     private List<ScenicSpot> scenicSpotList;
     //本地数据库表集合
     private List<SeachContent> seachContentList;
+    //热搜数组
+    private List<String> hotList;
+    //旅拍热搜集合
+    private List<String> areList;
     //本地数据库表
     private SeachContent seachContent;
     //适配器
@@ -97,10 +102,8 @@ public class SeachActivity extends BaseActivity implements DefineView {
     private DaoManger daoManger;
     //布局加载
     private LayoutInflater inflater;
-    private String[] mVals = new String[]
-            {"Hello", "Android", "Weclome Hi ", "Button", "TextView", "Hello",
-                    "Android", "Weclome", "Button ImageView", "TextView", "Helloworld",
-                    "Android", "Weclome Hello", "Button Text", "TextView"};
+    //获取搜索框内容
+    private String seach;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,7 +118,6 @@ public class SeachActivity extends BaseActivity implements DefineView {
     @Override
     public void initView() {
     }
-
 
     @Override
     public void initValidata() {
@@ -152,7 +154,7 @@ public class SeachActivity extends BaseActivity implements DefineView {
         }
 
         //创建旅拍热搜集合
-        List<String> hotList = new ArrayList<>();
+        hotList = new ArrayList<>();
         hotList.add("跟团游");
         hotList.add("周边游");
         hotList.add("一日游");
@@ -169,12 +171,12 @@ public class SeachActivity extends BaseActivity implements DefineView {
         });
 
         //创建旅拍热搜集合
-        List<String> areList = new ArrayList<>();
-        areList.add("南宁-青秀山");
-        areList.add("南宁-大明山");
+        areList = new ArrayList<>();
+        areList.add("青秀山");
+        areList.add("大明山");
         areList.add("南宁动物园");
-        areList.add("南宁-伊岭岩");
-        areList.add("南宁海底世界");
+        areList.add("伊岭岩");
+        areList.add("海底世界");
         areList.add("龙虎山自然保护区");
         areList.add("花花大世界");
         areList.add("大龙湖景区");
@@ -257,25 +259,42 @@ public class SeachActivity extends BaseActivity implements DefineView {
                 hideKeyboard(etSearch);
                 // 在这里写搜索的操作,一般都是网络请求数据
                 //获取数据
-                String seach = etSearch.getText().toString();
-                SeachContent seachContent = new SeachContent(null, "url", seach);
-                try {
-                    daoManger.getsDaoSession().getSeachContentDao().insert(seachContent);
-                } catch (Exception e) {
-                    AppUtils.getToast("添加失败");
-                }
+                getAddSeachContent();
+                newIntent();
                 return true;
             }
             return false;
         });
 
+        //最近搜索点击监听
         tflLately.setOnTagClickListener((view, position, parent) -> {
-            AppUtils.getToast(mVals[position]);
+            Intent intent = new Intent(this, SeachDetailsActivity.class);
+            intent.putExtra("content", seachContentList.get(position).getContent());
+            this.startActivity(intent);
             return true;
         });
 
+        //旅拍热搜点击监听
+        tflHotSearch.setOnTagClickListener((view, position, parent) -> {
+            Intent intent = new Intent(this, SeachDetailsActivity.class);
+            intent.putExtra("content", hotList.get(position));
+            this.startActivity(intent);
+            return true;
+        });
 
-        tflLately.setOnSelectListener(selectPosSet -> {
+        //附近大家都在搜点击监听
+        tflAreSearching.setOnTagClickListener((view, position, parent) -> {
+            Intent intent = new Intent(this, SeachDetailsActivity.class);
+            intent.putExtra("content", areList.get(position));
+            this.startActivity(intent);
+            return true;
+        });
+
+        rAdapter.setOnItemClickListener((view, object) -> {
+            ScenicSpot scenicSpot = (ScenicSpot) object;
+            AppUtils.getToast(scenicSpot.getScenicSpotTheme());
+            getAddSeachContent();
+            newIntent();
         });
     }
 
@@ -289,6 +308,22 @@ public class SeachActivity extends BaseActivity implements DefineView {
         rAdapter.setScenicSpotList(scenicSpotList);
         //设置适配器
         rvSeach.setAdapter(rAdapter);
+    }
+
+    private void getAddSeachContent() {
+        seach = etSearch.getText().toString();
+        SeachContent seachContent = new SeachContent(null, "url", seach);
+        try {
+            daoManger.getsDaoSession().getSeachContentDao().insert(seachContent);
+        } catch (Exception e) {
+            AppUtils.getToast("添加失败");
+        }
+    }
+
+    private void newIntent() {
+        Intent intent = new Intent(this, SeachDetailsActivity.class);
+        intent.putExtra("content", seach);
+        this.startActivity(intent);
     }
 
     @OnClick({R.id.iv_clear, R.id.tv_delete, R.id.iv_delete})

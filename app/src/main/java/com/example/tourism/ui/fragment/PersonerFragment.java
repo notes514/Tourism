@@ -3,7 +3,6 @@ package com.example.tourism.ui.fragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 
-import com.baoyz.widget.PullRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.tourism.R;
@@ -53,7 +50,6 @@ import butterknife.Unbinder;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
-import static android.widget.Toast.LENGTH_LONG;
 import static com.example.tourism.MainActivity.user;
 
 /**
@@ -104,6 +100,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     NestedScrollView scrollView;
     @BindView(R.id.prl_view)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.re)
+    TextView re;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -112,27 +110,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_personer, container, false);
         unbinder = ButterKnife.bind(this, root);
-        //设置背景磨砂效果
-        Glide.with(getContext()).load(R.drawable.personal_background)
-                .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getContext()))
-                .into(hBack);
-        //设置圆形图像
-        Glide.with(getContext()).load(R.drawable.personal_head_travel)
-                .bitmapTransform(new CropCircleTransformation(getContext()))
-                .into(hHead);
-
-
-        if (user == null) {
-            userHomeage.setVisibility(View.GONE);
-            userarrow.setVisibility(View.GONE);
-            userLine.setVisibility(View.GONE);
-            userVal.setVisibility(View.GONE);
-            userName.setVisibility(View.GONE);
-            userFans.setVisibility(View.GONE);
-            userFollow.setVisibility(View.GONE);
-            userFansNum.setVisibility(View.GONE);
-            userFollowNum.setVisibility(View.GONE);
-        }
         initValidata();
         initListener();
         bindData();
@@ -140,8 +117,9 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         return root;
     }
 
-    @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage, R.id.user_name
-            , R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order})
+    @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage,
+            R.id.user_name, R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order,
+            R.id.re})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
@@ -183,6 +161,9 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             case R.id.fl_all_order: //点击全部订单
                 openActivity(AllOrderActivity.class);
                 break;
+            case R.id.re: //点击全部订单
+                openActivity(SignInActivity.class);
+                break;
         }
     }
 
@@ -203,21 +184,42 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initValidata() {
+        customToolbar.setMyTitle("");
+        //设置背景磨砂效果
+        Glide.with(getContext()).load(R.drawable.personal_background)
+                .bitmapTransform(new BlurTransformation(getContext(), 25), new CenterCrop(getContext()))
+                .into(hBack);
+        //设置圆形图像
+        Glide.with(getContext()).load(R.drawable.personal_head_travel)
+                .bitmapTransform(new CropCircleTransformation(getContext()))
+                .into(hHead);
+
+
+        if (user == null) {
+            userHomeage.setVisibility(View.GONE);
+            userarrow.setVisibility(View.GONE);
+            userLine.setVisibility(View.GONE);
+            userVal.setVisibility(View.GONE);
+            userName.setVisibility(View.GONE);
+            userFans.setVisibility(View.GONE);
+            userFollow.setVisibility(View.GONE);
+            userFansNum.setVisibility(View.GONE);
+            userFollowNum.setVisibility(View.GONE);
+        }
         //获取状态栏高度
         int statusHeight = AppUtils.getStatusBarHeight(getActivity());
         //设置状态栏高度
         AppUtils.setStatusBarColor(statusView, statusHeight, R.color.color_blue);
 
-
         //设置透明度为0
-//        statusView.getBackground().mutate().setAlpha(0);
-//        customToolbar.getBackground().mutate().setAlpha(0);
+        statusView.getBackground().mutate().setAlpha(0);
+        customToolbar.getBackground().mutate().setAlpha(0);
         int bHeight = 400;
         //设置滚动监听
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             scrollView.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
                 //设置status，toobar颜色透明渐变
-                float detalis = scrollY > bHeight ? bHeight : (scrollY > 400 ? scrollY : 400);
+                float detalis = scrollY > bHeight ? bHeight : (scrollY > 30 ? scrollY : 0);
                 int alpha = (int) (detalis / bHeight * 255);
                 AppUtils.setUpdateActionBar(statusView, customToolbar, alpha);
             });
@@ -261,6 +263,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFollowNum.setVisibility(View.VISIBLE);
         }
     }
+
     //刷新头
     private void initRefreshLayout() {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
@@ -324,4 +327,5 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             }
         });
     }
+
 }

@@ -70,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="@+id/imageView_three"
         app:layout_constraintStart_toStartOf="@+id/imageView_three"
         app:layout_constraintTop_toTopOf="@+id/imageView_three"
-        app:srcCompat="@drawable/icon_shopping_while" />
+        app:srcCompat="@mipmap/icon_trip_while" />
 
     <ImageView
         android:id="@+id/more_image"

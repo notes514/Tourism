@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,7 +41,6 @@ import com.example.tourism.ui.fragment.details.TourismRealFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.ChildAutoViewPager;
-import com.example.tourism.widget.MyScrollView;
 import com.example.tourism.widget.ViewBundle;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
@@ -51,13 +50,11 @@ import com.youth.banner.loader.ImageLoader;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -136,8 +133,8 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     @BindView(R.id.layout_classify)
     LinearLayout layoutClassify;
     //滚动ScrollView
-    @BindView(R.id.my_scrollview)
-    MyScrollView myScrollview;
+    @BindView(R.id.nsv_scrollview)
+    NestedScrollView nsvScrollview;
     //状态栏
     @BindView(R.id.status_view)
     View statusView;
@@ -231,10 +228,11 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
     }
 
+    @SuppressLint("NewApi")
     @Override
     public void initValidata() {
         //设置中间内容隐藏
-        myScrollview.setVisibility(View.GONE);
+        nsvScrollview.setVisibility(View.GONE);
         llToolbar.setVisibility(View.GONE);
         llButtom.setVisibility(View.GONE);
         ivBackTop.setVisibility(View.GONE);
@@ -291,11 +289,11 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         buttomChildViewPager.addOnPageChangeListener(new ButtomPageChangeListener());
         //设置ViewPager
         //设置滚动监听
-        myScrollview.setOnScrollListener(new MyScrollView.OnScrollListener() {
+        nsvScrollview.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
-            public void onScrollView(int l, int t, int oldl, int oldt) {
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 //设置status，toobar颜色透明渐变
-                float detalis = t > bHeight ? bHeight : (t > 30 ? t : 0);
+                float detalis = scrollY > bHeight ? bHeight : (scrollY > 30 ? scrollY : 0);
                 int alpha = (int) (detalis / bHeight * 255);
                 AppUtils.setUpdateActionBar(statusView, detailsToolbar, alpha);
                 if (alpha < 200) {
@@ -312,18 +310,19 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                         - detailsToolbar.getHeight();
                 //设置浮动栏距离顶部的高度
                 //设置浮动栏
-                int translation = Math.max(t, vpagerTopDistance);
+                int translation = Math.max(scrollY, vpagerTopDistance);
                 layoutClassify.setTranslationY(translation);
                 layoutClassify.setVisibility(View.VISIBLE);
                 //设置返回顶部
-                if (t >= vpagerTopDistance) {
+                if (scrollY >= vpagerTopDistance) {
                     ivBackTop.setVisibility(View.VISIBLE);
                 } else {
                     ivBackTop.setVisibility(View.GONE);
                 }
             }
         });
-        myScrollview.smoothScrollTo(0, 0);
+
+        nsvScrollview.smoothScrollTo(0, 0);
         //获取传入的景区编号
         int scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
         //获取景区详情数据
@@ -369,10 +368,10 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     @Override
     public void bindData() {
         //设置中间内容隐藏
-        myScrollview.setVisibility(View.VISIBLE);
+        nsvScrollview.setVisibility(View.VISIBLE);
         llToolbar.setVisibility(View.VISIBLE);
         llButtom.setVisibility(View.VISIBLE);
-        ivBackTop.setVisibility(View.VISIBLE);
+        ivBackTop.setVisibility(View.GONE);
         loadingLine.setVisibility(View.GONE);
         emptyLine.setVisibility(View.GONE);
         errorLine.setVisibility(View.GONE);
@@ -449,7 +448,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         //集合存储天数
         List<String> dList = new ArrayList<>();
         for (int i = startDays; i <= remainingMonth + day; i++) {
-            if (currentDays - day == 1 ) break;
+            if (currentDays - day == 1) break;
             calendar.set(Calendar.DAY_OF_MONTH, i);
             int weeks = calendar.get(Calendar.DAY_OF_WEEK);
             if (month < 10 && i < 10) {
@@ -592,7 +591,8 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 break;
             case R.id.iv_back_top:
                 //返回顶部
-                AppUtils.getToast("点击可返回顶部！");
+                nsvScrollview.fling(0);
+                nsvScrollview.smoothScrollTo(0, 0);
                 break;
             case R.id.tv_more_dates:
                 intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
@@ -604,7 +604,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 if (flag) {
                     flag = false;
                     collectionImage.setBackgroundResource(R.drawable.ic_collection_gray_24dp);
-                    AppUtils.getToast("取消收藏");
                 } else {
                     flag = true;
                     AppUtils.getToast("收藏成功");

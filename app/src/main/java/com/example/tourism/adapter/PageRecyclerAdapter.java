@@ -2,6 +2,7 @@ package com.example.tourism.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.entity.TravelsBean;
+import com.example.tourism.ui.activity.StrategyDetailsActivity;
 import com.example.tourism.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -104,6 +106,18 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         goodAdapter.setPicList(travels.getPicUrl());
         holder.rvGood.setLayoutManager(new GridLayoutManager(context, 3));
         holder.rvGood.setAdapter(goodAdapter);
+        //点击文章内容跳转到文章详情页面
+        holder.tvTitleContent.setOnClickListener(v -> {
+            Intent intent = new Intent(context, StrategyDetailsActivity.class);
+            intent.putExtra("travelsId", travels.getTravelsId());
+            context.startActivity(intent);
+        });
+        //点赞
+        holder.ivFabulous.setOnClickListener(v -> {
+            holder.ivFabulous.setImageResource(R.drawable.icon_fabulous_bluish_green);
+            int fNum = Integer.parseInt(travels.getFoubles()) + 1;
+            holder.fabulousText.setText(fNum+"");
+        });
     }
 
     @Override

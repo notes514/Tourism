@@ -6,14 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue"
         android:orientation="vertical">
-
-
 
     <com.example.tourism.widget.CustomToolbar
         android:id="@+id/custom_toolbar"
@@ -698,10 +695,8 @@
 
         </LinearLayout>
 
-
     </com.example.tourism.widget.MyScrollView>
 
     </LinearLayout>
-
 
 </LinearLayout>

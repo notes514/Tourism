@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <!--  ScrollView滚动  -->
-    <com.example.tourism.widget.MyScrollView
-        android:id="@+id/my_scrollview"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_scrollview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
@@ -531,7 +531,7 @@
                     android:contentDescription="@null"/>
             </LinearLayout>
         </FrameLayout>
-    </com.example.tourism.widget.MyScrollView>
+    </androidx.core.widget.NestedScrollView>
     <!--详情页头部-->
     <LinearLayout
         android:id="@+id/ll_toolbar"

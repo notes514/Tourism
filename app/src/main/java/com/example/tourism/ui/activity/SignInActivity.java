@@ -11,6 +11,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.SignInFragmentViewpageAdapter;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonerFragment;
 import com.example.tourism.ui.fragment.SignIn2Fragment;
 import com.example.tourism.ui.fragment.SignInFragment;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SignInActivity extends FragmentActivity {
+public class SignInActivity extends BaseActivity {
     @BindView(R.id.tv_return)
     TextView textView;
     @BindView(R.id.tabLayout)

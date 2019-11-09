@@ -152,16 +152,5 @@
             android:layout_height="10dp"
             android:background="@color/color_separator_row"/>
 
-        <TextView
-            android:id="@+id/tv_tips"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            android:padding="16dp"
-            android:gravity="center"
-            android:textColor="@color/color_cyan_green"
-            android:background="@color/color_separator_row"
-            android:textSize="16sp"/>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

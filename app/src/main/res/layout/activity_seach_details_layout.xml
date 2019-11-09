@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <!--顶部标题栏-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/ct_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+        app:rightButtonIcon="@drawable/btn_more_horiz_selector"
+        app:myTitle="@string/tourism_seach_details_title"
+        />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_seach_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextColor="@color/color_black_2c"
+        app:tabIndicatorColor="@color/color_cyan_green"
+        app:tabSelectedTextColor="@color/color_cyan_green"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp_seach_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white" />
+
+</LinearLayout>

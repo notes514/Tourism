@@ -53,8 +53,9 @@
     <color name="personal_load_success">#03a44e</color>
     <color name="personal_load_failure">#de0e26</color>
     <color name="personal_load">#f506d9</color>
-
     <!--黑色半透明-->
+    <color name="personal_load_translucent">#80f506d9</color>
+    <!--粉色半透明-->
     <color name="color_black_translucent">#80000000</color>
     <!--半透明-->
     <color name="color_translucent">#e0000000</color>

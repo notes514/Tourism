@@ -20,6 +20,8 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.AllOrderActivity;
+import com.example.tourism.ui.activity.PersonalDataActivity;
 import com.example.tourism.ui.activity.SeachActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
@@ -112,6 +114,10 @@ public class OrderFragment extends BaseFragment implements DefineView {
 
         //设置线性布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        //列表在底部开始展示，反转后由上面开始展示
+        layoutManager.setStackFromEnd(true);
+        //列表翻转
+        layoutManager.setReverseLayout(true);
         //设置管理器竖向显示
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         //设置布局管理器
@@ -191,7 +197,8 @@ public class OrderFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-
+        customToolbar.setOnLeftButtonClickLister(() -> openActivity(AllOrderActivity.class));
+        customToolbar.setOnRightButtonClickLister(() -> openActivity(PersonalDataActivity.class));
     }
 
     @Override

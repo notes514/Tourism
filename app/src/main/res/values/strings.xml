@@ -134,4 +134,8 @@
     <string name="tourism_order_cancel_departureperiod">出发团期</string>
     <string name="tourism_order_cancel_amountpayable">应付金额</string>
 
+    <!--  模糊搜索模块  -->
+    <string name="tourism_seach_cancel">取消</string>
+    <string name="tourism_seach_details_title">模糊搜索</string>
+
 </resources>
