@@ -31,6 +31,7 @@ import com.example.tourism.ui.activity.PersonalhomepageActivity;
 import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.CircleImageView;
 import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
@@ -58,8 +59,6 @@ import static com.example.tourism.MainActivity.user;
 public class PersonerFragment extends BaseFragment implements DefineView {
     @BindView(R.id.h_back)
     ImageView hBack;
-    @BindView(R.id.h_head)
-    ImageView hHead;
     @BindView(R.id.user_line)
     ImageView userLine;
     @BindView(R.id.user_name)
@@ -102,6 +101,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.re)
     TextView re;
+    @BindView(R.id.h_head)
+    CircleImageView hHead;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;

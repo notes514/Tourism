@@ -44,19 +44,14 @@ public class ScenicSpotItemAdapter extends RecyclerView.Adapter<ScenicSpotItemAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-       // holder.scenicSpotPic.setImageResource(objects.get(position).getScenicSpotPicUrl());
         ScenicSpot scenicSpot = objects.get(position);
         holder.scenicSpotTheme.setText(objects.get(position).getScenicSpotTheme());
         holder.scenicSpotDescribe.setText(objects.get(position).getScenicSpotDescribe());
         holder.scenicSpotPrice.setText("¥:"+objects.get(position).getScenicSpotPrice());
-        holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
-                Intent intent = new Intent(context, TourismDetailsActivity.class);
-                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
-                context.startActivity(intent);
-            }
+        holder.scenicSpotId.setOnClickListener(view -> {
+            Intent intent = new Intent(context, TourismDetailsActivity.class);
+            intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+            context.startActivity(intent);
         });
         ImageLoader.getInstance().displayImage(RequestURL.ip_images+objects.get(position).getScenicSpotPicUrl(),
                 holder.scenicSpotPic, InitApp.getOptions());

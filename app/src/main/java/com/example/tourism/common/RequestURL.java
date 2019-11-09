@@ -12,14 +12,17 @@ public class RequestURL {
     //参数key: 返回数据3
     public static final String THREE_DATA = "THREE_DATA";
     //参数key: 返回数据4
-    private static final String FOUR_DATA = "THREE_DATA";
+    public static final String FOUR_DATA = "FOUR_DATA";
+
+    //用户编号(唯一)
+    public static String vUserId = "1";
 
     //IP地址,端口号
-    public static final String ip_port = "http://47.100.47.54/TourismServer-1.0-SNAPSHOT/api/";
+    public static final String ip_port = "http://192.168.43.115:8080/api/";
     //IP地址，视频路径
-    public static final String ip_video = "http://47.100.47.54/TourismServer-1.0-SNAPSHOT/video";
+    public static final String ip_video = "http://192.168.43.115:8080/video";
     //IP地址,图片路径
-    public static final String ip_images = "http://47.100.47.54/TourismServer-1.0-SNAPSHOT/";
+    public static final String ip_images = "http://192.168.43.115:8080/";
     //首页地址
     public static final String html = "https://travel.qunar.com/";
     //攻略库首页地址
