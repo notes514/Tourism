@@ -402,7 +402,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d("onActivityResult111", "执行了！！！ ");
-        if (requestCode == 0||requestCode == 1) {
+        if (requestCode == 0 || resultCode == 1) {
             String mLocation = data.getStringExtra("location");
             String temp = sharedPreferences.getString("location","");
             if (!mLocation.equals(temp)){
@@ -413,9 +413,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
             editor.putString("location",mLocation);
             //步骤4：提交
             editor.commit();
-
-
-
         }
     }
 

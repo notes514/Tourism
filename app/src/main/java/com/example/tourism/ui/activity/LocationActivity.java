@@ -316,6 +316,10 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()){
             case R.id.img_back:
                 if (IS_SEARCH_ICON){
+                    Intent data = new Intent();
+                    SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+                    data.putExtra("location", sharedPreferences.getString("location",""));
+                    setResult(1, data);
                     finish();
                 } else {
                     IS_SEARCH_ICON = true;
