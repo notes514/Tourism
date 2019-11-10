@@ -120,7 +120,7 @@
                 android:id="@+id/tv_diqu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="南宁"
+                android:text=""
                 android:padding="6dp"
                 android:textSize="16sp"
                 android:textColor="@color/color_white"

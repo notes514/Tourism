@@ -161,4 +161,7 @@
     <string name="tourism_seach_cancel">取消</string>
     <string name="tourism_seach_details_title">模糊搜索</string>
 
+    <!--  json  -->
+    <string name="area_select_json_name">area_phone_code.json</string>
+
 </resources>

@@ -32,9 +32,6 @@ import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.MyScrollView;
-import com.github.mikephil.charting.formatter.IFillFormatter;
-import com.yzq.zxinglibrary.android.CaptureActivity;
-import com.yzq.zxinglibrary.common.Constant;
 
 import org.json.JSONObject;
 

@@ -1,7 +1,9 @@
 package com.example.tourism.ui.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,6 +34,7 @@ import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
+import com.example.tourism.ui.activity.LocationActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
@@ -99,6 +103,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @BindView(R.id.hfragment)
     RelativeLayout hfragment;
 
+
     private int statusHeight;
 
     private List<String> images = new ArrayList<>();
@@ -117,7 +122,28 @@ public class HomeFragment extends BaseFragment implements DefineView {
         initValidata();
         initListener();
         bindData();
+        initLocationText();
+
+
         return root;
+    }
+
+    public void initLocation(){
+        tvDiqu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LocationActivity.class);
+                startActivityForResult(intent,0);
+            }
+        });
+    }
+
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+
+
     }
 
     @Override
@@ -156,7 +182,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-
+        initLocation();
     }
 
     @Override
@@ -357,4 +383,50 @@ public class HomeFragment extends BaseFragment implements DefineView {
         adapter2.notifyDataSetChanged();
     }
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        sharedPreferences= getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
+        //步骤2： 实例化SharedPreferences.Editor对象
+        editor = sharedPreferences.edit();
+        //步骤3：将获取过来的值放入文件
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult111", "执行了！！！ ");
+        if (requestCode == 0||requestCode == 1) {
+            String mLocation = data.getStringExtra("location");
+            String temp = sharedPreferences.getString("location","");
+            if (!mLocation.equals(temp)){
+                editor.remove("location");
+                editor.putString("location",mLocation);
+                editor.commit();
+            }
+            editor.putString("location",mLocation);
+            //步骤4：提交
+            editor.commit();
+
+
+
+        }
+    }
+
+
+    public void initLocationText(){
+        tvDiqu.setText(sharedPreferences.getString("location",""));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initLocationText();
+    }
 }

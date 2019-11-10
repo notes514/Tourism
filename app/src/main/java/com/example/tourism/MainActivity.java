@@ -1,5 +1,6 @@
 package com.example.tourism;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,10 +9,13 @@ import android.widget.Toast;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.ui.fragment.DestinationFragment;
+import com.example.tourism.ui.fragment.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -45,8 +49,15 @@ public class MainActivity extends BaseActivity implements DefineView {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
         checkPermission();
+
+        temp();
+    }
+
+    public void temp(){
+        Intent intent=getIntent();
+        String str=intent.getStringExtra("location");
+
     }
 
     @Override

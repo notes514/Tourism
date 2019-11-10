@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,6 +32,10 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
     <!-- 短信验证码登录、第三方登录权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -70,46 +75,67 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
-
-        <activity android:name=".ui.activity.ContactActivity" />
-        <activity android:name=".ui.activity.AddContactActivity" />
-        <activity android:name=".ui.activity.EditContactActivity" />
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.activity.NearbyActivity" />
-        <activity android:name=".ui.activity.SecondaryActivity" />
-        <activity android:name=".ui.activity.ActivitySpotActivity" />
-        <activity android:name=".ui.activity.PersonalMyCollection" />
-        <activity android:name=".ui.activity.PersonalHolidayproblem" />
-        <activity android:name=".ui.activity.PersonalSubscriptions" />
-        <activity android:name=".ui.activity.PersonalhomepageActivity" />
-        <activity android:name=".ui.activity.SignInActivity" />
-        <activity android:name=".ui.activity.RegisterActivity" />
-        <activity android:name=".ui.activity.StrategyDetailsActivity" />
-        <activity android:name=".ui.activity.ShowExhibitsDetialActivity" />
-        <activity android:name=".ui.activity.TourismDetailsActivity" />
-        <activity android:name=".ui.activity.PersonalCouponActivity" />
-        <activity android:name=".ui.activity.PersonalOpenmemberActivity" />
-        <activity android:name=".ui.activity.PersonalDataActivity" />
-        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity" />
-        <activity android:name=".ui.activity.PersonalOpenmembershipActivity" />
-        <activity android:name=".ui.activity.PersonalSystemSetupActivity"/>
-        <activity android:name=".ui.activity.CalendarActivity" />
-        <activity android:name=".ui.activity.OrderCompletionActivity" />
-        <activity android:name=".ui.activity.AllOrderActivity" />
-        <activity android:name=".ui.activity.BigImageActivity" />
-        <activity android:name=".ui.activity.RedEnvelopsActivity" />
-        <activity android:name=".ui.activity.ServiceExplainActivity" />
-        <activity android:name=".ui.activity.OrderCancelLayoutActivity" />
-        <activity android:name=".ui.activity.SeachActivity" />
-        <activity android:name=".ui.activity.BigImaActivity" />
-        <activity android:name=".TestCaptureActivity"/>
-        <activity android:name=".ui.activity.NewPedestriansActivity"/>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".ui.activity.NearbyActivity">
+        </activity>
+        <activity android:name=".ui.activity.SecondaryActivity">
+        </activity>
+        <activity android:name=".ui.activity.ActivitySpotActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalMyCollection">
+        </activity>
+        <activity android:name=".ui.activity.PersonalHolidayproblem">
+        </activity>
+        <activity android:name=".ui.activity.PersonalSubscriptions">
+        </activity>
+        <activity android:name=".ui.activity.PersonalhomepageActivity">
+        </activity>
+        <activity android:name=".ui.activity.SignInActivity">
+        </activity>
+        <activity android:name=".ui.activity.RegisterActivity">
+        </activity>
+        <activity android:name=".ui.activity.StrategyDetailsActivity">
+        </activity>
+        <activity android:name=".ui.activity.ShowExhibitsDetialActivity">
+        </activity>
+        <activity android:name=".ui.activity.TourismDetailsActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalCouponActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOpenmemberActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalDataActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity">
+        </activity>
+        <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
+        </activity>
+        <activity android:name=".ui.activity.CalendarActivity">
+        </activity>
+        <activity android:name=".ui.activity.OrderCompletionActivity">
+        </activity>
+        <activity android:name=".ui.activity.AllOrderActivity">
+        </activity>
+        <activity android:name=".ui.activity.BigImageActivity">
+        </activity>
+        <activity android:name=".ui.activity.RedEnvelopsActivity">
+        </activity>
+        <activity android:name=".ui.activity.ServiceExplainActivity">
+        </activity>
+        <activity android:name=".ui.activity.OrderCancelLayoutActivity">
+        </activity>
+        <activity android:name=".ui.activity.SeachActivity">
+        </activity>
+        <activity android:name=".ui.activity.BigImaActivity">
+        </activity>
+        <activity android:name=".ui.activity.SeachDetailsActivity">
+        </activity>
+        <activity android:name=".ui.activity.LocationActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -130,6 +156,7 @@
             <meta-data
                 android:name="AuthorizeAdapter"
                 android:value="cn.sharesdk.demo.MyAdapter" />
+
             <!--
                 Dropbox的SSO功能需要在此处添加一个对ACTION_VIEW事件的过滤器，其中的scheme是
                 “db-”前缀再开发者应用的加上appKey。如果此过滤器不设置，则不能完成SSO功能授权
@@ -166,6 +193,8 @@
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="8fd1937cd4daf2fabcd80969be430da3"></meta-data>
     </application>
 
 </manifest>
