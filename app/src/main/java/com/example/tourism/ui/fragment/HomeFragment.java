@@ -21,9 +21,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.adapter.MonthAdapter;
+import com.example.tourism.adapter.PageRecyclerAdapter;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
@@ -58,9 +61,13 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -125,6 +132,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     private List<String> images = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
     private List<ScenicSpot> allScenicSpots = new ArrayList<>();
+    private RecyclerViewAdapter rAdapter;
     private SecondaryMenuItemAdapter adapter1;
     private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
@@ -186,8 +194,45 @@ public class HomeFragment extends BaseFragment implements DefineView {
             int alpha = (int) (detalis / bHeight * 255);
             AppUtils.setUpdateActionBar(statusView, llToolbar, alpha);
         });
+
+        //创建网格布局管理器
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        //设置管理器竖向显示
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        //设置布局管理器
+        recyclerView.setLayoutManager(gridLayoutManager);
+        //创建适配器对象
+        rAdapter = new RecyclerViewAdapter(getContext(), 5);
+
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/deng.jpg", ivHotTopicsPic1, InitApp.getOptions());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/romantic.jpg", ivHotTopicsPic2, InitApp.getOptions());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
+
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pStr", "跟团游");
+        Call<ResponseBody> scenicSpotCall = api.getASync("searchArea", map);
+        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
+                            new TypeToken<List<ScenicSpot>>() {}.getType());
+                    bindData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("@@@", t.getMessage());
+            }
+        });
+
         bindData();
-        queryAllScenicSpot();
     }
 
     @Override
@@ -202,9 +247,9 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     @Override
     public void bindData() {
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/deng.jpg", ivHotTopicsPic1, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/romantic.jpg", ivHotTopicsPic2, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
+        if (allScenicSpots == null) return;
+        rAdapter.setScenicSpotList(allScenicSpots);
+        recyclerView.setAdapter(rAdapter);
     }
 
     @Override
@@ -327,44 +372,19 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
     }
 
-    private void initRecyclerView() {
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2) {
-            @Override
-            public boolean canScrollVertically() {
-                return false;
-            }
-        };
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setNestedScrollingEnabled(false);
-        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        adapter2 = new ScenicSpotItemAdapter(getContext(), allScenicSpots);
-        recyclerView.setAdapter(adapter2);
-    }
-
-    private void queryAllScenicSpot() {
-        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Call<ResponseBody> scenicSpotCall = api.getNAsync("queryAllScenicSpot");
-        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
-                            new TypeToken<List<ScenicSpot>>() {
-                            }.getType());
-                    if (allScenicSpots == null) return;
-                    initRecyclerView();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@", t.getMessage());
-            }
-        });
-
-    }
+//    private void initRecyclerView() {
+//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2) {
+//            @Override
+//            public boolean canScrollVertically() {
+//                return false;
+//            }
+//        };
+//        recyclerView.setLayoutManager(gridLayoutManager);
+//        recyclerView.setNestedScrollingEnabled(false);
+//        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+//        adapter2 = new ScenicSpotItemAdapter(getContext(), allScenicSpots);
+//        recyclerView.setAdapter(adapter2);
+//    }
 
     private void showNearby() {
         linearLayout.setOnClickListener(new View.OnClickListener() {
