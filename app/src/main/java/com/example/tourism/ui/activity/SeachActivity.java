@@ -43,9 +43,12 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -261,6 +264,16 @@ public class SeachActivity extends BaseActivity implements DefineView {
                 //获取数据
                 getAddSeachContent();
                 newIntent();
+                String seach = etSearch.getText().toString();
+                TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+                Calendar calendar = Calendar.getInstance();
+                Date date = calendar.getTime();
+                SeachContent seachContent = new SeachContent(null, "url", seach, date);
+                try {
+                    daoManger.getsDaoSession().getSeachContentDao().insert(seachContent);
+                } catch (Exception e) {
+                    AppUtils.getToast("添加失败");
+                }
                 return true;
             }
             return false;
@@ -312,7 +325,10 @@ public class SeachActivity extends BaseActivity implements DefineView {
 
     private void getAddSeachContent() {
         seach = etSearch.getText().toString();
-        SeachContent seachContent = new SeachContent(null, "url", seach);
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        SeachContent seachContent = new SeachContent(null, "url", seach, date);
         try {
             daoManger.getsDaoSession().getSeachContentDao().insert(seachContent);
         } catch (Exception e) {

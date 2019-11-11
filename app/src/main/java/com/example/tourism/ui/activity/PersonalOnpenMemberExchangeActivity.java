@@ -1,29 +1,46 @@
 package com.example.tourism.ui.activity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 
 import com.example.tourism.R;
+import com.example.tourism.common.DefineView;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.widget.CustomToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class PersonalOnpenMemberExchangeActivity extends BaseActivity {
+public class PersonalOnpenMemberExchangeActivity extends BaseActivity implements DefineView {
 
-    @BindView(R.id.btn_return)
-    ImageView btnReturn;
+
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_open_member_exchange);
         ButterKnife.bind(this);
+        initView();
     }
 
-    @OnClick(R.id.btn_return)
-    public void onViewClicked() {
-        finish();
+    @Override
+    public void initView() {
+        customToolbar.setOnLeftButtonClickLister(() ->finish());
+    }
+
+    @Override
+    public void initValidata() {
+
+    }
+
+    @Override
+    public void initListener() {
+
+    }
+
+    @Override
+    public void bindData() {
+
     }
 }

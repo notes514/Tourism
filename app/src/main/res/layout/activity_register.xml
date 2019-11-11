@@ -6,40 +6,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <!--顶部标题栏-->
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#1da8fe"
-        android:orientation="horizontal"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        android:textSize="23sp"
+        app:leftButtonIcon="@drawable/ic_arrow_back"
+        app:myTitle="注册"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tv_return2"
-            android:layout_width="5dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="2dp"
-            android:layout_weight="1"
-            android:background="@drawable/fanhui" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="10"
-            android:gravity="center"
-            android:text="注册"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/custom_toolbar"
         app:layout_constraintVertical_bias="0.013">
 
         <EditText

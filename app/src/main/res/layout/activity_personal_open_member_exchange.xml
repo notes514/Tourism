@@ -10,26 +10,14 @@
             android:layout_height="match_parent"
             android:background="@drawable/personal_member_bj"
             android:orientation="vertical">
-            <FrameLayout
+            <com.example.tourism.widget.CustomToolbar
+                android:id="@+id/custom_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="@color/color_white">
-                <ImageView
-                    android:id="@+id/btn_return"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center|left"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/personal_arrow_black_left"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="激活爱旅行VIP会员"
-                    android:layout_gravity="center"
-                    android:textColor="@color/color_black"
-                    android:textStyle="bold"
-                    android:textSize="18sp" />
-            </FrameLayout>
+                android:background="@color/color_blue"
+                app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+                app:myTitle="兑换会员"
+                tools:ignore="MissingConstraints" />
 
             <FrameLayout
                 android:layout_width="match_parent"

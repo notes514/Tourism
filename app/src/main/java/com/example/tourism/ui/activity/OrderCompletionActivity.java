@@ -1,6 +1,7 @@
 package com.example.tourism.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,6 +45,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.tourism.MainActivity.user;
 
 public class OrderCompletionActivity extends BaseActivity implements DefineView {
     @BindView(R.id.tv_content)
@@ -125,6 +128,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private Contacts contacts;
     private Passenger passenger;
     private Order order;
+
+    private int REQUEST_CODE_SCAN = 1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -210,8 +215,14 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_choice:
+                //选择联系人
+                Intent intent = new Intent(OrderCompletionActivity.this,ContactActivity.class);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.tv_trip:
+                //选择出行人
+                Intent intent2 = new Intent(OrderCompletionActivity.this,TravelerActivity.class);
+                startActivityForResult(intent2, 2);
                 break;
             case R.id.switch_order:
                 if (switchOrder.isChecked()) {
@@ -433,6 +444,30 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
 
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("onActivityResult", "执行了！！！ ");
+        //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
+        if (requestCode == 1 && resultCode == 3) {
+            String cName = data.getStringExtra("cName");
+            String cCellPhone = data.getStringExtra("cCellPhone");
+            String cQq = data.getStringExtra("cQq");
+            String cWechat = data.getStringExtra("cWechat");
+            etName.setText(cName);
+            etPhoneNumber.setText(cCellPhone);
+            etQq.setText(cQq);
+            etWechat.setText(cWechat);
+        }
+        if (requestCode == 2 && resultCode == 4) {
+            llIdentifyCardid.setVisibility(View.VISIBLE);
+            String tName = data.getStringExtra("tName");
+            String tIdentityCard = data.getStringExtra("tIdentityCard");
+            etAdult.setText(tName);
+            tvIdentifyCardId.setText(tIdentityCard);
+        }
     }
 
 }

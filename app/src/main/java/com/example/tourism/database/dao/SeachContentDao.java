@@ -28,6 +28,7 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         public final static Property ScId = new Property(0, Long.class, "scId", true, "_id");
         public final static Property Url = new Property(1, String.class, "url", false, "URL");
         public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
+        public final static Property SDate = new Property(3, java.util.Date.class, "sDate", false, "S_DATE");
     }
 
 
@@ -45,7 +46,8 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"SEACH_CONTENT\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: scId
                 "\"URL\" TEXT NOT NULL ," + // 1: url
-                "\"CONTENT\" TEXT NOT NULL );"); // 2: content
+                "\"CONTENT\" TEXT NOT NULL ," + // 2: content
+                "\"S_DATE\" INTEGER NOT NULL );"); // 3: sDate
     }
 
     /** Drops the underlying database table. */
@@ -64,6 +66,7 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         }
         stmt.bindString(2, entity.getUrl());
         stmt.bindString(3, entity.getContent());
+        stmt.bindLong(4, entity.getSDate().getTime());
     }
 
     @Override
@@ -76,6 +79,7 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         }
         stmt.bindString(2, entity.getUrl());
         stmt.bindString(3, entity.getContent());
+        stmt.bindLong(4, entity.getSDate().getTime());
     }
 
     @Override
@@ -88,7 +92,8 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         SeachContent entity = new SeachContent( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // scId
             cursor.getString(offset + 1), // url
-            cursor.getString(offset + 2) // content
+            cursor.getString(offset + 2), // content
+            new java.util.Date(cursor.getLong(offset + 3)) // sDate
         );
         return entity;
     }
@@ -98,6 +103,7 @@ public class SeachContentDao extends AbstractDao<SeachContent, Long> {
         entity.setScId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUrl(cursor.getString(offset + 1));
         entity.setContent(cursor.getString(offset + 2));
+        entity.setSDate(new java.util.Date(cursor.getLong(offset + 3)));
      }
     
     @Override

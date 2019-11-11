@@ -5,7 +5,6 @@ import android.content.Context;
 import com.example.tourism.database.dao.DaoMaster;
 import com.example.tourism.database.dao.DaoSession;
 
-
 /**
  * 创建数据库、创建数据库表、包含增删改查的操作以及数据库的升级
  *

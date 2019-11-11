@@ -2,10 +2,13 @@ package com.example.tourism.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,9 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.database.bean.ContactsBean;
+import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.ui.activity.EditContactActivity;
 import com.example.tourism.ui.activity.OrderCancelLayoutActivity;
 import com.example.tourism.ui.activity.TourismDetailsActivity;
 import com.example.tourism.widget.CircleImageView;
@@ -38,6 +44,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<Order> orderList;
     //行程信息数据集
     private List<ScenicSpot> scenicSpotList;
+    //联系人数据集
+    private List<ContactsBean> contactsBeanList;
+    //出行人信息数据集
+    private List<TripBean> tripBeanList;
     //行程信息数据集
     private Context context;
     private int type;
@@ -68,6 +78,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //设置行程信息数据集
     public void setScenicSpotList(List<ScenicSpot> scenicSpotList) {
         this.scenicSpotList = scenicSpotList;
+    }
+
+    //设置联系人数据集
+    public void setContactsBeanList(List<ContactsBean> contactsBeanList) {
+        this.contactsBeanList = contactsBeanList;
+    }
+
+    //设置出行人信息数据集
+    public void setTripBeanList(List<TripBean> tripBeanList) {
+        this.tripBeanList = tripBeanList;
     }
 
     @NonNull
@@ -101,6 +121,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_seach_details_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new SeachDetailsViewHolder(view);
+        } else if (type == 7) {
+            View view = inflater.inflate(R.layout.contact_item, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new ContactsViewHolder(view);
+        }else if (type == 8) {
+            View view = inflater.inflate(R.layout.traveler_item, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new TravelerViewHolder(view);
         }
         return null;
     }
@@ -291,6 +319,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 context.startActivity(intent);
             });
         }
+        if (holder instanceof ContactsViewHolder) {
+            ContactsBean contactsBean = contactsBeanList.get(position);
+            holder.itemView.setTag(contactsBean);
+            if (position == getItemCount() - 1) ((ContactsViewHolder) holder).checkBox.setChecked(true);
+            ((ContactsViewHolder) holder).contacts.setText(contactsBean.getCName());
+            ((ContactsViewHolder) holder).telephone.setText(contactsBean.getCtellPhone());
+//            ((ContactsViewHolder) holder).ivEdit.setOnClickListener(view -> {
+//                Intent intent = new Intent(context, EditContactActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("id",contactsBean.getCName());
+//                bundle.putString("tell",contactsBean.getCtellPhone());
+//                intent.putExtras(bundle);
+//                context.startActivity(intent);
+//            });
+        }
+        if (holder instanceof TravelerViewHolder) {
+            TripBean tripBean = tripBeanList.get(position);
+            holder.itemView.setTag(tripBean);
+            if (position == getItemCount() - 1) ((TravelerViewHolder) holder).checkBox.setChecked(true);
+            ((TravelerViewHolder) holder).contacts.setText(tripBean.getTName());
+            ((TravelerViewHolder) holder).idCard.setText(tripBean.getTIdentitycard());
+        }
     }
 
     @Override
@@ -306,6 +356,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         if (type == 3 || type == 4 || type == 5 || type == 6) {
             return scenicSpotList == null ? 0 : scenicSpotList.size();
+        }
+        if (type == 7) {
+            return contactsBeanList == null ? 0 : contactsBeanList.size();
+        }
+        if (type == 8) {
+            return tripBeanList == null ? 0 : tripBeanList.size();
         }
         return 0;
     }
@@ -437,6 +493,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvPrice;
 
         public SeachDetailsViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class ContactsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.checkBox)
+        CheckBox checkBox;
+        @BindView(R.id.contacts)
+        TextView contacts;
+        @BindView(R.id.telephone)
+        TextView telephone;
+        @BindView(R.id.iv_edit)
+        ImageView ivEdit;
+
+        public ContactsViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class TravelerViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.checkBox)
+        CheckBox checkBox;
+        @BindView(R.id.contacts)
+        TextView contacts;
+        @BindView(R.id.id_Card)
+        TextView idCard;
+        @BindView(R.id.iv_edit)
+        ImageView ivEdit;
+
+        public TravelerViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

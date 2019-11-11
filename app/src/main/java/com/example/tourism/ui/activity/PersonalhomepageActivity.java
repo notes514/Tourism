@@ -1,6 +1,5 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -10,29 +9,45 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.User;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.PersonalContentFragment;
 import com.example.tourism.ui.fragment.PersonalFriendFragment;
 import com.example.tourism.ui.fragment.PersonalVideoFragment;
-import com.example.tourism.ui.fragment.PersonerFragment;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class PersonalhomepageActivity extends FragmentActivity {
+import static com.example.tourism.MainActivity.user;
+
+public class PersonalhomepageActivity extends BaseActivity {
     @BindView(R.id.user_return_arrow)
     ImageView userReturnArrow;
+    @BindView(R.id.personal_user_name)
+    TextView personalUserName;
     private ImageView hBack;
     private ImageView hHead;
 
@@ -76,8 +91,39 @@ public class PersonalhomepageActivity extends FragmentActivity {
         findById();
         init();
         initTabLineWidth();
-    }
 
+        if (user == null) {
+
+        }else if (user !=null){
+            //网络请求
+            ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+            Map map = new HashMap();
+            map.put("userId", "1");
+            Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
+            personalData.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        String message = response.body().string();
+                        JSONObject json = new JSONObject(message);
+                        if (json.getString("RESULT").equals("S")) {
+                            User user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"), User.class);
+                            Log.d(InitApp.TAG, "UserAccountName: " + user.getUserAccountName());
+                            personalUserName.setText(user.getUserAccountName());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }
+
+    }
     private void findById() {
         contentTv = (TextView) this.findViewById(R.id.contentTv);
         videoTv = (TextView) this.findViewById(R.id.videoTv);
@@ -188,7 +234,6 @@ public class PersonalhomepageActivity extends FragmentActivity {
 
     @OnClick(R.id.user_return_arrow)
     public void onViewClicked() {
-        Intent intent = new Intent(PersonalhomepageActivity.this, PersonerFragment.class);
         finish();
     }
 }

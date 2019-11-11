@@ -139,8 +139,16 @@ dependencies {
     //支付框上弹
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
 
+    //扫一扫
+    implementation 'com.github.yuzhiqiang1993:zxing:2.1.4'
+
     //谷歌官方调色板
     implementation 'com.android.support:palette-v7:28.0.0'
+
+    implementation 'com.amap.api:location:latest.integration'
+    implementation 'com.github.D10NGYANG:DL10SideBar:1.0.0'
+    // 拼音
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }
 MobSDK {
     appKey "2c75fba93b9b8"

@@ -2,22 +2,18 @@ package com.example.tourism.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tourism.R;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.User;
+import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.CustomToolbar;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,16 +25,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.bumptech.glide.load.engine.DiskCacheStrategy.RESULT;
-
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     private static final String TAG = "MainActivity1";
     private String phone_number;
-    @BindView(R.id.tv_return2)
-    TextView textView;
+    @BindView(R.id.custom_toolbar)
+    CustomToolbar customToolbar;
     @BindView(R.id.user_name)
     EditText username;
     @BindView(R.id.tell_phone)
@@ -53,9 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
-        textView.setOnClickListener(new View.OnClickListener() {
+        customToolbar.setOnLeftButtonClickLister(new CustomToolbar.OnLeftButtonClickLister() {
             @Override
-            public void onClick(View view) {
+            public void OnClick() {
                 Intent intent = new Intent(RegisterActivity.this,SignInActivity.class);
                 finish();
             }
@@ -88,15 +80,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register(){
-//        //创建Retrofit对象
-//        Retrofit retrofit = new Retrofit.Builder()
-//                //设置数据解析器
-//                .addConverterFactory(GsonConverterFactory.create())
-//                //设置网络请求的Url地址
-//                .baseUrl(RequestURL.ip_port)
-//                .build();
-//        //创建网络请求接口实例
-//        serverApi = retrofit.create(ServerApi.class);
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
 
         //向上造型

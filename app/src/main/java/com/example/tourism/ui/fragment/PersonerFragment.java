@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
+import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -23,10 +24,13 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.AllOrderActivity;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalDataActivity;
+import com.example.tourism.entity.User;
+import com.example.tourism.ui.activity.ContactActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
 import com.example.tourism.ui.activity.PersonalMyCollection;
 import com.example.tourism.ui.activity.PersonalOpenmemberActivity;
 import com.example.tourism.ui.activity.PersonalSubscriptions;
+import com.example.tourism.ui.activity.PersonalSystemSetupActivity;
 import com.example.tourism.ui.activity.PersonalhomepageActivity;
 import com.example.tourism.ui.activity.SignInActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
@@ -73,8 +77,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView userHomeage;
     @BindView(R.id.user_arrow)
     ImageView userarrow;
-    //    @BindView(R.id.prl_view)
-//    PullRefreshLayout pullRefreshLayout;
     @BindView(R.id.btn_mycollection)
     FrameLayout btnMycollection;
     @BindView(R.id.btn_holidayprbolem)
@@ -103,6 +105,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     TextView re;
     @BindView(R.id.h_head)
     CircleImageView hHead;
+    @BindView(R.id.btn_set_up)
+    FrameLayout btnSetUp;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -120,38 +124,35 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage,
             R.id.user_name, R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order,
-            R.id.re})
+            R.id.re,R.id.btn_set_up})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mycollection:
-                Intent intent = new Intent(PersonerFragment.this.getActivity(), PersonalMyCollection.class);
-                startActivity(intent);
+                openActivity(PersonalMyCollection.class);
                 break;
             case R.id.btn_holidayprbolem:
-                Intent btn_holiday_prbolem = new Intent(PersonerFragment.this.getActivity(), PersonalHolidayproblem.class);
-                startActivity(btn_holiday_prbolem);
+                openActivity(PersonalHolidayproblem.class);
                 break;
             case R.id.btn_mysubscriptions:
-                Intent btn_my_subscriptions = new Intent(PersonerFragment.this.getActivity(), PersonalSubscriptions.class);
-                startActivity(btn_my_subscriptions);
+                openActivity(PersonalSubscriptions.class);
                 break;
             case R.id.btn_member:
-                Intent btn_member1 = new Intent(PersonerFragment.this.getActivity(), PersonalOpenmemberActivity.class);
-                startActivity(btn_member1);
+                openActivity(PersonalOpenmemberActivity.class);
                 break;
             case R.id.btn_coupon:
-                Intent btn_coupon1 = new Intent(PersonerFragment.this.getActivity(), PersonalCouponActivity.class);
-                startActivity(btn_coupon1);
+                openActivity(PersonalCouponActivity.class);
+                break;
+            case R.id.btn_set_up: //点击跳转系统设置
+                openActivity(PersonalSystemSetupActivity.class);
                 break;
             case R.id.user_homepage:
-                Intent btn_user_homepage = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-                startActivity(btn_user_homepage);
+                openActivity(PersonalhomepageActivity.class);
                 break;
             case R.id.user_follow:
-                show1();
+                openActivity(PersonalhomepageActivity.class);
                 break;
             case R.id.user_fans:
-                show1();
+                openActivity(PersonalhomepageActivity.class);
                 break;
             case R.id.user_name:
                 if (user == null) {
@@ -162,20 +163,11 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             case R.id.fl_all_order: //点击全部订单
                 openActivity(AllOrderActivity.class);
                 break;
-            case R.id.re: //点击全部订单
+            case R.id.re://点击登录
                 openActivity(SignInActivity.class);
                 break;
+
         }
-    }
-
-    private void show() {
-        Intent btn_data = new Intent(PersonerFragment.this.getActivity(), PersonalDataActivity.class);
-        startActivity(btn_data);
-    }
-
-    private void show1() {
-        Intent user_homepage1 = new Intent(PersonerFragment.this.getActivity(), PersonalhomepageActivity.class);
-        startActivity(user_homepage1);
     }
 
     @Override
@@ -230,7 +222,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnRightButtonClickLister(() -> show());
+        customToolbar.setOnRightButtonClickLister(() -> openActivity(PersonalDataActivity.class));
     }
 
     @Override
@@ -243,6 +235,23 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind(); //解绑
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case Request_Code:
+//                User user = (User) data.getSerializableExtra("data");
+//                Log.d("@@@@",data.getStringExtra("data"));
+                userName.setText(user.getUserAccountName());
+                break;
+                default:
+                    Log.d("@@@@",data.getStringExtra("无数据"));
+                    break;
+        }
     }
 
     @Override
@@ -262,6 +271,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             userFollow.setVisibility(View.VISIBLE);
             userFansNum.setVisibility(View.VISIBLE);
             userFollowNum.setVisibility(View.VISIBLE);
+            re.setVisibility(View.GONE);
         }
     }
 

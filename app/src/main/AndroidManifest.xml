@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -31,6 +32,10 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
     <!-- 短信验证码登录、第三方登录权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -129,17 +134,16 @@
         </activity>
         <activity android:name=".ui.activity.SeachDetailsActivity">
         </activity>
+        <activity android:name=".ui.activity.LocationActivity">
+        </activity>
         <activity android:name=".ui.activity.Top10Activity">
         </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/TranslucentTheme">
-        </activity>
-        <activity android:name=".ui.activity.LeaderboardActivity">
-        </activity>
-
-        <!-- 第三方登录需要额外添加的activity -->
+            android:theme="@style/TranslucentTheme" />
+        <activity android:name=".ui.activity.LeaderboardActivity" />
+        <activity android:name=".ui.activity.TravelerActivity" /> <!-- 第三方登录需要额外添加的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -191,6 +195,8 @@
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="8fd1937cd4daf2fabcd80969be430da3"></meta-data>
     </application>
 
 </manifest>

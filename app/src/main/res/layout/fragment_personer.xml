@@ -69,7 +69,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="账号"
                                 android:layout_gravity="center"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginRight="40dp"
                                 android:textColor="@android:color/white"
                                 android:textSize="17sp" />
 
@@ -78,7 +78,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:layout_marginLeft="45dp"
+                                android:layout_marginLeft="60dp"
                                 android:text="电话号码"
                                 android:textColor="@android:color/white"
                                 android:textSize="17sp" />
@@ -501,8 +501,42 @@
                         <include layout="@layout/activity_line_not_full"/>
 
                         <FrameLayout
+                            android:id="@+id/btn_set_up"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:gravity="center|left"
+                            android:layout_marginTop="5dp"
+                            android:onClick="my_holiday_prbolem"
+                            android:background="@color/color_white">
+
+                            <ImageView
+                                android:id="@+id/personal_set_up_Img"
+                                android:layout_width="30dp"
+                                android:layout_height="35dp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_gravity="center|left"
+                                android:src="@drawable/personal_set_up" />
+                            <TextView
+                                android:id="@+id/personal_set_up_Text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="70dp"
+                                android:layout_gravity="center|left"
+                                android:text="系统设置"
+                                android:textSize="15sp"
+                                android:textColor="@color/color_black"/>
+
+                            <ImageView
+                                android:id="@+id/persongal_set_up_arrow"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_gravity="center|right"
+                                android:src="@drawable/personal_arrow_white_right" />
+                        </FrameLayout>
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
                             android:background="#00000000">
 
                         </FrameLayout>
@@ -512,7 +546,6 @@
 
         </androidx.core.widget.NestedScrollView>
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-<!--    </com.baoyz.widget.PullRefreshLayout>-->
 
     <LinearLayout
         android:id="@+id/ll_state_toolbar"

@@ -38,6 +38,12 @@
         <item name="colorControlActivated">#BBBBBB</item>
     </style>
 
+    <!--  自定义CheckBox样式 -->
+    <style name="CheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#00BCD4</item>
+        <item name="colorControlActivated">#00BCD4</item>
+    </style>
+
     <declare-styleable name="PercentLayout_Layout">
         <attr format="fraction" name="layout_widthPercent"/>
         <attr format="fraction" name="layout_heightPercent"/>

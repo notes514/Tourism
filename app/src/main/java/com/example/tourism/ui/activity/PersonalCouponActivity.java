@@ -197,16 +197,11 @@ public class PersonalCouponActivity extends BaseActivity implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(() -> show());
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
     }
 
     @Override
     public void bindData() {
 
     }
-
-    public void show() {
-        finish();
-    }
-
 }
