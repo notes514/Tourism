@@ -95,4 +95,19 @@ public abstract class DialogPayment extends Dialog {
      */
     public abstract void btnPayment();
 
+    public TextView getTvPaymentMethod() {
+        return tvPaymentMethod;
+    }
+
+    public void setTvPaymentMethod(TextView tvPaymentMethod) {
+        this.tvPaymentMethod = tvPaymentMethod;
+    }
+
+    public TextView getTvPrice() {
+        return tvPrice;
+    }
+
+    public void setTvPrice(String price) {
+        tvPrice.setText(price);
+    }
 }

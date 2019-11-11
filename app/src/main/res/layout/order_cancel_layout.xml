@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_content_subject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_blue"
@@ -797,6 +798,7 @@
 
     <!--底部导航栏-->
     <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_alignParentBottom="true"
@@ -843,7 +845,7 @@
                     android:gravity="center"
                     android:textSize="16dp"
                     android:textColor="@color/color_orange_red"
-                    android:text="9000"/>
+                    android:text=""/>
             </LinearLayout>
 
             <TextView
@@ -872,5 +874,7 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <include layout="@layout/loading_layout_black"/>
 
 </RelativeLayout>

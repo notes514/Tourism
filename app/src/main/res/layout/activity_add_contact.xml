@@ -38,10 +38,12 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:textSize="14sp"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             android:background="@color/color_white"
             android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
             android:hint="@string/tourism_order_name_content"
-            android:maxLines="1"
             android:singleLine="true"/>
 
     </LinearLayout>
@@ -69,6 +71,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:textSize="14sp"
+            android:imeOptions="actionNext"
             android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
             android:background="@color/color_white"
             android:hint="@string/tourism_order_name_content"
@@ -100,6 +103,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:textSize="14sp"
+            android:imeOptions="actionNext"
             android:background="@color/color_white"
             android:hint="@string/tourism_order_qq_content"
             android:inputType="number|numberDecimal"
@@ -131,6 +135,8 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:textSize="14sp"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:background="@color/color_white"
             android:hint="@string/tourism_order_wechat_content"
             android:maxLines="1"

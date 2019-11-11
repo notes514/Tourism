@@ -287,7 +287,6 @@ public class DestinationFragment extends BaseFragment implements DefineView {
 
                             for (int i = 0; i < scenicRegions.size(); i++) {
                                 ScenicRegion scenicRegion = scenicRegions.get(i);
-                                Log.e(TAG, "abconResponse: " + newText, null);
                                 if (newText.equals(scenicRegion.getRegionName())) {
                                     temp = newText;
 
@@ -315,8 +314,6 @@ public class DestinationFragment extends BaseFragment implements DefineView {
             @Override
             public void onClick(View v) {
                 if (temp != null) {
-
-
                     RetrofitManger retrofit = RetrofitManger.getInstance();
                     ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
                     Map<String, Object> map = new HashMap<>();

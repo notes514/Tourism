@@ -118,12 +118,10 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String data = response.body().string();
-                    Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
                     exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),new TypeToken<ExhibitionArea>(){}.getType());
                     if (exhibitionArea == null) return;
-                    Log.d("@@@", exhibitionArea.getExhibitionAreaAddress());
                     //test();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -135,7 +133,6 @@ public class LeaderboardActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@","请求失败！");
                 Log.d("@@@",t.getMessage());
             }
         });
@@ -151,13 +148,11 @@ public class LeaderboardActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String data = response.body().string();
-                    Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
                     exhibits = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<List<Exhibits>>(){}.getType());
                     if (exhibits == null) return;
-                    Log.d("@@@", exhibits.size()+"");
                     initRecyclerView(exhibits);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -167,7 +162,6 @@ public class LeaderboardActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@","请求失败！");
                 Log.d("@@@",t.getMessage());
             }
         });

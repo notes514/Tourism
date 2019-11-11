@@ -153,9 +153,6 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     }
 
     private void login() {
-
-//        RetrofitManger retrofitManger = new RetrofitManger();
-//        serverApi = retrofitManger.getRetrofit(InitApp.ip_port).create(ServerApi.class);
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         //向上造型
         Map<String, Object> map = new HashMap<>();
@@ -184,7 +181,6 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                         getActivity().finish();
                         AppUtils.getToast(json.getString("TIPS"));
                     }else {
-                        Log.d(TAG, "onResponse: " + json.getString("RESULT").equals("F"));
                         AppUtils.getToast(json.getString("TIPS"));
                     }
                 } catch (Exception e) {
@@ -269,21 +265,6 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
         super.onDestroy();
         unbinder.unbind(); //解绑
     }
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        SharedPreferences sharedPreferences= InitApp.getInstance().getSharedPreferences("data",0);
-//        //步骤1：创建一个SharedPreferences对象
-//        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences("data",Context.MODE_PRIVATE);
-//        //步骤2： 实例化SharedPreferences.Editor对象
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        //步骤3：将获取过来的值放入文件
-//        editor.putString("name","");
-//        editor.putInt("age", 28);
-//        editor.putBoolean("marrid",false);
-//        //步骤4：提交
-//        editor.commit();
-//    }
 
     @Override
     public void onClick(View view) {

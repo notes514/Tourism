@@ -69,7 +69,6 @@ public class FragmentSearchListFragment extends Fragment {
         helper = new MySqliteHelper(getActivity());
         db = helper.getWritableDatabase();
 
-        //String url = "http://192.168.42.77:8080/api/";
         RetrofitManger retrofit = RetrofitManger.getInstance();
         ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String,Object> map=new HashMap<>();

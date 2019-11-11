@@ -184,17 +184,13 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
     }
     @OnClick(R.id.btn_personal_Logout)
     public void onViewClicked() {
-//        Intent intent_login = new Intent();
-//        intent_login.setClass(PersonalDataActivity.this,SignInActivity.class);
-//        intent_login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //关键的一句，将新的activity置为栈顶
-//        startActivity(intent_login);
-//        finish();
         SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
         //步骤2： 实例化SharedPreferences.Editor对象
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
         user = null;
+        RequestURL.vUserId = "";
         finish();
     }
 }

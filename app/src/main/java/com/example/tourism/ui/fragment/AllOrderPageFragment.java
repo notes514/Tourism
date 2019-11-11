@@ -113,19 +113,19 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
         adapter = new RecyclerViewAdapter(getContext(), 2);
 
         if ("全部".equals(pStr)) { //全部订单
-            queryByOrderState(1, 0);
+            queryByOrderState(0);
         }
         if ("待付款".equals(pStr)) {
-            queryByOrderState(1, 1);
+            queryByOrderState(1);
         }
         if ("待消费".equals(pStr)) {
-            queryByOrderState(1, 2);
+            queryByOrderState(2);
         }
         if ("待评价".equals(pStr)) {
-            queryByOrderState(1, 3);
+            queryByOrderState(3);
         }
         if ("退款中".equals(pStr)) {
-            queryByOrderState(1, 4);
+            queryByOrderState(4);
         }
 
     }
@@ -149,10 +149,10 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
         }
     }
 
-    private void queryByOrderState(int userId, int orderState) {
+    private void queryByOrderState(int orderState) {
         api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String, Object> map = new HashMap<>();
-        map.put("userId", userId);
+        map.put("userId", RequestURL.vUserId);
         map.put("orderState", orderState);
         Call<ResponseBody> allCall = api.getASync("queryByOrderState", map);
         allCall.enqueue(new Callback<ResponseBody>() {

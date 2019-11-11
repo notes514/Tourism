@@ -134,7 +134,7 @@ public class SearchSpotAdapterFragment extends Fragment {
                             LinearLayoutManager layoutManager = new LinearLayoutManager(SearchSpotAdapterFragment.this.getContext());
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             countryRecycleView.setLayoutManager(layoutManager);
-//给RecyclerView设置适配器
+                            //给RecyclerView设置适配器
                             countryRecycleView.setAdapter(browseCountryAdapter);
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -277,7 +277,7 @@ public class SearchSpotAdapterFragment extends Fragment {
                     LinearLayoutManager layoutManager = new LinearLayoutManager(SearchSpotAdapterFragment.this.getContext());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     countryRecycleView.setLayoutManager(layoutManager);
-//给RecyclerView设置适配器
+                    //给RecyclerView设置适配器
                     countryRecycleView.setAdapter(browseCountryAdapter);
                 } catch (IOException e) {
                     e.printStackTrace();

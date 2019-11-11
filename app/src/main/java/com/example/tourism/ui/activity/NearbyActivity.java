@@ -271,13 +271,11 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String data = response.body().string();
-                    Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
                     exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<ExhibitionArea>(){}.getType());
                     if (exhibitionArea == null) return;
-                    Log.d("@@@", exhibitionArea.getExhibitionAreaName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (JSONException e) {
@@ -286,7 +284,6 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@","请求失败！");
                 Log.d("@@@",t.getMessage());
             }
         });

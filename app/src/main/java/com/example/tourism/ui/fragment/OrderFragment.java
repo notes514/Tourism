@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
@@ -67,6 +68,10 @@ public class OrderFragment extends BaseFragment implements DefineView {
     LinearLayout emptyLine;
     @BindView(R.id.error_line)
     LinearLayout errorLine;
+    @BindView(R.id.ll_tv_empty_content)
+    TextView llTvEmptyContent;
+    @BindView(R.id.ll_trip)
+    LinearLayout llTrip;
     private Unbinder unbinder;
     //请求api
     private ServerApi api;
@@ -97,6 +102,7 @@ public class OrderFragment extends BaseFragment implements DefineView {
         //资源文件隐藏显示
         nsvScollview.setVisibility(View.GONE);
         btnAddTrip.setVisibility(View.GONE);
+        llTrip.setVisibility(View.GONE);
         loadingLine.setVisibility(View.VISIBLE);
         emptyLine.setVisibility(View.GONE);
         errorLine.setVisibility(View.GONE);
@@ -137,7 +143,7 @@ public class OrderFragment extends BaseFragment implements DefineView {
         //网络请求加载预定信息
         api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String, Object> qMap = new HashMap<>();
-        qMap.put("userId", 1);
+        qMap.put("userId", RequestURL.vUserId);
         Call<ResponseBody> qCall = api.getASync("queryAllTrips", qMap);
         qCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -203,30 +209,59 @@ public class OrderFragment extends BaseFragment implements DefineView {
 
     @Override
     public void bindData() {
-        if (scenicSpotList.size() > 0) {
-            //设置数据
-            qAdapter.setScenicSpotList(scenicSpotList);
-            //设置适配器
-            rvTrip.setAdapter(qAdapter);
-        }
-
-        if (scenictList.size() > 0) {
+        if (scenictList != null) {
+            //页面加载显示
+            loadingLine.setVisibility(View.GONE);
+            nsvScollview.setVisibility(View.VISIBLE);
+            btnAddTrip.setVisibility(View.VISIBLE);
+            llTrip.setVisibility(View.GONE);
+            emptyLine.setVisibility(View.GONE);
+            errorLine.setVisibility(View.GONE);
             //设置数据
             rAdapter.setScenicSpotList(scenictList);
             //设置适配器
             rvRecommend.setAdapter(rAdapter);
-            //页面加载显示
-            loadingLine.setVisibility(View.GONE);
-            emptyLine.setVisibility(View.GONE);
-            errorLine.setVisibility(View.GONE);
-            nsvScollview.setVisibility(View.VISIBLE);
-            btnAddTrip.setVisibility(View.VISIBLE);
         } else {
             nsvScollview.setVisibility(View.GONE);
             btnAddTrip.setVisibility(View.GONE);
+            llTrip.setVisibility(View.GONE);
             loadingLine.setVisibility(View.GONE);
             errorLine.setVisibility(View.GONE);
             emptyLine.setVisibility(View.VISIBLE);
+        }
+
+        if (RequestURL.vUserId.length() > 0) {
+            if (scenicSpotList != null) {
+                //页面加载显示
+                loadingLine.setVisibility(View.GONE);
+                nsvScollview.setVisibility(View.VISIBLE);
+                btnAddTrip.setVisibility(View.VISIBLE);
+                llTrip.setVisibility(View.GONE);
+                emptyLine.setVisibility(View.GONE);
+                errorLine.setVisibility(View.GONE);
+                //设置数据
+                qAdapter.setScenicSpotList(scenicSpotList);
+                //设置适配器
+                rvTrip.setAdapter(qAdapter);
+            } else {
+                //页面加载显示
+                loadingLine.setVisibility(View.GONE);
+                nsvScollview.setVisibility(View.VISIBLE);
+                btnAddTrip.setVisibility(View.VISIBLE);
+                llTrip.setVisibility(View.VISIBLE);
+                emptyLine.setVisibility(View.GONE);
+                errorLine.setVisibility(View.GONE);
+                llTvEmptyContent.setText("您还没有添加行程，点击 + 号添加");
+            }
+        } else {
+            //页面加载显示
+            loadingLine.setVisibility(View.GONE);
+            nsvScollview.setVisibility(View.VISIBLE);
+            btnAddTrip.setVisibility(View.VISIBLE);
+            llTrip.setVisibility(View.VISIBLE);
+            emptyLine.setVisibility(View.GONE);
+            errorLine.setVisibility(View.GONE);
+            llTvEmptyContent.setText("您还没有登录，请先登录");
         }
 
     }

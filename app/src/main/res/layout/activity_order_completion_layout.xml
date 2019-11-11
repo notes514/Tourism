@@ -48,14 +48,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/color_separator_row" />
-            <TextView
-                android:id="@+id/tv_room_difference"
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tourism_order_room_difference"
-                android:textSize="14sp"
-                android:textColor="@color/color_black"
-                android:padding="10dp"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_room_difference"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourism_order_room_difference"
+                    android:textSize="14sp"
+                    android:textColor="@color/color_black"
+                    android:padding="10dp"
+                    android:layout_gravity="left"/>
+
+                <TextView
+                    android:id="@+id/tv_room_difference_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center"
+                    android:layout_marginRight="10dp"
+                    android:text="¥681"/>
+
+            </FrameLayout>
+
             <!-- 添加分隔行 -->
             <View
                 android:layout_width="match_parent"
@@ -111,6 +128,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:textSize="14sp"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionNext"
                     android:background="@color/color_white"
                     android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
                     android:hint="@string/tourism_order_name_content"/>
@@ -142,9 +162,11 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:textSize="14sp"
+                    android:maxLines="1"
+                    android:inputType="phone"
+                    android:imeOptions="actionNext"
                     android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
                     android:background="@color/color_white"
-                    android:inputType="number|numberDecimal"
                     android:hint="@string/tourism_order_name_content"/>
 
             </LinearLayout>
@@ -174,6 +196,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:textSize="14sp"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
                     android:background="@color/color_white"
                     android:inputType="number|numberDecimal"
                     android:hint="@string/tourism_order_qq_content"/>
@@ -205,6 +229,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:textSize="14sp"
+                    android:maxLines="1"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
                     android:background="@color/color_white"
                     android:hint="@string/tourism_order_wechat_content"/>
 
@@ -272,6 +299,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:textSize="14sp"
+                        android:maxLines="1"
+                        android:inputType="text"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/color_black"
                         android:background="@color/color_white"
                         android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
@@ -502,14 +532,15 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:layout_weight="2"
+                android:gravity="left|center">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="总价"
                     android:textSize="16dp"
+                    android:layout_marginLeft="16dp"
                     android:textColor="@color/color_black"
                     android:layout_marginRight="2dp"/>
 
@@ -529,7 +560,7 @@
                     android:gravity="center"
                     android:textSize="16dp"
                     android:textColor="@color/color_orange_red"
-                    android:text="9000"/>
+                    android:text=""/>
             </LinearLayout>
 
             <TextView

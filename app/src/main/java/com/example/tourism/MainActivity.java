@@ -67,7 +67,6 @@ public class MainActivity extends BaseActivity implements DefineView {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         checkPermission();
-
         temp();
         SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
 

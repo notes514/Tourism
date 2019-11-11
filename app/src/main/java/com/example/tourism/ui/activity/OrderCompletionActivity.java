@@ -129,8 +129,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private Passenger passenger;
     private Order order;
 
-    private int REQUEST_CODE_SCAN = 1;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -241,6 +239,10 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
             case R.id.tv_cost_details:
                 break;
             case R.id.btn_reserve:
+                if (RequestURL.vUserId.length() == 0) {
+                    AppUtils.getToast("请先登录");
+                    return;
+                }
                 //获取联系人数据
                 name = etName.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();

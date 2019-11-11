@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white">
+
+    <!--滚动视图-->
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv_scollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_romantic_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="218dp"
+                        android:src="@drawable/aiaiai"/>
+
+                    <TextView
+                        android:id="@+id/tv_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginStart="34dp"
+                        android:layout_marginTop="80dp"
+                        android:text="南宁站" />
+
+                </RelativeLayout>
+
+                <!--只用于占位不显示-为浮动栏占位大小40dp跟浮动栏高度一致-->
+                <TextView
+                    android:id="@+id/tv_show"
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:background="@android:color/transparent"
+                    android:visibility="invisible"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.example.tourism.widget.NestedExpandaleListView
+                        android:id="@+id/elv_roantic"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_separator_row"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_classify"
+                android:layout_width="match_parent"
+                android:layout_height="49dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="73dp"
+                android:background="@color/color_white"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5">
+
+                    <!--tabIndicatorColor：指示器的颜色-->
+                    <!--tabIndicatorHeight：指示器的高度，可设置为0，相当于没有指示器-->
+                    <!--tabTextColor：Tab未选中时字体的颜色-->
+                    <!--tabSelectedTextColor：Tab选中时字体的颜色-->
+                    <!--tabTextAppearance：Tab内文字的样式，TabLayout没有提供直接属性设置文字大小，需通过该属性指定style样式从而改变文字大小-->
+                    <!--tabMode：Tab的显示模式，默认为fixed（固定不能滑动，标签很多时会被挤压），可设置为scrollable（标签很多时可向左滑动）-->
+                    <!--tabGravity：内容的显示模式，可选center（居中）和fill（填充）-->
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tb_romantic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        app:tabIndicatorColor="@color/color_cyan_green"
+                        app:tabIndicatorHeight="3dp"
+                        app:tabSelectedTextColor="@color/color_cyan_green"
+                        app:tabTextColor="@color/color_black"
+                        app:tabMode="scrollable"
+                        app:tabGravity="center">
+
+                    </com.google.android.material.tabs.TabLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_expand_more"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_expand_more_black_24dp"
+                    />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <!--详情页头部-->
+    <LinearLayout
+        android:id="@+id/ll_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--状态栏-->
+        <View
+            android:id="@+id/status_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_blue"/>
+        <!--详情页toolbar-->
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/ct_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@color/color_blue"
+            app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+            app:rightButtonIcon="@drawable/btn_more_horiz_selector"
+            app:myTitle="行万里路 爱一个人"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_more"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择分类"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/color_black_2c"/>
+
+                <ImageView
+                    android:id="@+id/iv_clear"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_expand_less_black_24dp"
+                    android:layout_gravity="right"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:id="@+id/tv_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="星辰大海"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+                <TextView
+                    android:id="@+id/tv_type2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="壕买买买"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+                <TextView
+                    android:id="@+id/tv_type3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="明星结婚地"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+                <TextView
+                    android:id="@+id/tv_type4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="激情刺激"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/color_white">
+
+                <TextView
+                    android:id="@+id/tv_type5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="网红流行"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+                <TextView
+                    android:id="@+id/tv_type6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="文艺小资"
+                    android:textSize="16sp"
+                    android:layout_marginRight="10dp"
+                    android:textColor="@color/color_black"
+                    android:background="@drawable/select_text_fillet_gray"/>
+
+            </LinearLayout>
+            <View
+                android:id="@+id/view_translucent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/color_black_translucent_30"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

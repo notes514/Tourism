@@ -38,7 +38,6 @@ import retrofit2.Response;
 import static com.example.tourism.MainActivity.user;
 
 public class PersonalSystemSetupActivity extends BaseActivity implements DefineView {
-
     @BindView(R.id.img_userHeadPortrait)
     ImageView imgUserHeadPortrait;
     @BindView(R.id.custom_toolbar)
@@ -82,7 +81,7 @@ public class PersonalSystemSetupActivity extends BaseActivity implements DefineV
 
             ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
             Map map = new HashMap();
-            map.put("userId", "1");
+            map.put("userId", RequestURL.vUserId);
             Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
             personalData.enqueue(new Callback<ResponseBody>() {
                 @Override

@@ -170,8 +170,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     Button btnReserve;
     @BindView(R.id.iv_back_top)
     ImageView ivBackTop;
-    @BindView(R.id.loading_line)
-    LinearLayout loadingLine;
     @BindView(R.id.empty_line)
     LinearLayout emptyLine;
     @BindView(R.id.error_line)
@@ -180,6 +178,10 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     LinearLayout llToolbar;
     @BindView(R.id.ll_buttom)
     LinearLayout llButtom;
+    @BindView(R.id.iv_left_back)
+    ImageView ivLeftBack;
+    @BindView(R.id.loading_line)
+    ConstraintLayout loadingLine;
     //保存顶部状态栏的高度
     private int statusHeight;
     //保存顶部标题栏的高度
@@ -289,36 +291,33 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         buttomChildViewPager.addOnPageChangeListener(new ButtomPageChangeListener());
         //设置ViewPager
         //设置滚动监听
-        nsvScrollview.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                //设置status，toobar颜色透明渐变
-                float detalis = scrollY > bHeight ? bHeight : (scrollY > 30 ? scrollY : 0);
-                int alpha = (int) (detalis / bHeight * 255);
-                AppUtils.setUpdateActionBar(statusView, detailsToolbar, alpha);
-                if (alpha < 200) {
-                    imageViewOne.setBackgroundResource(R.drawable.select_bar_translucent);
-                    imageViewTwo.setBackgroundResource(R.drawable.select_bar_translucent);
-                    imageViewThree.setBackgroundResource(R.drawable.select_bar_translucent);
-                } else {
-                    imageViewOne.setBackgroundResource(R.drawable.select_bar_transparent);
-                    imageViewTwo.setBackgroundResource(R.drawable.select_bar_transparent);
-                    imageViewThree.setBackgroundResource(R.drawable.select_bar_transparent);
-                }
-                //获取高度
-                vpagerTopDistance = buttomChildViewPager.getTop() - classifyHeight - statusView.getHeight()
-                        - detailsToolbar.getHeight();
-                //设置浮动栏距离顶部的高度
-                //设置浮动栏
-                int translation = Math.max(scrollY, vpagerTopDistance);
-                layoutClassify.setTranslationY(translation);
-                layoutClassify.setVisibility(View.VISIBLE);
-                //设置返回顶部
-                if (scrollY >= vpagerTopDistance) {
-                    ivBackTop.setVisibility(View.VISIBLE);
-                } else {
-                    ivBackTop.setVisibility(View.GONE);
-                }
+        nsvScrollview.setOnScrollChangeListener((View.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            //设置status，toobar颜色透明渐变
+            float detalis = scrollY > bHeight ? bHeight : (scrollY > 30 ? scrollY : 0);
+            int alpha = (int) (detalis / bHeight * 255);
+            AppUtils.setUpdateActionBar(statusView, detailsToolbar, alpha);
+            if (alpha < 200) {
+                imageViewOne.setBackgroundResource(R.drawable.select_bar_translucent);
+                imageViewTwo.setBackgroundResource(R.drawable.select_bar_translucent);
+                imageViewThree.setBackgroundResource(R.drawable.select_bar_translucent);
+            } else {
+                imageViewOne.setBackgroundResource(R.drawable.select_bar_transparent);
+                imageViewTwo.setBackgroundResource(R.drawable.select_bar_transparent);
+                imageViewThree.setBackgroundResource(R.drawable.select_bar_transparent);
+            }
+            //获取高度
+            vpagerTopDistance = buttomChildViewPager.getTop() - classifyHeight - statusView.getHeight()
+                    - detailsToolbar.getHeight();
+            //设置浮动栏距离顶部的高度
+            //设置浮动栏
+            int translation = Math.max(scrollY, vpagerTopDistance);
+            layoutClassify.setTranslationY(translation);
+            layoutClassify.setVisibility(View.VISIBLE);
+            //设置返回顶部
+            if (scrollY >= vpagerTopDistance) {
+                ivBackTop.setVisibility(View.VISIBLE);
+            } else {
+                ivBackTop.setVisibility(View.GONE);
             }
         });
 
@@ -361,7 +360,12 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
     @Override
     public void initListener() {
-
+        ivLeftBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")

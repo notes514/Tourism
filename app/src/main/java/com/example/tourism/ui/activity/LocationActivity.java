@@ -24,7 +24,6 @@ import com.amap.api.location.AMapLocationListener;
 import com.dlong.rep.dlsidebar.DLSideBar;
 import com.example.tourism.R;
 import com.example.tourism.adapter.CityItemAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.entity.City;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.PinyinUtils;

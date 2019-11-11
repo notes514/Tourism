@@ -97,12 +97,10 @@ public class LeaderboardDetailFragment extends BaseFragment implements DefineVie
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String data = response.body().string();
-                    Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
                     exhibits = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),
                            new TypeToken<List<Exhibits>>(){}.getType());
-                    Log.d("@@@", exhibits.size()+"");
                     Collections.sort(exhibits, new Comparator<Exhibits>() {
                         @Override
                         public int compare(Exhibits exhibits, Exhibits t1) {

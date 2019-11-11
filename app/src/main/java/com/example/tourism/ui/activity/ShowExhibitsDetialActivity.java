@@ -133,7 +133,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
         exhibitsId = (int) getIntent().getExtras().get("exhibitsId");
         queryExhibitsDetails(exhibitsId);
         queryExhibitsComment(exhibitsId);
-        queryFabulousDetailsFlag(1,exhibitsId);
+        queryFabulousDetailsFlag(exhibitsId);
         initToolBar();
         initBanner();
         initVideoView();
@@ -258,11 +258,9 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
                 try {
                     String mag = response.body().string();
                     JSONObject json = new JSONObject(mag);
-                    Log.d("33333", "onResponse: " + mag);
-                    exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
+                    Exhibits exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
                             new TypeToken<Exhibits>(){}.getType());
                     if (exhibit == null) return;
-                    Log.d("33333", "onResponse: " + exhibit.getExhibitsName());
                     exhibitsName.setText(exhibit.getExhibitsName());
                     guidanceTeacher.setText(exhibit.getGuidanceTeacher());
                     exhibitsAuthor.setText(exhibit.getExhibitsAuthor());
@@ -277,7 +275,6 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@@","请求失败！");
                 Log.d("@@@@",t.getMessage());
             }
         });
@@ -306,16 +303,15 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("!!!","请求失败！");
                 Log.d("!!!",t.getMessage());
             }
         });
     }
 
-    private void setFabulousDetailsFlag(int userId, int exhibitsId){
+    private void setFabulousDetailsFlag(int exhibitsId){
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         HashMap hashMap = new HashMap();
-        hashMap.put("userId",userId);
+        hashMap.put("userId", RequestURL.vUserId);
         hashMap.put("exhibitsId",exhibitsId);
         Call<ResponseBody> exhibitsCommentsCall = serverApi.getASync("setFabulousDetailsFlag",hashMap);
         exhibitsCommentsCall.enqueue(new Callback<ResponseBody>() {
@@ -341,10 +337,10 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
         });
     }
 
-    private void queryFabulousDetailsFlag(int userId, int exhibitsId){
+    private void queryFabulousDetailsFlag(int exhibitsId){
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         HashMap hashMap = new HashMap();
-        hashMap.put("userId",userId);
+        hashMap.put("userId",RequestURL.vUserId);
         hashMap.put("exhibitsId",exhibitsId);
         Call<ResponseBody> exhibitsCommentsCall = serverApi.getASync("queryFabulousDetailsFlag",hashMap);
         exhibitsCommentsCall.enqueue(new Callback<ResponseBody>() {
@@ -399,7 +395,6 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("!!!","请求失败！");
                 Log.d("!!!",t.getMessage());
             }
         });
@@ -507,7 +502,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if (likeFlag != defaultFlag){
-            setFabulousDetailsFlag(1,exhibitsId);
+            setFabulousDetailsFlag(exhibitsId);
         }
     }
 
@@ -518,6 +513,9 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
         if (danmakuView != null) {
             danmakuView.release();
             danmakuView = null;
+        }
+        if (likeFlag != defaultFlag){
+            setFabulousDetailsFlag(exhibitsId);
         }
     }
 }

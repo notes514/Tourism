@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -104,12 +104,14 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
     LinearLayout llFoubles;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
-    @BindView(R.id.loading_line)
-    LinearLayout loadingLine;
     @BindView(R.id.empty_line)
     LinearLayout emptyLine;
     @BindView(R.id.error_line)
     LinearLayout errorLine;
+    @BindView(R.id.iv_left_back)
+    ImageView ivLeftBack;
+    @BindView(R.id.loading_line)
+    ConstraintLayout loadingLine;
     private int statusHeight;
     private StrategyDetailsBean strategy;
     private RecyclerViewAdapter adapter;
@@ -139,6 +141,12 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         loadingLine.setVisibility(View.VISIBLE);
         emptyLine.setVisibility(View.INVISIBLE);
         errorLine.setVisibility(View.INVISIBLE);
+        ivLeftBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         //获取状态栏高度

@@ -45,7 +45,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SecondaryActivity extends AppCompatActivity {
-
     @BindView(R.id.toolBar)
     Toolbar toolbar;
     @BindView(R.id.recyclerView)
@@ -127,7 +126,6 @@ public class SecondaryActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    Log.d("@@@","请求成功！");
                     String data = response.body().string();
                     JSONObject jsonObject = new JSONObject(data);
                     scenicSpots = RetrofitManger.getInstance().getGson().fromJson(
@@ -142,7 +140,6 @@ public class SecondaryActivity extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@","请求失败！");
                 Log.d("@@@",t.getMessage());
             }
         });

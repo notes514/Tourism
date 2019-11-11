@@ -68,9 +68,8 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
         holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtils.getToast(objects.get(position).getScenicSpotId()+"");
                 Intent intent = new Intent(context, TourismDetailsActivity.class);
-                intent.putExtra("id", objects.get(position).getScenicSpotId());
+                intent.putExtra("scenicSpotId", objects.get(position).getScenicSpotId());
                 context.startActivity(intent);
             }
         });

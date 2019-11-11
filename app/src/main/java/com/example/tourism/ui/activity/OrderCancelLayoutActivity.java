@@ -3,8 +3,11 @@ package com.example.tourism.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.tourism.R;
 import com.example.tourism.application.RetrofitManger;
@@ -36,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class OrderCancelLayoutActivity extends BaseActivity implements DefineView {
-
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
     @BindView(R.id.productName)
@@ -85,6 +87,14 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
     TextView tvCostDetails;
     @BindView(R.id.btn_reserve)
     Button btnReserve;
+    @BindView(R.id.iv_left_back)
+    ImageView ivLeftBack;
+    @BindView(R.id.loading_line)
+    ConstraintLayout loadingLine;
+    @BindView(R.id.ll_content_subject)
+    LinearLayout llContentSubject;
+    @BindView(R.id.ll_bottom)
+    LinearLayout llBottom;
     //网络请求api
     private ServerApi api;
     //订单编号
@@ -97,6 +107,8 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
     private Contacts contacts;
     //出行人类
     private Passenger passenger;
+    //底部弹出框
+    private DialogPayment dialogPayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +126,11 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
 
     @Override
     public void initValidata() {
+        //加载隐藏资源文件
+        llContentSubject.setVisibility(View.GONE);
+        llBottom.setVisibility(View.GONE);
+        loadingLine.setVisibility(View.VISIBLE);
+
         //获取订单编号
         orderId = this.getIntent().getIntExtra("orderId", 0);
         //执行网络请求
@@ -161,11 +178,18 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
     public void bindData() {
         //订单信息
         if (order != null) {
+            //显示布局
+            //加载隐藏资源文件
+            loadingLine.setVisibility(View.GONE);
+            llContentSubject.setVisibility(View.VISIBLE);
+            llBottom.setVisibility(View.VISIBLE);
+
             //订单内容信息
             productName.setText(order.getOrderContent());
             tripMode.setText(order.getTripMode());
             departurePeriod.setText(order.getDepartDate());
-            amountPayable.setText("¥" + order.getOrderPrice());
+            int price = (int) (order.getOrderPrice() + 0);
+            amountPayable.setText("¥" + price);
             //订单号
             tvOrderNumber.setText("18776620191101719293513300" + order.getOrderNumber());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -173,6 +197,16 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             tvOrderDate.setText(date);
             //供应商
             tvSupplier.setText(order.getSupplier());
+            //价格明细
+            tvAdultPassenger.setText("¥" + price + " x 1");
+            //房差
+            tvRoomDifference.setText("¥681");
+            //订单总额
+            tvTotalOrders.setText("¥" + (price + 681));
+            //应付金额
+            tvAmountPayable.setText("¥" + (price + 681));
+            //总价
+            tvPrice.setText("¥" + (price + 681));
         }
         //联系人信息
         if (contacts != null) {
@@ -186,8 +220,6 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             tvPassengerName.setText(passenger.getPassengerName() + "(成人 >= 12)");
             tvIdentifyCardId.setText(passenger.getIdentityCard());
         }
-        //价格明细
-
     }
 
     @OnClick({R.id.btn_cancel, R.id.btn_reserve})
@@ -197,7 +229,6 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
                 break;
             case R.id.btn_reserve:
                 //立即支付
-                AppUtils.getToast("点击了立即支付");
                 new DialogPayment(this) {
                     @Override
                     public void btnClose() {

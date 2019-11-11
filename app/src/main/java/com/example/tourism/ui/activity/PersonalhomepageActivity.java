@@ -98,7 +98,7 @@ public class PersonalhomepageActivity extends BaseActivity {
             //网络请求
             ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
             Map map = new HashMap();
-            map.put("userId", "1");
+            map.put("userId", RequestURL.vUserId);
             Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
             personalData.enqueue(new Callback<ResponseBody>() {
                 @Override

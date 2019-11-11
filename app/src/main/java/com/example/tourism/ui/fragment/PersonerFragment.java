@@ -215,7 +215,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         Glide.with(getContext()).load(R.drawable.personal_head_travel)
                 .bitmapTransform(new CropCircleTransformation(getContext()))
                 .into(hHead);
-
         //获取状态栏高度
         int statusHeight = AppUtils.getStatusBarHeight(getActivity());
         //设置状态栏高度
@@ -282,6 +281,23 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         super.onStart();
         initView();
         Log.d("22222", "onStart: ");
+        if (user != null) {
+            //获取用户id
+            RequestURL.vUserId = user.getUserId()+"";
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
+            userName.setText(user.getUserAccountName());
+            userVal.setText(user.getUserTellphone());
+            userHomeage.setVisibility(View.VISIBLE);
+            userarrow.setVisibility(View.VISIBLE);
+            userLine.setVisibility(View.VISIBLE);
+            userVal.setVisibility(View.VISIBLE);
+            userName.setVisibility(View.VISIBLE);
+            userFans.setVisibility(View.VISIBLE);
+            userFollow.setVisibility(View.VISIBLE);
+            userFansNum.setVisibility(View.VISIBLE);
+            userFollowNum.setVisibility(View.VISIBLE);
+            re.setVisibility(View.GONE);
+        }
 
     }
 

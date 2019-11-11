@@ -3,7 +3,6 @@ package com.example.tourism.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,7 @@ import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.database.bean.TripBean;
+import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.ScenicSpot;
@@ -48,6 +48,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<ContactsBean> contactsBeanList;
     //出行人信息数据集
     private List<TripBean> tripBeanList;
+    //出行人信息数据集
+    private List<HotTopicsBean> hotTopicsBeanList;
     //行程信息数据集
     private Context context;
     private int type;
@@ -90,6 +92,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.tripBeanList = tripBeanList;
     }
 
+    //设置热门主题数据集
+    public void setHotTopicsBeanList(List<HotTopicsBean> hotTopicsBeanList) {
+        this.hotTopicsBeanList = hotTopicsBeanList;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -125,10 +132,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.contact_item, parent, false);
             view.setOnClickListener(this::onClick);
             return new ContactsViewHolder(view);
-        }else if (type == 8) {
+        } else if (type == 8) {
             View view = inflater.inflate(R.layout.traveler_item, parent, false);
             view.setOnClickListener(this::onClick);
             return new TravelerViewHolder(view);
+        } else if (type == 9) {
+            View view = inflater.inflate(R.layout.item_hot_topics_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new HotTopicsViewHolder(view);
+        } else if (type == 9) {
+            View view = inflater.inflate(R.layout.item_romantic_journey_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new TLRomanticViewHolder(view);
         }
         return null;
     }
@@ -322,24 +337,36 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (holder instanceof ContactsViewHolder) {
             ContactsBean contactsBean = contactsBeanList.get(position);
             holder.itemView.setTag(contactsBean);
-            if (position == getItemCount() - 1) ((ContactsViewHolder) holder).checkBox.setChecked(true);
+            if (position == getItemCount() - 1)
+                ((ContactsViewHolder) holder).checkBox.setChecked(true);
             ((ContactsViewHolder) holder).contacts.setText(contactsBean.getCName());
             ((ContactsViewHolder) holder).telephone.setText(contactsBean.getCtellPhone());
-//            ((ContactsViewHolder) holder).ivEdit.setOnClickListener(view -> {
-//                Intent intent = new Intent(context, EditContactActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putString("id",contactsBean.getCName());
-//                bundle.putString("tell",contactsBean.getCtellPhone());
-//                intent.putExtras(bundle);
-//                context.startActivity(intent);
-//            });
+            ((ContactsViewHolder) holder).ivEdit.setOnClickListener(view -> {
+                Intent intent = new Intent(context, EditContactActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("id",contactsBean.getCName());
+                bundle.putString("tell",contactsBean.getCtellPhone());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            });
         }
         if (holder instanceof TravelerViewHolder) {
             TripBean tripBean = tripBeanList.get(position);
             holder.itemView.setTag(tripBean);
-            if (position == getItemCount() - 1) ((TravelerViewHolder) holder).checkBox.setChecked(true);
+            if (position == getItemCount() - 1)
+                ((TravelerViewHolder) holder).checkBox.setChecked(true);
             ((TravelerViewHolder) holder).contacts.setText(tripBean.getTName());
             ((TravelerViewHolder) holder).idCard.setText(tripBean.getTIdentitycard());
+        }
+        if (holder instanceof HotTopicsViewHolder) {
+            HotTopicsBean hotTopicsBean = hotTopicsBeanList.get(position);
+            holder.itemView.setTag(hotTopicsBean);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + hotTopicsBean.gethPic(),
+                    ((HotTopicsViewHolder) holder).ivHotTopicsPic, InitApp.getOptions());
+            ((HotTopicsViewHolder) holder).tvHotTopicsContent.setText(hotTopicsBean.gethTheme());
+            ((HotTopicsViewHolder) holder).tvExplain1.setText(hotTopicsBean.gethExplainOne());
+            ((HotTopicsViewHolder) holder).tvExplain2.setText(hotTopicsBean.gethExplainTwo());
+            ((HotTopicsViewHolder) holder).tvExplain3.setText(hotTopicsBean.gethExplainThree());
         }
     }
 
@@ -362,6 +389,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         if (type == 8) {
             return tripBeanList == null ? 0 : tripBeanList.size();
+        }
+        if (type == 9) {
+            return hotTopicsBeanList == null ? 0 : hotTopicsBeanList.size();
         }
         return 0;
     }
@@ -525,6 +555,38 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         ImageView ivEdit;
 
         public TravelerViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class HotTopicsViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.iv_hot_topics_pic)
+        ImageView ivHotTopicsPic;
+        @BindView(R.id.tv_hot_topics_content)
+        TextView tvHotTopicsContent;
+        @BindView(R.id.tv_explain1)
+        TextView tvExplain1;
+        @BindView(R.id.tv_explain2)
+        TextView tvExplain2;
+        @BindView(R.id.tv_explain3)
+        TextView tvExplain3;
+
+        public HotTopicsViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class TLRomanticViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_theme)
+        TextView tvTheme;
+        @BindView(R.id.tv_explain)
+        TextView tvExplain;
+        @BindView(R.id.tv_more)
+        TextView tvMore;
+
+        public TLRomanticViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
