@@ -227,11 +227,8 @@
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <service android:name="com.amap.api.location.APSService">
-        </service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="4715bfcd39b5da41ffd6992f632ebeb1">
-
-        </meta-data>
+        <service android:name="com.amap.api.location.APSService"></service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="45563c379ed72d719f26748dbfa77968"></meta-data>
     </application>
 
 </manifest>

@@ -12,8 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.widget.NestedScrollView;
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
@@ -25,8 +25,6 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.AllOrderActivity;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalDataActivity;
-import com.example.tourism.entity.User;
-import com.example.tourism.ui.activity.ContactActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
 import com.example.tourism.ui.activity.PersonalMyCollection;
 import com.example.tourism.ui.activity.PersonalOpenmemberActivity;
@@ -108,6 +106,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     CircleImageView hHead;
     @BindView(R.id.btn_set_up)
     FrameLayout btnSetUp;
+    @BindView(R.id.btn_trip)
+    FrameLayout btnTrip;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -126,9 +126,13 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage,
             R.id.user_name, R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order,
-            R.id.re,R.id.btn_set_up})
+            R.id.re, R.id.btn_set_up,R.id.btn_trip})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.btn_trip:
+
+
+                break;
             case R.id.btn_mycollection:
                 openActivity(PersonalMyCollection.class);
                 break;
@@ -264,15 +268,15 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode){
+        switch (requestCode) {
             case Request_Code:
 //                User user = (User) data.getSerializableExtra("data");
 //                Log.d("@@@@",data.getStringExtra("data"));
                 userName.setText(user.getUserAccountName());
                 break;
-                default:
-                    Log.d("@@@@",data.getStringExtra("无数据"));
-                    break;
+            default:
+                Log.d("@@@@", data.getStringExtra("无数据"));
+                break;
         }
     }
 

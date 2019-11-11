@@ -7,9 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,6 +25,7 @@ import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -48,6 +51,8 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
 
     @BindView(R.id.btn_personal_Logout)
     Button btnPersonalLogout;
+    @BindView(R.id.btn_adress)
+    FrameLayout btnAdress;
     private Context context;
     private LinearLayout llDate, llTime;
     private TextView tvDate, tvTime;
@@ -182,15 +187,69 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
     }
-    @OnClick(R.id.btn_personal_Logout)
-    public void onViewClicked() {
-        SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
-        //步骤2： 实例化SharedPreferences.Editor对象
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.commit();
-        user = null;
-        RequestURL.vUserId = "";
-        finish();
+    @OnClick({R.id.btn_personal_Logout,R.id.btn_adress})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_personal_Logout:
+                SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
+                //步骤2： 实例化SharedPreferences.Editor对象
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                showMyDialog();
+                editor.clear();
+                editor.commit();
+                user = null;
+                RequestURL.vUserId = "";
+            break;
+            case R.id.btn_adress:
+                Intent intent = new Intent(PersonalDataActivity.this, LocationActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
+
+    /**
+     * 退出时弹出对话框，确定保存数据
+     *
+     * @chendong 2016年6月1日
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            showMyDialog(); //点击BACK弹出对话框
+        }
+        return false;
+    }
+
+    private void showMyDialog() {
+        // 创建退出对话框
+        AlertDialog isExit = new AlertDialog.Builder(this).create();
+        // 设置对话框标题
+        isExit.setTitle("提示");
+        // 设置对话框消息
+        isExit.setMessage("确定要退出吗，未保存的数据将会遗失");
+        // 添加选择按钮并注册监听
+        isExit.setButton("确定", listener);
+        isExit.setButton2("取消", listener);
+        // 显示对话框
+        isExit.show();
+    }
+
+    /**
+     * 监听对话框里面的button点击事件
+     */
+    DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener() {
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+                case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+                    finish();
+                    AppUtils.getToast("退出成功！！");
+                    break;
+                case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 }
