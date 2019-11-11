@@ -1,16 +1,24 @@
 package com.example.tourism;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.ui.fragment.DestinationFragment;
 import com.example.tourism.ui.fragment.HomeFragment;
+import com.example.tourism.ui.fragment.SignIn2Fragment;
+import com.example.tourism.utils.AppUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -21,8 +29,17 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity implements DefineView {
     public static User user;
@@ -52,7 +69,50 @@ public class MainActivity extends BaseActivity implements DefineView {
         checkPermission();
 
         temp();
+        SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
+
+        if (sharedPreferences != null){
+            sharedPreferences= getSharedPreferences("Userdata", Context.MODE_PRIVATE);
+            String userId = sharedPreferences.getString("userAccountName","");
+            String userId1 = sharedPreferences.getString("password","");
+            login(userId,userId1);
+            Log.d("wwww",userId);
+        }
     }
+
+    private void login(String userId,String userId1) {
+
+//        RetrofitManger retrofitManger = new RetrofitManger();
+//        serverApi = retrofitManger.getRetrofit(InitApp.ip_port).create(ServerApi.class);
+        ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        //向上造型
+        Map<String, Object> map = new HashMap<>();
+        map.put("userAccountName",userId);
+        map.put("password",userId1);
+        Call<ResponseBody> requestBodyCall = serverApi.postASync("login", map);
+        requestBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    //暂存response.body().string()流数据，防止流数据关闭
+                    String result = response.body().string();
+                    JSONObject json = new JSONObject(result);
+                    user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                //请求失败是回调
+                Log.d("", "Throwable: " + t.toString());
+            }
+        });
+
+    }
+
 
     public void temp(){
         Intent intent=getIntent();

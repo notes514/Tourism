@@ -298,14 +298,15 @@
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <Button
                             android:id="@+id/btn_personal_Logout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/color_red"
                             android:background="@color/color_white"
                             android:text="退出登录"
-                            android:textSize="18sp"/>
+                            android:textColor="@color/color_red"
+                            android:textSize="18sp" />
                     </FrameLayout>
             </FrameLayout>
 

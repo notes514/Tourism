@@ -2,10 +2,14 @@ package com.example.tourism.ui.fragment;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +20,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tourism.MainActivity;
 import com.example.tourism.R;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
@@ -164,6 +170,15 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                     String result = response.body().string();
                     JSONObject json = new JSONObject(result);
                     if (json.getString("RESULT").equals("S")) {
+                        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Userdata",Context.MODE_PRIVATE);
+                        //步骤2： 实例化SharedPreferences.Editor对象
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //步骤3：将获取过来的值放入文件
+                        editor.putString("userAccountName", user_name.getText().toString());
+                        editor.putString("password",password.getText().toString());
+                        //步骤4：提交
+                        editor.commit();
+
                         Log.d(TAG, "onResponse: " + json.getString("ONE_DETAIL"));
                         MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
                         getActivity().finish();
@@ -254,6 +269,21 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
         super.onDestroy();
         unbinder.unbind(); //解绑
     }
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        SharedPreferences sharedPreferences= InitApp.getInstance().getSharedPreferences("data",0);
+//        //步骤1：创建一个SharedPreferences对象
+//        SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences("data",Context.MODE_PRIVATE);
+//        //步骤2： 实例化SharedPreferences.Editor对象
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        //步骤3：将获取过来的值放入文件
+//        editor.putString("name","");
+//        editor.putInt("age", 28);
+//        editor.putBoolean("marrid",false);
+//        //步骤4：提交
+//        editor.commit();
+//    }
 
     @Override
     public void onClick(View view) {

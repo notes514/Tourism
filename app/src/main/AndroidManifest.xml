@@ -114,6 +114,7 @@
         </activity>
         <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
         </activity>
+        <activity android:name=".ui.activity.PersonalSystemSetupActivity"/>
         <activity android:name=".ui.activity.CalendarActivity">
         </activity>
         <activity android:name=".ui.activity.OrderCompletionActivity">

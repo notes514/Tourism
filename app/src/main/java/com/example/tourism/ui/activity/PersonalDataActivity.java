@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -90,38 +91,13 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
         if (user == null) {
             btnPersonalLogout.setVisibility(View.GONE);
         }else if (user != null){
-            ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-            Map map = new HashMap();
-            map.put("userId", "1");
-            Call<ResponseBody> personalData = api.getASync("queryByUserInformation", map);
-            personalData.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    try {
-                        String message = response.body().string();
-                        JSONObject json = new JSONObject(message);
-                        if (json.getString("RESULT").equals("S")) {
-                            User user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"), User.class);
-                            Log.d(InitApp.TAG, "UserAccountName: " + user.getUserAccountName());
-                            tvUsername.setText(user.getUserAccountName());
-                            tvEamil.setText(user.getEmail());
-                            tvAddress.setText(user.getNagaiAddr());
-                            tvSex.setText(user.getUserSex());
-                            tvTel.setText(user.getUserTellphone());
-
-                            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), userHeadPortrait, InitApp.getOptions());
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                }
-            });
+            tvUsername.setText(user.getUserAccountName());
+            tvEamil.setText(user.getEmail());
+            tvAddress.setText(user.getNagaiAddr());
+            tvSex.setText(user.getUserSex());
+            tvTel.setText(user.getUserTellphone());
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(),
+                    userHeadPortrait, InitApp.getOptions());
             btnPersonalLogout.setVisibility(View.VISIBLE);
         }
     }
@@ -208,10 +184,17 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
     }
     @OnClick(R.id.btn_personal_Logout)
     public void onViewClicked() {
-        Intent intent_login = new Intent();
-        intent_login.setClass(PersonalDataActivity.this,SignInActivity.class);
-        intent_login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //关键的一句，将新的activity置为栈顶
-        startActivity(intent_login);
+//        Intent intent_login = new Intent();
+//        intent_login.setClass(PersonalDataActivity.this,SignInActivity.class);
+//        intent_login.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); //关键的一句，将新的activity置为栈顶
+//        startActivity(intent_login);
+//        finish();
+        SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
+        //步骤2： 实例化SharedPreferences.Editor对象
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+        user = null;
         finish();
     }
 }

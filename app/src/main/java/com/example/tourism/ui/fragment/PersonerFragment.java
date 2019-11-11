@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
@@ -119,6 +120,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         initListener();
         bindData();
         initRefreshLayout();
+        display();
         return root;
     }
 
@@ -172,7 +174,34 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initView() {
-
+        if (user == null) {
+            userHomeage.setVisibility(View.GONE);
+            userarrow.setVisibility(View.GONE);
+            userLine.setVisibility(View.GONE);
+            userVal.setVisibility(View.GONE);
+            userName.setVisibility(View.GONE);
+            userFans.setVisibility(View.GONE);
+            userFollow.setVisibility(View.GONE);
+            userFansNum.setVisibility(View.GONE);
+            userFollowNum.setVisibility(View.GONE);
+            re.setVisibility(View.VISIBLE);
+            hHead.setImageResource(R.drawable.personal_head_travel);
+        }
+        if (user != null) {
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
+            userName.setText(user.getUserAccountName());
+            userVal.setText(user.getUserTellphone());
+            userHomeage.setVisibility(View.VISIBLE);
+            userarrow.setVisibility(View.VISIBLE);
+            userLine.setVisibility(View.VISIBLE);
+            userVal.setVisibility(View.VISIBLE);
+            userName.setVisibility(View.VISIBLE);
+            userFans.setVisibility(View.VISIBLE);
+            userFollow.setVisibility(View.VISIBLE);
+            userFansNum.setVisibility(View.VISIBLE);
+            userFollowNum.setVisibility(View.VISIBLE);
+            re.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -187,18 +216,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
                 .bitmapTransform(new CropCircleTransformation(getContext()))
                 .into(hHead);
 
-
-        if (user == null) {
-            userHomeage.setVisibility(View.GONE);
-            userarrow.setVisibility(View.GONE);
-            userLine.setVisibility(View.GONE);
-            userVal.setVisibility(View.GONE);
-            userName.setVisibility(View.GONE);
-            userFans.setVisibility(View.GONE);
-            userFollow.setVisibility(View.GONE);
-            userFansNum.setVisibility(View.GONE);
-            userFollowNum.setVisibility(View.GONE);
-        }
         //获取状态栏高度
         int statusHeight = AppUtils.getStatusBarHeight(getActivity());
         //设置状态栏高度
@@ -230,6 +247,12 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     }
 
+    private void display(){
+        if (user != null){
+            userName.setText(user.getUserAccountName());
+            userVal.setText(user.getUserTellphone());
+        }
+    }
 
     @Override
     public void onDestroy() {
@@ -257,22 +280,16 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     @Override
     public void onStart() {
         super.onStart();
+        initView();
         Log.d("22222", "onStart: ");
-        if (user != null) {
-            ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
-            userName.setText(user.getUserAccountName());
-            userVal.setText(user.getUserTellphone());
-            userHomeage.setVisibility(View.VISIBLE);
-            userarrow.setVisibility(View.VISIBLE);
-            userLine.setVisibility(View.VISIBLE);
-            userVal.setVisibility(View.VISIBLE);
-            userName.setVisibility(View.VISIBLE);
-            userFans.setVisibility(View.VISIBLE);
-            userFollow.setVisibility(View.VISIBLE);
-            userFansNum.setVisibility(View.VISIBLE);
-            userFollowNum.setVisibility(View.VISIBLE);
-            re.setVisibility(View.GONE);
-        }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initView();
+        Log.d("123456", "onResume: ");
     }
 
     //刷新头

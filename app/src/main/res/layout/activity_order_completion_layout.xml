@@ -144,6 +144,7 @@
                     android:textSize="14sp"
                     android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
                     android:background="@color/color_white"
+                    android:inputType="number|numberDecimal"
                     android:hint="@string/tourism_order_name_content"/>
 
             </LinearLayout>
@@ -174,6 +175,7 @@
                     android:layout_weight="5"
                     android:textSize="14sp"
                     android:background="@color/color_white"
+                    android:inputType="number|numberDecimal"
                     android:hint="@string/tourism_order_qq_content"/>
 
             </LinearLayout>

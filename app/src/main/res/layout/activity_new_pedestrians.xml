@@ -45,7 +45,9 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:background="@color/color_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:singleLine="true"/>
 
     </LinearLayout>
 
@@ -80,7 +82,9 @@
             android:layout_height="match_parent"
             android:layout_weight="4"
             android:background="@color/color_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:maxLines="1"
+            android:singleLine="true"/>
 
     </LinearLayout>
 
