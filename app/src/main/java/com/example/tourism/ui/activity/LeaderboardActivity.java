@@ -1,18 +1,12 @@
 package com.example.tourism.ui.activity;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
-import android.os.StrictMode;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +14,6 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.ExhibitsItemAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
@@ -41,9 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -70,6 +60,7 @@ public class LeaderboardActivity extends AppCompatActivity {
 
 
     private int exhibitionAreaId = 0;
+    private ExhibitionArea exhibitionArea;
     private List<Exhibits> exhibits;
     private LinearLayoutManager linearLayoutManager;
     private ExhibitsItemAdapter adapter;
@@ -129,8 +120,9 @@ public class LeaderboardActivity extends AppCompatActivity {
                     String data = response.body().string();
                     Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
-                    ExhibitionArea exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
+                    exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),new TypeToken<ExhibitionArea>(){}.getType());
+                    if (exhibitionArea == null) return;
                     Log.d("@@@", exhibitionArea.getExhibitionAreaAddress());
                     //test();
                 } catch (IOException e) {
@@ -164,6 +156,7 @@ public class LeaderboardActivity extends AppCompatActivity {
                     exhibits = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<List<Exhibits>>(){}.getType());
+                    if (exhibits == null) return;
                     Log.d("@@@", exhibits.size()+"");
                     initRecyclerView(exhibits);
                 } catch (IOException e) {

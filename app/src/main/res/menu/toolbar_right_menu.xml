@@ -4,6 +4,6 @@
     <item
         android:id="@+id/leaderboard"
         android:icon="@drawable/ic_leaderboard"
-        android:title="@string/leaderboard"
+        android:title="@string/top_10"
         app:showAsAction="always"/>
 </menu>

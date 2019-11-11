@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -323,6 +324,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
                     allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(response.body().string(),
                             new TypeToken<List<ScenicSpot>>() {
                             }.getType());
+                    if (allScenicSpots == null) return;
                     initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();

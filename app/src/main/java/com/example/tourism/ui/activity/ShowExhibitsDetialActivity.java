@@ -29,7 +29,6 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Exhibits;
 import com.example.tourism.entity.ExhibitsComment;
 import com.example.tourism.entity.FabulousDetails;
-import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.GlideImageLoader;
@@ -110,6 +109,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
 
     private int exhibitsId;
     private Unbinder unbinder;
+    private Exhibits exhibit;
     private List<String> images = new ArrayList<>();
     private List<ExhibitsComment> exhibitsComments = new ArrayList<>();
     private boolean showDanmaku;
@@ -259,8 +259,9 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
                     String mag = response.body().string();
                     JSONObject json = new JSONObject(mag);
                     Log.d("33333", "onResponse: " + mag);
-                    Exhibits exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
+                    exhibit = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),
                             new TypeToken<Exhibits>(){}.getType());
+                    if (exhibit == null) return;
                     Log.d("33333", "onResponse: " + exhibit.getExhibitsName());
                     exhibitsName.setText(exhibit.getExhibitsName());
                     guidanceTeacher.setText(exhibit.getGuidanceTeacher());
@@ -295,6 +296,7 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(data);
                     exhibitsComments = RetrofitManger.getInstance().getGson().fromJson(jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<List<ExhibitsComment>>(){}.getType());
+                    if (exhibitsComments == null) return;
                     initListView();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -502,15 +504,20 @@ public class ShowExhibitsDetialActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        if (likeFlag != defaultFlag){
+            setFabulousDetailsFlag(1,exhibitsId);
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         showDanmaku = false;
         if (danmakuView != null) {
             danmakuView.release();
             danmakuView = null;
-        }
-        if (likeFlag != defaultFlag){
-            setFabulousDetailsFlag(1,exhibitsId);
         }
     }
 }

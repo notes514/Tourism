@@ -26,7 +26,7 @@
     <string name="exhibition_area_5">展览区五</string>
     <string name="exhibition_area_6">展览区六</string>
     <string name="conference_hall">会议厅</string>
-    <string name="leaderboard">排行榜</string>
+    <string name="top_10">Top 10</string>
     <string-array name="exhibition_area">
         <item>展览区一</item>
         <item>展览区二</item>
@@ -45,15 +45,15 @@
     <string name="team_members">小组成员：</string>
     <string name="cell_phone_number">联系方式：</string>
 
-    <string-array name="spinner_item">
-        <item>评论降序</item>
-        <item>喜欢降序</item>
+    <string-array name="tab_item">
+        <item>评论榜</item>
+        <item>喜欢榜</item>
     </string-array>
 
     <!--  跑马灯通知  -->
     <string name="notice">热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！   热烈欢迎XXX领导！！！</string>
     <string name="exhibits_detial">作品详情</string>
-    <string name="comment_count">展品评价</string>
+    <string name="comment_count">用户评价</string>
     <string name="send_comment">发送</string>
     <string name="default_text">点我发弹幕哦！</string>
     <string name="no_more">没有更多了~~~</string>

@@ -129,6 +129,8 @@
         </activity>
         <activity android:name=".ui.activity.SeachDetailsActivity">
         </activity>
+        <activity android:name=".ui.activity.Top10Activity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
