@@ -410,6 +410,12 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         banner.setIndicatorGravity(BannerConfig.CENTER)
                 //必须最后调用的方法，启动轮播图。
                 .start();
+        banner.setOnBannerListener(position -> {
+            Intent intent = new Intent(TourismDetailsActivity.this, BigImageActivity.class);
+            intent.putStringArrayListExtra("imgData", (ArrayList<String>) list_path);
+            intent.putExtra("clickPosition", position);
+            startActivity(intent);
+        });
         //显示详情页数据
         tvContent.setText(scenicSpot.getScenicSpotTheme());
         tvPrice.setText(scenicSpot.getScenicSpotPrice() + "");

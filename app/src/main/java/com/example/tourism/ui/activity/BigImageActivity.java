@@ -61,6 +61,5 @@ public class BigImageActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.finish();
     }
 }

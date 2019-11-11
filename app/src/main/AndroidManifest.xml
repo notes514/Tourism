@@ -136,6 +136,8 @@
         </activity>
         <activity android:name=".ui.activity.LocationActivity">
         </activity>
+        <activity android:name=".ui.activity.Top10Activity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"

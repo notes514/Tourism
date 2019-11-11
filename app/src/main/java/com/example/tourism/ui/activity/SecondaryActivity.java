@@ -132,6 +132,7 @@ public class SecondaryActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(data);
                     scenicSpots = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"), new TypeToken<List<ScenicSpot>>(){}.getType());
+                    if (scenicSpots == null) return;
                     initRecyclerView();
                 } catch (IOException e) {
                     e.printStackTrace();

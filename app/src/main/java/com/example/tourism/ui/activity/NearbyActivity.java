@@ -24,7 +24,6 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ExhibitionArea;
-import com.example.tourism.entity.Exhibits;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.google.gson.reflect.TypeToken;
@@ -34,8 +33,6 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,6 +64,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
 
     private List<BRTBeacon> brtBeacons = new ArrayList<>();
     private List<String> macAddress = new ArrayList<>();
+    private ExhibitionArea exhibitionArea;
 
     @SuppressLint("ResourceType")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -105,7 +103,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             int id = item.getItemId();
             switch (id){
                 case R.id.leaderboard:
-                    //showLeaderboard(0);
+                    openActivity(Top10Activity.class);
             }
             return false;
         });
@@ -156,6 +154,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
     private BRTBeaconManagerListener beaconManagerListener = new BRTBeaconManagerListener() {
         @Override
         public void onUpdateBeacon(ArrayList<BRTBeacon> arrayList) {
+            Log.d("222",arrayList.size()+"");
 //            List<BRTBeacon> result = new ArrayList<>();
 //            for (int i = 0; i < arrayList.size(); i++) {
 //                if (arrayList.get(i).isBrightBeacon()){
@@ -190,6 +189,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             if (brtBeacon.getMacAddress().equals("F9:50:C1:76:EC:5F")){
                 AppUtils.getToast("进入"+brtBeacon.getName());
                 exhibition_area_1.setBackgroundColor(getColor(R.color.color_blue));
+                showByExhibitionArea(1);
             }
         }
 
@@ -210,9 +210,21 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
     };
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        InitApp.getInstance().getBRTBeaconManager().stopRanging();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        InitApp.getInstance().getBRTBeaconManager().startRanging();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
-        InitApp.getInstance().getBRTBeaconManager().stopRanging();
+        //InitApp.getInstance().getBRTBeaconManager().stopRanging();
     }
 
     @Override
@@ -220,29 +232,29 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
         int id  = view.getId();
         switch (id){
             case R.id.exhibition_area_1:
-                showLeaderboard(1);
+                showByExhibitionArea(1);
                 break;
             case R.id.exhibition_area_2:
-                showLeaderboard(2);
+                showByExhibitionArea(2);
                 break;
             case R.id.exhibition_area_3:
-                showLeaderboard(3);
+                showByExhibitionArea(3);
                 break;
             case R.id.exhibition_area_4:
-                showLeaderboard(4);
+                showByExhibitionArea(4);
                 break;
             case R.id.exhibition_area_5:
-                showLeaderboard(5);
+                showByExhibitionArea(5);
                 break;
             case R.id.exhibition_area_6:
-                showLeaderboard(6);
+                showByExhibitionArea(6);
                 break;
             default:
                 break;
         }
     }
 
-    private void showLeaderboard(int exhibitionAreaId){
+    private void showByExhibitionArea(int exhibitionAreaId){
         queryExhibitionArea(exhibitionAreaId);
         Intent intent = new Intent(this,LeaderboardActivity.class);
         intent.putExtra("exhibitionAreaId",exhibitionAreaId);
@@ -261,9 +273,10 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
                     String data = response.body().string();
                     Log.d("@@@",data);
                     JSONObject jsonObject = new JSONObject(data);
-                    ExhibitionArea exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
+                    exhibitionArea = RetrofitManger.getInstance().getGson().fromJson(
                             jsonObject.getString("ONE_DETAIL"),
                             new TypeToken<ExhibitionArea>(){}.getType());
+                    if (exhibitionArea == null) return;
                     Log.d("@@@", exhibitionArea.getExhibitionAreaName());
                 } catch (IOException e) {
                     e.printStackTrace();
