@@ -99,6 +99,13 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
             pStr = (String) bundle.getSerializable(KEY);
         }
 
+        if (RequestURL.vUserId.length() == 0) {
+            loadingLine.setVisibility(View.GONE);
+            emptyLine.setVisibility(View.VISIBLE);
+            tvEmptyContent.setText("您还没有本地订单，快登录查看订单吧");
+            return;
+        }
+
         //创建线性布局管理器
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         //列表在底部开始展示，反转后由上面开始展示
@@ -165,7 +172,6 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
                         orderList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
                                 new TypeToken<List<Order>>() {
                                 }.getType());
-                        Log.d(InitApp.TAG, "onResponse: " + orderList.size());
                         bindData();
                     } else {
                         pageRecyclerView.setVisibility(View.GONE);

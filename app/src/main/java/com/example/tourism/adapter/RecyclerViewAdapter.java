@@ -140,7 +140,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_hot_topics_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new HotTopicsViewHolder(view);
-        } else if (type == 9) {
+        } else if (type == 10) {
             View view = inflater.inflate(R.layout.item_romantic_journey_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new TLRomanticViewHolder(view);
@@ -221,6 +221,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, OrderCancelLayoutActivity.class);
                 intent.putExtra("orderId", order.getOrderId());
+                intent.putExtra("orderState", order.getOrderState());
                 context.startActivity(intent);
             });
         }

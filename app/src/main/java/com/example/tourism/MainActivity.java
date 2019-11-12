@@ -97,6 +97,7 @@ public class MainActivity extends BaseActivity implements DefineView {
                     String result = response.body().string();
                     JSONObject json = new JSONObject(result);
                     user = RetrofitManger.getInstance().getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
+                    if (user != null) RequestURL.vUserId = user.getUserId()+"";
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -106,7 +107,7 @@ public class MainActivity extends BaseActivity implements DefineView {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 //请求失败是回调
-                Log.d("", "Throwable: " + t.toString());
+                AppUtils.getToast(t.toString());
             }
         });
 

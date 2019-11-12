@@ -37,7 +37,7 @@
                     android:id="@+id/iv_tourism_pic"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:scaleType="center"/>
+                    android:scaleType="centerCrop"/>
 
             </LinearLayout>
 

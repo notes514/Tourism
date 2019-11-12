@@ -14,13 +14,13 @@
         android:orientation="vertical">
 
         <com.example.tourism.widget.CustomToolbar
-        android:id="@+id/custom_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/color_blue"
-        app:leftButtonIcon="@drawable/ic_arrow_back"
-        app:rightButtonIcon="@drawable/fenxiang"
-        app:myTitle="订单详情"
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@color/color_blue"
+            app:leftButtonIcon="@drawable/ic_arrow_back"
+            app:rightButtonIcon="@drawable/personal_export"
+            app:myTitle="订单详情"
         />
 
         <com.example.tourism.widget.MyScrollView
@@ -35,16 +35,134 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_marginStart="10dp"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@color/color_blue"
-                android:gravity="center_vertical"
-                android:padding="0dp"
-                android:text="订单取消"
-                android:textColor="@color/color_white"
-                android:textSize="18dp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_order_cancel"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/color_blue"
+                    android:gravity="center_vertical"
+                    android:padding="0dp"
+                    android:visibility="gone"
+                    android:text="订单取消"
+                    android:textColor="@color/color_white"
+                    android:textSize="18dp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_order_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:paddingLeft="32dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="32dp"
+                        android:paddingBottom="10dp">
+
+                        <CheckBox
+                            android:id="@+id/cb_commit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:button="@drawable/checkbox" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0.5dp"
+                            android:layout_weight="1"
+                            android:background="@color/color_white"/>
+
+                        <CheckBox
+                            android:id="@+id/cb_wait_for"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:button="@drawable/checkbox" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0.5dp"
+                            android:layout_weight="1"
+                            android:background="@color/color_white"/>
+
+                        <CheckBox
+                            android:id="@+id/cb_consumption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:button="@drawable/checkbox" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="0.5dp"
+                            android:layout_weight="1"
+                            android:background="@color/color_white"/>
+
+                        <CheckBox
+                            android:id="@+id/cb_complete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:button="@drawable/checkbox" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginBottom="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="提交订单"
+                            android:gravity="center"
+                            android:textColor="@color/color_white"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="等待付款"
+                            android:gravity="center"
+                            android:textColor="@color/color_white"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="等待消费"
+                            android:gravity="center"
+                            android:textColor="@color/color_white"
+                            android:textSize="16sp"/>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="交易完成"
+                            android:gravity="center"
+                            android:textColor="@color/color_white"
+                            android:textSize="16sp"/>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -818,14 +936,15 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:layout_weight="2"
+                android:gravity="left|center">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="总价"
                     android:textSize="16dp"
+                    android:layout_marginLeft="16dp"
                     android:textColor="@color/color_black"
                     android:layout_marginRight="2dp"/>
 
@@ -867,7 +986,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/color_white"
                     android:background="@drawable/btn_shape_orange_red"
-                    android:text="立即支付"
+                    android:text="立即预定"
                     android:layout_margin="6dp"/>
             </LinearLayout>
 

@@ -222,6 +222,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         ButterKnife.bind(this);
         initView();
         initValidata();
+        initListener();
         initImg();
     }
 
@@ -360,12 +361,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
     @Override
     public void initListener() {
-        ivLeftBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ivLeftBack.setOnClickListener(v -> finish());
     }
 
     @SuppressLint("SetTextI18n")
@@ -513,33 +509,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         }
     }
 
-    /**
-     * 设置状态栏和标题栏颜色渐变
-     *
-     * @param alpha
-     * @throws Exception
-     */
-    private void setActionBar(int alpha) throws Exception {
-        if (statusView != null && detailsToolbar == null) {
-            throw new Exception("状态栏和标题栏为空！");
-        }
-        statusView.getBackground().mutate().setAlpha(alpha);
-        detailsToolbar.getBackground().mutate().setAlpha(alpha);
-    }
-
-    /**
-     * 实时更新状态栏标题栏颜色渐变
-     *
-     * @param alpha
-     */
-    private void setUpdateActionBar(int alpha) {
-        try { //捕获异常
-            setActionBar(alpha);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @OnClick({R.id.back_left_image, R.id.shopping_chart_image, R.id.more_image,
             R.id.tv_info_imagetext, R.id.tv_info_product, R.id.tv_info_evaluate,
             R.id.btn_shapping_chart, R.id.btn_reserve, R.id.iv_back_top,
@@ -565,32 +534,10 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 buttomChildViewPager.setCurrentItem(2);
                 break;
             case R.id.btn_shapping_chart:
-                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                Map<String, Object> map = new HashMap<>();
-                map.put("userId", RequestURL.vUserId);
-                map.put("scenicSpotId", scenicDetails.getScenicSpotId());
-                Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
-                tripCall.enqueue(new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try {
-                            String message = response.body().string();
-                            JSONObject json = new JSONObject(message);
-                            if (json.getString(RequestURL.RESULT).equals("S")) {
-                                AppUtils.getToast(json.getString(RequestURL.TIPS));
-                            } else {
-                                AppUtils.getToast(RequestURL.TIPS);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                    }
-                });
+                intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
+                //指定类型，1表示更多日期
+                intent.putExtra("type", 1);
+                startActivity(intent);
                 break;
             case R.id.btn_reserve:
                 intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);

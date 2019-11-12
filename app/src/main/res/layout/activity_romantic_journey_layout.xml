@@ -28,6 +28,7 @@
                     <ImageView
                         android:id="@+id/iv_romantic_pic"
                         android:layout_width="match_parent"
+                        android:scaleType="centerCrop"
                         android:layout_height="218dp"
                         android:src="@drawable/aiaiai"/>
 
@@ -252,5 +253,11 @@
                 android:background="@color/color_black_translucent_30"/>
         </LinearLayout>
     </LinearLayout>
+
+    <include layout="@layout/loading_layout_black"/>
+    <!--暂无数据-->
+    <include layout="@layout/empty_layout"/>
+    <!--加载失败-->
+    <include layout="@layout/error_layout"/>
 
 </RelativeLayout>

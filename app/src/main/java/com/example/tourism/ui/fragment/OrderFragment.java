@@ -192,6 +192,7 @@ public class OrderFragment extends BaseFragment implements DefineView {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 AppUtils.getToast(t.toString());
+                if (emptyLine != null) return;
                 emptyLine.setVisibility(View.GONE);
                 nsvScollview.setVisibility(View.GONE);
                 btnAddTrip.setVisibility(View.GONE);

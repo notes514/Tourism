@@ -133,59 +133,123 @@
             <LinearLayout
                 android:id="@+id/ll_date_days"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <!-- 成人 -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="成人"
-                    android:textSize="14sp"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:textColor="@color/color_black"/>
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/select_text_add">
-                    <!-- 减 -->
-                    <ImageView
-                        android:id="@+id/tv_removes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/ic_remove_gray_28dp"/>
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_gray"
-                        android:layout_marginRight="10dp"/>
+                    android:gravity="center_vertical">
+
                     <!-- 成人 -->
                     <TextView
-                        android:id="@+id/tv_number"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1"
+                        android:layout_height="match_parent"
+                        android:text="成人"
                         android:textSize="14sp"
                         android:gravity="center"
-                        android:textColor="@color/color_tab_title"/>
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/color_gray"
-                        android:layout_marginLeft="10dp"/>
-                    <!-- 加 -->
-                    <ImageView
-                        android:id="@+id/iv_add"
+                        android:padding="10dp"
+                        android:textColor="@color/color_black"/>
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_add_cyan_green_28dp"/>
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/select_text_add">
+                        <!-- 减 -->
+                        <ImageView
+                            android:id="@+id/tv_adult_removes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_remove_gray_28dp"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_gray"
+                            android:layout_marginRight="10dp"/>
+                        <!-- 成人 -->
+                        <TextView
+                            android:id="@+id/tv_adult_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:textColor="@color/color_tab_title"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_gray"
+                            android:layout_marginLeft="10dp"/>
+                        <!-- 加 -->
+                        <ImageView
+                            android:id="@+id/iv_adult_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_add_cyan_green_28dp"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- 成人 -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="儿童"
+                        android:textSize="14sp"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textColor="@color/color_black"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/select_text_add">
+                        <!-- 减 -->
+                        <ImageView
+                            android:id="@+id/tv_children_removes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_remove_gray_28dp"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_gray"
+                            android:layout_marginRight="10dp"/>
+                        <!-- 成人 -->
+                        <TextView
+                            android:id="@+id/tv_children_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:textColor="@color/color_tab_title"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_gray"
+                            android:layout_marginLeft="10dp"/>
+                        <!-- 加 -->
+                        <ImageView
+                            android:id="@+id/iv_children_add"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_add_cyan_green_28dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
 
             <Button

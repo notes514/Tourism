@@ -164,13 +164,15 @@
         </activity>
         <activity android:name=".ui.activity.Top10Activity">
         </activity>
+        <activity android:name=".ui.activity.SuccessfulPaymentActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TranslucentTheme" />
         <activity android:name=".ui.activity.LeaderboardActivity" />
-        <activity android:name=".ui.activity.TravelerActivity" /> <!-- 第三方登录需要额外添加的activity -->
-
+        <activity android:name=".ui.activity.TravelerActivity" />
+        <!-- 第三方登录需要额外添加的activity -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -225,8 +227,10 @@
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="45563c379ed72d719f26748dbfa77968"></meta-data>
+        <service android:name="com.amap.api.location.APSService">
+        </service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="4715bfcd39b5da41ffd6992f632ebeb1">
+        </meta-data>
     </application>
 
 </manifest>

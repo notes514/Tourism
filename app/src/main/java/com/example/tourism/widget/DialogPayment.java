@@ -28,10 +28,12 @@ public abstract class DialogPayment extends Dialog {
     @BindView(R.id.btn_payment)
     Button btnPayment;
     private Activity activity;
+    private int price;
 
-    public DialogPayment(Activity activity) {
+    public DialogPayment(Activity activity, int price) {
         super(activity, R.style.ActionSheetDialogStyle);
         this.activity = activity;
+        this.price = price;
     }
 
     @Override
@@ -43,6 +45,7 @@ public abstract class DialogPayment extends Dialog {
 
         setViewLocation();
         setCanceledOnTouchOutside(false);//外部点击取消
+        tvPrice.setText("¥"+price);
     }
 
     /**

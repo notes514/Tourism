@@ -63,7 +63,7 @@ public class PersonalOpenmembershipActivity extends BaseActivity implements Defi
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment();
+                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment("100", 0);
                 payDetailFragment.show(getSupportFragmentManager(), "payDetailFragment");
             }
         });

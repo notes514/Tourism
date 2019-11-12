@@ -231,8 +231,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
                 Log.d("@@@", t.getMessage());
             }
         });
-
-        bindData();
     }
 
     @Override

@@ -31,6 +31,7 @@ import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.widget.CustomToolbar;
+import com.example.tourism.widget.LoadingDialog;
 import com.example.tourism.widget.MyScrollView;
 
 import org.json.JSONObject;
@@ -46,8 +47,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.tourism.MainActivity.user;
-
 public class OrderCompletionActivity extends BaseActivity implements DefineView {
     @BindView(R.id.tv_content)
     TextView tvContent;
@@ -55,6 +54,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     TextView tvDatePlaceDays;
     @BindView(R.id.tv_room_difference)
     TextView tvRoomDifference;
+    @BindView(R.id.tv_room_difference_price)
+    TextView tvRoomDifferencePrice;
     @BindView(R.id.tv_choice)
     TextView tvChoice;
     @BindView(R.id.et_name)
@@ -128,6 +129,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private Contacts contacts;
     private Passenger passenger;
     private Order order;
+    //正在加载dialog
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -206,7 +209,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 CTextUtils.getAutomaticInterceptString(scenicDetails.getDepartArrive(), "-", 0) +
                 " " + scenicDetails.getTravelDays());
         //总价
-        tvPrice.setText("¥" + scenicSpot.getScenicSpotPrice());
+        int price = (int) (scenicSpot.getScenicSpotPrice() + 0);
+        tvPrice.setText(price + "");
     }
 
     @OnClick({R.id.tv_choice, R.id.tv_trip, R.id.switch_order, R.id.checkBox, R.id.tv_cost_details, R.id.btn_reserve})
@@ -214,12 +218,12 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
         switch (view.getId()) {
             case R.id.tv_choice:
                 //选择联系人
-                Intent intent = new Intent(OrderCompletionActivity.this,ContactActivity.class);
+                Intent intent = new Intent(OrderCompletionActivity.this, ContactActivity.class);
                 startActivityForResult(intent, 1);
                 break;
             case R.id.tv_trip:
                 //选择出行人
-                Intent intent2 = new Intent(OrderCompletionActivity.this,TravelerActivity.class);
+                Intent intent2 = new Intent(OrderCompletionActivity.this, TravelerActivity.class);
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.switch_order:
@@ -243,6 +247,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     AppUtils.getToast("请先登录");
                     return;
                 }
+                //显示正在加载
+                loadingDialog = new LoadingDialog(this, "正在预定...");
+                loadingDialog.show();
                 //获取联系人数据
                 name = etName.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
@@ -431,8 +438,12 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     JSONObject json = new JSONObject(message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
                         AppUtils.getToast(json.getString(RequestURL.TIPS));
+                        //加载成功
+                        loadingDialog.dismiss();
                         //执行跳转
-                        openActivity(AllOrderActivity.class);
+                        Intent intent = new Intent(OrderCompletionActivity.this, AllOrderActivity.class);
+                        intent.putExtra("index", 1);
+                        startActivity(intent);
                     } else {
                         AppUtils.getToast(json.getString(RequestURL.TIPS));
                     }
@@ -443,7 +454,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                //加载失败
+                loadingDialog.dismiss();
+                AppUtils.getToast(t.toString());
             }
         });
     }
