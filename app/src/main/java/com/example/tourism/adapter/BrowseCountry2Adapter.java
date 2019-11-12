@@ -18,6 +18,7 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
 import com.example.tourism.entity.RegionType;
+import com.example.tourism.widget.GlideImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.Serializable;
@@ -49,9 +50,9 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    public BrowseCountry2Adapter(List<RegionType> regionTypes, List<ScenicRegion> countries, int position, String name) {
+    public BrowseCountry2Adapter(Context context,List<RegionType> regionTypes, List<ScenicRegion> countries, int position, String name) {
         //this.countries = countries;
-
+        this.context = context;
         cc = new ArrayList<>();
         for (int i=0;i<regionTypes.size();i++) {
             switch (regionTypes.get(i).getRegionTypeId()) {
@@ -112,7 +113,9 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScenicRegion country = cc.get(position);
         if (holder instanceof Country3ViewHolder){
-            ImageLoader.getInstance().displayImage(RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic, InitApp.getOptions());
+//            ImageLoader.getInstance().displayImage(RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic, InitApp.getOptions());
+            GlideImageLoader glideImageLoader = new GlideImageLoader();
+            glideImageLoader.displayImage(context,RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic);
             ((Country3ViewHolder) holder).countryName.setText(country.getRegionName());
             ((Country3ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

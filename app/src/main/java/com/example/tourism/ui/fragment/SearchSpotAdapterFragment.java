@@ -130,7 +130,7 @@ public class SearchSpotAdapterFragment extends Fragment {
                         try {
                             String m = response.body().string();
                             scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
-                            browseCountryAdapter = new BrowseCountryAdapter(regionTypes,scenicRegions);
+                            browseCountryAdapter = new BrowseCountryAdapter(SearchSpotAdapterFragment.this.getContext(),regionTypes,scenicRegions);
                             LinearLayoutManager layoutManager = new LinearLayoutManager(SearchSpotAdapterFragment.this.getContext());
                             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                             countryRecycleView.setLayoutManager(layoutManager);
@@ -273,7 +273,7 @@ public class SearchSpotAdapterFragment extends Fragment {
                     scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
 
 
-                    browseCountryAdapter = new BrowseCountryAdapter(temp,scenicRegions);
+                    browseCountryAdapter = new BrowseCountryAdapter(SearchSpotAdapterFragment.this.getContext(),temp,scenicRegions);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(SearchSpotAdapterFragment.this.getContext());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                     countryRecycleView.setLayoutManager(layoutManager);
