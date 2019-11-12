@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -63,7 +65,6 @@ import com.youth.banner.Transformer;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -129,6 +130,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
     RelativeLayout hfragment;
     private int statusHeight;
 
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private List<String> images = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
     private List<ScenicSpot> allScenicSpots = new ArrayList<>();
@@ -137,6 +140,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
@@ -148,27 +152,11 @@ public class HomeFragment extends BaseFragment implements DefineView {
         return root;
     }
 
-    public void initLocation() {
-        tvDiqu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LocationActivity.class);
-                startActivityForResult(intent, 0);
-            }
-        });
-    }
 
-
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
-        super.startActivityForResult(intent, requestCode, options);
-
-
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView() {
-        //默认初始工具栏为透明
+        initToolBar();
         initRefreshLayout();
         initBanner();
         initSecondaryMenu();
@@ -177,6 +165,37 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @SuppressLint("NewApi")
     @Override
     public void initValidata() {
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/deng.jpg", ivHotTopicsPic1, InitApp.getOptions());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/romantic.jpg", ivHotTopicsPic2, InitApp.getOptions());
+        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
+
+        String[] sList = new String[]{"国内游", "出境游", "自由行", "跟团游", "主题游", "周边游", "一日游", "定制游"};
+        searchArea("出境游");
+    }
+
+    @Override
+    public void initListener() {
+        initLocation();
+        showNearby();
+    }
+
+    @Override
+    public void bindData() {
+        if (allScenicSpots == null) return;
+        //rAdapter.setScenicSpotList(allScenicSpots);
+        //创建网格布局管理器
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        //设置管理器竖向显示
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        //设置布局管理器
+        recyclerView.setLayoutManager(gridLayoutManager);
+        //创建适配器对象
+        adapter2 = new ScenicSpotItemAdapter(getContext(),allScenicSpots);
+        recyclerView.setAdapter(adapter2);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void initToolBar(){
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(getActivity());
         //获取状态栏高度
@@ -194,68 +213,10 @@ public class HomeFragment extends BaseFragment implements DefineView {
             int alpha = (int) (detalis / bHeight * 255);
             AppUtils.setUpdateActionBar(statusView, llToolbar, alpha);
         });
-
-        //创建网格布局管理器
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        //设置管理器竖向显示
-        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        //设置布局管理器
-        recyclerView.setLayoutManager(gridLayoutManager);
-        //创建适配器对象
-        rAdapter = new RecyclerViewAdapter(getContext(), 5);
-
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/deng.jpg", ivHotTopicsPic1, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/romantic.jpg", ivHotTopicsPic2, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
-
-        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Map<String, Object> map = new HashMap<>();
-        map.put("pStr", "跟团游");
-        Call<ResponseBody> scenicSpotCall = api.getASync("searchArea", map);
-        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String message = response.body().string();
-                    JSONObject json = new JSONObject(message);
-                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
-                            new TypeToken<List<ScenicSpot>>() {}.getType());
-                    bindData();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@", t.getMessage());
-            }
-        });
-
-        bindData();
     }
 
-    @Override
-    public void initListener() {
-        initLocation();
-        linearLayout.setOnClickListener(view -> {
-            Toast.makeText(getContext(), "查看附近景点", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), NearbyActivity.class);
-            startActivity(intent);
-        });
-    }
-
-    @Override
-    public void bindData() {
-        if (allScenicSpots == null) return;
-        rAdapter.setScenicSpotList(allScenicSpots);
-        recyclerView.setAdapter(rAdapter);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        unbinder.unbind(); //解绑
+    public void initLocationText() {
+        tvDiqu.setText(sharedPreferences.getString("location", ""));
     }
 
     private void initRefreshLayout() {
@@ -265,27 +226,31 @@ public class HomeFragment extends BaseFragment implements DefineView {
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         //设置 Footer 为 球脉冲 样式
         refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
-                .setAnimatingColor(0xFF1DA8FE));
+                .setAnimatingColor(AppUtils.getColor(R.color.color_blue)));
         refreshLayout.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
-                llStateToolbar.setVisibility(View.INVISIBLE);
+                if (llStateToolbar == null) return;
+                llStateToolbar.setVisibility(View.GONE);
                 Log.d(InitApp.TAG, "offset: " + offset + "headerHeight: " + headerHeight + "maxDragHeight: " + maxDragHeight);
             }
 
             @Override
             public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
-                llStateToolbar.setVisibility(View.INVISIBLE);
+                if (llStateToolbar == null) return;
+                llStateToolbar.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int maxDragHeight) {
-                llStateToolbar.setVisibility(View.INVISIBLE);
+                if (llStateToolbar == null) return;
+                llStateToolbar.setVisibility(View.GONE);
             }
 
             @Override
             public void onHeaderFinish(RefreshHeader header, boolean success) {
-                llStateToolbar.setVisibility(View.INVISIBLE);
+                if (llStateToolbar == null) return;
+                llStateToolbar.setVisibility(View.GONE);
                 Log.d("@@@", "刷新完成！");
             }
 
@@ -306,7 +271,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFooterFinish(RefreshFooter footer, boolean success) {
-                //add();
+                loadmore();
             }
 
             @Override
@@ -321,6 +286,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+                if (llStateToolbar == null) return;
                 llStateToolbar.setVisibility(View.VISIBLE);
             }
         });
@@ -386,6 +352,16 @@ public class HomeFragment extends BaseFragment implements DefineView {
 //        recyclerView.setAdapter(adapter2);
 //    }
 
+    public void initLocation() {
+        tvDiqu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LocationActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
     private void showNearby() {
         linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -397,16 +373,37 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
     }
 
-    private void add() {
-        int l = allScenicSpots.size();
-        for (int i = 1; i <= 10; i++) {
-            //scenicSpots.add(new ScenicSpot(R.drawable.defaultbg,i+l+""));
+    private void loadmore() {
+        if (allScenicSpots != null || adapter2 != null){
+            allScenicSpots.addAll(allScenicSpots);
+            adapter2.loadMore(allScenicSpots);
         }
-        adapter2.notifyDataSetChanged();
     }
 
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    private void searchArea(String pStr){
+        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String, Object> map = new HashMap<>();
+        map.put("pStr", pStr);
+        Call<ResponseBody> scenicSpotCall = api.getASync("searchArea", map);
+        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
+                            new TypeToken<List<ScenicSpot>>() {}.getType());
+                    bindData();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("@@@", t.getMessage());
+            }
+        });
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -416,6 +413,12 @@ public class HomeFragment extends BaseFragment implements DefineView {
         //步骤2： 实例化SharedPreferences.Editor对象
         editor = sharedPreferences.edit();
         //步骤3：将获取过来的值放入文件
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initLocationText();
     }
 
     @Override
@@ -435,14 +438,9 @@ public class HomeFragment extends BaseFragment implements DefineView {
         }
     }
 
-
-    public void initLocationText() {
-        tvDiqu.setText(sharedPreferences.getString("location", ""));
-    }
-
     @Override
-    public void onResume() {
-        super.onResume();
-        initLocationText();
+    public void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind(); //解绑
     }
 }

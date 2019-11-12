@@ -101,7 +101,7 @@ public class LeaderboardActivity extends AppCompatActivity {
     public void initToolBar() {
         StatusBarUtil.setTransparentForWindow(this);
         //扩张时候的title颜色
-        collapsingToolbarLayout.setExpandedTitleColor(getColor(R.color.color_black));
+        collapsingToolbarLayout.setExpandedTitleColor(getColor(R.color.color_white));
         //收缩后在Toolbar上显示时的title的颜色
         collapsingToolbarLayout.setCollapsedTitleTextColor(getColor(R.color.color_white));
         toolbar.setTitle(AppUtils.getStringArray(R.array.exhibition_area)[exhibitionAreaId-1]);
