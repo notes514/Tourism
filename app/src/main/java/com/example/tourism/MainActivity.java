@@ -97,7 +97,7 @@ public class MainActivity extends BaseActivity implements DefineView {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 //请求失败是回调
-                Log.d("", "Throwable: " + t.toString());
+                AppUtils.getToast(t.toString());
             }
         });
     }

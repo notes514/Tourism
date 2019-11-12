@@ -36,6 +36,8 @@ public class AllOrderActivity extends BaseActivity implements DefineView {
     private FixedPagerAdapter adapter;
     private List<Fragment> fragmentList;
     private List<String> sList;
+    //位置索引
+    private int index;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class AllOrderActivity extends BaseActivity implements DefineView {
 
     @Override
     public void initValidata() {
+        //获取索引
+        index = this.getIntent().getIntExtra("index",0);
         //设置数据
         sList = new ArrayList<>();
         sList.add("全部");
@@ -81,6 +85,7 @@ public class AllOrderActivity extends BaseActivity implements DefineView {
         vpAllOrder.setAdapter(adapter);
         //使用setupWithViewPager可以让TabLayout和ViewPager联动
         tlAllOrder.setupWithViewPager(vpAllOrder);
+        vpAllOrder.setCurrentItem(index);
     }
 
 }

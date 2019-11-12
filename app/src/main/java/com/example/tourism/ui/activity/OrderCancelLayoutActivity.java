@@ -3,6 +3,7 @@ package com.example.tourism.ui.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.example.tourism.entity.Order;
 import com.example.tourism.entity.OrderDetails;
 import com.example.tourism.entity.Passenger;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.ui.fragment.PersonalPayDetailFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.DialogPayment;
@@ -41,6 +43,18 @@ import retrofit2.Response;
 public class OrderCancelLayoutActivity extends BaseActivity implements DefineView {
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
+    @BindView(R.id.tv_order_cancel)
+    TextView tvOrderCancel;
+    @BindView(R.id.cb_commit)
+    CheckBox cbCommit;
+    @BindView(R.id.cb_wait_for)
+    CheckBox cbWaitFor;
+    @BindView(R.id.cb_consumption)
+    CheckBox cbConsumption;
+    @BindView(R.id.cb_complete)
+    CheckBox cbComplete;
+    @BindView(R.id.ll_order_state)
+    LinearLayout llOrderState;
     @BindView(R.id.productName)
     TextView productName;
     @BindView(R.id.tripMode)
@@ -81,24 +95,28 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
     Button btnCancel;
     @BindView(R.id.scroll)
     MyScrollView scroll;
+    @BindView(R.id.ll_content_subject)
+    LinearLayout llContentSubject;
     @BindView(R.id.tv_price)
     TextView tvPrice;
     @BindView(R.id.tv_cost_details)
     TextView tvCostDetails;
     @BindView(R.id.btn_reserve)
     Button btnReserve;
-    @BindView(R.id.iv_left_back)
-    ImageView ivLeftBack;
-    @BindView(R.id.loading_line)
-    ConstraintLayout loadingLine;
-    @BindView(R.id.ll_content_subject)
-    LinearLayout llContentSubject;
     @BindView(R.id.ll_bottom)
     LinearLayout llBottom;
+    @BindView(R.id.iv_left_back)
+    ImageView ivLeftBack;
+    @BindView(R.id.tv_loading_content)
+    TextView tvLoadingContent;
+    @BindView(R.id.loading_line)
+    ConstraintLayout loadingLine;
     //网络请求api
     private ServerApi api;
     //订单编号
     private int orderId;
+    //订单状态
+    private int orderState;
     //订单详情类
     private OrderDetails orderDetails;
     //订单类
@@ -107,8 +125,8 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
     private Contacts contacts;
     //出行人类
     private Passenger passenger;
-    //底部弹出框
-    private DialogPayment dialogPayment;
+    //总金额
+    private int totalSum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,9 +148,35 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
         llContentSubject.setVisibility(View.GONE);
         llBottom.setVisibility(View.GONE);
         loadingLine.setVisibility(View.VISIBLE);
+        tvOrderCancel.setVisibility(View.GONE);
+        llOrderState.setVisibility(View.VISIBLE);
+        btnCancel.setVisibility(View.GONE);
+
+        llBottom.setVisibility(View.VISIBLE);
 
         //获取订单编号
         orderId = this.getIntent().getIntExtra("orderId", 0);
+        orderState = this.getIntent().getIntExtra("orderState", 0);
+
+        if (orderState == 0) {
+            cbCommit.setChecked(true);
+            llBottom.setVisibility(View.VISIBLE);
+        } else if (orderState == 1) {
+            cbWaitFor.setChecked(true);
+            llBottom.setVisibility(View.VISIBLE);
+        } else if (orderState == 2) {
+            cbConsumption.setChecked(true);
+            llBottom.setVisibility(View.GONE);
+        }  else if (orderState == 5) {
+            llBottom.setVisibility(View.GONE);
+            cbComplete.setChecked(true);
+        } else if (orderState == 6) {
+            tvOrderCancel.setVisibility(View.VISIBLE);
+            btnCancel.setVisibility(View.VISIBLE);
+            llOrderState.setVisibility(View.GONE);
+            llBottom.setVisibility(View.GONE);
+        }
+
         //执行网络请求
         api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String, Object> map = new HashMap<>();
@@ -182,7 +226,6 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             //加载隐藏资源文件
             loadingLine.setVisibility(View.GONE);
             llContentSubject.setVisibility(View.VISIBLE);
-            llBottom.setVisibility(View.VISIBLE);
 
             //订单内容信息
             productName.setText(order.getOrderContent());
@@ -202,11 +245,12 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             //房差
             tvRoomDifference.setText("¥681");
             //订单总额
-            tvTotalOrders.setText("¥" + (price + 681));
+            totalSum = price + 681;
+            tvTotalOrders.setText("¥" + totalSum);
             //应付金额
-            tvAmountPayable.setText("¥" + (price + 681));
+            tvAmountPayable.setText("¥" + totalSum);
             //总价
-            tvPrice.setText("¥" + (price + 681));
+            tvPrice.setText("¥" + totalSum);
         }
         //联系人信息
         if (contacts != null) {
@@ -229,22 +273,8 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
                 break;
             case R.id.btn_reserve:
                 //立即支付
-                new DialogPayment(this) {
-                    @Override
-                    public void btnClose() {
-                        AppUtils.getToast("点击关闭");
-                    }
-
-                    @Override
-                    public void btnPaymentMethod() {
-                        AppUtils.getToast("支付方式");
-                    }
-
-                    @Override
-                    public void btnPayment() {
-                        AppUtils.getToast("立即支付");
-                    }
-                }.show();
+                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment("¥"+totalSum+".00", order.getOrderId());
+                payDetailFragment.show(getSupportFragmentManager(), "payDetailFragment");
                 break;
         }
     }

@@ -14,22 +14,32 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.MonthAdapter;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.DateBean;
 import com.example.tourism.entity.MonthBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.Lunar;
 import com.example.tourism.widget.CustomToolbar;
-import com.github.mikephil.charting.formatter.IFillFormatter;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 日历选择
@@ -41,21 +51,26 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
     CustomToolbar customToolbar;
     @BindView(R.id.rv_calender)
     RecyclerView rvCalender;
-    @BindView(R.id.tv_removes)
-    ImageView tvRemoves;
-    @BindView(R.id.tv_number)
-    TextView tvNumber;
-    @BindView(R.id.iv_add)
-    ImageView ivAdd;
-    @BindView(R.id.btn_completion_order)
-    Button btnCompletionOrder;
     @BindView(R.id.tv_date_days)
     TextView tvDateDays;
+    @BindView(R.id.tv_adult_removes)
+    ImageView tvAdultRemoves;
+    @BindView(R.id.tv_adult_number)
+    TextView tvAdultNumber;
+    @BindView(R.id.iv_adult_add)
+    ImageView ivAdultAdd;
+    @BindView(R.id.tv_children_removes)
+    ImageView tvChildrenRemoves;
+    @BindView(R.id.tv_children_number)
+    TextView tvChildrenNumber;
+    @BindView(R.id.iv_children_add)
+    ImageView ivChildrenAdd;
     @BindView(R.id.ll_date_days)
     LinearLayout llDateDays;
+    @BindView(R.id.btn_completion_order)
+    Button btnCompletionOrder;
     @BindView(R.id.ll_buttoms)
     LinearLayout llButtoms;
-
     private int type;
     private int scenicSpotId;
     private final int CALENDAR_TODAY = 77; //今天的日历
@@ -67,7 +82,10 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
     private int nowDay; //当天
     private int lastDateSelect = -1; //上次日期选择
     private int lastMonthSelect = -1; //上个月的选择
-    private int number = 1;
+    //成人数
+    private int adultNumber = 1;
+    //儿童数
+    private int childrenNumber = 0;
     private boolean flag = false;
     private String dateStr = "";
 
@@ -160,35 +178,80 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
         adapter = new MonthAdapter(this, monthList);
         adapter.setChildClickListener(this);
         rvCalender.setAdapter(adapter);
-        tvNumber.setText(number + "");
+        tvAdultNumber.setText(adultNumber + "");
+        tvChildrenNumber.setText(childrenNumber + "");
     }
 
-    @OnClick({R.id.tv_removes, R.id.iv_add, R.id.btn_completion_order})
+    @OnClick({R.id.tv_adult_removes, R.id.iv_adult_add, R.id.tv_children_removes, R.id.iv_children_add, R.id.btn_completion_order})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_removes:
-                if (number == 1) return;
-                number -= 1;
-                tvNumber.setText(number + "");
+            case R.id.tv_adult_removes:
+                if (adultNumber == 1) return;
+                adultNumber -= 1;
+                tvAdultNumber.setText(adultNumber + "");
                 break;
-            case R.id.iv_add:
-                number += 1;
-                tvNumber.setText(number + "");
+            case R.id.iv_adult_add:
+                adultNumber += 1;
+                tvAdultNumber.setText(adultNumber + "");
+                break;
+            case R.id.tv_children_removes:
+                if (childrenNumber == 1) return;
+                childrenNumber -= 1;
+                tvChildrenNumber.setText(childrenNumber + "");
+                break;
+            case R.id.iv_children_add:
+                childrenNumber += 1;
+                tvChildrenNumber.setText(childrenNumber + "");
                 break;
             case R.id.btn_completion_order:
                 if (type == 0) {
                     if (flag) {
                         Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
                         intent.putExtra("scenicSpotId", scenicSpotId);
-                        intent.putExtra("number", tvNumber.getText().toString());
+                        intent.putExtra("number", tvAdultNumber.getText().toString());
                         intent.putExtra("date", dateStr);
                         this.startActivity(intent);
-                        break;
+                    } else {
+                        AppUtils.getToast("请先选择出行日期");
+                    }
+                } else if (type == 1){
+                    if (flag) {
+                        finish();
                     } else {
                         AppUtils.getToast("请先选择出行日期");
                     }
                 } else {
-                    finish();
+                    if (flag) {
+                        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("userId", RequestURL.vUserId);
+                        map.put("scenicSpotId", scenicSpotId);
+                        Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
+                        tripCall.enqueue(new Callback<ResponseBody>() {
+                            @Override
+                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                try {
+                                    String message = response.body().string();
+                                    JSONObject json = new JSONObject(message);
+                                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                    } else {
+                                        AppUtils.getToast(RequestURL.TIPS);
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                            }
+                        });
+                        finish();
+                    } else {
+                        AppUtils.getToast("请先选择出行日期");
+                    }
                 }
                 break;
         }
@@ -221,5 +284,4 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
             flag = true;
         }
     }
-
 }

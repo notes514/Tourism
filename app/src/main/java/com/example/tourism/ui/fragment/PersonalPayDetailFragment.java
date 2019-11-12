@@ -1,5 +1,6 @@
 package com.example.tourism.ui.fragment;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
@@ -13,13 +14,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.tourism.R;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.PersonalCustomStatusViewActivity;
+import com.example.tourism.ui.activity.SuccessfulPaymentActivity;
+import com.example.tourism.utils.AppUtils;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -31,8 +48,17 @@ public class PersonalPayDetailFragment extends DialogFragment {
     private ListView lv;
     private Button btnPay;
     private PersonalCustomStatusViewActivity customStatusView;
-
+    private TextView tvOrderPrice;
+    private TextView tvPrice;
     private ImageView imageCloseOne,imageCloseTwo;
+
+    private String price;
+    private int orderId;
+
+    public PersonalPayDetailFragment(String price, int orderId) {
+        this.price = price;
+        this.orderId = orderId;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +94,8 @@ public class PersonalPayDetailFragment extends DialogFragment {
         btnPay = (Button) dialog.findViewById(R.id.btn_confirm_pay);
         linPass = (LinearLayout)dialog.findViewById(R.id.lin_pass);
         customStatusView =(PersonalCustomStatusViewActivity)dialog.findViewById(R.id.as_status);
+        tvOrderPrice = (TextView) dialog.findViewById(R.id.tv_order_price);
+        tvPrice = (TextView) dialog.findViewById(R.id.tv_price);
         imageCloseOne= (ImageView) dialog.findViewById(R.id.close_one);
         imageCloseTwo= (ImageView) dialog.findViewById(R.id.close_two);
         rePayWay.setOnClickListener(listener);
@@ -75,6 +103,10 @@ public class PersonalPayDetailFragment extends DialogFragment {
         btnPay.setOnClickListener(listener);
         imageCloseOne.setOnClickListener(listener);
         imageCloseTwo.setOnClickListener(listener);
+
+        //显示数据
+        tvOrderPrice.setText(price);
+        tvPrice.setText(price);
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -103,12 +135,42 @@ public class PersonalPayDetailFragment extends DialogFragment {
                     linPass.startAnimation(slide_right_to_left);
                     customStatusView.loadSuccess();
                     linPass.setVisibility(View.VISIBLE);
-                    new Handler().postDelayed(new Runnable() {
+
+                    ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("userId", RequestURL.vUserId);
+                    map.put("orderId", orderId);
+                    Call<ResponseBody> call = api.getASync("orderPayment", map);
+                    call.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void run() {
-                            getDialog().dismiss();
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                String message = response.body().string();
+                                JSONObject json = new JSONObject(message);
+                                if (json.getString(RequestURL.RESULT).equals("S")) {
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            getDialog().dismiss();
+                                            Intent intent = new Intent(getContext(), SuccessfulPaymentActivity.class);
+                                            intent.putExtra("orderId", orderId);
+                                            intent.putExtra("price", price);
+                                            startActivity(intent);
+                                        }
+                                    }, 3000);
+                                } else {
+                                    AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }, 3000);
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
                     break;
                 case R.id.close_one:
                     getDialog().dismiss();

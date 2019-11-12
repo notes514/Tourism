@@ -35,6 +35,8 @@ import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.RegisterActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.widget.DialogPayment;
+import com.example.tourism.widget.LoadingDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -56,12 +58,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class SignIn2Fragment extends BaseFragment implements View.OnClickListener ,PlatformActionListener {
-
     @BindView(R.id.user_name)
     EditText user_name;
     @BindView(R.id.password)
@@ -72,17 +72,10 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
     TextView tv_register;
     @BindView(R.id.weibo_signin)
     ImageView weibo_signin;
-
-    private static final String TAG = "MainActivity";
     private View view;
     private Unbinder unbinder;
-
-    //private ServerApi serverApi;
-
-
-    public SignIn2Fragment() {
-        // Required empty public constructor
-    }
+    //正在加载dialog
+    private LoadingDialog loadingDialog;
 
     @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
@@ -120,35 +113,25 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
          view = inflater.inflate(R.layout.fragment_sign_in2, container, false);
          unbinder = ButterKnife.bind(this,view);
          this.setTargetFragment(new PersonerFragment(),0);
-         signin.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 if(user_name.getText().length() < 1){
-                     AppUtils.getToast("请输入用户名");
-                 } else if(password.getText().length() < 1 ){
-                     AppUtils.getToast("请输入密码");
-                 }else {
-                     login();
-                 }
-
-
+         signin.setOnClickListener(view -> {
+             if(user_name.getText().length() < 1){
+                 AppUtils.getToast("请输入用户名");
+             } else if(password.getText().length() < 1 ){
+                 AppUtils.getToast("请输入密码");
+             }else {
+                 loadingDialog = new LoadingDialog(getContext(), "正在登录...");
+                 loadingDialog.show();
+                 login();
              }
+
          });
 
-         tv_register.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 Intent intent = new Intent(getActivity(), RegisterActivity.class);
-                 startActivity(intent);
-             }
+         tv_register.setOnClickListener(view -> {
+             Intent intent = new Intent(getActivity(), RegisterActivity.class);
+             startActivity(intent);
          });
 
-            weibo_signin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    loginByWeibo();
-                }
-            });
+            weibo_signin.setOnClickListener(view -> loginByWeibo());
          return view;
     }
 
@@ -175,12 +158,13 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
                         editor.putString("password",password.getText().toString());
                         //步骤4：提交
                         editor.commit();
-
-                        Log.d(TAG, "onResponse: " + json.getString("ONE_DETAIL"));
+                        //加载关闭
+                        loadingDialog.dismiss();
                         MainActivity.user = RetrofitManger.retrofitManger.getGson().fromJson(json.getString("ONE_DETAIL"),User.class);
                         getActivity().finish();
                         AppUtils.getToast(json.getString("TIPS"));
-                    }else {
+                    } else {
+                        loadingDialog.dismiss();
                         AppUtils.getToast(json.getString("TIPS"));
                     }
                 } catch (Exception e) {
@@ -192,7 +176,8 @@ public class SignIn2Fragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 //请求失败是回调
-                Log.d(TAG, "Throwable: " + t.toString());
+                Log.d(InitApp.TAG, "Throwable: " + t.toString());
+                loadingDialog.dismiss();
             }
         });
 

@@ -223,6 +223,7 @@
                     android:src="@drawable/personal_arrow_white_right"/>
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/btn_sex"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="0.1dp"

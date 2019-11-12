@@ -13,14 +13,11 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.application.InitApp;
@@ -44,7 +41,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -99,6 +95,14 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
     LinearLayout llMore;
     @BindView(R.id.ll_toolbar)
     LinearLayout llToolbar;
+    @BindView(R.id.iv_left_back)
+    ImageView ivLeftBack;
+    @BindView(R.id.loading_line)
+    ConstraintLayout loadingLine;
+    @BindView(R.id.empty_line)
+    LinearLayout emptyLine;
+    @BindView(R.id.error_line)
+    LinearLayout errorLine;
     //状态栏高度
     private int statusHeight;
     //滚动高度
@@ -141,6 +145,13 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
     @SuppressLint("NewApi")
     @Override
     public void initValidata() {
+        //资源文件加载显示
+        nsvScollview.setVisibility(View.GONE);
+        llToolbar.setVisibility(View.GONE);
+        loadingLine.setVisibility(View.VISIBLE);
+        emptyLine.setVisibility(View.GONE);
+        errorLine.setVisibility(View.GONE);
+
         String[] mTitles = {"星辰大海", "壕买买买", "明星结婚地", "激情刺激", "网红流行", "文艺小资"};
         for (int i = 0; i < mTitles.length; i++) {
             tbRomantic.addTab(tbRomantic.newTab().setText(mTitles[i]));
@@ -281,12 +292,19 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
     @Override
     public void bindData() {
         if (listList.size() >= 3) {
+            //显示数据
+            loadingLine.setVisibility(View.GONE);
+            nsvScollview.setVisibility(View.VISIBLE);
+            llToolbar.setVisibility(View.VISIBLE);
+            emptyLine.setVisibility(View.GONE);
+            errorLine.setVisibility(View.GONE);
+
             elvAdapter.setRomanticBeanList(romanticBeanList);
             elvAdapter.setListList(listList);
             elvRoantic.setAdapter(elvAdapter);
 
             int groupCount = elvRoantic.getCount();
-            for (int i=0; i<groupCount; i++) {
+            for (int i = 0; i < groupCount; i++) {
                 elvRoantic.expandGroup(i);
             }
         }

@@ -41,7 +41,8 @@
                     <GridView
                         android:id="@+id/gridView"
                         android:layout_width="match_parent"
-                        android:layout_height="122dp"
+                        android:layout_height="140dp"
+                        android:verticalSpacing="16dp"
                         android:numColumns="4" />
                 </androidx.cardview.widget.CardView>
 
@@ -145,7 +146,7 @@
                                         android:id="@+id/iv_hot_topics_pic1"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:scaleType="center"
+                                        android:scaleType="centerCrop"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
@@ -233,7 +234,7 @@
                                         android:id="@+id/iv_hot_topics_pic3"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:scaleType="center"
+                                        android:scaleType="centerCrop"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"
@@ -321,7 +322,7 @@
                                         android:id="@+id/iv_hot_topics_pic2"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:scaleType="center"
+                                        android:scaleType="centerCrop"
                                         app:layout_constraintBottom_toBottomOf="parent"
                                         app:layout_constraintEnd_toEndOf="parent"
                                         app:layout_constraintStart_toStartOf="parent"

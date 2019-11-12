@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -19,31 +18,20 @@ import android.widget.TimePicker;
 import com.bumptech.glide.Glide;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
-import com.example.tourism.application.RetrofitManger;
-import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONObject;
-
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.tourism.MainActivity.user;
 
@@ -53,6 +41,8 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
     Button btnPersonalLogout;
     @BindView(R.id.btn_adress)
     FrameLayout btnAdress;
+    @BindView(R.id.btn_sex)
+    FrameLayout btnSex;
     private Context context;
     private LinearLayout llDate, llTime;
     private TextView tvDate, tvTime;
@@ -95,7 +85,7 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
 
         if (user == null) {
             btnPersonalLogout.setVisibility(View.GONE);
-        }else if (user != null){
+        } else if (user != null) {
             tvUsername.setText(user.getUserAccountName());
             tvEamil.setText(user.getEmail());
             tvAddress.setText(user.getNagaiAddr());
@@ -187,11 +177,12 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
         hour = calendar.get(Calendar.HOUR);
         minute = calendar.get(Calendar.MINUTE);
     }
-    @OnClick({R.id.btn_personal_Logout,R.id.btn_adress})
+
+    @OnClick({R.id.btn_personal_Logout, R.id.btn_adress,R.id.btn_sex})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_personal_Logout:
-                SharedPreferences sharedPreferences = getSharedPreferences("Userdata",Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("Userdata", Context.MODE_PRIVATE);
                 //步骤2： 实例化SharedPreferences.Editor对象
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 showMyDialog();
@@ -199,7 +190,7 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
                 editor.commit();
                 user = null;
                 RequestURL.vUserId = "";
-            break;
+                break;
             case R.id.btn_adress:
                 Intent intent = new Intent(PersonalDataActivity.this, LocationActivity.class);
                 startActivity(intent);
