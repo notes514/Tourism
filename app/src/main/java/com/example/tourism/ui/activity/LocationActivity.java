@@ -107,9 +107,9 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
         // 根据拼音为数组进行排序
         Collections.sort(mBeans, new City.ComparatorPY());
         // 数据更新
-        if (mAdapter!=null) {
-            mAdapter.notifyDataSetChanged();
-        }
+//        if (mAdapter!=null) {
+//            mAdapter.notifyDataSetChanged();
+//        }
     }
 
 
@@ -126,10 +126,10 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
                             location = aMapLocation.getCity();
                             location = location.substring(0, location.length() - 1);
                             Log.d("ss", "onLocationChanged: " + location);
-
                             mAdapter = new CityItemAdapter(mContext, mBeans,location);
                             Log.d("ss", "onLs: " + mBeans.get(0));
                             lvArea.setAdapter(mAdapter);
+                            mLocationClient.stopLocation();
                         }
                     }else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
@@ -247,12 +247,12 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
 //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
 
-        mLocationOption.setInterval(5000);
 
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocationLatest(true);
 
-        mLocationOption.setHttpTimeOut(20000);
+        mLocationOption.setHttpTimeOut(900000);
         mLocationOption.setLocationCacheEnable(false);
 
         //给定位客户端对象设置定位参数
