@@ -386,7 +386,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
     private void loadmore() {
-        if (allScenicSpots != null || adapter2 != null){
+        if (allScenicSpots != null && adapter2 != null){
             allScenicSpots.addAll(allScenicSpots);
             adapter2.loadMore(allScenicSpots);
         }
