@@ -39,7 +39,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="100dp"
-                android:src="@drawable/personal_crown"/>
+                android:src="@drawable/ic_personal_crown"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -227,7 +227,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_tv"/>
+                        android:src="@drawable/ic_personal_tv"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -257,7 +257,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_hotel"/>
+                        android:src="@drawable/ic_personal_hotel"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -287,7 +287,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_aircraft"/>
+                        android:src="@drawable/ic_personal_aircraft"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -303,7 +303,7 @@
                         android:layout_marginTop="5dp"
                         android:textColor="@color/color_black"
                         android:textSize="12sp"
-                        android:text="芒果TV会员双月卡"/>
+                        android:text="最高省¥6/月"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -323,7 +323,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_train"/>
+                        android:src="@drawable/ic_personal_train"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -353,7 +353,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_refund_ticket"/>
+                        android:src="@drawable/ic_personal_refund_ticket"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -383,7 +383,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_vacation"/>
+                        android:src="@drawable/ic_personal_vacation"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -399,7 +399,7 @@
                         android:layout_marginTop="5dp"
                         android:textColor="@color/color_black"
                         android:textSize="12sp"
-                        android:text="芒果TV会员双月卡"/>
+                        android:text="度假权益包"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -419,7 +419,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_admission_ticket"/>
+                        android:src="@drawable/ic_personal_admission_ticket"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -449,7 +449,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_buy_ticket"/>
+                        android:src="@drawable/ic_personal_buy_ticket"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -479,7 +479,7 @@
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:src="@drawable/personal_security_check"/>
+                        android:src="@drawable/ic_personal_security_check"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
