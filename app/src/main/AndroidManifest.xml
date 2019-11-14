@@ -228,7 +228,7 @@
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
         <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="e6ac0a092dbc925b4d11ef1993b29344"></meta-data>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="8fd1937cd4daf2fabcd80969be430da3"></meta-data>
     </application>
 
 </manifest>
