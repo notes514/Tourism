@@ -39,7 +39,7 @@
                        android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
-                       android:src="@drawable/personal_insurance_problem"/>
+                       android:src="@drawable/ic_personal_insurance_problem"/>
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                        android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
-                       android:src="@drawable/personal_predetermined_problem"/>
+                       android:src="@drawable/ic_personal_predetermined_problem"/>
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                        android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
-                       android:src="@drawable/personal_travel_problem"/>
+                       android:src="@drawable/ic_personal_travel_problem"/>
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                        android:layout_height="30dp"
                        android:layout_marginTop="15dp"
                        android:layout_gravity="center"
-                       android:src="@drawable/personal_refund_invoice"/>
+                       android:src="@drawable/ic_personal_refund_invoice"/>
                    <TextView
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
