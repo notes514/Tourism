@@ -21,12 +21,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.example.tourism.R;
-import com.example.tourism.adapter.MonthAdapter;
-import com.example.tourism.adapter.PageRecyclerAdapter;
+import com.example.tourism.adapter.CityItemAdapter;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
@@ -35,7 +37,6 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.ui.activity.LocationActivity;
@@ -63,7 +64,6 @@ import com.youth.banner.Transformer;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -136,6 +136,14 @@ public class HomeFragment extends BaseFragment implements DefineView {
     private SecondaryMenuItemAdapter adapter1;
     private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+    AMapLocationListener mLocationListener;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -145,10 +153,73 @@ public class HomeFragment extends BaseFragment implements DefineView {
         initValidata();
         initListener();
         initLocationText();
+        initListen();
+        initLocation();
+        initLocations();
         return root;
     }
 
-    public void initLocation() {
+    public void initListen(){
+
+        mLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        Log.d("ss", "fasd: "+aMapLocation.getCity());
+                        if (aMapLocation.getCity()!=null) {
+                            if (tvDiqu.getText().equals("")){
+                                tvDiqu.setText(aMapLocation.getCity());
+                            }
+                            mLocationClient.stopLocation();
+                        }
+                    }else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError","location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        };
+    }
+
+    public void initLocation(){
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
+//设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+
+
+//设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+
+
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocationLatest(true);
+
+        mLocationOption.setHttpTimeOut(900000);
+        mLocationOption.setLocationCacheEnable(false);
+
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+//启动定位
+        mLocationClient.startLocation();
+
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+    }
+
+    public void initLocations() {
         tvDiqu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,12 +230,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
 
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
-        super.startActivityForResult(intent, requestCode, options);
-
-
-    }
 
     @Override
     public void initView() {
@@ -442,5 +507,11 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public void onResume() {
         super.onResume();
         initLocationText();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 }
