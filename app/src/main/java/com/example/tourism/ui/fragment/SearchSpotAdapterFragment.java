@@ -220,10 +220,10 @@ public class SearchSpotAdapterFragment extends Fragment {
 
         regions.add(new Region(0,"热门"));
         regions.add(new Region(1,"国内"));
-        regions.add(new Region(3,"日韩"));
-        regions.add(new Region(4,"东南亚"));
-        regions.add(new Region(5,"欧洲"));
-        regions.add(new Region(6,"美洲"));
+        regions.add(new Region(2,"日韩"));
+        regions.add(new Region(3,"东南亚"));
+        regions.add(new Region(4,"欧洲"));
+        regions.add(new Region(5,"美洲"));
 
 
         mlist.add(new RegionType(0,"国内热门"));
@@ -232,6 +232,8 @@ public class SearchSpotAdapterFragment extends Fragment {
         mlist.add(new RegionType(1,"华中地区"));
         mlist.add(new RegionType(1,"华北地区"));
         mlist.add(new RegionType(1,"华南地区"));
+        mlist.add(new RegionType(3,"东南亚"));
+        mlist.add(new RegionType(4,"欧洲"));
 
 //        countries.add(new Country(0,"丽江",R.drawable.defaultbg,"西南地区 国内热门"));
 //        countries.add(new Country(1,"三亚",R.drawable.defaultbg,"华南地区 国内热门"));
