@@ -172,13 +172,20 @@
                             android:background="@color/color_white">
 
 
-                            <ImageView
-                                android:id="@+id/personal_Shopping_Cart_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_shop_car" />
+                                android:background="@drawable/ic_personal_fillet">
+                                <ImageView
+                                    android:id="@+id/personal_Shopping_Cart_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_trips" />
+                            </FrameLayout>
+
                             <TextView
                                 android:id="@+id/personal_Trip_Text"
                                 android:layout_width="wrap_content"
@@ -204,13 +211,20 @@
                             android:layout_height="50dp"
                             android:layout_marginTop="10dp"
                             android:background="@color/color_white">
-                            <ImageView
-                                android:id="@+id/personal_Holiday_order_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="left|center"
-                                android:src="@drawable/personal_order" />
+                                android:background="@drawable/ic_personal_fillet">
+                                <ImageView
+                                    android:id="@+id/personal_Holiday_order_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_order" />
+                            </FrameLayout>
+
                             <TextView
                                 android:id="@+id/personal_Holiday_order_Text"
                                 android:layout_width="wrap_content"
@@ -244,11 +258,11 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="25dp"
+                                    android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
-                                    android:src="@drawable/personal_payment"/>
+                                    android:src="@drawable/ic_personal_payment"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -270,7 +284,7 @@
                                     android:layout_height="30dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
-                                    android:src="@drawable/personal_consumption"/>
+                                    android:src="@drawable/ic_personal_consumption"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -292,7 +306,7 @@
                                     android:layout_height="30dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
-                                    android:src="@drawable/personal_evaluate"/>
+                                    android:src="@drawable/ic_personal_evaluate"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -310,11 +324,11 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="25dp"
+                                    android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
-                                    android:src="@drawable/personal_refund"/>
+                                    android:src="@drawable/ic_personal_refund"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -333,13 +347,20 @@
                             android:layout_marginTop="10dp"
                             android:gravity="center|left"
                             android:background="@color/color_white">
-                            <ImageView
-                                android:id="@+id/personal_Coupon_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_coupon" />
+                                android:background="@drawable/ic_personal_fillet_yellow">
+                                <ImageView
+                                    android:id="@+id/personal_Coupon_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_coupon" />
+                            </FrameLayout>
+
                             <TextView
                                 android:id="@+id/personal_Coupon_Text"
                                 android:layout_width="wrap_content"
@@ -369,15 +390,19 @@
                             android:background="@color/color_white"
                             android:gravity="center|left"
                             android:onClick="my_collection">
-
-                            <ImageView
-                                android:id="@+id/personal_Collection_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center|left"
                                 android:layout_marginLeft="20dp"
-                                android:src="@drawable/personal_collection" />
-
+                                android:background="@drawable/ic_personal_fillet_red">
+                                <ImageView
+                                    android:id="@+id/personal_Collection_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_collection" />
+                            </FrameLayout>
                             <TextView
                                 android:id="@+id/personal_Collection_Text"
                                 android:layout_width="wrap_content"
@@ -406,13 +431,19 @@
                             android:gravity="center|left"
                             android:onClick="my_subscriptions"
                             android:background="@color/color_white">
-                            <ImageView
-                                android:id="@+id/personal_Subscribe_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_subscribe" />
+                                android:background="@drawable/ic_personal_fillet_red">
+                                <ImageView
+                                    android:id="@+id/personal_Subscribe_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_subscribe" />
+                            </FrameLayout>
                             <TextView
                                 android:id="@+id/personal_Subscribe_Text"
                                 android:layout_width="wrap_content"
@@ -439,12 +470,19 @@
                             android:gravity="center|left"
                             android:onClick="my_subscriptions"
                             android:background="@color/color_white">
-                            <ImageView
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_member_recharge" />
+                                android:background="@drawable/ic_personal_fillet_red">
+                                <ImageView
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_member_recharge" />
+                            </FrameLayout>
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -473,14 +511,19 @@
                             android:layout_marginTop="5dp"
                             android:onClick="my_holiday_prbolem"
                             android:background="@color/color_white">
-
-                            <ImageView
-                                android:id="@+id/personal_Feedback_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_feedback" />
+                                android:background="@drawable/ic_personal_fillet_gray">
+                                <ImageView
+                                    android:id="@+id/personal_Feedback_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_feedback" />
+                            </FrameLayout>
                             <TextView
                                 android:id="@+id/personal_Feedback_Text"
                                 android:layout_width="wrap_content"
@@ -509,14 +552,21 @@
                             android:layout_marginTop="5dp"
                             android:onClick="my_holiday_prbolem"
                             android:background="@color/color_white">
-
-                            <ImageView
-                                android:id="@+id/personal_set_up_Img"
+                            <FrameLayout
                                 android:layout_width="30dp"
-                                android:layout_height="35dp"
+                                android:layout_height="30dp"
                                 android:layout_marginLeft="20dp"
                                 android:layout_gravity="center|left"
-                                android:src="@drawable/personal_set_up" />
+                                android:background="@drawable/ic_personal_fillet_gray">
+                                <ImageView
+                                    android:id="@+id/personal_set_up_Img"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_personal_set_up" />
+                            </FrameLayout>
+
+
                             <TextView
                                 android:id="@+id/personal_set_up_Text"
                                 android:layout_width="wrap_content"
