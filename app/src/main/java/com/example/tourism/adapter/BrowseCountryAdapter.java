@@ -23,7 +23,8 @@ public class BrowseCountryAdapter extends RecyclerView.Adapter<BrowseCountryAdap
     private Context mContext;
     private BrowseCountry2Adapter browseCountry2Adapter;
 
-    public BrowseCountryAdapter(List<RegionType> mList, List<ScenicRegion> countries) {
+    public BrowseCountryAdapter(Context context,List<RegionType> mList, List<ScenicRegion> countries) {
+        this.mContext = context;
         this.mList = mList;
         this.countries = countries;
     }
@@ -51,7 +52,7 @@ public class BrowseCountryAdapter extends RecyclerView.Adapter<BrowseCountryAdap
                 }
             }});
         holder.country.setLayoutManager(gridLayoutManager);
-        browseCountry2Adapter = new BrowseCountry2Adapter(mList,countries,position,region.getRegionTypeName());
+        browseCountry2Adapter = new BrowseCountry2Adapter(mContext,mList,countries,position,region.getRegionTypeName());
         holder.country.setAdapter(browseCountry2Adapter);
     }
 

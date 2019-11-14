@@ -43,6 +43,7 @@ import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.ui.activity.LocationActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
+import com.example.tourism.ui.activity.SeachActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
@@ -170,13 +171,24 @@ public class HomeFragment extends BaseFragment implements DefineView {
         ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
 
         String[] sList = new String[]{"国内游", "出境游", "自由行", "跟团游", "主题游", "周边游", "一日游", "定制游"};
-        searchArea("出境游");
+        searchArea("跟团游");
     }
 
     @Override
     public void initListener() {
         initLocation();
         showNearby();
+        etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    // 此处为得到焦点时的处理内容
+                    openActivity(SeachActivity.class);
+                } else {
+                    // 此处为失去焦点时的处理内容
+                }
+            }
+        });
     }
 
     @Override
@@ -326,7 +338,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
         adapter1 = new SecondaryMenuItemAdapter(getContext(), secondaryMenuList);
         gridView.setAdapter(adapter1);
         gridView.setOnItemClickListener((adapterView, view, i, l) -> {
-            if (i == 0) {
+            if (i == 4) {
                 openActivity(RomanticJourneyActivity.class);
             } else {
                 Toast.makeText(getContext(), secondaryMenuList.get(i).menu_name, Toast.LENGTH_SHORT).show();

@@ -208,7 +208,7 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
                     if (flag) {
                         Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
                         intent.putExtra("scenicSpotId", scenicSpotId);
-                        intent.putExtra("number", tvAdultNumber.getText().toString());
+                        intent.putExtra("number", adultNumber);
                         intent.putExtra("date", dateStr);
                         this.startActivity(intent);
                     } else {

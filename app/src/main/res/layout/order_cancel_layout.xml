@@ -986,7 +986,7 @@
                     android:layout_height="match_parent"
                     android:textColor="@color/color_white"
                     android:background="@drawable/btn_shape_orange_red"
-                    android:text="立即预定"
+                    android:text="立即支付"
                     android:layout_margin="6dp"/>
             </LinearLayout>
 

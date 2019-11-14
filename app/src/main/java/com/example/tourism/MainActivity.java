@@ -15,6 +15,7 @@ import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
+import com.example.tourism.utils.AppUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
