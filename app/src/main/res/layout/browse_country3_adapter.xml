@@ -11,6 +11,7 @@
         android:id="@+id/country_pic"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars"
         android:layout_gravity="center"/>
 
@@ -22,6 +23,7 @@
         android:textSize="15dp"
         android:layout_gravity="center"
         android:gravity="center_horizontal|center_vertical"
-        android:background="@drawable/text_border"></TextView>
+        android:background="@drawable/text_border">
+    </TextView>
 
 </LinearLayout>

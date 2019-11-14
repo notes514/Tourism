@@ -15,15 +15,11 @@ import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.ui.fragment.DestinationFragment;
-import com.example.tourism.ui.fragment.HomeFragment;
-import com.example.tourism.ui.fragment.SignIn2Fragment;
 import com.example.tourism.utils.AppUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -80,9 +76,6 @@ public class MainActivity extends BaseActivity implements DefineView {
     }
 
     private void login(String userId,String userId1) {
-
-//        RetrofitManger retrofitManger = new RetrofitManger();
-//        serverApi = retrofitManger.getRetrofit(InitApp.ip_port).create(ServerApi.class);
         ServerApi serverApi = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         //向上造型
         Map<String, Object> map = new HashMap<>();
@@ -101,23 +94,19 @@ public class MainActivity extends BaseActivity implements DefineView {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
-
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 //请求失败是回调
                 AppUtils.getToast(t.toString());
             }
         });
-
     }
 
 
     public void temp(){
         Intent intent=getIntent();
         String str=intent.getStringExtra("location");
-
     }
 
     @Override
