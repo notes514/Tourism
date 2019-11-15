@@ -45,6 +45,7 @@ import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.ui.activity.LocationActivity;
+import com.example.tourism.ui.activity.MapActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SeachActivity;
@@ -240,6 +241,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void initView() {
         initToolBar();
@@ -454,7 +456,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "查看附近景点", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), NearbyActivity.class);
+                Intent intent = new Intent(getContext(), MapActivity.class);
                 startActivity(intent);
             }
         });
