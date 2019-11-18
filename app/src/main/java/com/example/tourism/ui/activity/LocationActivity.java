@@ -277,7 +277,14 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
         sbIndex.setOnTouchingLetterChangedListener(mSBTouchListener);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent data = new Intent();
+        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+        data.putExtra("location", sharedPreferences.getString("location",""));
+        setResult(1, data);
+        super.onBackPressed();
+    }
 
     @Override
     protected void onStop() {
@@ -290,6 +297,8 @@ public class LocationActivity extends BaseActivity implements View.OnClickListen
         super.onDestroy();
         mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
     }
+
+
 
     /**
      * 修改当前显示
