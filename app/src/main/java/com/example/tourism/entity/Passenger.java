@@ -3,6 +3,10 @@ package com.example.tourism.entity;
 public class Passenger {
     private Integer passengerId;
 
+    private Integer userId;
+
+    private Integer orderId;
+
     private String passengerName;
 
     private String passengerType;
@@ -15,6 +19,22 @@ public class Passenger {
 
     public void setPassengerId(Integer passengerId) {
         this.passengerId = passengerId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public String getPassengerName() {
