@@ -1,10 +1,16 @@
 package com.example.tourism.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -49,6 +55,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import scut.carson_ho.searchview.EditText_Clear;
+import scut.carson_ho.searchview.SearchListView;
 
 /**
  * 文章详情类
@@ -141,12 +149,7 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         loadingLine.setVisibility(View.VISIBLE);
         emptyLine.setVisibility(View.INVISIBLE);
         errorLine.setVisibility(View.INVISIBLE);
-        ivLeftBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        ivLeftBack.setOnClickListener(v -> finish());
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         //获取状态栏高度
@@ -241,23 +244,41 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         adapter.setStringList(strategy.getForewordList());
         rvForeword.setAdapter(adapter);
 
-        //WebView设置
-        detailsContent.setWebChromeClient(new MyWebChromeClient());
-        detailsContent.setWebViewClient(new MyWebViewClient());
+//        //WebView设置
+//        detailsContent.setWebChromeClient(new MyWebChromeClient());
+//        detailsContent.setWebViewClient(new MyWebViewClient());
+//        //这个是给图片设置点击监听的，如果你项目需要webview中图片，点击查看大图功能，可以这么添加
+//        detailsContent.addJavascriptInterface(new JavaScriptInterface(this), "imagelistner");
 
         WebSettings webSettings = detailsContent.getSettings();
         webSettings.setJavaScriptEnabled(true); //开启javascript
-        webSettings.setDomStorageEnabled(true);  //开启DOM
-        webSettings.setDefaultTextEncodingName("utf-8"); //设置编码
-        // web页面处理
-        webSettings.setAllowFileAccess(true);// 支持文件流
-        //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
-        webSettings.setBlockNetworkImage(true);
-        //开启缓存机制
-        webSettings.setAppCacheEnabled(true);
+        webSettings.setBlockNetworkImage(false); //解决图片不显示
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+
+//        WebSettings webSettings = detailsContent.getSettings();
+//        webSettings.setJavaScriptEnabled(true);  //开启javascript
+//        webSettings.setDomStorageEnabled(true);  //开启DOM
+//        webSettings.setDefaultTextEncodingName("utf-8"); //设置编码
+//        // // web页面处理
+//        webSettings.setAllowFileAccess(true);// 支持文件流
+////		webSettings.setSupportZoom(true);// 支持缩放
+////		webSettings.setBuiltInZoomControls(true);// 支持缩放
+//        webSettings.setUseWideViewPort(true);// 调整到适合webview大小
+//        webSettings.setLoadWithOverviewMode(true);// 调适合整到webview大小
+//        webSettings.setDefaultZoom(WebSettings.ZoomDensity.FAR);// 屏幕自适应网页,如果没有这个，在低分辨率的手机上显示可能会异常
+//        webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
+//        //提高网页加载速度，暂时阻塞图片加载，然后网页加载好了，在进行加载图片
+//        webSettings.setBlockNetworkImage(true);
+//        //开启缓存机制
+//        webSettings.setAppCacheEnabled(true);
+
+//        webSettings.setBuiltInZoomControls(true); // 显示放大缩小
+//        webSettings.setSupportZoom(true); // 可以缩放
 
         //加载数据
-        detailsContent.loadDataWithBaseURL(null, getNewContent(strategy.getContent()), "text_seach_layout/html", "UTF-8", null);
+        detailsContent.loadDataWithBaseURL(null, getNewContent(strategy.getContent()), "text/html", "UTF-8", null);
 
         if (strategy != null) {
             detailsContent.setWebViewClient(new WebViewClient() {
@@ -282,41 +303,20 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
     }
 
     /**
-     * 设置状态栏和标题栏颜色渐变
-     *
-     * @param alpha
-     * @throws Exception
-     */
-    private void setActionBar(int alpha) throws Exception {
-        if (statusView != null && customToolbar == null) {
-            throw new Exception("状态栏和标题栏为空！");
-        }
-        statusView.getBackground().mutate().setAlpha(alpha);
-        customToolbar.getBackground().mutate().setAlpha(alpha);
-    }
+     * 将html文本内容中包含img标签的图片，宽度变为屏幕宽度，高度根据宽度比例自适应
+     **/
+    public static String getNewContent(String htmltext){
+        try {
+            Document doc= Jsoup.parse(htmltext);
+            Elements elements=doc.getElementsByTag("img");
+            for (Element element : elements) {
+                element.attr("width","100%").attr("height","auto");
+            }
 
-    /**
-     * 实时更新状态栏标题栏颜色渐变
-     *
-     * @param alpha
-     */
-    private void setUpdateActionBar(int alpha) {
-        try { //捕获异常
-            setActionBar(alpha);
+            return doc.toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            return htmltext;
         }
-    }
-
-    private String getNewContent(String htmltext) {
-        Document doc = Jsoup.parse(htmltext);
-        Elements elements = doc.getElementsByTag("img");
-
-        for (Element element : elements) {
-            element.attr("width", "100%").attr("height", "auto");
-        }
-        Log.d("VACK", "getNewContent: " + doc.toString());
-        return doc.toString();
     }
 
     @OnClick({R.id.ll_shape, R.id.ll_collection, R.id.ll_comment, R.id.ll_foubles})
@@ -324,6 +324,14 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         switch (view.getId()) {
             case R.id.ll_shape:
                 AppUtils.getToast("点击了分享！");
+                Dialog dialog = new Dialog(this);
+                dialog.setContentView(R.layout.share_layout);
+                //绑定控件
+                TextView tvWeixin =  dialog.findViewById(R.id.tv_weixin);
+                TextView tvQq = dialog.findViewById(R.id.tv_qq);
+                TextView tvWeibo = dialog.findViewById(R.id.tv_weibo);
+                //显示
+                dialog.show();
                 break;
             case R.id.ll_collection:
                 if (flag) {
@@ -359,32 +367,69 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         }
     }
 
-    class MyWebViewClient extends WebViewClient {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            Log.d("zttjiangqq", "网页开始加载:" + url);
-        }
+    private class MyWebViewClient extends WebViewClient {
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            Log.d("zttjiangqq", "网页加载完成..." + url);
-        }
-
-        @Override
-        public void onLoadResource(WebView view, String url) {
-            super.onLoadResource(view, url);
-            Log.d("zttjiangqq", "加载的资源:" + url);
+            imgReset();//重置webview中img标签的图片大小
+            // html加载完成之后，添加监听图片的点击js函数
+            addImageClickListner();
         }
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Log.d("zttjiangqq", "拦截到URL信息为:" + url);
-            return super.shouldOverrideUrlLoading(view, url);
+            view.loadUrl(url);
+            return true;
+        }
+    }
 
+    /**
+     * 对图片进行重置大小，宽度就是手机屏幕宽度，高度根据宽度比便自动缩放
+     **/
+    private void imgReset() {
+        detailsContent.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName('img'); " +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "var img = objs[i];   " +
+                "    img.style.maxWidth = '100%'; img.style.height = 'auto';  " +
+                "}" +
+                "})()");
+    }
+
+    private void addImageClickListner() {
+        // 这段js函数的功能就是，遍历所有的img节点，并添加onclick函数，函数的功能是在图片点击的时候调用本地java接口并传递url过去
+        detailsContent.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName(\"img\"); " +
+                "for(var i=0;i<objs.length;i++)  " +
+                "{"
+                + "    objs[i].οnclick=function()  " +
+                "    {  "
+                + "        window.imagelistner.openImage(this.src);  " +
+                "    }  " +
+                "}" +
+                "})()");
+    }
+
+    public static class JavaScriptInterface {
+
+        private Context context;
+
+        public JavaScriptInterface(Context context) {
+            this.context = context;
         }
 
+        //点击图片回调方法
+        //必须添加注解,否则无法响应
+        @JavascriptInterface
+        public void openImage(String img) {
+            Log.i("TAG", "响应点击事件!");
+            Intent intent = new Intent();
+            intent.putExtra("image", img);
+            intent.setClass(context, BigImageActivity.class);//BigImageActivity查看大图的类，自己定义就好
+            context.startActivity(intent);
+        }
     }
 
 }

@@ -22,6 +22,7 @@
                 android:orientation="vertical">
                 <!--头部信息栏-->
                 <LinearLayout
+                    android:id="@+id/ll_head_information"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -485,6 +486,11 @@
                     android:id="@+id/buttom_child_viewPager"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:background="@color/color_white"/>
             </LinearLayout>
             <!--中间浮动栏，同时设置到顶部的距离为0，因为顶部的toolbar的高度为73dp，所以设置layout_marginTop="50dp"-->
             <LinearLayout
@@ -502,7 +508,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="图文详情"
+                        android:text="费用信息"
                         android:gravity="center"
                         android:textSize="15sp"/>
                     <TextView
@@ -510,7 +516,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="景区实拍"
+                        android:text="行程信息"
                         android:gravity="center"
                         android:textSize="15sp"/>
                     <TextView
@@ -518,7 +524,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="评价详情"
+                        android:text="预定须知"
                         android:gravity="center"
                         android:textSize="15sp"/>
                 </LinearLayout>

@@ -5,32 +5,38 @@
     android:orientation="vertical"
     android:background="@color/color_separator_row">
 
-    <LinearLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/page_swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <!-- RecyclerView -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/page_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/tv_tips"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:padding="16dp"
-            android:gravity="center"
-            android:visibility="gone"
-            android:textColor="@color/color_cyan_green"
-            android:background="@color/color_separator_row"
-            android:textSize="16sp"/>
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <!-- RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/page_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:padding="16dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textColor="@color/color_cyan_green"
+                android:background="@color/color_separator_row"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <!--正在加载-->
     <include layout="@layout/loading_layout"/>

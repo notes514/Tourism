@@ -187,6 +187,7 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
             rvTopDistance = elvRoantic.getTop() - layoutClassify.getHeight() - statusView.getHeight()
                     - ctToolbar.getHeight();
             height = layoutClassify.getHeight() + statusView.getHeight() + ctToolbar.getHeight();
+            Log.d(InitApp.TAG, "height: " + height);
 
             //设置浮动栏距离顶部的高度
             translation = Math.max(scrollY, height);
@@ -242,16 +243,10 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
     @Override
     public void initListener() {
         ctToolbar.setOnLeftButtonClickLister(() -> finish());
-        elvRoantic.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                return true;
-            }
-        });
+        elvRoantic.setOnGroupClickListener((parent, v, groupPosition, id) -> true);
 
         ivExpandMore.setOnClickListener(v1 ->
         {
-            AppUtils.getToast("被点击了");
             //返回顶部
             nsvScollview.fling(0);
             nsvScollview.smoothScrollTo(0, height + 218);

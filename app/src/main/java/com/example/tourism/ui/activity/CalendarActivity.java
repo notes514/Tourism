@@ -1,7 +1,9 @@
 package com.example.tourism.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -9,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.MonthAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -27,6 +31,8 @@ import com.example.tourism.widget.CustomToolbar;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -72,8 +78,14 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
     @BindView(R.id.ll_buttoms)
     LinearLayout llButtoms;
     private int type;
+    //景区编号
     private int scenicSpotId;
-    private final int CALENDAR_TODAY = 77; //今天的日历
+    //景区详情编号
+    private int scenicDetailsId;
+    //景区价格
+    private int price;
+    //今天的日历
+    private final int CALENDAR_TODAY = 77;
     private MonthAdapter adapter;
     private List<MonthBean> monthList = new ArrayList<>();
     private int year; //年份
@@ -106,11 +118,13 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
 
     @Override
     public void initValidata() {
-        //获取指定类型
+        //获取指定类型 0表示加入行程 1表示下一步 2 表示更多日期
         type = this.getIntent().getIntExtra("type", 0);
-        if (type == 0) {
-            //获取商品详情编号
-            scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
+        //获取商品详情编号
+        scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
+        scenicDetailsId = this.getIntent().getIntExtra("scenicDetailsId", 0);
+        price = this.getIntent().getIntExtra("price", 0);
+        if (type == 1) {
             btnCompletionOrder.setText(R.string.tourism_order_calendar_completion_order);
         } else {
             btnCompletionOrder.setText(R.string.tourism_order_calendar_determine);
@@ -168,6 +182,73 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
     @Override
     public void initListener() {
         customToolbar.setOnLeftButtonClickLister(() -> finish());
+
+        btnCompletionOrder.setOnClickListener(v -> {
+            if (type == 0) {
+                if (flag) {
+                    if (RequestURL.vUserId.length() == 0) {
+                        AppUtils.getToast("请先登录!");
+                        return;
+                    }
+                    ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("userId", Integer.parseInt(RequestURL.vUserId));
+                    map.put("scenicSpotId", scenicSpotId);
+                    map.put("scenicDetailsId", scenicDetailsId);
+                    map.put("tripInformation", dateStr);
+                    map.put("price", price);
+                    map.put("remark", "");
+                    Call<ResponseBody> tCall = api.postASync("addByTrips", map);
+                    tCall.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                String message = response.body().string();
+                                JSONObject json = new JSONObject(message);
+                                Log.d(InitApp.TAG, "message: " + message);
+                                if ("S".equals(json.getString(RequestURL.RESULT))) {
+                                    AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                    finish();
+                                } else {
+                                    AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                    finish();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            AppUtils.getToast(t.toString());
+                            finish();
+                        }
+                    });
+                } else {
+                    AppUtils.getToast("请先选择出行日期");
+                }
+            } else if (type == 1) {
+                if (flag) {
+                    Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
+                    intent.putExtra("scenicSpotId", scenicSpotId);
+                    intent.putExtra("adultNumber", adultNumber);
+                    intent.putExtra("childrenNumber", childrenNumber);
+                    intent.putExtra("date", dateStr);
+                    this.startActivity(intent);
+                } else {
+                    AppUtils.getToast("请先选择出行日期");
+                }
+            } else {
+                if (flag) {
+                    Intent data = new Intent();
+                    data.putExtra("dateStr", dateStr);
+                    setResult(2, data);
+                    finish();
+                } else {
+                    AppUtils.getToast("请先选择出行日期");
+                }
+            }
+        });
     }
 
     @Override
@@ -182,7 +263,8 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
         tvChildrenNumber.setText(childrenNumber + "");
     }
 
-    @OnClick({R.id.tv_adult_removes, R.id.iv_adult_add, R.id.tv_children_removes, R.id.iv_children_add, R.id.btn_completion_order})
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @OnClick({R.id.tv_adult_removes, R.id.iv_adult_add, R.id.tv_children_removes, R.id.iv_children_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_adult_removes:
@@ -195,64 +277,13 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
                 tvAdultNumber.setText(adultNumber + "");
                 break;
             case R.id.tv_children_removes:
-                if (childrenNumber == 1) return;
+                if (childrenNumber == 0) return;
                 childrenNumber -= 1;
                 tvChildrenNumber.setText(childrenNumber + "");
                 break;
             case R.id.iv_children_add:
                 childrenNumber += 1;
                 tvChildrenNumber.setText(childrenNumber + "");
-                break;
-            case R.id.btn_completion_order:
-                if (type == 0) {
-                    if (flag) {
-                        Intent intent = new Intent(CalendarActivity.this, OrderCompletionActivity.class);
-                        intent.putExtra("scenicSpotId", scenicSpotId);
-                        intent.putExtra("number", adultNumber);
-                        intent.putExtra("date", dateStr);
-                        this.startActivity(intent);
-                    } else {
-                        AppUtils.getToast("请先选择出行日期");
-                    }
-                } else if (type == 1){
-                    if (flag) {
-                        finish();
-                    } else {
-                        AppUtils.getToast("请先选择出行日期");
-                    }
-                } else {
-                    if (flag) {
-                        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("userId", RequestURL.vUserId);
-                        map.put("scenicSpotId", scenicSpotId);
-                        Call<ResponseBody> tripCall = api.postASync("addByTrips", map);
-                        tripCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                try {
-                                    String message = response.body().string();
-                                    JSONObject json = new JSONObject(message);
-                                    if (json.getString(RequestURL.RESULT).equals("S")) {
-                                        AppUtils.getToast(json.getString(RequestURL.TIPS));
-                                    } else {
-                                        AppUtils.getToast(RequestURL.TIPS);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
-                        finish();
-                    } else {
-                        AppUtils.getToast("请先选择出行日期");
-                    }
-                }
                 break;
         }
     }
@@ -284,4 +315,5 @@ public class CalendarActivity extends BaseActivity implements DefineView, MonthA
             flag = true;
         }
     }
+
 }

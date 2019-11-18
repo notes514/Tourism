@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -22,7 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -33,7 +31,6 @@ import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.DaoManger;
-import com.example.tourism.utils.DaoUtils;
 import com.google.gson.reflect.TypeToken;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -41,7 +38,6 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -14,14 +14,14 @@
         app:cardCornerRadius="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="200dp">
 
             <ImageView
                 android:id="@+id/iv_hot_topics_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

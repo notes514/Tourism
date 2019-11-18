@@ -43,7 +43,7 @@ public class TravelsDataManger {
             //文章内容
             String content = ment.select("a[href]").text();
             //文章详情页地址
-            String href = ment.select("a[href]").attr("abs:href");
+            String href = ment.select("h2.tit").select("a[href]").attr("abs:href");
             //用户名称
             String userName = ment.select("span.user_name").select("a").text();
             //用户别称
@@ -63,7 +63,7 @@ public class TravelsDataManger {
             //点赞数量
             String foubles = CTextUtils.getFoubles(ment.select("span.icon_love").text());
             //评论数量
-            String comment = CTextUtils.getComment(ment.select("span.icon_comment_gray").text());
+            String comment = CTextUtils.getComment(ment.select("span.icon_comment").text());
             //途径
             String channel = CTextUtils.getCannelStr(ment.select("p.places").text());
             //行程
