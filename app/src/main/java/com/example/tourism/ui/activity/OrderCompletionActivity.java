@@ -10,33 +10,39 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.entity.Contacts;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.Passenger;
 import com.example.tourism.entity.ScenicDetails;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.LoadingDialog;
-import com.example.tourism.widget.MyScrollView;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -68,20 +74,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     EditText etWechat;
     @BindView(R.id.tv_trip)
     TextView tvTrip;
-    @BindView(R.id.et_adult)
-    EditText etAdult;
-    @BindView(R.id.tv_identify_cardId)
-    TextView tvIdentifyCardId;
-    @BindView(R.id.ll_identify_cardid)
-    LinearLayout llIdentifyCardid;
-    @BindView(R.id.et_adult2)
-    EditText etAdult2;
-    @BindView(R.id.tv_identify_cardId2)
-    TextView tvIdentifyCardId2;
-    @BindView(R.id.ll_identify_cardid2)
-    LinearLayout llIdentifyCardid2;
-    @BindView(R.id.ll_trips2)
-    LinearLayout llTrips2;
+    @BindView(R.id.rv_trip)
+    RecyclerView rvTrip;
     @BindView(R.id.iv_forward)
     ImageView ivForward;
     @BindView(R.id.switch_order)
@@ -95,7 +89,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     @BindView(R.id.textView)
     TextView textView;
     @BindView(R.id.order_scrollView)
-    MyScrollView orderScrollView;
+    NestedScrollView orderScrollView;
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
     @BindView(R.id.tv_price)
@@ -110,8 +104,10 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private ScenicDetails scenicDetails;
     //景区编号
     private int scenicSpotId;
-    //人数
-    private int number;
+    //成人数
+    private int adultNumber;
+    //儿童数
+    private int childrenNumber;
     //日期
     private String date;
     //联系人姓名
@@ -129,6 +125,10 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private Contacts contacts;
     private Passenger passenger;
     private Order order;
+    //适配器
+    private RecyclerViewAdapter rAdapter;
+    //出行人数据集
+    private List<TravellingPeopleBean> peopleBeanList;
     //正在加载dialog
     private LoadingDialog loadingDialog;
 
@@ -156,7 +156,33 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
         //获取景区详情编号
         scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
         //获取人数
-        number = this.getIntent().getIntExtra("number", 0);
+        adultNumber = this.getIntent().getIntExtra("adultNumber", 0);
+        childrenNumber = this.getIntent().getIntExtra("childrenNumber", 0);
+
+        //创建线性布局管理器
+        //设置线性布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext());
+        //设置管理器竖向显示
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        //设置布局管理器
+        rvTrip.setLayoutManager(layoutManager);
+        //创建适配器对象
+        rAdapter = new RecyclerViewAdapter(this, 11);
+
+        //创建出行人对象
+        peopleBeanList = new ArrayList<>();
+        for (int i = 0; i < adultNumber; i++) {
+            peopleBeanList.add(new TravellingPeopleBean("成人", "请务必保证所填项与出游所持证件一致", "", 0));
+        }
+        if (childrenNumber > 0) {
+            for (int i = 0; i < childrenNumber; i++) {
+                peopleBeanList.add(new TravellingPeopleBean("儿童", "请务必保证所填项与出游所持证件一致", "", 0));
+            }
+        }
+        //显示出行人信息
+        rAdapter.setTravellingPeopleBeanList(peopleBeanList);
+        rvTrip.setAdapter(rAdapter);
+
         //获取出行日期
         date = this.getIntent().getStringExtra("date");
         //网络请求
@@ -170,7 +196,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 try {
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
-                    Log.d(InitApp.TAG, "onResponse: " + message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
                         //获取景区信息
                         scenicSpot = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
@@ -197,6 +222,14 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     @Override
     public void initListener() {
         customToolbar.setOnLeftButtonClickLister(() -> finish());
+        //设置适配器点击监听
+        rAdapter.setOnItemClickListener((view, object) -> {
+            //选择出行人
+            Intent intent2 = new Intent(OrderCompletionActivity.this, TravelerActivity.class);
+            intent2.putExtra("adultNumber", adultNumber);
+            intent2.putExtra("childrenNumber", childrenNumber);
+            startActivityForResult(intent2, 2);
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -224,6 +257,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
             case R.id.tv_trip:
                 //选择出行人
                 Intent intent2 = new Intent(OrderCompletionActivity.this, TravelerActivity.class);
+                intent2.putExtra("adultNumber", adultNumber);
+                intent2.putExtra("childrenNumber", childrenNumber);
                 startActivityForResult(intent2, 2);
                 break;
             case R.id.switch_order:
@@ -256,7 +291,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 qq = etQq.getText().toString();
                 wechat = etWechat.getText().toString();
                 //获取出行人信息
-                identfityCardId = etAdult.getText().toString();
                 //备注信息可选
                 remarks = etRequirement.getText().toString();
                 if (checkBox.isChecked()) {
@@ -298,30 +332,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         });
 
                         //生成出行人信息
-                        map.clear();
-                        map.put("passengerName", "代合行");
-                        map.put("passengerType", "学生");
-                        map.put("identityCard", identfityCardId);
-                        Call<ResponseBody> pCall = api.postASync("addByPassenger", map);
-                        pCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                try {
-                                    String message = response.body().string();
-                                    JSONObject json = new JSONObject(message);
-                                    if (json.getString(RequestURL.RESULT).equals("S")) {
-                                    } else {
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
+                        addTrip(peopleBeanList);
 
                         String travelMode = "";
                         if (scenicSpot.getTravelMode() == 0) {
@@ -349,7 +360,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         map.put("tripMode", travelMode);
                         map.put("departDate", date + " 出发");
                         map.put("departDays", scenicDetails.getTravelDays());
-                        map.put("tirpInformation", "成人 " + number);
+                        map.put("tirpInformation", "成人 " + adultNumber);
                         map.put("orderPrice", scenicSpot.getScenicSpotPrice());
                         map.put("supplier", "中旅集团私人定制中心");
                         Call<ResponseBody> orderCall = api.postASync("addByOrder", map);
@@ -377,6 +388,39 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     AppUtils.getToast("请同意");
                 }
                 break;
+        }
+    }
+
+    /**
+     * 添加出行人信息
+     * @param peopleBeanList
+     */
+    private void addTrip(List<TravellingPeopleBean> peopleBeanList) {
+        //生成出行人信息
+        if (peopleBeanList == null) return;
+        for (TravellingPeopleBean bean : peopleBeanList) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("passengerName", bean.gettName());
+            map.put("passengerType", bean.gettType());
+            map.put("identityCard", bean.gettIdentitycard());
+            Call<ResponseBody> pCall = api.postASync("addByPassenger", map);
+            pCall.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        String message = response.body().string();
+                        JSONObject json = new JSONObject(message);
+                        if (json.getString(RequestURL.RESULT).equals("S")) {
+                        } else {
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                }
+            });
         }
     }
 
@@ -477,11 +521,16 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
             etWechat.setText(cWechat);
         }
         if (requestCode == 2 && resultCode == 4) {
-            llIdentifyCardid.setVisibility(View.VISIBLE);
-            String tName = data.getStringExtra("tName");
-            String tIdentityCard = data.getStringExtra("tIdentityCard");
-            etAdult.setText(tName);
-            tvIdentifyCardId.setText(tIdentityCard);
+            Bundle bundle = data.getExtras();
+            peopleBeanList.clear();
+            peopleBeanList = (List<TravellingPeopleBean>) bundle.getSerializable("tripBeans");
+            //显示出行人信息
+            if (peopleBeanList == null) return;
+            for (TravellingPeopleBean bean : peopleBeanList) {
+                identfityCardId = bean.gettIdentitycard();
+            }
+            rAdapter.setTravellingPeopleBeanList(peopleBeanList);
+            rvTrip.setAdapter(rAdapter);
         }
     }
 

@@ -24,6 +24,7 @@ import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.ui.activity.EditContactActivity;
 import com.example.tourism.ui.activity.OrderCancelLayoutActivity;
 import com.example.tourism.ui.activity.TourismDetailsActivity;
@@ -48,8 +49,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<ContactsBean> contactsBeanList;
     //出行人信息数据集
     private List<TripBean> tripBeanList;
-    //出行人信息数据集
+    //热门主题数据集
     private List<HotTopicsBean> hotTopicsBeanList;
+    //出行人数据集
+    private List<TravellingPeopleBean> travellingPeopleBeanList;
     //行程信息数据集
     private Context context;
     private int type;
@@ -95,6 +98,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //设置热门主题数据集
     public void setHotTopicsBeanList(List<HotTopicsBean> hotTopicsBeanList) {
         this.hotTopicsBeanList = hotTopicsBeanList;
+    }
+
+    //出行人数据集
+    public void setTravellingPeopleBeanList(List<TravellingPeopleBean> travellingPeopleBeanList) {
+        this.travellingPeopleBeanList = travellingPeopleBeanList;
     }
 
     @NonNull
@@ -144,7 +152,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_romantic_journey_layout, parent, false);
             view.setOnClickListener(this::onClick);
             return new TLRomanticViewHolder(view);
+        } else if (type == 11) {
+            View view = inflater.inflate(R.layout.item_order_completion_tirp_llayout, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new OrderCompletionTirpViewHolder(view);
         }
+
         return null;
     }
 
@@ -183,19 +196,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             MonthDayBean monthDayBean = monthDayBeanList.get(position);
             //设置Tag以便响应适配器监听点击获取相应数据
             holder.itemView.setTag(monthDayBean);
+
             ((DViewHolder) holder).tvDateWeek.setText(monthDayBean.getMonth());
             ((DViewHolder) holder).tvPrice.setText("¥" + monthDayBean.getPrice());
-            holder.itemView.setClickable(false);
-            if (position == 0) {
-                ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
-                ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
-                ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
-            }
-            ((DViewHolder) holder).llDetailsDate.setOnClickListener(v -> {
-                ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
-                ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
-                ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
-            });
+            ((DViewHolder) holder).llDetailsDate.setBackgroundResource(R.drawable.state_orange_selected);
+            ((DViewHolder) holder).tvDateWeek.setTextColor(context.getResources().getColor(R.color.color_white));
+            ((DViewHolder) holder).tvPrice.setTextColor(context.getResources().getColor(R.color.color_white));
 
         }
         if (holder instanceof AllOrderViewHolder) {
@@ -345,8 +351,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((ContactsViewHolder) holder).ivEdit.setOnClickListener(view -> {
                 Intent intent = new Intent(context, EditContactActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("id",contactsBean.getCName());
-                bundle.putString("tell",contactsBean.getCtellPhone());
+                bundle.putString("id", contactsBean.getCName());
+                bundle.putString("tell", contactsBean.getCtellPhone());
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             });
@@ -368,6 +374,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ((HotTopicsViewHolder) holder).tvExplain1.setText(hotTopicsBean.gethExplainOne());
             ((HotTopicsViewHolder) holder).tvExplain2.setText(hotTopicsBean.gethExplainTwo());
             ((HotTopicsViewHolder) holder).tvExplain3.setText(hotTopicsBean.gethExplainThree());
+        }
+        if (holder instanceof OrderCompletionTirpViewHolder) {
+            TravellingPeopleBean peopleBean = travellingPeopleBeanList.get(position);
+            holder.itemView.setTag(peopleBean);
+            if (peopleBean.getType() == 0) {
+                ((OrderCompletionTirpViewHolder) holder).llIdentifyCardid.setVisibility(View.GONE);
+                //类型
+                ((OrderCompletionTirpViewHolder) holder).tvType.setText(peopleBean.gettType());
+                //显示用户
+                ((OrderCompletionTirpViewHolder) holder).etAdult.setHint(peopleBean.gettName());
+            } else {
+                ((OrderCompletionTirpViewHolder) holder).llIdentifyCardid.setVisibility(View.VISIBLE);
+                //类型
+                ((OrderCompletionTirpViewHolder) holder).tvType.setText(peopleBean.gettType());
+                //显示用户
+                ((OrderCompletionTirpViewHolder) holder).etAdult.setText(peopleBean.gettName());
+                //显示用户身份证
+                ((OrderCompletionTirpViewHolder) holder).tvIdentifyCardId.setText(peopleBean.gettIdentitycard());
+            }
         }
     }
 
@@ -393,6 +418,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         if (type == 9) {
             return hotTopicsBeanList == null ? 0 : hotTopicsBeanList.size();
+        }
+        if (type == 11) {
+            return travellingPeopleBeanList == null ? 0 : travellingPeopleBeanList.size();
         }
         return 0;
     }
@@ -593,6 +621,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
+    class OrderCompletionTirpViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_type)
+        TextView tvType;
+        @BindView(R.id.et_adult)
+        TextView etAdult;
+        @BindView(R.id.tv_identify_cardId)
+        TextView tvIdentifyCardId;
+        @BindView(R.id.ll_identify_cardid)
+        LinearLayout llIdentifyCardid;
+
+        public OrderCompletionTirpViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
     /**
      * 重写onClick
      *
@@ -620,6 +664,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
          * @param object 回调的数据
          */
         void onItemClick(View view, Object object);
+    }
+
+    public void loadMore(List<ScenicSpot> scenicSpots) {
+        if (scenicSpots != null) {
+            scenicSpotList = scenicSpots;
+        }
+        notifyDataSetChanged();
     }
 
 }

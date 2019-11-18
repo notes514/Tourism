@@ -23,7 +23,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
@@ -31,12 +30,8 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.example.tourism.R;
-import com.example.tourism.adapter.MonthAdapter;
-import com.example.tourism.adapter.PageRecyclerAdapter;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.adapter.ScenicSpotItemAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -44,8 +39,8 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
+import com.example.tourism.ui.activity.HotelActivity;
 import com.example.tourism.ui.activity.LocationActivity;
-import com.example.tourism.ui.activity.MapActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SeachActivity;
@@ -55,7 +50,6 @@ import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.GlideImageLoader;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -88,8 +82,19 @@ import retrofit2.Response;
  * 首页
  */
 public class HomeFragment extends BaseFragment implements DefineView {
+
     @BindView(R.id.banner)
     Banner banner;
+    @BindView(R.id.ll_hotel_brown)
+    LinearLayout llHotelBrown;
+    @BindView(R.id.ll_plane_ticket)
+    LinearLayout llPlaneTicket;
+    @BindView(R.id.ll_train)
+    LinearLayout llTrain;
+    @BindView(R.id.ll_bus)
+    LinearLayout llBus;
+    @BindView(R.id.ll_piao)
+    LinearLayout llPiao;
     @BindView(R.id.gridView)
     GridView gridView;
     @BindView(R.id.showNearby)
@@ -98,18 +103,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
     LinearLayout linearLayout;
     @BindView(R.id.tv_more)
     TextView tvMore;
-    @BindView(R.id.iv_hot_topics_pic1)
-    ImageView ivHotTopicsPic1;
-    @BindView(R.id.tv_hot_topics_content1)
-    TextView tvHotTopicsContent1;
-    @BindView(R.id.iv_hot_topics_pic3)
-    ImageView ivHotTopicsPic3;
-    @BindView(R.id.tv_hot_topics_content3)
-    TextView tvHotTopicsContent3;
-    @BindView(R.id.iv_hot_topics_pic2)
-    ImageView ivHotTopicsPic2;
-    @BindView(R.id.tv_hot_topics_content2)
-    TextView tvHotTopicsContent2;
+    @BindView(R.id.rv_theme)
+    RecyclerView rvTheme;
     @BindView(R.id.tv_show)
     TextView tvShow;
     @BindView(R.id.recyclerView)
@@ -141,9 +136,10 @@ public class HomeFragment extends BaseFragment implements DefineView {
     private List<String> images = new ArrayList<>();
     private List<SecondaryMenu> secondaryMenuList = new ArrayList<>();
     private List<ScenicSpot> allScenicSpots = new ArrayList<>();
+    private List<HotTopicsBean> hotTopicsBeanList;
+    private RecyclerViewAdapter tAdapter;
     private RecyclerViewAdapter rAdapter;
     private SecondaryMenuItemAdapter adapter1;
-    private ScenicSpotItemAdapter adapter2;
     private Unbinder unbinder;
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -169,7 +165,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
         return root;
     }
 
-    public void initListen(){
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void initListen() {
 
         mLocationListener = new AMapLocationListener() {
             @Override
@@ -177,16 +174,16 @@ public class HomeFragment extends BaseFragment implements DefineView {
                 if (aMapLocation != null) {
                     if (aMapLocation.getErrorCode() == 0) {
                         //可在其中解析amapLocation获取相应内容。
-                        Log.d("ss", "fasd: "+aMapLocation.getCity());
-                        if (aMapLocation.getCity()!=null) {
-                            if (tvDiqu.getText().equals("")){
+                        Log.d("ss", "fasd: " + aMapLocation.getCity());
+                        if (aMapLocation.getCity() != null) {
+                            if (tvDiqu.getText().equals("")) {
                                 tvDiqu.setText(aMapLocation.getCity());
                             }
                             mLocationClient.stopLocation();
                         }
-                    }else {
+                    } else {
                         //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        Log.e("AmapError","location Error, ErrCode:"
+                        Log.e("AmapError", "location Error, ErrCode:"
                                 + aMapLocation.getErrorCode() + ", errInfo:"
                                 + aMapLocation.getErrorInfo());
                     }
@@ -195,18 +192,16 @@ public class HomeFragment extends BaseFragment implements DefineView {
         };
     }
 
-    public void initLocation(){
+    public void initLocation() {
         //初始化定位
         mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-//设置定位回调监听
+        //设置定位回调监听
         mLocationClient.setLocationListener(mLocationListener);
         //初始化AMapLocationClientOption对象
         mLocationOption = new AMapLocationClientOption();
 
-
-//设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-
 
         //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setNeedAddress(true);
@@ -217,10 +212,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
-//启动定位
+        //启动定位
         mLocationClient.startLocation();
-
-
     }
 
     @Override
@@ -230,15 +223,11 @@ public class HomeFragment extends BaseFragment implements DefineView {
     }
 
     public void initLocations() {
-        tvDiqu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), LocationActivity.class);
-                startActivityForResult(intent, 0);
-            }
+        tvDiqu.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), LocationActivity.class);
+            startActivityForResult(intent, 0);
         });
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -253,48 +242,97 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @SuppressLint("NewApi")
     @Override
     public void initValidata() {
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/deng.jpg", ivHotTopicsPic1, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/romantic.jpg", ivHotTopicsPic2, InitApp.getOptions());
-        ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/depth.jpg", ivHotTopicsPic3, InitApp.getOptions());
-
         String[] sList = new String[]{"国内游", "出境游", "自由行", "跟团游", "主题游", "周边游", "一日游", "定制游"};
         searchArea("跟团游");
+
+        //创建网格布局管理器
+        GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), 3);
+        //设置管理器竖向显示
+        gridLayoutManager1.setOrientation(RecyclerView.VERTICAL);
+        //设置布局管理器
+        rvTheme.setLayoutManager(gridLayoutManager1);
+        //创建适配器对象
+        tAdapter = new RecyclerViewAdapter(getContext(), 9);
+
+        //创建网格布局管理器
+        GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 2);
+        //设置管理器竖向显示
+        gridLayoutManager2.setOrientation(RecyclerView.VERTICAL);
+        //设置布局管理器
+        recyclerView.setLayoutManager(gridLayoutManager2);
+        //创建适配器对象
+        rAdapter = new RecyclerViewAdapter(getContext(), 5);
     }
 
     @Override
     public void initListener() {
         initLocation();
         showNearby();
-        etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    // 此处为得到焦点时的处理内容
-                    openActivity(SeachActivity.class);
-                } else {
-                    // 此处为失去焦点时的处理内容
-                }
+        etSearch.setOnFocusChangeListener((view, b) -> {
+            if (b) {
+                // 此处为得到焦点时的处理内容
+                openActivity(SeachActivity.class);
+            } else {
+                // 此处为失去焦点时的处理内容
             }
+        });
+        tvDiqu.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), LocationActivity.class);
+            startActivityForResult(intent, 0);
+        });
+
+        //点击酒店监听
+        llHotelBrown.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelActivity.class);
+            intent.putExtra("url", RequestURL.hotel_url);
+            startActivity(intent);
+        });
+        //点击机票监听
+        llPlaneTicket.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelActivity.class);
+            intent.putExtra("url", RequestURL.flight_url);
+            startActivity(intent);
+        });
+        //火车票点击监听
+        llTrain.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelActivity.class);
+            intent.putExtra("url", RequestURL.train_url);
+            startActivity(intent);
+        });
+        //车票点击监听
+        llBus.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelActivity.class);
+            intent.putExtra("url", RequestURL.bus_url);
+            startActivity(intent);
+        });
+        //门票点击监听
+        llPiao.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelActivity.class);
+            intent.putExtra("url", RequestURL.piao_url);
+            startActivity(intent);
         });
     }
 
     @Override
     public void bindData() {
+        hotTopicsBeanList = new ArrayList<>();
+        hotTopicsBeanList.add(new HotTopicsBean("images/deng.jpg", "徒步登上", "#初级登山",
+                "#户外活动", "#徒步体验"));
+        hotTopicsBeanList.add(new HotTopicsBean("images/romantic.jpg", "浪漫·之旅", "#行万里路",
+                "#激情刺激", "#星辰大海"));
+        hotTopicsBeanList.add(new HotTopicsBean("images/depth.jpg", "深度体验", "#摄影/拍摄",
+                "#轻奢游", "#义工旅行"));
+        //设置数据
+        tAdapter.setHotTopicsBeanList(hotTopicsBeanList);
+        rvTheme.setAdapter(tAdapter);
+
         if (allScenicSpots == null) return;
-        //rAdapter.setScenicSpotList(allScenicSpots);
-        //创建网格布局管理器
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        //设置管理器竖向显示
-        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
-        //设置布局管理器
-        recyclerView.setLayoutManager(gridLayoutManager);
-        //创建适配器对象
-        adapter2 = new ScenicSpotItemAdapter(getContext(),allScenicSpots);
-        recyclerView.setAdapter(adapter2);
+        rAdapter.setScenicSpotList(allScenicSpots);
+        recyclerView.setAdapter(rAdapter);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initToolBar(){
+    private void initToolBar() {
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(getActivity());
         //获取状态栏高度
@@ -320,8 +358,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     private void initRefreshLayout() {
         //设置 Header 为 贝塞尔雷达 样式
-//        refreshLayout.setRefreshHeader(new BezierRadarHeader(getContext()).setEnableHorizontalDrag(true)
-//                .setPrimaryColorId(R.color.mask_tags_8));
         refreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         //设置 Footer 为 球脉冲 样式
         refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
@@ -331,7 +367,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
                 if (llStateToolbar == null) return;
                 llStateToolbar.setVisibility(View.GONE);
-                Log.d(InitApp.TAG, "offset: " + offset + "headerHeight: " + headerHeight + "maxDragHeight: " + maxDragHeight);
             }
 
             @Override
@@ -437,39 +472,22 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
     }
 
-//    private void initRecyclerView() {
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2) {
-//            @Override
-//            public boolean canScrollVertically() {
-//                return false;
-//            }
-//        };
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        recyclerView.setNestedScrollingEnabled(false);
-//        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-//        adapter2 = new ScenicSpotItemAdapter(getContext(), allScenicSpots);
-//        recyclerView.setAdapter(adapter2);
-//    }
-
     private void showNearby() {
-        linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "查看附近景点", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getContext(), MapActivity.class);
-                startActivity(intent);
-            }
+        linearLayout.setOnClickListener(view -> {
+            Toast.makeText(getContext(), "查看附近景点", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), NearbyActivity.class);
+            startActivity(intent);
         });
     }
 
     private void loadmore() {
-        if (allScenicSpots != null && adapter2 != null){
+        if (allScenicSpots != null && rAdapter != null) {
             allScenicSpots.addAll(allScenicSpots);
-            adapter2.loadMore(allScenicSpots);
+            rAdapter.loadMore(allScenicSpots);
         }
     }
 
-    private void searchArea(String pStr){
+    private void searchArea(String pStr) {
         ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String, Object> map = new HashMap<>();
         map.put("pStr", pStr);
@@ -481,12 +499,14 @@ public class HomeFragment extends BaseFragment implements DefineView {
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
                     allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
-                            new TypeToken<List<ScenicSpot>>() {}.getType());
+                            new TypeToken<List<ScenicSpot>>() {
+                            }.getType());
                     bindData();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
+
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d("@@@", t.getMessage());

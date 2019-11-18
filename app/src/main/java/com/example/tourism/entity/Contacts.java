@@ -3,6 +3,10 @@ package com.example.tourism.entity;
 public class Contacts {
     private Integer contactsId;
 
+    private Integer userId;
+
+    private Integer orderId;
+
     private String contactsName;
 
     private String cellPhoneNumber;
@@ -19,6 +23,22 @@ public class Contacts {
 
     public void setContactsId(Integer contactsId) {
         this.contactsId = contactsId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public String getContactsName() {

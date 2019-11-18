@@ -80,7 +80,6 @@ public class ContactActivity extends BaseActivity implements DefineView {
             data.putExtra("cQq", contacts.getCQQ());
             data.putExtra("cWechat", contacts.getCWechat());
             setResult(3, data);
-            Log.d("hlahfahfoahf", "执行了！！！ ");
             finish();
         });
     }

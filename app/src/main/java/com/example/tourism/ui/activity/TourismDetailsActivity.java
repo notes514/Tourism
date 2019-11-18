@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
@@ -25,8 +27,9 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.tourism.R;
-import com.example.tourism.adapter.RecyclerViewAdapter;
+import com.example.tourism.adapter.SelectionAdapter;
 import com.example.tourism.adapter.VPagerFragmentAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -43,6 +46,7 @@ import com.example.tourism.utils.StatusBarUtil;
 import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.ViewBundle;
 import com.google.gson.reflect.TypeToken;
+import com.hz.android.easyadapter.EasyAdapter;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -70,75 +74,52 @@ import retrofit2.Response;
  * Time:2019.10.23
  */
 public class TourismDetailsActivity extends AppCompatActivity implements DefineView {
-    //图片轮播
     @BindView(R.id.banner)
     Banner banner;
-    //标题内容
     @BindView(R.id.tv_content)
     TextView tvContent;
     @BindView(R.id.ty_smbol)
     TextView tySmbol;
-    //价格
     @BindView(R.id.tv_price)
     TextView tvPrice;
-    //人数
     @BindView(R.id.ty_everyone)
     TextView tyEveryone;
-    //特惠说明
     @BindView(R.id.fl_red_envelopes)
     FrameLayout flRedEnvelopes;
-    //店铺红包
     @BindView(R.id.fl_shop_red_envelopes)
     FrameLayout flShopRedEnvelopes;
-    //说明
     @BindView(R.id.fl_explain)
     FrameLayout flExplain;
-    //日期选择 RecyclerView
     @BindView(R.id.rv_date)
     RecyclerView rvDate;
-    //更多日期选项
     @BindView(R.id.tv_more_dates)
     TextView tvMoreDates;
-    //参考交通
     @BindView(R.id.tv_traffic)
     TextView tvTraffic;
-    //行程天数
     @BindView(R.id.tv_trip)
     TextView tvTrip;
-    //出发到达
     @BindView(R.id.tv_arrive)
     TextView tvArrive;
-    //住宿标准
     @BindView(R.id.tv_stay)
     TextView tvStay;
-    //占位浮动栏
     @BindView(R.id.tv_show)
     TextView tvShow;
-    //底部ViewPager
     @BindView(R.id.buttom_child_viewPager)
     ChildAutoViewPager buttomChildViewPager;
-    //图文详情
     @BindView(R.id.tv_info_imagetext)
     TextView tvInfoImagetext;
-    //产品实拍
     @BindView(R.id.tv_info_product)
     TextView tvInfoProduct;
-    //评价详情
     @BindView(R.id.tv_info_evaluate)
     TextView tvInfoEvaluate;
-    //游标
     @BindView(R.id.iv_corsor)
     ImageView ivCorsor;
-    //浮动栏
     @BindView(R.id.layout_classify)
     LinearLayout layoutClassify;
-    //滚动ScrollView
     @BindView(R.id.nsv_scrollview)
     NestedScrollView nsvScrollview;
-    //状态栏
     @BindView(R.id.status_view)
     View statusView;
-    //顶部toobar部分
     @BindView(R.id.imageView_one)
     ImageView imageViewOne;
     @BindView(R.id.imageView_two)
@@ -155,33 +136,40 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     ImageView moreImage;
     @BindView(R.id.details_toolbar)
     ConstraintLayout detailsToolbar;
-    //底部toobar部分
+    @BindView(R.id.ll_toolbar)
+    LinearLayout llToolbar;
     @BindView(R.id.customer_service_line)
     LinearLayout customerServiceLine;
     @BindView(R.id.collection_image)
     ImageView collectionImage;
-    @BindView(R.id.ll_service)
-    LinearLayout llService;
     @BindView(R.id.ll_collection)
     LinearLayout llCollection;
+    @BindView(R.id.ll_service)
+    LinearLayout llService;
     @BindView(R.id.btn_shapping_chart)
     Button btnShappingChart;
     @BindView(R.id.btn_reserve)
     Button btnReserve;
-    @BindView(R.id.iv_back_top)
-    ImageView ivBackTop;
-    @BindView(R.id.empty_line)
-    LinearLayout emptyLine;
-    @BindView(R.id.error_line)
-    LinearLayout errorLine;
-    @BindView(R.id.ll_toolbar)
-    LinearLayout llToolbar;
     @BindView(R.id.ll_buttom)
     LinearLayout llButtom;
+    @BindView(R.id.iv_back_top)
+    ImageView ivBackTop;
     @BindView(R.id.iv_left_back)
     ImageView ivLeftBack;
+    @BindView(R.id.tv_loading_content)
+    TextView tvLoadingContent;
     @BindView(R.id.loading_line)
     ConstraintLayout loadingLine;
+    @BindView(R.id.tv_empty_content)
+    TextView tvEmptyContent;
+    @BindView(R.id.empty_line)
+    LinearLayout emptyLine;
+    @BindView(R.id.tv_erro_content)
+    TextView tvErroContent;
+    @BindView(R.id.error_line)
+    LinearLayout errorLine;
+    @BindView(R.id.ll_head_information)
+    LinearLayout llHeadInformation;
     //保存顶部状态栏的高度
     private int statusHeight;
     //保存顶部标题栏的高度
@@ -209,7 +197,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
     private ScenicDetails scenicDetails;
     private List<ScenicPic> scenicPicList;
     //日期适配器
-    private RecyclerViewAdapter rvAdapter;
+    private SelectionAdapter rvAdapter;
     private List<MonthDayBean> monthDayBeanList = new ArrayList<>();
     //收藏、取消判断
     private boolean flag = false;
@@ -242,6 +230,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         loadingLine.setVisibility(View.VISIBLE);
         emptyLine.setVisibility(View.GONE);
         errorLine.setVisibility(View.GONE);
+
         //设置状态栏透明
         StatusBarUtil.setTransparentForWindow(this);
         //获取状态栏高度
@@ -251,6 +240,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         //设置透明度为0
         statusView.getBackground().mutate().setAlpha(0);
         detailsToolbar.getBackground().mutate().setAlpha(0);
+
         //设置标题栏隐藏
         detailsTitleText.setVisibility(TextView.GONE);
         imageViewOne.setBackgroundResource(R.drawable.select_bar_translucent);
@@ -309,11 +299,14 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
             //获取高度
             vpagerTopDistance = buttomChildViewPager.getTop() - classifyHeight - statusView.getHeight()
                     - detailsToolbar.getHeight();
+
             //设置浮动栏距离顶部的高度
             //设置浮动栏
             int translation = Math.max(scrollY, vpagerTopDistance);
             layoutClassify.setTranslationY(translation);
             layoutClassify.setVisibility(View.VISIBLE);
+            Log.d(InitApp.TAG, "vpagerTopDistance: " + vpagerTopDistance);
+            Log.d(InitApp.TAG, "translation: " + translation);
             //设置返回顶部
             if (scrollY >= vpagerTopDistance) {
                 ivBackTop.setVisibility(View.VISIBLE);
@@ -322,7 +315,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
             }
         });
 
-        nsvScrollview.smoothScrollTo(0, 0);
         //获取传入的景区编号
         int scenicSpotId = this.getIntent().getIntExtra("scenicSpotId", 0);
         //获取景区详情数据
@@ -357,11 +349,30 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
 
             }
         });
+
+        //设置线性布局管理器
+        LinearLayoutManager manager = new LinearLayoutManager(this);
+        //横向显示
+        manager.setOrientation(RecyclerView.HORIZONTAL);
+        //设置管理器
+        rvDate.setLayoutManager(manager);
+        //创新适配器对象，并指定子布局
+        rvAdapter = new SelectionAdapter(this, 0);
+        //设置点击模式
+        rvAdapter.setSelectMode(EasyAdapter.SelectMode.CLICK);
+        //设置单选模式
+        rvAdapter.setSelectMode(EasyAdapter.SelectMode.SINGLE_SELECT);
     }
 
     @Override
     public void initListener() {
         ivLeftBack.setOnClickListener(v -> finish());
+        //监听单选
+        rvAdapter.setOnItemSingleSelectListener(new EasyAdapter.OnItemSingleSelectListener() {
+            @Override
+            public void onSelected(int itemPosition, boolean isSelected) {
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -375,6 +386,7 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         loadingLine.setVisibility(View.GONE);
         emptyLine.setVisibility(View.GONE);
         errorLine.setVisibility(View.GONE);
+
         //banner图片轮播
         List<String> list_path = new ArrayList<>();
         List<String> list_title = new ArrayList<>();
@@ -423,15 +435,6 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
         tvTrip.setText(scenicDetails.getTravelDays());
         tvStay.setText(scenicDetails.getStayStandard());
         tvArrive.setText(scenicDetails.getDepartArrive());
-
-        //设置线性布局管理器
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        //横向显示
-        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-        //设置管理器
-        rvDate.setLayoutManager(layoutManager);
-        //创新适配器对象，并指定子布局
-        rvAdapter = new RecyclerViewAdapter(this, 1);
         getMonthDays();
     }
 
@@ -525,24 +528,33 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 AppUtils.getToast("点击了更多");
                 break;
             case R.id.tv_info_imagetext:
+                nsvScrollview.fling(0);
+                nsvScrollview.smoothScrollTo(0, vpagerTopDistance);
                 buttomChildViewPager.setCurrentItem(0);
                 break;
             case R.id.tv_info_product:
+                nsvScrollview.fling(0);
+                nsvScrollview.smoothScrollTo(0, vpagerTopDistance);
                 buttomChildViewPager.setCurrentItem(1);
                 break;
             case R.id.tv_info_evaluate:
+                nsvScrollview.fling(0);
+                nsvScrollview.smoothScrollTo(0, vpagerTopDistance);
                 buttomChildViewPager.setCurrentItem(2);
                 break;
             case R.id.btn_shapping_chart:
                 intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
-                //指定类型，1表示更多日期
-                intent.putExtra("type", 1);
+                //指定类型，0表示加入行程
+                intent.putExtra("type", 0);
+                intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
+                intent.putExtra("scenicDetailsId", scenicDetails.getScenicDetailsId());
+                intent.putExtra("price", scenicSpot.getScenicSpotPrice());
                 startActivity(intent);
                 break;
             case R.id.btn_reserve:
                 intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
-                //指定类型，0表示立即预定
-                intent.putExtra("type", 0);
+                //指定类型，1表示立即预定
+                intent.putExtra("type", 1);
                 intent.putExtra("scenicSpotId", scenicSpot.getScenicSpotId());
                 startActivity(intent);
                 break;
@@ -553,9 +565,10 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 break;
             case R.id.tv_more_dates:
                 intent = new Intent(TourismDetailsActivity.this, CalendarActivity.class);
-                //指定类型，1表示更多日期
-                intent.putExtra("type", 1);
-                startActivity(intent);
+                //指定类型，2表示更多日期
+                intent.putExtra("type", 2);
+                //跳转传值
+                startActivityForResult(intent, 1);
                 break;
             case R.id.ll_collection:
                 if (flag) {
@@ -660,6 +673,16 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                 break;
         }
         mCurrentIndex = position;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
+        if (requestCode == 1 && resultCode == 2) {
+            String dateStr = data.getStringExtra("dateStr");
+            AppUtils.getToast(dateStr);
+        }
     }
 
 }

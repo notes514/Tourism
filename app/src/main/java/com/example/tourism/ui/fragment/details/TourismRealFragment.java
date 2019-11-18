@@ -14,7 +14,7 @@ import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.ViewBundle;
 
 /**
- * 景区实拍
+ * 行程信息
  */
 public class TourismRealFragment extends Fragment {
     private static final String KEY = "viewBundle";

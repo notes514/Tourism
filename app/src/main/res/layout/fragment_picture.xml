@@ -4,8 +4,94 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.PictureFragment"
-    android:orientation="vertical"
-    android:background="@drawable/poster_one">
+    tools:context=".ui.fragment.details.PictureFragment"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_title1"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/color_black_2c"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_content1"
+                android:textSize="14sp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:textColor="@color/color_black_2c" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_title2"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="@color/color_black_2c"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_content2"
+                android:textSize="14sp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:textColor="@color/color_black_2c" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_title3"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="@color/color_black_2c"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_content3"
+                android:textSize="14sp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:textColor="@color/color_black_2c" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_title4"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textColor="@color/color_black_2c"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tourism_cost_information_content4"
+                android:textSize="14sp"
+                android:gravity="left"
+                android:padding="10dp"
+                android:textColor="@color/color_black_2c"
+                android:layout_marginBottom="30dp"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

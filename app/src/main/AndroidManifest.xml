@@ -166,6 +166,10 @@
         </activity>
         <activity android:name=".ui.activity.SuccessfulPaymentActivity">
         </activity>
+        <activity android:name=".ui.activity.AirTicketActivity">
+        </activity>
+        <activity android:name=".ui.activity.HotelActivity">
+        </activity>
         <activity android:name=".ui.activity.MapActivity">
         </activity>
         <activity

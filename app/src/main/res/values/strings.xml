@@ -59,7 +59,7 @@
     <string name="no_more">没有更多了~~~</string>
 
     <!--  景区详情页面加载模块  -->
-    <string name="tourism_details_content">跟团游·促销】漓悠悠纯玩！错峰特惠*蝴蝶泉侗王夜宴+象鼻山+船游四湖/桂林漓江阳朔3日游</string>
+    <string name="tourism_details_content">我已阅读并接受《合同条款、补充条款及其他所有内容》阅读《轻途网旅游安全手册》、《发票信息说明》</string>
     <string name="tourism_details_smbol">¥</string>
     <string name="tourism_details_price">2250</string>
     <string name="tourism_details_everyone">起/人</string>
@@ -83,6 +83,21 @@
     <string name="tourism_details_tv_stay">住宿标准</string>
     <string name="tourism_details_add_trip">加入行程</string>
     <string name="tourism_details_reserves">立即预定</string>
+    <string name="tourism_cost_information_title1">费用包含</string>
+    <string name="tourism_cost_information_content1">【交通】 \n 含出发地至长沙往返高铁/动车二等坐票 \n 【接送服务】 \n 含高铁至酒店，24小时接送服务 \n 【住宿】 \n 含2晚长沙市中心- 【万家丽国际大酒店】酒店以欧陆古典风情结合中式风格，打造独有的文化类豪华五星酒店，且酒店出门就是地铁站，2号线可直达五一广场、梅溪湖 \n 【用餐】\n 酒店含早餐2份/房/天 \n 【保险】含旅行社责任险，人身意外险，一人一份； \n 【赠送】\n ⭐️ 赠送网红"文和友老长沙龙虾馆"快速通道，爱吃族最爱！ \n 【其他】 如需增加套餐天数或减少/更换酒店/更换门票/增加用车等其他需求，可联系客服定制或沟通。</string>
+    <string name="tourism_cost_information_title2">费用不含</string>
+    <string name="tourism_cost_information_content2">【不可抗力】 \n 因交通延阻、罢工、天气、飞机、机器故障、航班取消或更改时间等原因所导致的额外费用 \n 【单差房】 \n 自由行酒店不允许拼房，单人入住需补房差 \n 【保险】 \n 航空意外险、航空延误险，为了您的权益，根据自身需要选择 \n 【其它】 \n 以上"费用包含"中未注明的其它项目费用</string>
+    <string name="tourism_cost_information_title3">儿童说明</string>
+    <string name="tourism_cost_information_content3">1、3-12岁（1.12米以下）含往返机票、门票、车位费</string>
+    <string name="tourism_cost_information_title4">老人说明</string>
+    <string name="tourism_cost_information_content4">1、此产品预定出行人需确保身体健康适宜旅游，如出行人中有70周岁（含）以上老人，必须至少各有一位20周岁-55周岁亲友陪同方可预订出行。敬请谅解！</string>
+    <string name="tourism_cost_reserve_title1">出行须知</string>
+    <string name="tourism_cost_reserve_content1">1、【重要说明】如遇政府接待、酒店会议及其它特殊原因导致无房状态，我社有权给您安排，同级同性价酒店，并会提前告知您，请您谅解。 \n 2、【单方差】本产品是按照2成人入住一间房间计算的价格，不接受拼房，如出现单男单女请补交单房差。 \n 3、【酒店退改】因酒店房间预订是以款到方确定留房。您的订单一经预订交易成功后，我社第一时间打款留房。酒店不可变更及取消，请知晓。\n 4、【关于退改】机票一经出票，均不能退票及改签。 \n 5、【关于发票】提供发票票种为旅行社服务发票。（金额不含当地消费、自理项目）。无法提供当地住宿、餐饮、车票等成本发票；如需发票的请提前联系客服，留言备注或拨打客服电话、行程结束后一周内可索取来电要求旅行社发票。 \n 6、【其它说明】若无房无车导致无法正常安排，在您未验证消费码之前会告知您，我们仅做订单退款，不做赔偿，请悉知。</string>
+    <string name="tourism_cost_reserve_title2">温馨提示</string>
+    <string name="tourism_cost_reserve_content2">1、在您进行旅游活动前，请先参考当地天气预报情况及其他专业人士或机构的的相关建议和公告。 \n 2、为了不耽误您的行程，建议您在出发前120分钟到达机场办理登机＆相关手续。 \n 3、接送机师傅一般会提前3小时与您联系，确认具体的时间和地点。 \n 4、酒店须在14:00后方能办理入住，在12:00之前退房，如需延迟至14点退房，请提前联系客服尽量给您争取。 \n 5、成人务请携带有效身份证件、18周岁以下小孩带户口本（原件）出行游玩，因没带证件出行可能会导致无法进入景区或入住，损失自费，请知晓。 \n 6、在您下单后，客服会给您提供相关的推荐游玩攻略，方便您进行更好的游玩，在此中旅集团私人定制中心祝您旅途愉快。</string>
+    <string name="tourism_cost_reserve_title3">退款说明</string>
+    <string name="tourism_cost_reserve_content3">【旅游者违约】\n 合同生效后如需取消、退订，将按您所订资源实际产生损失收取费用 \n【供应商违约】 \n 在规定时间内违约，除退还全额旅游费用外，另支付违约金比例如下： \n 行程开始前4-7日，退还全额旅游费用，支付旅游费用总额10%的违约金。 \n 行程开始前1-3日，退还全额旅游费用，支付旅游费用总额15%的违约金。 \n 行程开始当日，退还全额旅游费用，支付旅游费用总额20%的违约金。 \n 如按上述比例支付的违约金不足以赔偿旅游者的实际损失，旅行社应当按实际损失对旅游者予以赔偿。 </string>
+
     <!--  立即预定 日期选择 模块  -->
     <string name="tourism_order_calendar_title">选择日期/出行人数</string>
     <string name="tourism_order_calendar_trip_number">请选择出行人数</string>
@@ -111,11 +126,12 @@
     <string name="tourism_order_trip">出行人</string>
     <string name="tourism_order_choice_trip">选择出行人</string>
     <string name="tourism_order_trip_name">成人</string>
-    <string name="tourism_order_trip_name_content">为了您顺利出行，请务必保证所填项与出游所持证件一致</string>
+    <string name="tourism_order_trip_name_content">请务必保证所填项与出游所持证件一致</string>
     <string name="tourism_order_discount">使用优惠</string>
     <string name="tourism_order_nothing_discount">没有可用的优惠</string>
     <string name="tourism_order_special_requirements">是否有特殊要求</string>
     <string name="tourism_order_requirements">请在此处写明您的特殊要求</string>
+    <string name="tourism_order_complete">完成</string>
     <!--  订单支付  -->
     <string name="tourism_order_payment_title">确认订单</string>
     <string name="tourism_order_payment_number">订单号：</string>

@@ -68,9 +68,9 @@ public class BrowseFragment extends BaseFragment implements DefineView {
 
         //不进行网络请求抓取数据，直接设置数据
         headBeanList = new ArrayList<>();
-        headBeanList.add(new TrHeadBean("热门游记", "travelbook/list.htm?order=hot_heat"));
-        headBeanList.add(new TrHeadBean("精华游记", "travelbook/list.htm?page=1&order=elite_ctime"));
-        headBeanList.add(new TrHeadBean("行程计划", "travelbook/list.htm?page=1&order=start_heat"));
+        headBeanList.add(new TrHeadBean("热门游记", "hot_heat"));
+        headBeanList.add(new TrHeadBean("精华游记", "elite_ctime"));
+        headBeanList.add(new TrHeadBean("行程计划", "start_heat"));
         bindData();
     }
 

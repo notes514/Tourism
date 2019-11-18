@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 姓名子模块 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tourism_order_trip_name"
+                android:textSize="14sp"
+                android:textColor="@color/color_black"
+                android:padding="10dp"/>
+
+            <TextView
+                android:id="@+id/et_adult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:textSize="14sp"
+                android:maxLines="1"
+                android:gravity="center_vertical"
+                android:textColor="@color/color_black"
+                android:background="@color/color_white"
+                android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                android:hint="@string/tourism_order_trip_name_content"/>
+
+        </LinearLayout>
+
+        <!-- 身份证模块 -->
+        <LinearLayout
+            android:id="@+id/ll_identify_cardid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                android:textColor="@color/color_black"/>
+
+            <TextView
+                android:id="@+id/tv_identify_cardId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:text="452228199810085514"
+                android:textSize="14sp"
+                android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                android:textColor="@color/color_black"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
