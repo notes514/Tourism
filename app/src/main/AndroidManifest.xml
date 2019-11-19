@@ -2,56 +2,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.tourism">
-
     <!-- 允许程序设置内置sd卡的写权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- 允许程序获取网络状态 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- 允许程序获取网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <!-- 允许程序访问WiFi网络信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许程序读写手机状态和身份 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- 允许程序访问WiFi网络信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许程序读写手机状态和身份 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="LOCAT" />
-    <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
+    <uses-permission android:name="LOCAT" /> <!-- 允许程序访问CellID或WiFi热点来获取粗略的位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 用于访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 用于申请调用A-GPS模块 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!-- 用于申请获取蓝牙信息进行室内定位 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions" />
-    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
-    </uses-permission>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 用于访问网络，网络定位需要上网 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 用于申请调用A-GPS模块 -->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+        tools:ignore="ProtectedPermissions" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <!-- 短信验证码登录、第三方登录权限 -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
-    </uses-permission>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
-    </uses-permission>
-    <!-- 短信验证码登录、第三方登录权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 短信验证码登录、第三方登录权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission> <!-- 短信验证码登录、第三方登录权限 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -81,109 +61,73 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".ui.activity.PersonalChangePassword"></activity>
         <activity
             android:name=".ui.activity.StartPageActivity"
             android:label="@string/app_name"
             android:theme="@style/TranslucentTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".ui.activity.NearbyActivity">
-        </activity>
-        <activity android:name=".ui.activity.SecondaryActivity">
-        </activity>
-        <activity android:name=".ui.activity.ActivitySpotActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalMyCollection">
-        </activity>
-        <activity android:name=".ui.activity.PersonalHolidayproblem">
-        </activity>
-        <activity android:name=".ui.activity.PersonalSubscriptions">
-        </activity>
-        <activity android:name=".ui.activity.PersonalhomepageActivity">
-        </activity>
-        <activity android:name=".ui.activity.SignInActivity">
-        </activity>
-        <activity android:name=".ui.activity.RegisterActivity">
-        </activity>
-        <activity android:name=".ui.activity.StrategyDetailsActivity">
-        </activity>
-        <activity android:name=".ui.activity.ShowExhibitsDetialActivity">
-        </activity>
-        <activity android:name=".ui.activity.TourismDetailsActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalCouponActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalOpenmemberActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalDataActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
-        </activity>
-        <activity android:name=".ui.activity.PersonalSystemSetupActivity"/>
-        <activity android:name=".ui.activity.CalendarActivity">
-        </activity>
-        <activity android:name=".ui.activity.OrderCompletionActivity">
-        </activity>
-        <activity android:name=".ui.activity.AllOrderActivity">
-        </activity>
-        <activity android:name=".ui.activity.BigImageActivity">
-        </activity>
-        <activity android:name=".ui.activity.RedEnvelopsActivity">
-        </activity>
-        <activity android:name=".ui.activity.ServiceExplainActivity">
-        </activity>
-        <activity android:name=".ui.activity.OrderCancelLayoutActivity">
-        </activity>
-        <activity android:name=".ui.activity.SeachActivity">
-        </activity>
-        <activity android:name=".ui.activity.BigImaActivity">
-        </activity>
-        <activity android:name=".ui.activity.SeachDetailsActivity">
-        </activity>
-        <activity android:name=".ui.activity.LocationActivity">
-        </activity>
-        <activity android:name=".ui.activity.ContactActivity" >
-        </activity>
-        <activity android:name=".ui.activity.AddContactActivity">
-        </activity>
-        <activity android:name=".ui.activity.EditContactActivity" >
-        </activity>
-        <activity android:name=".ui.activity.NewPedestriansActivity">
-        </activity>
-        <activity android:name=".ui.activity.RomanticJourneyActivity">
-        </activity>
-        <activity android:name=".ui.activity.Top10Activity">
-        </activity>
-        <activity android:name=".ui.activity.SuccessfulPaymentActivity">
-        </activity>
-        <activity android:name=".ui.activity.AirTicketActivity">
-        </activity>
-        <activity android:name=".ui.activity.HotelActivity">
-        </activity>
-        <activity android:name=".ui.activity.MapActivity">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ui.activity.NearbyActivity"></activity>
+        <activity android:name=".ui.activity.SecondaryActivity"></activity>
+        <activity android:name=".ui.activity.ActivitySpotActivity"></activity>
+        <activity android:name=".ui.activity.PersonalMyCollection"></activity>
+        <activity android:name=".ui.activity.PersonalHolidayproblem"></activity>
+        <activity android:name=".ui.activity.PersonalSubscriptions"></activity>
+        <activity android:name=".ui.activity.PersonalhomepageActivity"></activity>
+        <activity android:name=".ui.activity.SignInActivity"></activity>
+        <activity android:name=".ui.activity.RegisterActivity"></activity>
+        <activity android:name=".ui.activity.StrategyDetailsActivity"></activity>
+        <activity android:name=".ui.activity.ShowExhibitsDetialActivity"></activity>
+        <activity android:name=".ui.activity.TourismDetailsActivity"></activity>
+        <activity android:name=".ui.activity.PersonalCouponActivity"></activity>
+        <activity android:name=".ui.activity.PersonalOpenmemberActivity"></activity>
+        <activity android:name=".ui.activity.PersonalDataActivity"></activity>
+        <activity android:name=".ui.activity.PersonalOnpenMemberExchangeActivity"></activity>
+        <activity android:name=".ui.activity.PersonalOpenmembershipActivity"></activity>
+        <activity android:name=".ui.activity.PersonalSystemSetupActivity" />
+        <activity android:name=".ui.activity.CalendarActivity"></activity>
+        <activity android:name=".ui.activity.OrderCompletionActivity"></activity>
+        <activity android:name=".ui.activity.AllOrderActivity"></activity>
+        <activity android:name=".ui.activity.BigImageActivity"></activity>
+        <activity android:name=".ui.activity.RedEnvelopsActivity"></activity>
+        <activity android:name=".ui.activity.ServiceExplainActivity"></activity>
+        <activity android:name=".ui.activity.OrderCancelLayoutActivity"></activity>
+        <activity android:name=".ui.activity.SeachActivity"></activity>
+        <activity android:name=".ui.activity.BigImaActivity"></activity>
+        <activity android:name=".ui.activity.SeachDetailsActivity"></activity>
+        <activity android:name=".ui.activity.LocationActivity"></activity>
+        <activity android:name=".ui.activity.ContactActivity"></activity>
+        <activity android:name=".ui.activity.AddContactActivity"></activity>
+        <activity android:name=".ui.activity.EditContactActivity"></activity>
+        <activity android:name=".ui.activity.NewPedestriansActivity"></activity>
+        <activity android:name=".ui.activity.RomanticJourneyActivity"></activity>
+        <activity android:name=".ui.activity.Top10Activity"></activity>
+        <activity android:name=".ui.activity.SuccessfulPaymentActivity"></activity>
+        <activity android:name=".ui.activity.AirTicketActivity"></activity>
+        <activity android:name=".ui.activity.HotelActivity"></activity>
+        <activity android:name=".ui.activity.MapActivity"></activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/TranslucentTheme" />
         <activity android:name=".ui.activity.LeaderboardActivity" />
-        <activity android:name=".ui.activity.TravelerActivity" />
-        <!-- 第三方登录需要额外添加的activity -->
+        <activity android:name=".ui.activity.TravelerActivity" /> <!-- 第三方登录需要额外添加的activity -->
         <uses-library
             android:name="org.apache.http.legacy"
-            android:required="false" />
-
-        <!-- 第三方登录需要额外添加的activity -->
+            android:required="false" /> <!-- 第三方登录需要额外添加的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -227,14 +171,20 @@
 
                 <data android:scheme="line.1477692153" />
             </intent-filter>
-        </activity>
-        <!-- BRTSDK服务. -->
+        </activity> <!-- BRTSDK服务. -->
         <service
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="8fd1937cd4daf2fabcd80969be430da3"></meta-data>
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
+        <service android:name="com.amap.api.location.APSService" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="45563c379ed72d719f26748dbfa77968" />
     </application>
 
 </manifest>

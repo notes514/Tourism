@@ -1,11 +1,13 @@
 package com.example.tourism.ui.activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.bumptech.glide.Glide;
 import com.example.tourism.R;
+import com.example.tourism.adapter.CityItemAdapter;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
@@ -49,6 +60,15 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
     private int year, month, day, hour, minute;
     //在TextView上显示的字符
     private StringBuffer date, time;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+    //声明定位回调监听器
+
+    //声明AMapLocationClientOption对象
+    public AMapLocationClientOption mLocationOption = null;
+
+    AMapLocationListener mLocationListener;
+    SharedPreferences sharedPreferences;
 
     @BindView(R.id.user_head_portrait)
     CircleImageView userHeadPortrait;
@@ -76,6 +96,10 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
         date = new StringBuffer();
         time = new StringBuffer();
         initView();
+        initLocations();
+        initListen();
+        initLocation();
+
 
 
         //设置圆形图像
@@ -96,6 +120,76 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
             btnPersonalLogout.setVisibility(View.VISIBLE);
         }
     }
+    public void initListen() {
+
+        mLocationListener = new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //可在其中解析amapLocation获取相应内容。
+                        Log.d("ss", "onLocationChanged: " + aMapLocation.getCity());
+                        if (aMapLocation.getCity() != null) {
+                            if (tvAddress.getText().equals("")){
+                                tvAddress.setText(aMapLocation.getCity());
+                            }
+                            mLocationClient.stopLocation();
+                        }
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError", "location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        };
+    }
+    public void initLocations() {
+        tvAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonalDataActivity.this, LocationActivity.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 || resultCode == 1) {
+            String mLocation = data.getStringExtra("location");
+            tvAddress.setText(mLocation);
+
+        }
+    }
+
+    public void initLocation(){
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(mLocationListener);
+        //初始化AMapLocationClientOption对象
+        mLocationOption = new AMapLocationClientOption();
+        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //设置是否返回地址信息（默认返回地址信息）
+        mLocationOption.setNeedAddress(true);
+        mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setHttpTimeOut(900000);
+        mLocationOption.setLocationCacheEnable(false);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLocationClient.onDestroy();//销毁定位客户端，同时销毁本地定位服务。
+    }
+
 
     @Override
     public void initView() {
@@ -103,7 +197,6 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
         tvDate = (TextView) findViewById(R.id.tv_date);
         llDate.setOnClickListener(this);
     }
-
     @Override
     public void initValidata() {
 
@@ -191,10 +284,6 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
                 user = null;
                 RequestURL.vUserId = "";
                 break;
-            case R.id.btn_adress:
-                Intent intent = new Intent(PersonalDataActivity.this, LocationActivity.class);
-                startActivity(intent);
-                break;
         }
     }
 
@@ -236,7 +325,6 @@ public class PersonalDataActivity extends BaseActivity implements DefineView, Vi
                     AppUtils.getToast("退出成功！！");
                     break;
                 case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
-
                     break;
                 default:
                     break;
