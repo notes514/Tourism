@@ -12,6 +12,25 @@ public class AuthorBean {
     private String score; //积分
     private String follow; //关注
     private String fans; //粉丝
+    private String signature;//个性签名
+    private String visitor;//访客
+
+    public String getVisitor() {
+        return visitor;
+    }
+
+    public void setVisitor(String visitor) {
+        this.visitor = visitor;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
     private TrHeadBean trHeadBean;
 
     public AuthorBean() {
@@ -76,6 +95,6 @@ public class AuthorBean {
     @Override
     public String toString() {
         return "[authorId="+authorId+", name="+name+", avatarPic="+avatarPic+", score="+score+", " +
-                "follow="+follow+", fans="+fans+", trHeadBean="+trHeadBean+"]";
+                "follow="+follow+", fans="+fans+",signature="+signature+",visitor="+visitor+",trHeadBean="+trHeadBean+"]";
     }
 }

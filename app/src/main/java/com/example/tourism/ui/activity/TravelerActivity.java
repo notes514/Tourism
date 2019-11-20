@@ -26,8 +26,11 @@ import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 import com.hz.android.easyadapter.EasyAdapter;
 
+import java.util.Collections;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +51,7 @@ public class TravelerActivity extends BaseActivity implements DefineView {
     RecyclerView travelerRecyclerView;
     @BindView(R.id.btn_complete)
     Button btnComplete;
+    SwipeRecyclerView travelerRecyclerView;
 
     private int REQUEST_CODE_SCAN = 1;
     private List<TripBean> tripBeanList;
@@ -174,6 +178,30 @@ public class TravelerActivity extends BaseActivity implements DefineView {
             @Override
             public boolean onItemLongClickListener(View view, Object object, int itemPosition) {
                 return false;
+            }
+        });
+        travelerRecyclerView.setItemViewSwipeEnabled(true);//侧滑删除 默认关闭
+        travelerRecyclerView.setLongPressDragEnabled(true);//拖拽排序 默认关闭
+        travelerRecyclerView.setOnItemMoveListener(new OnItemMoveListener() {
+            //此方法在item拖拽交换位置时被调用
+            @Override
+            public boolean onItemMove(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+                // 第一个参数是要交换为之的Item，第二个是目标位置的Item。
+                int adapterPosition = viewHolder.getAdapterPosition();
+                int adapterPosition1 = viewHolder1.getAdapterPosition();
+                // swap交换数据，并更新adapter。
+                Collections.swap(tripBeanList, adapterPosition, adapterPosition1);
+                adapter.notifyItemMoved(adapterPosition, adapterPosition1);
+                return true; //返回true,表示数据交换成功,Itemview可以交换位置
+            }
+            //此方法在item在侧滑删除时被调用
+            @Override
+            public void onItemDismiss(RecyclerView.ViewHolder viewHolder) {
+                //从数据源移除该item对应的数据，并刷新Adapter
+                int position = viewHolder.getAdapterPosition();
+                daoManger.getsDaoSession().getTripBeanDao().deleteByKey(tripBeanList.get(position).getTripId());
+                tripBeanList.remove(position);
+                adapter.notifyItemRemoved(position);
             }
         });
 

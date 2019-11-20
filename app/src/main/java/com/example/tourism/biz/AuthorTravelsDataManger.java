@@ -1,5 +1,7 @@
 package com.example.tourism.biz;
 
+import android.util.Log;
+
 import com.example.tourism.entity.AuthorTravelsBean;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.utils.ImageUtils;
@@ -41,6 +43,7 @@ public class AuthorTravelsDataManger {
             String releaseDate = year + monthday;
             //获取列表数据
             Element lMnet = ment.select("div.timeline-content").first();
+            Log.d("12", "getAuthorTravelsBeans: " + lMnet);
             //标签
             String label = "";
             //文章内容

@@ -207,6 +207,9 @@
     <!--  json  -->
     <string name="area_select_json_name">area_phone_code.json</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!--  支付宝支付  -->
     <string name="demo_info_text">Warning: \n\nFor demonstration purpose, the assembling and signing of the request parameters are done on the client side.\nHowever, in practice, both assembling and signing MUST BE carried out on the server side.</string>
     <string name="pay_with_alipay">Pay with Alipay</string>
