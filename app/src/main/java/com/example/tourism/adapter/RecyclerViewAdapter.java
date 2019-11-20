@@ -156,6 +156,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_order_completion_tirp_llayout, parent, false);
             view.setOnClickListener(this::onClick);
             return new OrderCompletionTirpViewHolder(view);
+        }else if (type == 12) {
+            View view = inflater.inflate(R.layout.my_collection_product_item, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new UserCollectViewHolder(view);
         }
 
         return null;
@@ -394,6 +398,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((OrderCompletionTirpViewHolder) holder).tvIdentifyCardId.setText(peopleBean.gettIdentitycard());
             }
         }
+        if (holder instanceof UserCollectViewHolder) {
+            ScenicSpot scenicSpot = scenicSpotList.get(position);
+            holder.itemView.setTag(scenicSpot);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + scenicSpot.getScenicSpotPicUrl(),
+                    ((UserCollectViewHolder) holder).imgCollect, InitApp.getOptions());
+            ((UserCollectViewHolder) holder).tvCollectItem.setText(scenicSpot.getScenicSpotTheme());
+            ((UserCollectViewHolder) holder).tvCollectPrice.setText(scenicSpot.getScenicSpotPrice()+"");
+        }
     }
 
     @Override
@@ -421,6 +433,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         if (type == 11) {
             return travellingPeopleBeanList == null ? 0 : travellingPeopleBeanList.size();
+        }
+        if (type == 12) {
+            return scenicSpotList == null ? 0 : scenicSpotList.size();
         }
         return 0;
     }
@@ -492,6 +507,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View viewTop;
 
         public TripViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class UserCollectViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img_collect)
+        ImageView imgCollect;
+        @BindView(R.id.tv_collect_item)
+        TextView tvCollectItem;
+        @BindView(R.id.tv_collect_price)
+        TextView tvCollectPrice;
+
+        public UserCollectViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

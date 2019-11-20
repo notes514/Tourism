@@ -58,7 +58,7 @@ public class RegisterActivity extends BaseActivity {
             public void onClick(View view) {
                 if (username.getText().equals("")){
                     AppUtils.getToast("请输入用户名");
-                }else if(tellphone.getText().equals("")){
+                } else if (tellphone.getText().equals("")){
                     AppUtils.getToast("请输入您的电话号码");
                 }else if (password.getText().length() < 6){
                     phone_number=tellphone.getText().toString().trim();
@@ -95,8 +95,7 @@ public class RegisterActivity extends BaseActivity {
                 //请求成功时回调
                 try {
                     String result = response.body().string();
-//                        Intent intent = new Intent(RegisterActivity.this,SignInActivity.class);
-//                        startActivity(intent);
+
                         Log.d(TAG, "result: " + result);
                         finish();
                 } catch (IOException e) {

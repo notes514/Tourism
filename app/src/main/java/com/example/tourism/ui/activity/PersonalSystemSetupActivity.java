@@ -137,9 +137,19 @@ public class PersonalSystemSetupActivity extends BaseActivity implements DefineV
 
     }
 
-    @OnClick(R.id.btn_Lin)
-    public void onViewClicked() {
-        Intent intent = new Intent(PersonalSystemSetupActivity.this, PersonalDataActivity.class);
-        startActivity(intent);
+
+    @OnClick({R.id.btn_Lin, R.id.btn_Accountsecurity})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_Lin:
+            Intent intent = new Intent(PersonalSystemSetupActivity.this, PersonalDataActivity.class);
+            startActivity(intent);
+                break;
+            case R.id.btn_Accountsecurity:
+                Intent i = new Intent(PersonalSystemSetupActivity.this, PersonalChangePassword.class);
+                startActivity(i);
+                break;
+        }
     }
+
 }
