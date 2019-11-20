@@ -1,6 +1,7 @@
 package com.example.tourism.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.PageRecyclerAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.biz.TravelsDataManger;
@@ -144,6 +146,7 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
                     String message = response.body().string();
                     Document document = Jsoup.parse(message, RequestURL.html);
                     travelsList = new TravelsDataManger().getTravels(document);
+                    Log.d(InitApp.TAG, "travelsList: "  + travelsList);
                     if (travelsList != null && travelsList.size() > 0) {
                         bindData();
                     }

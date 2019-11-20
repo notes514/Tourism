@@ -47,6 +47,8 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
+import java.io.StringReader;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -194,7 +196,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         if (user != null) {
             ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
             userName.setText(user.getUserAccountName());
-            userVal.setText(user.getUserTellphone());
+            String tellphone = user.getUserTellphone();
+            String replace = tellphone.substring(3,7);
+            String newreplace = tellphone.replace(replace,"****");
+            userVal.setText(newreplace);
             userHomeage.setVisibility(View.VISIBLE);
             userarrow.setVisibility(View.VISIBLE);
             userLine.setVisibility(View.VISIBLE);

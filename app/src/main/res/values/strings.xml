@@ -164,4 +164,7 @@
     <!--  json  -->
     <string name="area_select_json_name">area_phone_code.json</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

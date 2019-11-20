@@ -42,6 +42,7 @@ import com.example.tourism.ui.activity.LocationActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
+import com.example.tourism.ui.activity.StrategyCommunityActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;

@@ -1,5 +1,7 @@
 package com.example.tourism.biz;
 
+import android.util.Log;
+
 import com.example.tourism.entity.AuthorBean;
 import com.example.tourism.entity.TrHeadBean;
 import com.example.tourism.utils.CTextUtils;
@@ -31,7 +33,8 @@ public class AuthorDataManger {
      */
     public List<AuthorBean> getAurhorBeans(Document document) {
         List<AuthorBean> beanList = new ArrayList<>();
-        Element element = document.select("div.qn-header").first();
+       Element element = document.select("div.qn-header").first();
+
         //用户头像地址
         String userPic = element.select("dt.fl").select("img").attr("abs:src");
         //用户名
@@ -42,6 +45,8 @@ public class AuthorDataManger {
         String follow = CTextUtils.getBlankSpaces(element.select("div.fr").select("dt").text(), 0);
         //粉丝
         String fans = CTextUtils.getBlankSpaces(element.select("div.fr").select("dt").text(), 1);
+        //个性签名
+        String signature = element.select("div.intro-body").select("div.view").select("span.view-text").text();
         //获取账户详情标题
         Elements elements = element.select("div.nav").select("ul.clrfix").select("li.item");
         AuthorBean authorBean = new AuthorBean();
@@ -57,6 +62,7 @@ public class AuthorDataManger {
         authorBean.setScore(score);
         authorBean.setFollow(follow);
         authorBean.setFans(fans);
+        authorBean.setSignature(signature);
         authorBean.setTrHeadBean(headBean);
         beanList.add(authorBean);
         return beanList;

@@ -1,5 +1,6 @@
 package com.example.tourism.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,10 @@ import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -29,7 +33,7 @@ public class ContactActivity extends BaseActivity implements DefineView {
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
     @BindView(R.id.contacts_recyclerView)
-    RecyclerView recyclerView;
+    SwipeRecyclerView recyclerView;
     @BindView(R.id.newly_added)
     Button newlyAdded;
     private List<ContactsBean> contactsBeans;
@@ -83,7 +87,34 @@ public class ContactActivity extends BaseActivity implements DefineView {
             Log.d("hlahfahfoahf", "执行了！！！ ");
             finish();
         });
+
+        recyclerView.setItemViewSwipeEnabled(true);//侧滑删除 默认关闭
+        recyclerView.setLongPressDragEnabled(true);//拖拽排序 默认关闭
+        recyclerView.setOnItemMoveListener(new OnItemMoveListener() {
+            //此方法在item拖拽交换位置时被调用
+            @Override
+            public boolean onItemMove(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+                // 第一个参数是要交换为之的Item，第二个是目标位置的Item。
+                int adapterPosition = viewHolder.getAdapterPosition();
+                int adapterPosition1 = viewHolder1.getAdapterPosition();
+                // swap交换数据，并更新adapter。
+                Collections.swap(contactsBeans, adapterPosition, adapterPosition1);
+                adapter.notifyItemMoved(adapterPosition, adapterPosition1);
+                return true; //返回true,表示数据交换成功,Itemview可以交换位置
+            }
+            //此方法在item在侧滑删除时被调用
+            @Override
+            public void onItemDismiss(RecyclerView.ViewHolder viewHolder) {
+                //从数据源移除该item对应的数据，并刷新Adapter
+                int position = viewHolder.getAdapterPosition();
+                daoManger.getsDaoSession().getContactsBeanDao().deleteByKey(contactsBeans.get(position).getContactsid());
+                contactsBeans.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
+
     }
+
 
     @Override
     public void bindData() {
