@@ -131,7 +131,6 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         Toast.makeText(getContext(), "支付失败", Toast.LENGTH_SHORT).show();
-                        dismiss();
                     }
                     break;
                 }
@@ -162,7 +161,7 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
         final WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.BOTTOM; // 紧贴底部
         lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
-        lp.height = getActivity().getWindowManager().getDefaultDisplay().getHeight() * 3 / 6;
+        lp.height = getActivity().getWindowManager().getDefaultDisplay().getHeight() * 3 / 5;
         window.setAttributes(lp);
         //绑定控件
         reRoot = (RelativeLayout) dialog.findViewById(R.id.re_root);

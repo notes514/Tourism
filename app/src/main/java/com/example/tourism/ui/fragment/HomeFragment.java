@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -150,6 +151,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public AMapLocationClientOption mLocationOption = null;
 
     AMapLocationListener mLocationListener;
+    //网络请求api
+    private ServerApi api;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -403,6 +406,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFooterFinish(RefreshFooter footer, boolean success) {
+                Log.d(InitApp.TAG, "onFooterFinish: " + allScenicSpots.size());
                 loadmore();
             }
 
@@ -414,6 +418,32 @@ public class HomeFragment extends BaseFragment implements DefineView {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(3000);
+                //网络请求加载预定信息
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Call<ResponseBody> qCall = api.getNAsync("onRefresh");
+                qCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                        new TypeToken<List<ScenicSpot>>() {
+                                        }.getType());
+                                if (allScenicSpots.size() > 0) {
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override

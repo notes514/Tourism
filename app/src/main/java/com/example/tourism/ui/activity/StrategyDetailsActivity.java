@@ -200,7 +200,6 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
                     strategy = new StrategyDetailsManger().getStrategyDetailsBeans(document);
                     if (strategy != null) {
                         bindData();
-                        Log.d(InitApp.TAG, "StrategyDetailsBean: " + strategy.getForewordList().size());
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -221,6 +220,15 @@ public class StrategyDetailsActivity extends BaseActivity implements DefineView 
         });
         customToolbar.setOnRightButtonClickLister(() -> {
             AppUtils.getToast("点击显示更多！");
+        });
+
+        ivUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StrategyDetailsActivity.this, StrategyCommunityActivity.class);
+                intent.putExtra("strategyId", strategy.getStrategyId());
+                startActivity(intent);
+            }
         });
     }
 

@@ -37,10 +37,8 @@ import static com.example.tourism.common.RequestURL.html;
 import static com.example.tourism.common.RequestURL.user_html;
 
 public class TravelsFragment extends BaseFragment implements DefineView {
-
     @BindView(R.id.ft_recyclerview)
     RecyclerView ftRecyclerview;
-
     private Unbinder unbinder;
     private ServerApi api;
     private RecyclerViewAdapter adapter;
@@ -67,7 +65,6 @@ public class TravelsFragment extends BaseFragment implements DefineView {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         ftRecyclerview.setLayoutManager(linearLayoutManager);
         adapter = new RecyclerViewAdapter(getContext(),11);
-        //String html1 = "https://travel.qunar.com/space/201567838@qunar#js_notes#1";
         api = RetrofitManger.getInstance().getRetrofit(html).create(ServerApi.class);
         Call<ResponseBody> call = api.getNAsync(user_html + "123426612@qunar");
         call.enqueue(new Callback<ResponseBody>() {
@@ -80,7 +77,6 @@ public class TravelsFragment extends BaseFragment implements DefineView {
                     if (authorTravelsBeanList != null && authorTravelsBeanList.size() > 0) {
                         bindData();
                     }
-                    Log.d("333", "onResponse: " + authorTravelsBeanList);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -104,4 +100,10 @@ public class TravelsFragment extends BaseFragment implements DefineView {
         ftRecyclerview.setAdapter(adapter);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //解绑
+        unbinder.unbind();
+    }
 }

@@ -4,22 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerAdapter;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.adapter.SelectionAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.entity.TravellingPeopleBean;
@@ -28,11 +24,10 @@ import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;
 import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
-import com.hz.android.easyadapter.EasyAdapter;
 
-import java.util.Collections;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +38,22 @@ import butterknife.ButterKnife;
 public class TravelerActivity extends BaseActivity implements DefineView {
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
+    @BindView(R.id.t_view)
+    TextView tView;
+    @BindView(R.id.linearLayout)
+    LinearLayout linearLayout;
     @BindView(R.id.tv_scan_documents)
     TextView tvScanDocuments;
+    @BindView(R.id.tv_choice)
+    TextView tvChoice;
     @BindView(R.id.tv_manually)
     TextView tvManually;
+    @BindView(R.id.linearLayout3)
+    LinearLayout linearLayout3;
     @BindView(R.id.traveler_recyclerView)
-    RecyclerView travelerRecyclerView;
+    SwipeRecyclerView travelerRecyclerView;
     @BindView(R.id.btn_complete)
     Button btnComplete;
-    SwipeRecyclerView travelerRecyclerView;
 
     private int REQUEST_CODE_SCAN = 1;
     private List<TripBean> tripBeanList;
@@ -194,6 +196,7 @@ public class TravelerActivity extends BaseActivity implements DefineView {
                 adapter.notifyItemMoved(adapterPosition, adapterPosition1);
                 return true; //返回true,表示数据交换成功,Itemview可以交换位置
             }
+
             //此方法在item在侧滑删除时被调用
             @Override
             public void onItemDismiss(RecyclerView.ViewHolder viewHolder) {
@@ -207,11 +210,11 @@ public class TravelerActivity extends BaseActivity implements DefineView {
 
     }
 
-    private void setDialog(String title, String message, String bStr){
-        AlertDialog.Builder builder  = new AlertDialog.Builder(TravelerActivity.this);
-        builder.setTitle(title) ;
-        builder.setMessage(message) ;
-        builder.setPositiveButton(bStr ,  null );
+    private void setDialog(String title, String message, String bStr) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TravelerActivity.this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(bStr, null);
         builder.show();
     }
 

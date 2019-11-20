@@ -64,7 +64,7 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, StrategyCommunityActivity.class);
-                intent.putExtra("userPicUrl", travels.getUserPicUrl());
+                intent.putExtra("strategyId", travels.getUserHref());
                 context.startActivity(intent);
             }
         });

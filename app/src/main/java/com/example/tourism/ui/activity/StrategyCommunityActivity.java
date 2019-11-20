@@ -80,10 +80,12 @@ public class StrategyCommunityActivity extends BaseActivity implements DefineVie
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout coordinatorLayout;
-
-
+    //网络请求api
     private ServerApi api;
+    //用户实体
     private List<AuthorBean> authorBeanList;
+    //获取用户编号
+    private String strategyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +105,8 @@ public class StrategyCommunityActivity extends BaseActivity implements DefineVie
 
     @Override
     public void initValidata() {
-
+        //获取编号
+        strategyId = this.getIntent().getStringExtra("strategyId");
 
         SignInFragmentViewpageAdapter signInFragmentViewpageAdapter = new SignInFragmentViewpageAdapter(getSupportFragmentManager());
         ArrayList<Fragment> datas = new ArrayList<Fragment>();
@@ -122,18 +125,16 @@ public class StrategyCommunityActivity extends BaseActivity implements DefineVie
         sCTablayout.setupWithViewPager(viewPager);
 
         api = RetrofitManger.getInstance().getRetrofit(html).create(ServerApi.class);
-        Call<ResponseBody> call = api.getNAsync(user_html + "123426612"+"@qunar");
+        Call<ResponseBody> call = api.getNAsync(user_html + strategyId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String mag = response.body().string();
                     Document document = Jsoup.parse(mag, html);
-                    Log.d("head1212", "getAurhorBeans: "+document.toString() );
                     authorBeanList = new AuthorDataManger().getAurhorBeans(document);
                     if (authorBeanList == null) return;
                     bindData();
-                    Log.d(InitApp.TAG, "onResponse:" + authorBeanList);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
