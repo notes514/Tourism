@@ -46,7 +46,7 @@ public class StrategyDetailsManger {
         //用户主页ID
         String strategyId = endElements.select("div.container").select("a.link_userspace").attr("data");
         //文章内容
-        String content = element.select("div.b_panel_schedule").select("div.e_main").toString();
+        String content = element.select("div.b_panel_schedule").select("div.e_main").html();
         //获取用户信息、点赞评论分享
         Elements coverElements = element.select("div.b_main_info");
         //获取用户信息

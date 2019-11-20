@@ -4,30 +4,30 @@
     <item
         android:id="@+id/navigation_home"
         android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_browse"
         android:enabled="true"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_browse"
         android:title="@string/title_browse" />
 
     <item
         android:id="@+id/navigation_destination"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_destination"
         android:title="@string/title_destination" />
 
     <item
         android:id="@+id/navigation_order"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_order"
         android:title="@string/title_order" />
 
      <item
         android:id="@+id/navigation_personer"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/ic_personer"
         android:title="@string/title_personer" />
 </menu>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.example.tourism.widget.CustomToolbar
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/color_blue"
+        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+        app:rightButtonIcon="@drawable/btn_more_horiz_selector"
+        app:myTitle="机票车票"
+        />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_air_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_white"
+        app:tabIndicatorColor="@color/color_cyan_green"
+        app:tabIndicatorHeight="3dp"
+        app:tabSelectedTextColor="@color/color_cyan_green"
+        app:tabTextColor="@color/color_black"
+        app:tabMode="fixed"
+        app:tabGravity="fill">
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_air_ticket"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

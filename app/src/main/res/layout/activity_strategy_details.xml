@@ -46,8 +46,7 @@
                         android:layout_marginStart="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/baidu_icon" />
+                        app:layout_constraintTop_toTopOf="parent" />
                     <!--账户名-->
                     <TextView
                         android:id="@+id/tv_accountName"

@@ -18,16 +18,13 @@ import java.util.List;
 
 public class BrowseCountryAdapter extends RecyclerView.Adapter<BrowseCountryAdapter.CountryViewHolder> {
 
-
     private List<RegionType> mList;
     private List<ScenicRegion> countries;
     private Context mContext;
     private BrowseCountry2Adapter browseCountry2Adapter;
 
-
-
     public BrowseCountryAdapter(Context context,List<RegionType> mList, List<ScenicRegion> countries) {
-        mContext = context;
+        this.mContext = context;
         this.mList = mList;
         this.countries = countries;
     }

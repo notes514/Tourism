@@ -1,177 +1,54 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
+import com.example.tourism.adapter.RecyclerViewAdapter;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.ui.fragment.PersonalProductFragment;
-import com.example.tourism.ui.fragment.PersonalShopFragment;
-import com.example.tourism.ui.fragment.PersonalTripFragment;
-import com.example.tourism.ui.fragment.PersonerFragment;
 import com.example.tourism.widget.CustomToolbar;
+import com.google.gson.reflect.TypeToken;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PersonalMyCollection extends BaseActivity implements DefineView {
 
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
-    private ViewPager viewPager;
-    private List<Fragment> mFragmentList = new ArrayList<Fragment>();
-    private PersonalFragmentAdapter mFragmentAdapter;
-
-    //Tab显示内容TextView
-    private TextView productTv, tripTv, shopTv;
-    //Tab的那个引导线
-    private ImageView tablineIv;
-
-    //三个Fragment页面
-    private PersonalProductFragment productFg;
-    private PersonalTripFragment tripFg;
-    private PersonalShopFragment shopFg;
-
-    //ViewPager的当前选中页
-    private int currentIndex;
-
-    //屏幕的宽度
-    private int screenWidth;
+    @BindView(R.id.recyclerView_collect)
+    RecyclerView recyclerViewCollect;
+    private ServerApi api;
+    private List<ScenicSpot> scenicSpotList;
+    private RecyclerViewAdapter rAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_my_collection);
         ButterKnife.bind(this);
-        findById();
-        init();
-        initTabLineWidth();
+        initView();
+        initValidata();
         initListener();
-
     }
 
-    private void findById() {
-        productTv = (TextView) this.findViewById(R.id.productTv);
-        tripTv = (TextView) this.findViewById(R.id.tripTv);
-        shopTv = (TextView) this.findViewById(R.id.shopTv);
-        tablineIv = (ImageView) this.findViewById(R.id.iv_tabline);
-        viewPager = (ViewPager) this.findViewById(R.id.viewpager);
-    }
-
-    private void init() {
-        productFg = new PersonalProductFragment();
-        tripFg = new PersonalTripFragment();
-        shopFg = new PersonalShopFragment();
-        //将三个页面添加到容器里面
-        mFragmentList.add(productFg);
-        mFragmentList.add(tripFg);
-        mFragmentList.add(shopFg);
-
-        //重写一个FragmentAdapter继承FragmentPagerAdapter，需要FragmentManager和存放页面的容器过去
-        mFragmentAdapter = new PersonalFragmentAdapter(this.getSupportFragmentManager(), mFragmentList);
-        //ViewPager绑定监听器
-        viewPager.setAdapter(mFragmentAdapter);
-        //ViewPager设置默认当前的项
-        viewPager.setCurrentItem(0);
-        //ViewPager设置监听器，需要重写onPageScrollStateChanged，onPageScrolled，onPageSelected三个方法
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                Log.i("PageScroll：", "onPageScrollStateChanged" + ":" + state);
-            }
-
-            @Override
-            public void onPageScrolled(int position, float offset,
-                                       int offsetPixels) {
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tablineIv.getLayoutParams();
-                Log.i("mOffset", "offset:" + offset + ",position:" + position);
-                /**
-                 * 利用currentIndex(当前所在页面)和position(下一个页面)以及offset来
-                 * 设置mTabLineIv的左边距 滑动场景：
-                 * 记3个页面,
-                 * 从左到右分别为0,1,2
-                 * 0->1; 1->2; 2->1; 1->0
-                 */
-                if (currentIndex == 0 && position == 0)// 0->1
-                {
-                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
-
-                } else if (currentIndex == 1 && position == 0) // 1->0
-                {
-                    lp.leftMargin = (int) (-(1 - offset)
-                            * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
-
-                } else if (currentIndex == 1 && position == 1) // 1->2
-                {
-                    lp.leftMargin = (int) (offset * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
-                } else if (currentIndex == 2 && position == 1) // 2->1
-                {
-                    lp.leftMargin = (int) (-(1 - offset)
-                            * (screenWidth * 1.0 / 3) + currentIndex
-                            * (screenWidth / 3));
-                }
-                tablineIv.setLayoutParams(lp);
-            }
-
-            /**
-             * 将当前选择的页面的标题设置字体颜色为蓝色
-             */
-            @Override
-            public void onPageSelected(int position) {
-                Log.i("PageScroll：", "onPageSelected" + ":" + position);
-                resetTextView();
-                switch (position) {
-                    case 0:
-                        productTv.setTextColor(Color.BLUE);
-                        break;
-                    case 1:
-                        tripTv.setTextColor(Color.BLUE);
-                        break;
-                    case 2:
-                        shopTv.setTextColor(Color.BLUE);
-                        break;
-                }
-                currentIndex = position;
-            }
-        });
-
-    }
-
-    private void initTabLineWidth() {
-        DisplayMetrics dpMetrics = new DisplayMetrics();
-        getWindow().getWindowManager().getDefaultDisplay().getMetrics(dpMetrics);
-        screenWidth = dpMetrics.widthPixels;
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) tablineIv.getLayoutParams();
-        lp.width = screenWidth / 3;
-        tablineIv.setLayoutParams(lp);
-    }
-
-    /**
-     * 重置颜色
-     */
-    private void resetTextView() {
-        productTv.setTextColor(Color.BLACK);
-        tripTv.setTextColor(Color.BLACK);
-        shopTv.setTextColor(Color.BLACK);
-    }
     @Override
     public void initView() {
 
@@ -179,7 +56,42 @@ public class PersonalMyCollection extends BaseActivity implements DefineView {
 
     @Override
     public void initValidata() {
+        //设置线性布局管理器
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        //设置布局管理器显示方向
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        //设置分割线
+        //设置布局显示
+        recyclerViewCollect.setLayoutManager(layoutManager);
+        //创建适配器
+        rAdapter = new RecyclerViewAdapter(this, 12);
 
+        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", RequestURL.vUserId);
+        Call<ResponseBody> call = api.getASync("queryAllUserCollection", map);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        scenicSpotList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                new TypeToken<List<ScenicSpot>>() {
+                                }.getType());
+                        bindData();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -189,6 +101,10 @@ public class PersonalMyCollection extends BaseActivity implements DefineView {
 
     @Override
     public void bindData() {
-
+        if (scenicSpotList.size() > 0) {
+            //设置数据
+            rAdapter.setScenicSpotList(scenicSpotList);
+            recyclerViewCollect.setAdapter(rAdapter);
+        }
     }
 }

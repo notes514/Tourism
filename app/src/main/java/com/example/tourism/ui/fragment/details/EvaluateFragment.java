@@ -13,7 +13,7 @@ import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.ViewBundle;
 
 /**
- * 评价详情
+ * 预定须知
  */
 public class EvaluateFragment extends Fragment {
     private static final String KEY = "viewBundle";

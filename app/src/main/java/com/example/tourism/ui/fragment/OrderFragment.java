@@ -206,6 +206,7 @@ public class OrderFragment extends BaseFragment implements DefineView {
     public void initListener() {
         customToolbar.setOnLeftButtonClickLister(() -> openActivity(AllOrderActivity.class));
         customToolbar.setOnRightButtonClickLister(() -> openActivity(PersonalDataActivity.class));
+        //实现下拉刷新监听接口
     }
 
     @Override

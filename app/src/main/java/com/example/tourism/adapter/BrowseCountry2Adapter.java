@@ -50,7 +50,7 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    public BrowseCountry2Adapter(Context context,List<RegionType> regionTypes, List<ScenicRegion> countries, int position, String name) {
+    public BrowseCountry2Adapter(Context context ,List<RegionType> regionTypes, List<ScenicRegion> countries, int position, String name) {
         //this.countries = countries;
         this.context = context;
         cc = new ArrayList<>();
@@ -113,9 +113,8 @@ public class BrowseCountry2Adapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ScenicRegion country = cc.get(position);
         if (holder instanceof Country3ViewHolder){
-//            ImageLoader.getInstance().displayImage(RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic, InitApp.getOptions());
             GlideImageLoader glideImageLoader = new GlideImageLoader();
-            glideImageLoader.displayImage(context,RequestURL.ip_images+country.getRegionPicUrl(),((Country3ViewHolder) holder).countryPic);
+            glideImageLoader.displayImage(context, RequestURL.ip_images+country.getRegionPicUrl(), ((Country3ViewHolder) holder).countryPic);
             ((Country3ViewHolder) holder).countryName.setText(country.getRegionName());
             ((Country3ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

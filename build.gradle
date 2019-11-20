@@ -4,7 +4,10 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        // 添加下面的内容
+        flatDir {
+            dirs 'libs'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.2'

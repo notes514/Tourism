@@ -151,8 +151,14 @@ dependencies {
 
     implementation 'com.amap.api:location:latest.integration'
     implementation 'com.github.D10NGYANG:DL10SideBar:1.0.0'
+    implementation 'com.amap.api:map2d:latest.integration'
+    implementation 'com.amap.api:search:latest.integration'
     // 拼音
     implementation files('libs/pinyin4j-2.5.0.jar')
+
+    //RecyclerView的适配器
+    implementation 'com.hz.androids.easyadapter:library:1.1'
+    // 添加下面的内容
 }
 MobSDK {
     appKey "2c75fba93b9b8"

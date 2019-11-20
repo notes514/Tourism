@@ -189,7 +189,7 @@ public class NearbyActivity extends BaseActivity implements View.OnClickListener
             if (brtBeacon.getMacAddress().equals("F9:50:C1:76:EC:5F")){
                 AppUtils.getToast("进入"+brtBeacon.getName());
                 exhibition_area_1.setBackgroundColor(getColor(R.color.color_blue));
-                showByExhibitionArea(1);
+                //showByExhibitionArea(1);
             }
         }
 

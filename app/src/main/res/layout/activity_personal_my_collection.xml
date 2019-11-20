@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <com.example.tourism.widget.CustomToolbar
             android:id="@+id/custom_toolbar"
             android:layout_width="match_parent"
@@ -14,25 +15,10 @@
             android:background="@color/color_blue"
             app:leftButtonIcon="@drawable/btn_arrow_back_selector"
             app:myTitle="@string/title_personal_collection" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
-        android:orientation="vertical">
-
-        <!-- 顶部的内容 -->
-        <include layout="@layout/activity_mycollection_top_bar" />
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_collect"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/color_white">
-
-        </androidx.viewpager.widget.ViewPager>
-
-    </LinearLayout>
-</FrameLayout>
+            android:layout_height="match_parent" />
+</LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

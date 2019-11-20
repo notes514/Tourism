@@ -20,10 +20,6 @@ public class PersonalOpenmembershipActivity extends BaseActivity implements Defi
 
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
-    //    @BindView(R.id.btn_re)
-//    ImageView btnRe;
-//    @BindView(R.id.btn_zhifu)
-//    Button btnZhifu;
     private TextView shoujia;
     private Button mButton;
 
@@ -63,7 +59,7 @@ public class PersonalOpenmembershipActivity extends BaseActivity implements Defi
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment("100", 0);
+                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment("69", 0);
                 payDetailFragment.show(getSupportFragmentManager(), "payDetailFragment");
             }
         });

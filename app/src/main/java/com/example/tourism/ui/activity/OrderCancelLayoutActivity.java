@@ -250,7 +250,7 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             //应付金额
             tvAmountPayable.setText("¥" + totalSum);
             //总价
-            tvPrice.setText("¥" + totalSum);
+            tvPrice.setText(totalSum+"");
         }
         //联系人信息
         if (contacts != null) {

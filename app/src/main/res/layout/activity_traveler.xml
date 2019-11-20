@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,94 +7,96 @@
     android:orientation="vertical"
     tools:context=".ui.activity.TravelerActivity">
 
-    <com.example.tourism.widget.CustomToolbar
-        android:id="@+id/custom_toolbar"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:background="@color/color_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:leftButtonIcon="@drawable/btn_arrow_back_selector"
-        app:myTitle="@string/tourism_order_choice_trip"
-        app:rightButtonIcon="@null" />
+        android:layout_height="wrap_content">
 
+        <com.example.tourism.widget.CustomToolbar
+            android:id="@+id/custom_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:background="@color/color_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:leftButtonIcon="@drawable/btn_arrow_back_selector"
+            app:myTitle="@string/tourism_order_choice_trip"
+            app:rightButtonIcon="@null" />
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#FFF1D9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
-
-        <TextView
-            android:id="@+id/t_view"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:background="#FFF1D9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
+
+            <TextView
+                android:id="@+id/t_view"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
+                android:gravity="center_vertical"
+                android:textColor="#FF6600"
+                android:text="@string/tourism_order_trip_name_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
             android:layout_marginLeft="20dp"
-            android:drawableLeft="@drawable/ic_filter_vintage_black_8dp"
-            android:gravity="center_vertical"
-            android:textColor="#FF6600"
-            android:text="@string/tourism_order_trip_name_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            android:layout_marginRight="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
 
-        <TextView
-            android:id="@+id/tv_scan_documents"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/btn_text_shape"
-            android:gravity="center"
-            android:text="@string/tourism_order_scan_documents"
-            android:textColor="#00BCD4"
-            android:textSize="20sp"
-            android:layout_weight="3"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="307dp" />
+            <TextView
+                android:id="@+id/tv_scan_documents"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_text_shape"
+                android:gravity="center"
+                android:text="@string/tourism_order_scan_documents"
+                android:textColor="#00BCD4"
+                android:textSize="20sp"
+                android:layout_weight="3"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="307dp" />
 
-        <TextView
-            android:id="@+id/tv_choice"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:textSize="14sp"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="307dp" />
+            <TextView
+                android:id="@+id/tv_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="14sp"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="307dp" />
 
-        <TextView
-            android:id="@+id/tv_manually"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:background="@drawable/btn_text_shape"
-            android:text="@string/tourism_order_manually"
-            android:textColor="#00BCD4"
-            android:textSize="20sp"
-            android:layout_weight="3"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="307dp" />
+            <TextView
+                android:id="@+id/tv_manually"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@drawable/btn_text_shape"
+                android:text="@string/tourism_order_manually"
+                android:textColor="#00BCD4"
+                android:textSize="20sp"
+                android:layout_weight="3"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="307dp" />
 
-    </LinearLayout>
+        </LinearLayout>
 
     <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/traveler_recyclerView"
@@ -109,3 +111,15 @@
     </com.yanzhenjie.recyclerview.SwipeRecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tourism_order_complete"
+        android:background="@color/color_orange"
+        android:textSize="16sp"
+        android:textColor="@color/color_white"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
