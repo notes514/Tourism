@@ -155,6 +155,8 @@ dependencies {
     //RecyclerView的适配器
     implementation 'com.hz.androids.easyadapter:library:1.1'
     // 添加下面的内容
+    // 支付宝 SDK AAR 包所需的配置
+    implementation (name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
 }
 MobSDK {
     appKey "2c75fba93b9b8"

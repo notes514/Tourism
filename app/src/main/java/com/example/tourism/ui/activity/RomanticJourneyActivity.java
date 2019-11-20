@@ -243,7 +243,13 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
     @Override
     public void initListener() {
         ctToolbar.setOnLeftButtonClickLister(() -> finish());
-        elvRoantic.setOnGroupClickListener((parent, v, groupPosition, id) -> true);
+        elvRoantic.setOnGroupClickListener((parent, v, groupPosition, id) -> false);
+
+        //NestedExpandaleListView子view点击监听
+        elvRoantic.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            AppUtils.getToast("你点击了第" + groupPosition + "个父和第" + childPosition + "个子");
+            return true;
+        });
 
         ivExpandMore.setOnClickListener(v1 ->
         {
@@ -265,6 +271,7 @@ public class RomanticJourneyActivity extends BaseActivity implements DefineView 
             llMore.setVisibility(View.GONE);
         });
 
+        //设置TabLayout点击监听
         tbRomantic.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @SuppressLint("ResourceType")
             @Override

@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_white">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="交通信息"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/color_black_2c"
-        android:layout_marginTop="50dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="交通住宿仅供参考，具体信息可咨询商家"
-        android:gravity="center"
-        android:textSize="12sp"
-        android:textColor="@color/color_dark_grey"/>
+    android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -35,7 +16,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tourism_cost_information_title1"
+                android:text="@string/tourism_cost_instructions_title1"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:padding="10dp"
@@ -44,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/tourism_cost_information_content1"
+                android:text="@string/tourism_cost_instructions_content1"
                 android:textSize="14sp"
                 android:gravity="left"
                 android:padding="10dp"

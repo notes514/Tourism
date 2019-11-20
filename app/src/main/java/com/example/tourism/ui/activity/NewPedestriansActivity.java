@@ -1,5 +1,6 @@
 package com.example.tourism.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -11,6 +12,7 @@ import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
+import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
 
@@ -55,29 +57,22 @@ public class NewPedestriansActivity extends BaseActivity implements DefineView {
 
     @Override
     public void initListener() {
-        customToolbar.setOnLeftButtonClickLister(new CustomToolbar.OnLeftButtonClickLister() {
-            @Override
-            public void OnClick() {
-                finish();
-            }
-        });
+        customToolbar.setOnLeftButtonClickLister(() -> finish());
 
         customToolbar.setOnRightButtonClickLister(() -> {
             TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
             Calendar calendar = Calendar.getInstance();
-            Date date = calendar.getTime();
             TripBean tripBean = new TripBean(null,etAddName.getText().toString(),idCard.getText().toString(),"");
             try {
-                if (idCard.getText().length() < 18){
-                    AppUtils.getToast("请输入正确的身份证");
-                }else if(etAddName.getText().length() < 1){
-                    AppUtils.getToast("名字");
-                }else {
+                if (!CTextUtils.isIDNumber(idCard.getText().toString())) {
+                    setDialog("提示", "您输入的身份证号码不正确，请重新输入", "确定");
+                } else if(etAddName.getText().length() < 1){
+                    setDialog("提示", "请输入姓名", "确定");
+                } else {
                     Intent i = new Intent();
                     daoManger.getsDaoSession().getTripBeanDao().insert(tripBean);
                     setResult(3,i);
                     this.finish();
-                    AppUtils.getToast("添加成功！");
                 }
 
             } catch (Exception e) {
@@ -90,6 +85,14 @@ public class NewPedestriansActivity extends BaseActivity implements DefineView {
     @Override
     public void bindData() {
 
+    }
+
+    private void setDialog(String title, String message, String bStr){
+        AlertDialog.Builder builder  = new AlertDialog.Builder(NewPedestriansActivity.this);
+        builder.setTitle(title) ;
+        builder.setMessage(message) ;
+        builder.setPositiveButton(bStr ,  null );
+        builder.show();
     }
 
     @Override

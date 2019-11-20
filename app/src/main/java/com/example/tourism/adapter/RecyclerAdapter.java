@@ -1,7 +1,6 @@
 package com.example.tourism.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.database.bean.TripBean;
+import com.example.tourism.entity.Passenger;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +25,8 @@ import butterknife.ButterKnife;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener, View.OnLongClickListener {
     //出行人信息数据集
     private List<TripBean> tripBeanList;
+    //旅客信息数据集
+    private List<Passenger> passengerList;
     //上下文
     private Context context;
     //布局
@@ -50,13 +51,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private void initMap() {
         if (tripBeanList == null) return;
         for (int i = 0; i < tripBeanList.size(); i++) {
-            map.put(i,false);
+            map.put(i, false);
         }
     }
 
-    //设置信息数据
+    //设置出行人信息数据
     public void setTripBeanList(List<TripBean> tripBeanList) {
         this.tripBeanList = tripBeanList;
+    }
+
+    //设置旅客信息数据
+    public void setPassengerList(List<Passenger> passengerList) {
+        this.passengerList = passengerList;
     }
 
     //设置接口实例数据
@@ -66,6 +72,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     /**
      * 点击item选中CheckBox
+     *
      * @param position
      */
     public void setSelectItem(int position) {
@@ -105,6 +112,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view.setOnClickListener(this::onClick);
             view.setOnLongClickListener(this::onLongClick);
             return new TravelerViewHolder(view);
+        } else if (index == 1) {
+            View view = layoutInflater.inflate(R.layout.item_order_details_trip_layout, parent, false);
+            view.setOnClickListener(this::onClick);
+            view.setOnLongClickListener(this::onLongClick);
+            return new OrderDetailsTripViewHolder(view);
         }
         return null;
     }
@@ -130,18 +142,32 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ((TravelerViewHolder) holder).contacts.setText(tripBean.getTName());
             ((TravelerViewHolder) holder).idCard.setText(tripBean.getTIdentitycard());
         }
+
+        if (holder instanceof OrderDetailsTripViewHolder) {
+            Passenger passenger = passengerList.get(position);
+            //设置实体类Tag
+            holder.itemView.setTag(passenger);
+            //设置列表索引(position)Tag
+            holder.itemView.setTag(R.id.tag_pos, position);
+            //显示数据
+            ((OrderDetailsTripViewHolder) holder).tvPassengerName.setText(passenger.getPassengerName() + "(成人 >= 12)");
+            ((OrderDetailsTripViewHolder) holder).tvIdentifyCardId.setText(passenger.getIdentityCard());
+        }
     }
 
     @Override
     public int getItemCount() {
         if (index == 0) {
             return tripBeanList == null ? 0 : tripBeanList.size();
+        } else if (index == 1) {
+            return passengerList == null ? 0 : passengerList.size();
         }
         return 0;
     }
 
     /**
      * 重写点击事件
+     *
      * @param v
      */
     @Override
@@ -153,6 +179,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     /**
      * 重写长按事件
+     *
      * @param v
      * @return
      */
@@ -165,6 +192,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     /**
      * 返回集合给MainActivity
+     *
      * @return
      */
     public Map<Integer, Boolean> getMap() {
@@ -187,6 +215,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
+    class OrderDetailsTripViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_passenger_name)
+        TextView tvPassengerName;
+        @BindView(R.id.tv_identify_cardId)
+        TextView tvIdentifyCardId;
+
+        public OrderDetailsTripViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
     /**
      * 接口回调设置点击
      */
@@ -194,6 +234,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         /**
          * 点击事件
+         *
          * @param view
          * @param object
          */
@@ -201,6 +242,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         /**
          * 长按事件
+         *
          * @param view
          * @param object
          * @return
