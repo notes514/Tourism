@@ -26,6 +26,8 @@
                 android:text="@string/tourism_details_content"
                 android:lineSpacingExtra="6dp"
                 android:textSize="16sp"
+                android:lines="2"
+                android:ellipsize="end"
                 android:textColor="@color/color_black"
                 android:padding="10dp"
                 android:layout_marginTop="60dp"/>

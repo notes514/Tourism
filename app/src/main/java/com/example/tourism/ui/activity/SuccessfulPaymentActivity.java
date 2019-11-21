@@ -1,5 +1,6 @@
 package com.example.tourism.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,7 +56,7 @@ public class SuccessfulPaymentActivity extends BaseActivity implements DefineVie
     @BindView(R.id.btn_determine)
     Button btnDetermine;
     private int orderId;
-    private String price;
+    private int price;
     //网路请求api
     private ServerApi api;
     //
@@ -78,7 +79,7 @@ public class SuccessfulPaymentActivity extends BaseActivity implements DefineVie
 
     @Override
     public void initValidata() {
-        price = this.getIntent().getStringExtra("price");
+        price = this.getIntent().getIntExtra("price", 0);
         orderId = this.getIntent().getIntExtra("orderId", 0);
 
         api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
@@ -121,13 +122,15 @@ public class SuccessfulPaymentActivity extends BaseActivity implements DefineVie
     public void bindData() {
         if (order != null) {
             ImageLoader.getInstance().displayImage(RequestURL.ip_images + "images/success.jpg", ivSuccessful, InitApp.getOptions());
-            tvOrderNumber.setText("18776620191101719293513300" + order.getOrderNumber());
-            tvPrice.setText(price);
+            tvOrderNumber.setText("20191122000" + order.getOrderNumber());
+            tvPrice.setText(price+"元");
         }
     }
 
     @OnClick(R.id.btn_determine)
     public void onViewClicked() {
+        Intent intent = new Intent();
+        setResult(3, intent);
         finish();
     }
 }

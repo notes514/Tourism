@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,6 @@ import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.AllOrderActivity;
-import com.example.tourism.ui.activity.PersonalChangePassword;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalDataActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
@@ -46,8 +46,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
-
-import java.io.StringReader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -110,6 +108,14 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     FrameLayout btnSetUp;
     @BindView(R.id.btn_trip)
     FrameLayout btnTrip;
+    @BindView(R.id.ll_daifukuan)
+    LinearLayout llDaifukuan;
+    @BindView(R.id.ll_daixiaofei)
+    LinearLayout llDaixiaofei;
+    @BindView(R.id.ll_daipingjia)
+    LinearLayout llDaipingjia;
+    @BindView(R.id.ll_tuikuanzhon)
+    LinearLayout llTuikuanzhon;
 
     private Unbinder unbinder;
     public static final int Request_Code = 1;
@@ -128,7 +134,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     @OnClick({R.id.btn_mycollection, R.id.btn_holidayprbolem, R.id.btn_mysubscriptions, R.id.user_homepage,
             R.id.user_name, R.id.btn_coupon, R.id.btn_member, R.id.user_follow, R.id.user_fans, R.id.fl_all_order,
-            R.id.re, R.id.btn_set_up,R.id.btn_trip})
+            R.id.re, R.id.btn_set_up, R.id.btn_trip})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_trip:
@@ -196,8 +202,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
             ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
             userName.setText(user.getUserAccountName());
             String tellphone = user.getUserTellphone();
-            String replace = tellphone.substring(3,7);
-            String newreplace = tellphone.replace(replace,"****");
+            String replace = tellphone.substring(3, 7);
+            String newreplace = tellphone.replace(replace, "****");
             userVal.setText(newreplace);
             userHomeage.setVisibility(View.VISIBLE);
             userarrow.setVisibility(View.VISIBLE);
@@ -247,6 +253,27 @@ public class PersonerFragment extends BaseFragment implements DefineView {
     @Override
     public void initListener() {
         customToolbar.setOnRightButtonClickLister(() -> openActivity(PersonalDataActivity.class));
+
+        llDaifukuan.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AllOrderActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+        });
+        llDaixiaofei.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AllOrderActivity.class);
+            intent.putExtra("index", 2);
+            startActivity(intent);
+        });
+        llDaipingjia.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AllOrderActivity.class);
+            intent.putExtra("index", 3);
+            startActivity(intent);
+        });
+        llTuikuanzhon.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), AllOrderActivity.class);
+            intent.putExtra("index", 4);
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -254,8 +281,8 @@ public class PersonerFragment extends BaseFragment implements DefineView {
 
     }
 
-    private void display(){
-        if (user != null){
+    private void display() {
+        if (user != null) {
             userName.setText(user.getUserAccountName());
             userVal.setText(user.getUserTellphone());
         }
@@ -291,7 +318,7 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         Log.d("22222", "onStart: ");
         if (user != null) {
             //获取用户id
-            RequestURL.vUserId = user.getUserId()+"";
+            RequestURL.vUserId = user.getUserId() + "";
             ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
             userName.setText(user.getUserAccountName());
             userVal.setText(user.getUserTellphone());

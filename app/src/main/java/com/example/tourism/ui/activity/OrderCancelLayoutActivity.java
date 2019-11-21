@@ -1,6 +1,7 @@
 package com.example.tourism.ui.activity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +26,7 @@ import com.example.tourism.entity.Contacts;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.OrderDetails;
 import com.example.tourism.entity.Passenger;
+import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
@@ -306,7 +309,7 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             int price = (int) (order.getOrderPrice() + 0);
             amountPayable.setText("¥" + price);
             //订单号
-            tvOrderNumber.setText("20191101719293513300" + order.getOrderNumber());
+            tvOrderNumber.setText("20191122000" + order.getOrderNumber());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String date = format.format(order.getOrderDate());
             tvOrderDate.setText(date);
@@ -375,11 +378,21 @@ public class OrderCancelLayoutActivity extends BaseActivity implements DefineVie
             case R.id.btn_reserve:
                 //立即支付
                 FragmentManager fm = getSupportFragmentManager();
-                PayDialogFragment payDialogFragment = new PayDialogFragment(orderId, totalSum, order.getOrderContent());
+                PayDialogFragment payDialogFragment = new PayDialogFragment(orderId, totalSum, order.getOrderContent(), 1);
                 payDialogFragment.show(fm, "payDialog");
 //                PersonalPayDetailFragment payDetailFragment = new PersonalPayDetailFragment("¥" + totalSum + ".00", order.getOrderId());
 //                payDetailFragment.show(getSupportFragmentManager(), "payDetailFragment");
                 break;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
+        if (requestCode == 1 && resultCode == 3) {
+            finish();
+        }
+    }
+
 }

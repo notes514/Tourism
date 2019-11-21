@@ -760,7 +760,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public void loadMore(List<ScenicSpot> scenicSpots) {
         if (scenicSpots != null) {
-            scenicSpotList = scenicSpots;
+            scenicSpotList.addAll(scenicSpots);
         }
         notifyDataSetChanged();
     }

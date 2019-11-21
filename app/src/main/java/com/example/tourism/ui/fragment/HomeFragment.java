@@ -61,6 +61,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -243,9 +244,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @SuppressLint("NewApi")
     @Override
     public void initValidata() {
-        String[] sList = new String[]{"国内游", "出境游", "自由行", "跟团游", "主题游", "周边游", "一日游", "定制游"};
-        searchArea("跟团游");
-
         //创建网格布局管理器
         GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), 3);
         //设置管理器竖向显示
@@ -263,6 +261,19 @@ public class HomeFragment extends BaseFragment implements DefineView {
         recyclerView.setLayoutManager(gridLayoutManager2);
         //创建适配器对象
         rAdapter = new RecyclerViewAdapter(getContext(), 5);
+
+        hotTopicsBeanList = new ArrayList<>();
+        hotTopicsBeanList.add(new HotTopicsBean("images/deng.jpg", "徒步登上", "#初级登山",
+                "#户外活动", "#徒步体验"));
+        hotTopicsBeanList.add(new HotTopicsBean("images/romantic.jpg", "浪漫·之旅", "#行万里路",
+                "#激情刺激", "#星辰大海"));
+        hotTopicsBeanList.add(new HotTopicsBean("images/depth.jpg", "深度体验", "#摄影/拍摄",
+                "#轻奢游", "#义工旅行"));
+        //设置数据
+        tAdapter.setHotTopicsBeanList(hotTopicsBeanList);
+        rvTheme.setAdapter(tAdapter);
+
+        onRefreshss();
     }
 
     @Override
@@ -316,20 +327,11 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
     @Override
     public void bindData() {
-        hotTopicsBeanList = new ArrayList<>();
-        hotTopicsBeanList.add(new HotTopicsBean("images/deng.jpg", "徒步登上", "#初级登山",
-                "#户外活动", "#徒步体验"));
-        hotTopicsBeanList.add(new HotTopicsBean("images/romantic.jpg", "浪漫·之旅", "#行万里路",
-                "#激情刺激", "#星辰大海"));
-        hotTopicsBeanList.add(new HotTopicsBean("images/depth.jpg", "深度体验", "#摄影/拍摄",
-                "#轻奢游", "#义工旅行"));
-        //设置数据
-        tAdapter.setHotTopicsBeanList(hotTopicsBeanList);
-        rvTheme.setAdapter(tAdapter);
-
         if (allScenicSpots == null) return;
         rAdapter.setScenicSpotList(allScenicSpots);
         recyclerView.setAdapter(rAdapter);
+        //刷新适配器
+        rAdapter.notifyDataSetChanged();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -363,6 +365,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
         //设置 Footer 为 球脉冲 样式
         refreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
                 .setAnimatingColor(AppUtils.getColor(R.color.color_blue)));
+
         refreshLayout.setOnMultiListener(new OnMultiListener() {
             @Override
             public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
@@ -386,7 +389,15 @@ public class HomeFragment extends BaseFragment implements DefineView {
             public void onHeaderFinish(RefreshHeader header, boolean success) {
                 if (llStateToolbar == null) return;
                 llStateToolbar.setVisibility(View.GONE);
-                Log.d("@@@", "刷新完成！");
+                if (success) {
+                    AppUtils.getToast("为您推荐了9条内容");
+                    //设置数据
+                    rAdapter.setScenicSpotList(allScenicSpots);
+                    //刷新适配器
+                    rAdapter.notifyDataSetChanged();
+                } else {
+                    AppUtils.getToast("数据更新失败");
+                }
             }
 
             @Override
@@ -406,21 +417,19 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFooterFinish(RefreshFooter footer, boolean success) {
-                Log.d(InitApp.TAG, "onFooterFinish: " + allScenicSpots.size());
-                loadmore();
+                //网络请求加载预定信息
+                if (success) {
+                    rAdapter.loadMore(allScenicSpots);
+                } else {
+                    AppUtils.getToast("加载失败");
+                }
+
             }
 
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishLoadMore(1000);
-            }
-
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshLayout.finishRefresh(3000);
-                //网络请求加载预定信息
                 api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-                Call<ResponseBody> qCall = api.getNAsync("onRefresh");
+                Call<ResponseBody> qCall = api.getNAsync("onFooterFinish");
                 qCall.enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -431,8 +440,43 @@ public class HomeFragment extends BaseFragment implements DefineView {
                                 allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
                                         new TypeToken<List<ScenicSpot>>() {
                                         }.getType());
-                                if (allScenicSpots.size() > 0) {
-                                }
+                                if (allScenicSpots.size() == 0) return;
+                                refreshLayout.finishLoadMore(true);
+                            } else {
+                                refreshLayout.finishLoadMore(false);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Call<ResponseBody> qCall = api.getNAsync("onRefresh");
+                qCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                //清除数据
+                                allScenicSpots.clear();
+                                allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                        new TypeToken<List<ScenicSpot>>() {
+                                        }.getType());
+                                if (allScenicSpots.size() == 0) return;
+                                refreshLayout.finishRefresh(true);
+                            } else {
+                                refreshLayout.finishRefresh(false);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -450,6 +494,17 @@ public class HomeFragment extends BaseFragment implements DefineView {
             public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
                 if (llStateToolbar == null) return;
                 llStateToolbar.setVisibility(View.VISIBLE);
+                Log.d(InitApp.TAG, "isTwoLevel: " + newState.isTwoLevel);
+                Log.d(InitApp.TAG, "isDragging: " + newState.isDragging);
+                Log.d(InitApp.TAG, "isOpening: " + newState.isOpening);
+                Log.d(InitApp.TAG, "isFinishing: " + newState.isFinishing);
+                Log.d(InitApp.TAG, "isReleaseToOpening: " + newState.isReleaseToOpening);
+//                if (!oldState.isReleaseToOpening) {
+//                    llStateToolbar.setVisibility(View.GONE);
+//                }
+//                if (oldState.isFinishing) {
+//                    llStateToolbar.setVisibility(View.VISIBLE);
+//                }
             }
         });
     }
@@ -508,28 +563,23 @@ public class HomeFragment extends BaseFragment implements DefineView {
         });
     }
 
-    private void loadmore() {
-        if (allScenicSpots != null && rAdapter != null) {
-            allScenicSpots.addAll(allScenicSpots);
-            rAdapter.loadMore(allScenicSpots);
-        }
-    }
-
-    private void searchArea(String pStr) {
-        ServerApi api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
-        Map<String, Object> map = new HashMap<>();
-        map.put("pStr", pStr);
-        Call<ResponseBody> scenicSpotCall = api.getASync("searchArea", map);
-        scenicSpotCall.enqueue(new Callback<ResponseBody>() {
+    private void onRefreshss() {
+        allScenicSpots.clear();
+        //网络请求加载预定信息
+        api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+        Call<ResponseBody> qCall = api.getNAsync("onRefresh");
+        qCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
-                    allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
-                            new TypeToken<List<ScenicSpot>>() {
-                            }.getType());
-                    bindData();
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                new TypeToken<List<ScenicSpot>>() {
+                                }.getType());
+                        bindData();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -537,7 +587,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.d("@@@", t.getMessage());
+
             }
         });
     }
@@ -545,7 +595,6 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
         sharedPreferences = getActivity().getSharedPreferences("data", Context.MODE_PRIVATE);
         //步骤2： 实例化SharedPreferences.Editor对象
         editor = sharedPreferences.edit();

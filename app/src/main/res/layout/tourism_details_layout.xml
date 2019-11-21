@@ -48,6 +48,8 @@
                             android:text="@string/tourism_details_content"
                             android:lineSpacingExtra="2dp"
                             android:textSize="18sp"
+                            android:lines="2"
+                            android:ellipsize="end"
                             android:textColor="@color/color_black"
                             android:padding="10dp"/>
                         <LinearLayout

@@ -575,9 +575,34 @@ public class TourismDetailsActivity extends AppCompatActivity implements DefineV
                     flag = false;
                     collectionImage.setBackgroundResource(R.drawable.ic_collection_gray_24dp);
                 } else {
-                    flag = true;
-                    AppUtils.getToast("收藏成功");
-                    collectionImage.setBackgroundResource(R.drawable.ic_collection_red_24dp);
+                    api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("userId", RequestURL.vUserId);
+                    map.put("scenicDetailsId", scenicDetails.getScenicSpotId());
+                    Call<ResponseBody> call = api.postASync("userAddByCollection", map);
+                    call.enqueue(new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            try {
+                                String message = response.body().string();
+                                JSONObject json = new JSONObject(message);
+                                if (json.getString(RequestURL.RESULT).equals("S")) {
+                                    flag = true;
+                                    AppUtils.getToast("收藏成功");
+                                    collectionImage.setBackgroundResource(R.drawable.ic_collection_red_24dp);
+                                } else {
+                                    AppUtils.getToast(json.getString(RequestURL.TIPS));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                        }
+                    });
                 }
                 break;
             case R.id.ll_service:

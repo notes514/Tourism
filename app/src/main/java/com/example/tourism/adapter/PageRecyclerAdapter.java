@@ -210,4 +210,11 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         void onItemClick(View view, Object object);
     }
 
+    public void addAllTravels(List<TravelsBean> travelsList) {
+        if (travelsList.size() == 0) return;
+        travelsBeans.addAll(travelsList);
+        //刷新适配器
+        notifyDataSetChanged();
+    }
+
 }

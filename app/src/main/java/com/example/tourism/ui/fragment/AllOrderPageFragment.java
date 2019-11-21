@@ -17,14 +17,28 @@ import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
+import com.example.tourism.biz.TravelsDataManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Order;
 import com.example.tourism.ui.fragment.base.BaseFragment;
+import com.example.tourism.utils.AppUtils;
 import com.google.gson.reflect.TypeToken;
+import com.scwang.smart.refresh.footer.BallPulseFooter;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshFooter;
+import com.scwang.smart.refresh.layout.api.RefreshHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.RefreshState;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,20 +55,25 @@ import retrofit2.Response;
  * 目的地
  */
 public class AllOrderPageFragment extends BaseFragment implements DefineView {
+
     @BindView(R.id.page_recyclerView)
     RecyclerView pageRecyclerView;
-    @BindView(R.id.loading_line)
-    LinearLayout loadingLine;
-    @BindView(R.id.empty_line)
-    LinearLayout emptyLine;
-    @BindView(R.id.error_line)
-    LinearLayout errorLine;
-    @BindView(R.id.tv_empty_content)
-    TextView tvEmptyContent;
-    @BindView(R.id.tv_erro_content)
-    TextView tvErroContent;
     @BindView(R.id.tv_tips)
     TextView tvTips;
+    @BindView(R.id.page_swipeRefreshLayout)
+    SmartRefreshLayout pageSwipeRefreshLayout;
+    @BindView(R.id.tv_loading_content)
+    TextView tvLoadingContent;
+    @BindView(R.id.loading_line)
+    LinearLayout loadingLine;
+    @BindView(R.id.tv_empty_content)
+    TextView tvEmptyContent;
+    @BindView(R.id.empty_line)
+    LinearLayout emptyLine;
+    @BindView(R.id.tv_erro_content)
+    TextView tvErroContent;
+    @BindView(R.id.error_line)
+    LinearLayout errorLine;
     private Unbinder unbinder;
     private static final String KEY = "AllOrderPage";
     private String pStr;
@@ -64,6 +83,7 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
     private List<Order> orderList;
     //适配器
     private RecyclerViewAdapter adapter;
+    private int state = 0;
 
     public static AllOrderPageFragment newInstance(String pStr) {
         Bundle bundle = new Bundle();
@@ -139,7 +159,129 @@ public class AllOrderPageFragment extends BaseFragment implements DefineView {
 
     @Override
     public void initListener() {
+        //设置 Header 为 贝塞尔雷达 样式
+        pageSwipeRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
+        //设置 Footer 为 球脉冲 样式
+        pageSwipeRefreshLayout.setRefreshFooter(new BallPulseFooter(getContext()).setSpinnerStyle(SpinnerStyle.Translate)
+                .setAnimatingColor(AppUtils.getColor(R.color.color_blue)));
 
+        pageSwipeRefreshLayout.setOnMultiListener(new OnMultiListener() {
+            @Override
+            public void onHeaderMoving(RefreshHeader header, boolean isDragging, float percent, int offset, int headerHeight, int maxDragHeight) {
+            }
+
+            @Override
+            public void onHeaderReleased(RefreshHeader header, int headerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onHeaderStartAnimator(RefreshHeader header, int headerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onHeaderFinish(RefreshHeader header, boolean success) {
+                if (success) {
+                    adapter.setOrderList(orderList);
+                    adapter.notifyDataSetChanged();
+                } else {
+                    AppUtils.getToast("加载失败");
+                }
+            }
+
+            @Override
+            public void onFooterMoving(RefreshFooter footer, boolean isDragging, float percent, int offset, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterReleased(RefreshFooter footer, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterStartAnimator(RefreshFooter footer, int footerHeight, int maxDragHeight) {
+
+            }
+
+            @Override
+            public void onFooterFinish(RefreshFooter footer, boolean success) {
+                //网络请求加载预定信息
+                if (success) {
+
+                } else {
+                    AppUtils.getToast("加载失败");
+                }
+
+            }
+
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishRefresh(100);
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+
+                if ("全部".equals(pStr)) { //全部订单
+                    state = 0;
+                }
+                if ("待付款".equals(pStr)) {
+                    state = 1;
+                }
+                if ("待消费".equals(pStr)) {
+                    state = 2;
+                }
+                if ("待评价".equals(pStr)) {
+                    state = 3;
+                }
+                if ("退款中".equals(pStr)) {
+                    state = 4;
+                }
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Map<String, Object> map = new HashMap<>();
+                map.put("userId", RequestURL.vUserId);
+                map.put("orderState", state);
+                Call<ResponseBody> allCall = api.getASync("queryByOrderState", map);
+                allCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                orderList.clear();
+                                orderList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                        new TypeToken<List<Order>>() {
+                                        }.getType());
+                                if (orderList == null) return;
+                                refreshLayout.finishRefresh(true);
+                            } else {
+                                pageRecyclerView.setVisibility(View.GONE);
+                                errorLine.setVisibility(View.GONE);
+                                loadingLine.setVisibility(View.GONE);
+                                emptyLine.setVisibility(View.VISIBLE);
+                                tvEmptyContent.setText(json.getString(RequestURL.TIPS));
+                                refreshLayout.finishRefresh(false);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onStateChanged(@NonNull RefreshLayout refreshLayout, @NonNull RefreshState oldState, @NonNull RefreshState newState) {
+
+            }
+        });
     }
 
     @Override

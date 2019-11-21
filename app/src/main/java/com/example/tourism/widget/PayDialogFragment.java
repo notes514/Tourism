@@ -51,7 +51,7 @@ import retrofit2.Response;
 
 public class PayDialogFragment extends DialogFragment implements PasswordEditText.PasswordFullListener {
     private RelativeLayout reRoot;
-    private LinearLayout llPayDetail;
+    private RelativeLayout llPayDetail;
     private TextView tvCancel;
     private TextView tvPayMoney;
     private RelativeLayout rlWxPay;
@@ -91,6 +91,8 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
     private int price;
     //商品名称
     private String productName;
+    //
+    private int requestCode;
 
     /**
      * 用于支付宝支付业务的入参 app_id。
@@ -140,10 +142,11 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
         };
     };
 
-    public PayDialogFragment(int orderId, int price, String productName) {
+    public PayDialogFragment(int orderId, int price, String productName, int requestCode) {
         this.orderId = orderId;
         this.price = price;
         this.productName = productName;
+        this.requestCode = requestCode;
     }
 
     @NonNull
@@ -161,11 +164,11 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
         final WindowManager.LayoutParams lp = window.getAttributes();
         lp.gravity = Gravity.BOTTOM; // 紧贴底部
         lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
-        lp.height = getActivity().getWindowManager().getDefaultDisplay().getHeight() * 3 / 5;
+        lp.height = getActivity().getWindowManager().getDefaultDisplay().getHeight() * 3 / 6;
         window.setAttributes(lp);
         //绑定控件
         reRoot = (RelativeLayout) dialog.findViewById(R.id.re_root);
-        llPayDetail = (LinearLayout) dialog.findViewById(R.id.ll_pay_detail); //付款详情
+        llPayDetail = (RelativeLayout) dialog.findViewById(R.id.ll_pay_detail); //付款详情
         tvCancel = (TextView) dialog.findViewById(R.id.tv_cancel);
         tvPayMoney = (TextView) dialog.findViewById(R.id.tv_pay_money);
         rlWxPay = (RelativeLayout) dialog.findViewById(R.id.rl_wx_pay);
@@ -185,8 +188,7 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
         keyboard = (LinearLayout) dialog.findViewById(R.id.keyboard);
         llPayPassword = (LinearLayout) dialog.findViewById(R.id.ll_pay_password); //密码支付
 
-        tvBalance.setText(price + "元");
-        tvPayMoney.setText(price + "元");
+        tvPayMoney.setText(price+"");
 
         //点击监听
         llPayDetail.setOnClickListener(listener);
@@ -284,15 +286,50 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
         }
     }
 
+    //正在加载dialog
+    private LoadingDialog loadingDialog;
+
     @Override
     public void passwordFull(String password) {
-        if ("085514".equals(password)) {
-            AppUtils.getToast("支付成功");
-        } else {
-            passwordEdt.addPassword("");
-            passwordEdt.setText("");
-            setDialog("提示", "密码输入错误", "重新输入");
-        }
+        loadingDialog = new LoadingDialog(getContext(), "正在支付...");
+        loadingDialog.show();
+        new Handler().postDelayed(() -> {
+            api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+            Map<String, Object> map = new HashMap<>();
+            map.put("userId", RequestURL.vUserId);
+            map.put("orderId", orderId);
+            map.put("password", password);
+            Call<ResponseBody> call = api.getASync("orderPaymentPassWord", map);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    try {
+                        String message = response.body().string();
+                        JSONObject json = new JSONObject(message);
+                        if (json.getString(RequestURL.RESULT).equals("S")) {
+                            loadingDialog.dismiss();
+                            Intent intent = new Intent(getContext(), SuccessfulPaymentActivity.class);
+                            intent.putExtra("price", price);
+                            intent.putExtra("orderId", orderId);
+                            startActivityForResult(intent, requestCode);
+                            dismiss();
+                        } else {
+                            passwordEdt.addPassword("");
+                            passwordEdt.setText("");
+                            setDialog("提示", json.getString(RequestURL.TIPS), "重新输入");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                }
+            });
+        }, 1000);
+
     }
 
     /**
@@ -353,7 +390,9 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
                     JSONObject json = new JSONObject(message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
                         Intent intent = new Intent(getContext(), SuccessfulPaymentActivity.class);
-                        startActivity(intent);
+                        intent.putExtra("price", price);
+                        intent.putExtra("orderId", orderId);
+                        startActivityForResult(intent, requestCode);
                         dismiss();
                     } else {
                         AppUtils.getToast(RequestURL.TIPS);
