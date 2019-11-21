@@ -219,6 +219,19 @@ public class CTextUtils {
     }
 
     /**
+     * 获取用户详情编号
+     * @param pStr
+     * @return
+     */
+    public static String getUserId(String pStr) {
+        if (pStr.contains("/")) {
+            String[] array = pStr.split("/");
+            return array[array.length-1];
+        }
+        return pStr;
+    }
+
+    /**
      * 正则表达式校验身份证号码
      *
      * @param IDNumber 传入的身份证号

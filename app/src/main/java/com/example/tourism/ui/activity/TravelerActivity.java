@@ -4,32 +4,30 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerAdapter;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.adapter.SelectionAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
-import com.hz.android.easyadapter.EasyAdapter;
+import com.yanzhenjie.recyclerview.SwipeRecyclerView;
+import com.yanzhenjie.recyclerview.touch.OnItemMoveListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,12 +38,20 @@ import butterknife.ButterKnife;
 public class TravelerActivity extends BaseActivity implements DefineView {
     @BindView(R.id.custom_toolbar)
     CustomToolbar customToolbar;
+    @BindView(R.id.t_view)
+    TextView tView;
+    @BindView(R.id.linearLayout)
+    LinearLayout linearLayout;
     @BindView(R.id.tv_scan_documents)
     TextView tvScanDocuments;
+    @BindView(R.id.tv_choice)
+    TextView tvChoice;
     @BindView(R.id.tv_manually)
     TextView tvManually;
+    @BindView(R.id.linearLayout3)
+    LinearLayout linearLayout3;
     @BindView(R.id.traveler_recyclerView)
-    RecyclerView travelerRecyclerView;
+    SwipeRecyclerView travelerRecyclerView;
     @BindView(R.id.btn_complete)
     Button btnComplete;
 
@@ -176,14 +182,39 @@ public class TravelerActivity extends BaseActivity implements DefineView {
                 return false;
             }
         });
+        travelerRecyclerView.setItemViewSwipeEnabled(true);//侧滑删除 默认关闭
+        travelerRecyclerView.setLongPressDragEnabled(true);//拖拽排序 默认关闭
+        travelerRecyclerView.setOnItemMoveListener(new OnItemMoveListener() {
+            //此方法在item拖拽交换位置时被调用
+            @Override
+            public boolean onItemMove(RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder viewHolder1) {
+                // 第一个参数是要交换为之的Item，第二个是目标位置的Item。
+                int adapterPosition = viewHolder.getAdapterPosition();
+                int adapterPosition1 = viewHolder1.getAdapterPosition();
+                // swap交换数据，并更新adapter。
+                Collections.swap(tripBeanList, adapterPosition, adapterPosition1);
+                adapter.notifyItemMoved(adapterPosition, adapterPosition1);
+                return true; //返回true,表示数据交换成功,Itemview可以交换位置
+            }
+
+            //此方法在item在侧滑删除时被调用
+            @Override
+            public void onItemDismiss(RecyclerView.ViewHolder viewHolder) {
+                //从数据源移除该item对应的数据，并刷新Adapter
+                int position = viewHolder.getAdapterPosition();
+                daoManger.getsDaoSession().getTripBeanDao().deleteByKey(tripBeanList.get(position).getTripId());
+                tripBeanList.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
 
     }
 
-    private void setDialog(String title, String message, String bStr){
-        AlertDialog.Builder builder  = new AlertDialog.Builder(TravelerActivity.this);
-        builder.setTitle(title) ;
-        builder.setMessage(message) ;
-        builder.setPositiveButton(bStr ,  null );
+    private void setDialog(String title, String message, String bStr) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TravelerActivity.this);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(bStr, null);
         builder.show();
     }
 

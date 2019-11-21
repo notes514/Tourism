@@ -19,7 +19,7 @@
         app:myTitle="联系人信息"
         app:rightButtonIcon="@null" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.SwipeRecyclerView
         android:id="@+id/contacts_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/custom_toolbar">
 
-    </androidx.recyclerview.widget.RecyclerView>
+    </com.yanzhenjie.recyclerview.SwipeRecyclerView>
 
     <LinearLayout
         android:layout_width="48dp"

@@ -37,6 +37,7 @@ import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.CTextUtils;
 import com.example.tourism.widget.CustomToolbar;
 import com.example.tourism.widget.LoadingDialog;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
@@ -122,8 +123,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private String identfityCardId;
     //备注（留言）
     private String remarks;
-    private Contacts contacts;
-    private Passenger passenger;
+    private List<Contacts> contactsList;
+    private List<Passenger> passengerList;
     private Order order;
     //适配器
     private RecyclerViewAdapter rAdapter;
@@ -282,9 +283,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     AppUtils.getToast("请先登录");
                     return;
                 }
-                //显示正在加载
-                loadingDialog = new LoadingDialog(this, "正在预定...");
-                loadingDialog.show();
                 //获取联系人数据
                 name = etName.getText().toString();
                 phoneNumber = etPhoneNumber.getText().toString();
@@ -303,36 +301,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         return;
                     }
                     if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(phoneNumber) && !TextUtils.isEmpty(identfityCardId)) {
-                        //生成联系人信息
-                        Map<String, Object> map = new HashMap<>();
-                        map.put("contactsName", name);
-                        map.put("cellPhoneNumber", phoneNumber);
-                        map.put("qqNumber", qq);
-                        map.put("wechatNumber", wechat);
-                        map.put("remarks", remarks);
-                        Call<ResponseBody> addCall = api.postASync("addByContacts", map);
-                        addCall.enqueue(new Callback<ResponseBody>() {
-                            @Override
-                            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                                try {
-                                    String message = response.body().string();
-                                    JSONObject json = new JSONObject(message);
-                                    if (json.getString(RequestURL.RESULT).equals("S")) {
-
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                            }
-                        });
-
-                        //生成出行人信息
-                        addTrip(peopleBeanList);
+                        //显示正在加载
+                        loadingDialog = new LoadingDialog(this, "正在预定...");
+                        loadingDialog.show();
 
                         String travelMode = "";
                         if (scenicSpot.getTravelMode() == 0) {
@@ -353,14 +324,17 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                             travelMode = "定制游";
                         }
                         //生成订单
-                        map.clear();
+                        Map<String, Object> map = new HashMap<>();
                         map.put("orderContent", tvContent.getText().toString());
                         map.put("orderNumber", 1);
                         map.put("orderState", 1);
+                        map.put("passengerNumber", adultNumber + childrenNumber);
                         map.put("tripMode", travelMode);
                         map.put("departDate", date + " 出发");
                         map.put("departDays", scenicDetails.getTravelDays());
-                        map.put("tirpInformation", "成人 " + adultNumber);
+                        if (adultNumber > 0) map.put("tirpInformation", "成人 " + adultNumber);
+                        if (adultNumber > 0 && childrenNumber > 0)
+                            map.put("tirpInformation", "成人 " + adultNumber + " 儿童" + childrenNumber);
                         map.put("orderPrice", scenicSpot.getScenicSpotPrice());
                         map.put("supplier", "中旅集团私人定制中心");
                         Call<ResponseBody> orderCall = api.postASync("addByOrder", map);
@@ -371,7 +345,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                                     String message = response.body().string();
                                     JSONObject json = new JSONObject(message);
                                     if (json.getString(RequestURL.RESULT).equals("S")) {
-                                        queryNewestByOCP();
+                                        queryNewestOrder();
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -392,14 +366,78 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     }
 
     /**
-     * 添加出行人信息
-     * @param peopleBeanList
+     * 获取最新订单
      */
-    private void addTrip(List<TravellingPeopleBean> peopleBeanList) {
+    private void queryNewestOrder() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", RequestURL.vUserId);
+        Call<ResponseBody> oCall = api.getASync("queryNewestOrder", map);
+        oCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                        order = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                Order.class);
+                        if (order != null) {
+                            addContactsAndPassenger();
+                        }
+                    } else {
+                        AppUtils.getToast(json.getString(RequestURL.TIPS));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    /**
+     * 新增联系人，出行人信息
+     */
+    private void addContactsAndPassenger() {
+        //生成联系人信息
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", RequestURL.vUserId);
+        map.put("orderId", order.getOrderId());
+        map.put("contactsName", name);
+        map.put("cellPhoneNumber", phoneNumber);
+        map.put("qqNumber", qq);
+        map.put("wechatNumber", wechat);
+        map.put("remarks", remarks);
+        Call<ResponseBody> addCall = api.postASync("addByContacts", map);
+        addCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String message = response.body().string();
+                    JSONObject json = new JSONObject(message);
+                    if (json.getString(RequestURL.RESULT).equals("S")) {
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
         //生成出行人信息
         if (peopleBeanList == null) return;
+        map.clear();
         for (TravellingPeopleBean bean : peopleBeanList) {
-            Map<String, Object> map = new HashMap<>();
+            map.put("userId", RequestURL.vUserId);
+            map.put("orderId", order.getOrderId());
             map.put("passengerName", bean.gettName());
             map.put("passengerType", bean.gettType());
             map.put("identityCard", bean.gettIdentitycard());
@@ -422,34 +460,27 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                 }
             });
         }
-    }
 
-    /**
-     * 获取订单、联系人、出行人信息
-     */
-    private void queryNewestByOCP() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("contactsName", name);
-        map.put("identityCard", identfityCardId);
-        Call<ResponseBody> oCall = api.getASync("queryNewestByOCP", map);
-        oCall.enqueue(new Callback<ResponseBody>() {
+        map.clear();
+        map.put("userId", RequestURL.vUserId);
+        map.put("orderId", order.getOrderId());
+        Call<ResponseBody> qCall = api.getASync("queryContactsAndPassenger", map);
+        qCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
+                    assert response.body() != null;
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
+                    Log.d(InitApp.TAG, "message: " + message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
-                        order = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
-                                Order.class);
-                        contacts = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
-                                Contacts.class);
-                        passenger = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.THREE_DATA),
-                                Passenger.class);
-                        if (order != null && contacts != null && passenger != null) {
+                        contactsList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                new TypeToken<List<Contacts>>(){}.getType());
+                        passengerList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.TWO_DATA),
+                                new TypeToken<List<Passenger>>(){}.getType());
+                        if (contactsList != null && passengerList != null) {
                             addByOrderDedails();
                         }
-                    } else {
-                        AppUtils.getToast(json.getString(RequestURL.TIPS));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -469,9 +500,10 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     private void addByOrderDedails() {
         //生成订单详情
         Map<String, Object> map = new HashMap<>();
+        map.clear();
         map.put("orderId", order.getOrderId());
-        map.put("contactsId", contacts.getContactsId());
-        map.put("passengerId", passenger.getPassengerId());
+        map.put("contactsId", contactsList.get(0).getContactsId());
+        map.put("passengerId", passengerList.get(0).getPassengerId());
         map.put("orderDetailsDescribe", "订单明细描述");
         Call<ResponseBody> dCall = api.postASync("addByOrderDedails", map);
         dCall.enqueue(new Callback<ResponseBody>() {
@@ -508,7 +540,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("onActivityResult", "执行了！！！ ");
         //此处可以根据两个Code进行判断，本页面和结果页面跳过来的值
         if (requestCode == 1 && resultCode == 3) {
             String cName = data.getStringExtra("cName");

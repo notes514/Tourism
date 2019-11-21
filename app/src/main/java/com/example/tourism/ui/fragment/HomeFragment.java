@@ -32,6 +32,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
 import com.example.tourism.adapter.SecondaryMenuItemAdapter;
+import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
@@ -45,6 +46,7 @@ import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SeachActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
+import com.example.tourism.ui.activity.StrategyCommunityActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
@@ -149,6 +151,8 @@ public class HomeFragment extends BaseFragment implements DefineView {
     public AMapLocationClientOption mLocationOption = null;
 
     AMapLocationListener mLocationListener;
+    //网络请求api
+    private ServerApi api;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -168,25 +172,22 @@ public class HomeFragment extends BaseFragment implements DefineView {
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void initListen() {
 
-        mLocationListener = new AMapLocationListener() {
-            @Override
-            public void onLocationChanged(AMapLocation aMapLocation) {
-                if (aMapLocation != null) {
-                    if (aMapLocation.getErrorCode() == 0) {
-                        //可在其中解析amapLocation获取相应内容。
-                        Log.d("ss", "fasd: " + aMapLocation.getCity());
-                        if (aMapLocation.getCity() != null) {
-                            if (tvDiqu.getText().equals("")) {
-                                tvDiqu.setText(aMapLocation.getCity());
-                            }
-                            mLocationClient.stopLocation();
+        mLocationListener = aMapLocation -> {
+            if (aMapLocation != null) {
+                if (aMapLocation.getErrorCode() == 0) {
+                    //可在其中解析amapLocation获取相应内容。
+                    Log.d("ss", "fasd: " + aMapLocation.getCity());
+                    if (aMapLocation.getCity() != null) {
+                        if (tvDiqu.getText().equals("")) {
+                            tvDiqu.setText(aMapLocation.getCity());
                         }
-                    } else {
-                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                        Log.e("AmapError", "location Error, ErrCode:"
-                                + aMapLocation.getErrorCode() + ", errInfo:"
-                                + aMapLocation.getErrorInfo());
+                        mLocationClient.stopLocation();
                     }
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + aMapLocation.getErrorCode() + ", errInfo:"
+                            + aMapLocation.getErrorInfo());
                 }
             }
         };
@@ -405,6 +406,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
 
             @Override
             public void onFooterFinish(RefreshFooter footer, boolean success) {
+                Log.d(InitApp.TAG, "onFooterFinish: " + allScenicSpots.size());
                 loadmore();
             }
 
@@ -416,6 +418,32 @@ public class HomeFragment extends BaseFragment implements DefineView {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(3000);
+                //网络请求加载预定信息
+                api = RetrofitManger.getInstance().getRetrofit(RequestURL.ip_port).create(ServerApi.class);
+                Call<ResponseBody> qCall = api.getNAsync("onRefresh");
+                qCall.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            String message = response.body().string();
+                            JSONObject json = new JSONObject(message);
+                            if (json.getString(RequestURL.RESULT).equals("S")) {
+                                allScenicSpots = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
+                                        new TypeToken<List<ScenicSpot>>() {
+                                        }.getType());
+                                if (allScenicSpots.size() > 0) {
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                    }
+                });
             }
 
             @Override

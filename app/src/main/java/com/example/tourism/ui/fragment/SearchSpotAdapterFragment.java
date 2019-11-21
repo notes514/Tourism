@@ -1,6 +1,5 @@
 package com.example.tourism.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -28,7 +26,6 @@ import com.example.tourism.entity.Region;
 import com.example.tourism.entity.RegionType;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
-import com.example.tourism.ui.activity.SearchList;
 import com.example.tourism.utils.DbManger;
 import com.example.tourism.utils.MySqliteHelper;
 import com.google.gson.Gson;
@@ -73,11 +70,6 @@ public class SearchSpotAdapterFragment extends Fragment {
         View root = inflater.inflate(R.layout.search_spot_adapter, container, false);
         return root;
     }
-
-
-
-
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -266,15 +258,14 @@ public class SearchSpotAdapterFragment extends Fragment {
         RetrofitManger retrofit = RetrofitManger.getInstance();
         ServerApi serverApi = retrofit.getRetrofit(RequestURL.ip_port).create(ServerApi.class);
         Map<String,Object> map=new HashMap<>();
-        Call<ResponseBody> scenicRegionCall = serverApi.getASync(RequestURL.ip_port+"queryAllScenicRegion",map);
+        Call<ResponseBody> scenicRegionCall = serverApi.getASync("queryAllScenicRegion",map);
         scenicRegionCall.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     String m = response.body().string();
+                    if (scenicRegions == null) return;
                     scenicRegions = new Gson().fromJson(m,new TypeToken<List<ScenicRegion>>(){}.getType());
-
-
                     browseCountryAdapter = new BrowseCountryAdapter(SearchSpotAdapterFragment.this.getContext(),temp,scenicRegions);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(SearchSpotAdapterFragment.this.getContext());
                     layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

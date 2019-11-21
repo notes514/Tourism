@@ -224,6 +224,7 @@ public class BrowsePageFragment extends BaseFragment implements DefineView {
                     String message = response.body().string();
                     Document document = Jsoup.parse(message, RequestURL.html);
                     travelsList = new TravelsDataManger().getTravels(document);
+                    Log.d(InitApp.TAG, "travelsList: "  + travelsList);
                     if (travelsList != null && travelsList.size() > 0) {
                         bindData();
                     }

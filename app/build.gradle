@@ -37,9 +37,13 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.0.0'
     implementation 'androidx.navigation:navigation-ui:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    //可滑动删除的recycleview
+    implementation 'com.yanzhenjie.recyclerview:support:1.3.2'
 
     //MPAndroidChart（开源图表框架）
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
@@ -155,6 +159,8 @@ dependencies {
     //RecyclerView的适配器
     implementation 'com.hz.androids.easyadapter:library:1.1'
     // 添加下面的内容
+    // 支付宝 SDK AAR 包所需的配置
+    implementation (name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
 }
 MobSDK {
     appKey "2c75fba93b9b8"

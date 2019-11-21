@@ -97,6 +97,8 @@
     <string name="tourism_cost_reserve_content2">1、在您进行旅游活动前，请先参考当地天气预报情况及其他专业人士或机构的的相关建议和公告。 \n 2、为了不耽误您的行程，建议您在出发前120分钟到达机场办理登机＆相关手续。 \n 3、接送机师傅一般会提前3小时与您联系，确认具体的时间和地点。 \n 4、酒店须在14:00后方能办理入住，在12:00之前退房，如需延迟至14点退房，请提前联系客服尽量给您争取。 \n 5、成人务请携带有效身份证件、18周岁以下小孩带户口本（原件）出行游玩，因没带证件出行可能会导致无法进入景区或入住，损失自费，请知晓。 \n 6、在您下单后，客服会给您提供相关的推荐游玩攻略，方便您进行更好的游玩，在此中旅集团私人定制中心祝您旅途愉快。</string>
     <string name="tourism_cost_reserve_title3">退款说明</string>
     <string name="tourism_cost_reserve_content3">【旅游者违约】\n 合同生效后如需取消、退订，将按您所订资源实际产生损失收取费用 \n【供应商违约】 \n 在规定时间内违约，除退还全额旅游费用外，另支付违约金比例如下： \n 行程开始前4-7日，退还全额旅游费用，支付旅游费用总额10%的违约金。 \n 行程开始前1-3日，退还全额旅游费用，支付旅游费用总额15%的违约金。 \n 行程开始当日，退还全额旅游费用，支付旅游费用总额20%的违约金。 \n 如按上述比例支付的违约金不足以赔偿旅游者的实际损失，旅行社应当按实际损失对旅游者予以赔偿。 </string>
+    <string name="tourism_cost_instructions_title1">使用说明</string>
+    <string name="tourism_cost_instructions_content1">【出团信息】 \n 商家会在出游前1天的23点前与您确认出团信息。若您超过此时间预订，则工作时间（06:00:00-19:59:59）商家会在120分钟内发送出团通知；非工作时间（20:00:00-05:59:59）商家会在您出行前120分钟内发送出团通知。 \n \n 【预订须知】 \n 温馨提示：赠送的代金券仅适用于我社产品使用，详情咨询客服！ \n 1、此行程不含从景区回出发地的返程，预定时请注意。 \n 2、漓江杨堤九马竹筏都是桂林出发；兴坪竹筏/游船的行程桂林/阳朔都可以出发； \n 3、2019年9月1日至10月31日将对兴坪“渔村游”游码头进行提档升级改建，届时将全面停用“渔村游”码头。兴坪游船的行程航线为朝板山码头至渔村（往返），兴坪竹筏的行程航线为马山码头至朝板山水域（往返） \n 4.2人拼车的商务团如当天无法成团，可以退差价改大巴车行程或者补车位费单独包车。\n \n 【使用说明】 \n 集合时间： 仅供参考，以导游提前一天22:30前通知为准。\n \n 【产品说明】 \n 集合时间：以导游通知为准，行程时间仅供参考； \n 杨堤竹筏游览景点：漓江竹筏精华游（杨堤-九马段），凭竹筏票免费乘电瓶车，途经兴坪古镇和20元人民币背景； \n 兴坪竹筏游览景点：兴坪朝板山码头-马山码头，乘竹筏观20元背景拍摄地，远观九马画山； 兴坪游船游览景点：兴坪渔村游，游览兴坪佳境、朝板山、螺丝山等。</string>
 
     <!--  立即预定 日期选择 模块  -->
     <string name="tourism_order_calendar_title">选择日期/出行人数</string>
@@ -151,10 +153,35 @@
     <string name="tourism_order_details">查看详情</string>
     <string name="tourism_order_cancel1">取消支付</string>
     <string name="tourism_order_payment1">立即支付</string>
+    <string name="tourism_order_cancel_title">取消订单</string>
+    <string name="tourism_order_cancel_reason">请选择取消订单的原因（必选）：</string>
+    <string name="tourism_order_cancel_content1">不想要了</string>
+    <string name="tourism_order_cancel_content2">商品信息填写错误</string>
+    <string name="tourism_order_cancel_content3">地址信息填写错误</string>
+    <string name="tourism_order_cancel_content4">商品降价</string>
+    <string name="tourism_order_cancel_content5">其他</string>
+    <string name="tourism_order_cancel_commit">提交</string>
 
     <!--  立即预定 全部 模块  -->
     <string name="tourism_all_order_title">度假旅游/团购订单</string>
 
+    <string name="common_input_pwd_title">请输入支付密码</string>
+    <string name="common_withdraw_prompt1">提现成功后，</string>
+    <string name="common_withdraw_prompt2">个工作日之内钱款会打到您的微信钱包</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_certain">确定</string>
+    <string name="common_choose_month">选择月份</string>
+    <string name="common_pay_info">付款详情</string>
+    <string name="common_cn_yuan">元</string>
+    <string name="common_need_to_pay">需要支付的金额</string>
+    <string name="common_wx_pay">微信支付</string>
+    <string name="common_wx_pay_context">推荐安装微信的用户使用</string>
+    <string name="common_ali_pay">支付宝支付</string>
+    <string name="common_ali_pay_context">推荐安装支付宝的用户使用</string>
+    <string name="common_balance_pay">余额支付</string>
+    <string name="common_balance_pay_context">使用现金余额支付，当前余额</string>
+    <string name="common_balance_not_enough_context">余额不足，当前余额</string>
+    <string name="common_pay">确认付款</string>
 
     <!--  攻略库模块  -->
     <string name="tourism_strategy_details_title">攻略详情</string>
@@ -179,5 +206,32 @@
 
     <!--  json  -->
     <string name="area_select_json_name">area_phone_code.json</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  支付宝支付  -->
+    <string name="demo_info_text">Warning: \n\nFor demonstration purpose, the assembling and signing of the request parameters are done on the client side.\nHowever, in practice, both assembling and signing MUST BE carried out on the server side.</string>
+    <string name="pay_with_alipay">Pay with Alipay</string>
+    <string name="pay_with_alipay_hk">Pay with AlipayHK</string>
+    <string name="auth_with_alipay">Authenticate with Alipay</string>
+    <string name="web_to_native">Call Alipay from Web Content</string>
+    <string name="check_sdk_version">Alipay SDK Version</string>
+    <string name="pay_success">Payment success:</string>
+    <string name="auth_failed">Authentication failed:</string>
+    <string name="error_missing_appid_rsa_private">Error: Missing \"APPID\" or \"RSA_PRIVATE\" in PayDemoActivity.</string>
+    <string name="error_missing_hk_partner_seller_rsa_private">Error: Missing \"PARTNER\", \"SELLER\", or \"RSA_PRIVATE\\ in OrderUtils1_0_HK.</string>
+    <string name="pay_result">Payment result:</string>
+    <string name="error_auth_missing_partner_appid_rsa_private_target_id">Error: Missing \"PARTNER\", \"APP_ID\", \"RSA_PRIVATE\", or \"TARGET_ID\" in PayDemoActivity.</string>
+    <string name="confirm">Confirm</string>
+    <string name="pay_failed">Payment failed:</string>
+    <string name="auth_success">Authentication success:</string>
+    <string name="alipay_sdk_version_is">"Alipay SDK version: "</string>
+    <string name="error_missing_h5_pay_url">Missing URL to load. Please configure in PayDemoActivity.h5Pay()</string>
+    <string name="error">Error</string>
+    <string name="pay_cross_border">Cross-border Pay with Alipay</string>
+    <string name="error_missing_global_partner_seller_rsa_private" >Error: Missing \"PARTNER\", \"SELLER\", or \"RSA_PRIVATE\\ in OrderUtils1_0_Global.</string>
+    <string name="payment_inst_hk">Payer: HK</string>
+    <string name="payment_inst_cn">Payer: CN</string>
 
 </resources>

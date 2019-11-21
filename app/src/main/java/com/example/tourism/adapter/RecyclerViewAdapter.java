@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
@@ -20,11 +21,13 @@ import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.database.bean.TripBean;
+import com.example.tourism.entity.AuthorTravelsBean;
 import com.example.tourism.entity.HotTopicsBean;
 import com.example.tourism.entity.MonthDayBean;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.TravellingPeopleBean;
+import com.example.tourism.ui.activity.BigImaActivity;
 import com.example.tourism.ui.activity.EditContactActivity;
 import com.example.tourism.ui.activity.OrderCancelLayoutActivity;
 import com.example.tourism.ui.activity.TourismDetailsActivity;
@@ -53,6 +56,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private List<HotTopicsBean> hotTopicsBeanList;
     //出行人数据集
     private List<TravellingPeopleBean> travellingPeopleBeanList;
+    //用户游记信息数据集
+    private List<AuthorTravelsBean> authorTravelsBeanList;
     //行程信息数据集
     private Context context;
     private int type;
@@ -103,6 +108,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     //出行人数据集
     public void setTravellingPeopleBeanList(List<TravellingPeopleBean> travellingPeopleBeanList) {
         this.travellingPeopleBeanList = travellingPeopleBeanList;
+    }
+
+    //设置用户游记数据集
+    public void setAuthorTravelsBeanList(List<AuthorTravelsBean> authorTravelsBeanList) {
+        this.authorTravelsBeanList = authorTravelsBeanList;
     }
 
     @NonNull
@@ -156,6 +166,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             View view = inflater.inflate(R.layout.item_order_completion_tirp_llayout, parent, false);
             view.setOnClickListener(this::onClick);
             return new OrderCompletionTirpViewHolder(view);
+        }else if (type == 12) {
+            View view = inflater.inflate(R.layout.my_collection_product_item, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new UserCollectViewHolder(view);
+        } else if (type == 13) {
+            View view = inflater.inflate(R.layout.fm_travels_items, parent, false);
+            view.setOnClickListener(this::onClick);
+            return new FmTravelersViewHolder(view);
         }
 
         return null;
@@ -394,6 +412,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((OrderCompletionTirpViewHolder) holder).tvIdentifyCardId.setText(peopleBean.gettIdentitycard());
             }
         }
+        if (holder instanceof UserCollectViewHolder) {
+            ScenicSpot scenicSpot = scenicSpotList.get(position);
+            holder.itemView.setTag(scenicSpot);
+            ImageLoader.getInstance().displayImage(RequestURL.ip_images + scenicSpot.getScenicSpotPicUrl(),
+                    ((UserCollectViewHolder) holder).imgCollect, InitApp.getOptions());
+            ((UserCollectViewHolder) holder).tvCollectItem.setText(scenicSpot.getScenicSpotTheme());
+            ((UserCollectViewHolder) holder).tvCollectPrice.setText(scenicSpot.getScenicSpotPrice()+"");
+        }
+        if (holder instanceof FmTravelersViewHolder) {
+            AuthorTravelsBean authorTravelsBean = authorTravelsBeanList.get(position);
+            holder.itemView.setTag(authorTravelsBean);
+            ((FmTravelersViewHolder) holder).tvTitleContent.setText(authorTravelsBean.getTitle());
+            ImageLoader.getInstance().displayImage(authorTravelsBean.getPicsUrl(),((FmTravelersViewHolder) holder).imageTravels,InitApp.getOptions());
+            ((FmTravelersViewHolder) holder).imageTravels.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, BigImaActivity.class);
+                    intent.putExtra("",authorTravelsBean.getPicsUrl());
+                    context.startActivity(intent);
+                }
+            });
+            ((FmTravelersViewHolder) holder).ivBrowse.setImageResource(R.drawable.icon_browse);
+            ((FmTravelersViewHolder) holder).browseTextView.setText(authorTravelsBean.getBrowse());
+            ((FmTravelersViewHolder) holder).ivFabulous.setImageResource(R.drawable.icon_fabulous);
+            ((FmTravelersViewHolder) holder).fabulousText.setText(authorTravelsBean.getFoubles());
+            ((FmTravelersViewHolder) holder).ivComment.setImageResource(R.drawable.icon_comment_gray);
+            ((FmTravelersViewHolder) holder).commentText.setText(authorTravelsBean.getComment());
+        }
     }
 
     @Override
@@ -419,8 +465,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (type == 9) {
             return hotTopicsBeanList == null ? 0 : hotTopicsBeanList.size();
         }
+        if (type == 10) {
+            return authorTravelsBeanList == null ? 0 : authorTravelsBeanList.size();
+        }
         if (type == 11) {
             return travellingPeopleBeanList == null ? 0 : travellingPeopleBeanList.size();
+        }
+        if (type == 12) {
+            return scenicSpotList == null ? 0 : scenicSpotList.size();
         }
         return 0;
     }
@@ -492,6 +544,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         View viewTop;
 
         public TripViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class UserCollectViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.img_collect)
+        ImageView imgCollect;
+        @BindView(R.id.tv_collect_item)
+        TextView tvCollectItem;
+        @BindView(R.id.tv_collect_price)
+        TextView tvCollectPrice;
+
+        public UserCollectViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -632,6 +698,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         LinearLayout llIdentifyCardid;
 
         public OrderCompletionTirpViewHolder(@NonNull View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class FmTravelersViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.tv_title_content)
+        TextView tvTitleContent;
+        @BindView(R.id.image_travels)
+        ImageView imageTravels;
+        @BindView(R.id.iv_browse)
+        ImageView ivBrowse;
+        @BindView(R.id.browse_textView)
+        TextView browseTextView;
+        @BindView(R.id.iv_fabulous)
+        ImageView ivFabulous;
+        @BindView(R.id.fabulous_text)
+        TextView fabulousText;
+        @BindView(R.id.iv_comment)
+        ImageView ivComment;
+        @BindView(R.id.comment_text)
+        TextView commentText;
+        @BindView(R.id.goods_cardView)
+        CardView goodsCardView;
+
+        public FmTravelersViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -17,12 +17,12 @@ import androidx.core.widget.NestedScrollView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.ui.activity.AllOrderActivity;
+import com.example.tourism.ui.activity.PersonalChangePassword;
 import com.example.tourism.ui.activity.PersonalCouponActivity;
 import com.example.tourism.ui.activity.PersonalDataActivity;
 import com.example.tourism.ui.activity.PersonalHolidayproblem;
@@ -46,6 +46,8 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
+
+import java.io.StringReader;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,7 +133,6 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         switch (view.getId()) {
             case R.id.btn_trip:
 
-
                 break;
             case R.id.btn_mycollection:
                 openActivity(PersonalMyCollection.class);
@@ -194,7 +195,10 @@ public class PersonerFragment extends BaseFragment implements DefineView {
         if (user != null) {
             ImageLoader.getInstance().displayImage(RequestURL.ip_images + user.getUserPicUrl(), hHead, InitApp.getOptions());
             userName.setText(user.getUserAccountName());
-            userVal.setText(user.getUserTellphone());
+            String tellphone = user.getUserTellphone();
+            String replace = tellphone.substring(3,7);
+            String newreplace = tellphone.replace(replace,"****");
+            userVal.setText(newreplace);
             userHomeage.setVisibility(View.VISIBLE);
             userarrow.setVisibility(View.VISIBLE);
             userLine.setVisibility(View.VISIBLE);

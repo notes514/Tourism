@@ -37,7 +37,7 @@ public class TravelsDataManger {
             //文章ID
             String travelsId = ment.select("h2.tit").attr("data-bookid");
             //用户主页地址
-            String userHref = ment.select("a.face").attr("abs:href");
+            String userHref = CTextUtils.getUserId(ment.select("a.face").attr("abs:href"));
             //用户头像URL
             String userSrc = ment.select("img.imgf").attr("abs:src");
             //文章内容

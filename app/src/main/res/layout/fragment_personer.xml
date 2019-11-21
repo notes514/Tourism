@@ -180,8 +180,8 @@
                                 android:background="@drawable/ic_personal_fillet">
                                 <ImageView
                                     android:id="@+id/personal_Shopping_Cart_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_trips" />
                             </FrameLayout>
@@ -219,8 +219,8 @@
                                 android:background="@drawable/ic_personal_fillet">
                                 <ImageView
                                     android:id="@+id/personal_Holiday_order_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_order" />
                             </FrameLayout>
@@ -246,20 +246,18 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="80dp"
+                            android:layout_height="70dp"
                             android:layout_marginTop="1dp"
                             android:background="@color/color_white"
                             android:orientation="horizontal">
-
                             <LinearLayout
                                 android:layout_width="fill_parent"
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
-
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
                                     android:src="@drawable/ic_personal_payment"/>
@@ -280,8 +278,8 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
                                     android:src="@drawable/ic_personal_consumption"/>
@@ -302,8 +300,8 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
                                     android:src="@drawable/ic_personal_evaluate"/>
@@ -324,8 +322,8 @@
                                 android:orientation="vertical">
 
                                 <ImageView
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:layout_marginTop="15dp"
                                     android:src="@drawable/ic_personal_refund"/>
@@ -355,8 +353,8 @@
                                 android:background="@drawable/ic_personal_fillet_yellow">
                                 <ImageView
                                     android:id="@+id/personal_Coupon_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_coupon" />
                             </FrameLayout>
@@ -398,8 +396,8 @@
                                 android:background="@drawable/ic_personal_fillet_red">
                                 <ImageView
                                     android:id="@+id/personal_Collection_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_collection" />
                             </FrameLayout>
@@ -439,8 +437,8 @@
                                 android:background="@drawable/ic_personal_fillet_red">
                                 <ImageView
                                     android:id="@+id/personal_Subscribe_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_subscribe" />
                             </FrameLayout>
@@ -477,8 +475,8 @@
                                 android:layout_gravity="center|left"
                                 android:background="@drawable/ic_personal_fillet_red">
                                 <ImageView
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_member_recharge" />
                             </FrameLayout>
@@ -519,8 +517,8 @@
                                 android:background="@drawable/ic_personal_fillet_gray">
                                 <ImageView
                                     android:id="@+id/personal_Feedback_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_feedback" />
                             </FrameLayout>
@@ -560,8 +558,8 @@
                                 android:background="@drawable/ic_personal_fillet_gray">
                                 <ImageView
                                     android:id="@+id/personal_set_up_Img"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
                                     android:layout_gravity="center"
                                     android:src="@drawable/ic_personal_set_up" />
                             </FrameLayout>

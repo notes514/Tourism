@@ -25,11 +25,11 @@
     <!-- 用于申请调用A-GPS模块 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!-- 用于申请获取蓝牙信息进行室内定位 -->
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
     <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
-    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 用于访问网络，网络定位需要上网 -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -39,16 +39,15 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- 短信验证码登录、第三方登录权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE">
     </uses-permission>
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE">
     </uses-permission>
     <!-- 短信验证码登录、第三方登录权限 -->
@@ -71,6 +70,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
+    <!--  支付宝支付权限  -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".application.InitApp"
         android:allowBackup="true"
@@ -90,7 +96,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <uses-library android:name="org.apache.http.legacy" android:required="false" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -129,7 +139,7 @@
         </activity>
         <activity android:name=".ui.activity.PersonalOpenmembershipActivity">
         </activity>
-        <activity android:name=".ui.activity.PersonalSystemSetupActivity"/>
+        <activity android:name=".ui.activity.PersonalSystemSetupActivity" />
         <activity android:name=".ui.activity.CalendarActivity">
         </activity>
         <activity android:name=".ui.activity.OrderCompletionActivity">
@@ -152,11 +162,11 @@
         </activity>
         <activity android:name=".ui.activity.LocationActivity">
         </activity>
-        <activity android:name=".ui.activity.ContactActivity" >
+        <activity android:name=".ui.activity.ContactActivity">
         </activity>
         <activity android:name=".ui.activity.AddContactActivity">
         </activity>
-        <activity android:name=".ui.activity.EditContactActivity" >
+        <activity android:name=".ui.activity.EditContactActivity">
         </activity>
         <activity android:name=".ui.activity.NewPedestriansActivity">
         </activity>
@@ -172,6 +182,10 @@
         </activity>
         <activity android:name=".ui.activity.MapActivity">
         </activity>
+        <activity android:name=".ui.activity.PersonalChangePassword">
+        </activity>
+        <activity android:name=".ui.activity.StrategyCommunityActivity">
+        </activity>
         <activity
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -182,8 +196,6 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
-
-        <!-- 第三方登录需要额外添加的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -233,8 +245,10 @@
             android:name="com.brtbeacon.sdk.BleService"
             android:enabled="true" />
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="8fd1937cd4daf2fabcd80969be430da3"></meta-data>
+        <service android:name="com.amap.api.location.APSService">
+        </service>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="4715bfcd39b5da41ffd6992f632ebeb1">
+        </meta-data>
     </application>
 
 </manifest>

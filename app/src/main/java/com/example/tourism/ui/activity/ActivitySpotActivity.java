@@ -54,8 +54,6 @@ import retrofit2.Response;
 import static org.greenrobot.eventbus.EventBus.TAG;
 
 public class ActivitySpotActivity extends BaseActivity implements DefineView{
-
-
     private Unbinder unbinder;
     private TextView searchView;
     private RecyclerView travelMode;
@@ -68,13 +66,9 @@ public class ActivitySpotActivity extends BaseActivity implements DefineView{
     SpotAdapter spotAdapter;
     Context context;
 
-
-
     @Override
     public void initView() {
         //默认初始工具栏为透明
-
-
     }
 
     @Override

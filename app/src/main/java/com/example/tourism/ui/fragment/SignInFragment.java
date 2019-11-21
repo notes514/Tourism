@@ -1,6 +1,7 @@
 package com.example.tourism.ui.fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -111,6 +112,7 @@ public class SignInFragment extends BaseFragment {
     /**
      * 使用Handler来分发Message对象到主线程中，处理事件
      */
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler(){
         @Override
         public void handleMessage(@NonNull Message message) {

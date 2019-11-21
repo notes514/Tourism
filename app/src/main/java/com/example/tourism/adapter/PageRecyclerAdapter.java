@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.entity.TravelsBean;
+import com.example.tourism.ui.activity.StrategyCommunityActivity;
 import com.example.tourism.ui.activity.StrategyDetailsActivity;
 import com.example.tourism.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -59,6 +60,14 @@ public class PageRecyclerAdapter extends RecyclerView.Adapter<PageRecyclerAdapte
         holder.itemView.setTag(travels);
         //用户头像
         ImageLoader.getInstance().displayImage(travels.getUserPicUrl(), holder.headPortraitImage, InitApp.getOptions());
+        holder.headPortraitImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, StrategyCommunityActivity.class);
+                intent.putExtra("strategyId", travels.getUserHref());
+                context.startActivity(intent);
+            }
+        });
         //标题内容
         holder.tvTitleContent.setText(travels.getTitle());
         //用户姓名
