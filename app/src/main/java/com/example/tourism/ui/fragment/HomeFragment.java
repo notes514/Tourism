@@ -42,6 +42,7 @@ import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.ui.activity.HotelActivity;
 import com.example.tourism.ui.activity.LocationActivity;
+import com.example.tourism.ui.activity.MapActivity;
 import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SeachActivity;
@@ -503,7 +504,7 @@ public class HomeFragment extends BaseFragment implements DefineView {
     private void showNearby() {
         linearLayout.setOnClickListener(view -> {
             Toast.makeText(getContext(), "查看附近景点", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), NearbyActivity.class);
+            Intent intent = new Intent(getContext(), MapActivity.class);
             startActivity(intent);
         });
     }
