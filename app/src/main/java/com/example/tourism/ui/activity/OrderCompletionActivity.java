@@ -325,6 +325,7 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         }
                         //生成订单
                         Map<String, Object> map = new HashMap<>();
+                        map.put("userId", RequestURL.vUserId);
                         map.put("orderContent", tvContent.getText().toString());
                         map.put("orderNumber", 1);
                         map.put("orderState", 1);
