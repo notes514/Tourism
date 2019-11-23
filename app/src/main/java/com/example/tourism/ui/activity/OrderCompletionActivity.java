@@ -305,6 +305,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                         loadingDialog = new LoadingDialog(this, "正在预定...");
                         loadingDialog.show();
 
+
+                        Log.d(InitApp.TAG, "addContactsAndPassenger: 正在预定！！！" );
                         String travelMode = "";
                         if (scenicSpot.getTravelMode() == 0) {
                             travelMode = "国内游";
@@ -344,7 +346,9 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                                 try {
                                     String message = response.body().string();
                                     JSONObject json = new JSONObject(message);
+                                    Log.d(InitApp.TAG, "message: " + message);
                                     if (json.getString(RequestURL.RESULT).equals("S")) {
+
                                         queryNewestOrder();
                                     }
                                 } catch (Exception e) {
@@ -420,6 +424,8 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
+
+                        Log.d(InitApp.TAG, "addContactsAndPassenger: 执行了！！！" );
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -472,7 +478,6 @@ public class OrderCompletionActivity extends BaseActivity implements DefineView 
                     assert response.body() != null;
                     String message = response.body().string();
                     JSONObject json = new JSONObject(message);
-                    Log.d(InitApp.TAG, "message: " + message);
                     if (json.getString(RequestURL.RESULT).equals("S")) {
                         contactsList = RetrofitManger.getInstance().getGson().fromJson(json.getString(RequestURL.ONE_DATA),
                                 new TypeToken<List<Contacts>>(){}.getType());
