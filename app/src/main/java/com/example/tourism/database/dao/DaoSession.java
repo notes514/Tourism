@@ -22,12 +22,12 @@ import java.util.Map;
 public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig contactsBeanDaoConfig;
-    private final DaoConfig seachContentDaoConfig;
     private final DaoConfig tripBeanDaoConfig;
+    private final DaoConfig seachContentDaoConfig;
 
     private final ContactsBeanDao contactsBeanDao;
-    private final SeachContentDao seachContentDao;
     private final TripBeanDao tripBeanDao;
+    private final SeachContentDao seachContentDao;
 
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
@@ -36,37 +36,37 @@ public class DaoSession extends AbstractDaoSession {
         contactsBeanDaoConfig = daoConfigMap.get(ContactsBeanDao.class).clone();
         contactsBeanDaoConfig.initIdentityScope(type);
 
-        seachContentDaoConfig = daoConfigMap.get(SeachContentDao.class).clone();
-        seachContentDaoConfig.initIdentityScope(type);
-
         tripBeanDaoConfig = daoConfigMap.get(TripBeanDao.class).clone();
         tripBeanDaoConfig.initIdentityScope(type);
 
+        seachContentDaoConfig = daoConfigMap.get(SeachContentDao.class).clone();
+        seachContentDaoConfig.initIdentityScope(type);
+
         contactsBeanDao = new ContactsBeanDao(contactsBeanDaoConfig, this);
-        seachContentDao = new SeachContentDao(seachContentDaoConfig, this);
         tripBeanDao = new TripBeanDao(tripBeanDaoConfig, this);
+        seachContentDao = new SeachContentDao(seachContentDaoConfig, this);
 
         registerDao(ContactsBean.class, contactsBeanDao);
-        registerDao(SeachContent.class, seachContentDao);
         registerDao(TripBean.class, tripBeanDao);
+        registerDao(SeachContent.class, seachContentDao);
     }
     
     public void clear() {
         contactsBeanDaoConfig.clearIdentityScope();
-        seachContentDaoConfig.clearIdentityScope();
         tripBeanDaoConfig.clearIdentityScope();
+        seachContentDaoConfig.clearIdentityScope();
     }
 
     public ContactsBeanDao getContactsBeanDao() {
         return contactsBeanDao;
     }
 
-    public SeachContentDao getSeachContentDao() {
-        return seachContentDao;
-    }
-
     public TripBeanDao getTripBeanDao() {
         return tripBeanDao;
+    }
+
+    public SeachContentDao getSeachContentDao() {
+        return seachContentDao;
     }
 
 }
