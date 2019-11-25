@@ -17,13 +17,13 @@ public class RequestURL {
     //用户编号(唯一)
     public static String vUserId = "";
 
-    //http://47.100.47.54/TourismServer-1.0-SNAPSHOT(服务器地址)
+    //http://47.100.47.54/TourismServer(服务器地址)
     //IP地址,端口号
-    public static final String ip_port = "http://192.168.2.227:8080/api/";
+    public static final String ip_port = "http://47.100.47.54/TourismServer/api/";
     //IP地址，视频路径
-    public static final String ip_video = "http://192.168.2.227:8080/video";
+    public static final String ip_video = "http://47.100.47.54/TourismServer/video";
     //IP地址,图片路径
-    public static final String ip_images = "http://192.168.2.227:8080/";
+    public static final String ip_images = "http://47.100.47.54/TourismServer/";
     //首页地址
     public static final String html = "https://travel.qunar.com/";
     //攻略库首页地址
