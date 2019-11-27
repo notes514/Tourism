@@ -51,20 +51,9 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.scenicSpotTheme.setText(objects.get(position).getScenicSpotTheme());
-        holder.travelMode.setText(objects.get(position).getTravelMode()+"");
+        holder.travelMode.setText(objects.get(position).getTourCity());
         holder.scenicSpotPrice.setText("¥:"+objects.get(position).getScenicSpotPrice());
-        //holder.scenicSpotState.setText(objects.get(position).getScenicSpotState()+"");
-        if (objects.get(position).getScenicSpotState()==1){
-            holder.scenicSpotState.setText("❤");
-        }else if (objects.get(position).getScenicSpotState()==2){
-            holder.scenicSpotState.setText("❤❤");
-        }else if (objects.get(position).getScenicSpotState()==3){
-            holder.scenicSpotState.setText("❤❤❤");
-        }else if (objects.get(position).getScenicSpotState()==4){
-            holder.scenicSpotState.setText("❤❤❤❤");
-        }else if (objects.get(position).getScenicSpotState()==5){
-            holder.scenicSpotState.setText("❤❤❤❤❤");
-        }
+        holder.scenicSpotState.setText(objects.get(position).getScenicSpotShop()+"");
         holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
