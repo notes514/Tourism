@@ -54,6 +54,8 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
         holder.travelMode.setText(objects.get(position).getTourCity());
         holder.scenicSpotPrice.setText("¥:"+objects.get(position).getScenicSpotPrice());
         holder.scenicSpotState.setText(objects.get(position).getScenicSpotShop()+"");
+        holder.scenicSpotScore.setText(objects.get(position).getScenicSpotScore()+"");
+        holder.numberOfTourists.setText(objects.get(position).getNumberOfTourists()+"");
         holder.scenicSpotId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,6 +85,8 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
         public TextView scenicSpotState;
         public TextView travelMode;
         public TextView scenicSpotPrice;
+        public TextView scenicSpotScore;
+        public TextView numberOfTourists;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +96,8 @@ public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<Seconda
             this.travelMode = itemView.findViewById(R.id.travel_mode);
             this.scenicSpotState = itemView.findViewById(R.id.scenic_spot_state);
             this.scenicSpotPrice = itemView.findViewById(R.id.scenic_spot_price);
+            this.scenicSpotScore = itemView.findViewById(R.id.scenic_spot_score);
+            this.numberOfTourists = itemView.findViewById(R.id.number_of_tourists);
         }
     }
 }
