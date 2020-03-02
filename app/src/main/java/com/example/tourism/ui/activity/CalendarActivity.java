@@ -31,8 +31,6 @@ import com.example.tourism.widget.CustomToolbar;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.time.MonthDay;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;

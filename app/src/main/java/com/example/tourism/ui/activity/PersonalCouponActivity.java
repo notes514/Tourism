@@ -1,6 +1,5 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -19,7 +18,6 @@ import com.example.tourism.ui.fragment.PersonalEdenvelopesFragment;
 import com.example.tourism.ui.fragment.PersonalFailureFragment;
 import com.example.tourism.ui.fragment.PersonalVolumereductionFragment;
 import com.example.tourism.ui.fragment.PersonalVoucherFragment;
-import com.example.tourism.ui.fragment.PersonerFragment;
 import com.example.tourism.widget.CustomToolbar;
 
 import java.util.ArrayList;

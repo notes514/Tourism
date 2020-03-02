@@ -4,11 +4,11 @@ package com.example.tourism.ui.fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-import android.view.View;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.adapter.BrowseCountryAdapter;
 import com.example.tourism.adapter.SearchListAdapter;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
@@ -31,7 +30,6 @@ import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

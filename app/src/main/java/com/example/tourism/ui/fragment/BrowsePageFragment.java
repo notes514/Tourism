@@ -1,7 +1,6 @@
 package com.example.tourism.ui.fragment;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +20,10 @@ import com.example.tourism.application.ServerApi;
 import com.example.tourism.biz.TravelsDataManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.TrHeadBean;
 import com.example.tourism.entity.TravelsBean;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
@@ -37,7 +34,6 @@ import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
-import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 

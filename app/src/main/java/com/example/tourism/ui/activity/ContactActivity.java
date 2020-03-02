@@ -1,10 +1,7 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
@@ -13,11 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
 import com.yanzhenjie.recyclerview.SwipeRecyclerView;

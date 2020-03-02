@@ -25,7 +25,6 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.entity.Contacts;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.Passenger;

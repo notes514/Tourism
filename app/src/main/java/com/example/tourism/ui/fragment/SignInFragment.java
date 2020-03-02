@@ -2,7 +2,6 @@ package com.example.tourism.ui.fragment;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.widget.TimeCountUtil;

@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;

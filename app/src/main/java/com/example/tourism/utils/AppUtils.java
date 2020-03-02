@@ -16,8 +16,6 @@ import androidx.annotation.ArrayRes;
 import androidx.annotation.StringRes;
 import androidx.core.content.ContextCompat;
 
-import com.example.tourism.R;
-
 import java.util.Locale;
 
 /**

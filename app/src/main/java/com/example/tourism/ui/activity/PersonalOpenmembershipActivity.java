@@ -14,7 +14,6 @@ import com.example.tourism.widget.CustomToolbar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class PersonalOpenmembershipActivity extends BaseActivity implements DefineView {
 

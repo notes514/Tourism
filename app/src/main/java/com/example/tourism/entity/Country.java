@@ -1,7 +1,5 @@
 package com.example.tourism.entity;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
 
 public class Country implements Serializable{

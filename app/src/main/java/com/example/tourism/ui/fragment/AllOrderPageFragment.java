@@ -1,7 +1,6 @@
 package com.example.tourism.ui.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.RecyclerViewAdapter;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
-import com.example.tourism.biz.TravelsDataManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.Order;
@@ -35,10 +32,7 @@ import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
 
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

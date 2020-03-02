@@ -1,13 +1,13 @@
 package com.example.tourism.adapter;
 
-import java.util.List;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
@@ -16,10 +16,7 @@ import com.example.tourism.entity.ExhibitsComment;
 import com.example.tourism.widget.CircleImageView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.ImageView;
+import java.util.List;
 
 public class ExhibitsCommentItemsAdapter extends BaseAdapter {
     private List<ExhibitsComment> objects;

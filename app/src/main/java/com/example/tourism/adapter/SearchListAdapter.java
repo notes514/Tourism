@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
 import com.example.tourism.entity.ScenicRegion;
-import com.example.tourism.entity.ScenicSpot;
 
 import java.util.List;
 

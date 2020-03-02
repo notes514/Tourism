@@ -13,15 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tourism.R;
-import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.RegionType;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.ui.activity.ActivitySpotActivity;
-import com.example.tourism.entity.RegionType;
 import com.example.tourism.widget.GlideImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

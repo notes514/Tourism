@@ -11,7 +11,6 @@ import com.example.tourism.application.InitApp;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 

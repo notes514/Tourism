@@ -1,7 +1,5 @@
 package com.example.tourism.biz;
 
-import android.util.Log;
-
 import com.example.tourism.entity.AuthorBean;
 import com.example.tourism.entity.TrHeadBean;
 import com.example.tourism.utils.CTextUtils;

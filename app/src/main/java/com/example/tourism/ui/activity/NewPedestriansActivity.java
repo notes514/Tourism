@@ -8,7 +8,6 @@ import android.widget.EditText;
 
 import com.example.tourism.R;
 import com.example.tourism.common.DefineView;
-import com.example.tourism.database.bean.ContactsBean;
 import com.example.tourism.database.bean.TripBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;
@@ -17,7 +16,6 @@ import com.example.tourism.utils.DaoManger;
 import com.example.tourism.widget.CustomToolbar;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import butterknife.BindView;

@@ -1,8 +1,5 @@
 package com.example.tourism.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +10,9 @@ import android.widget.TextView;
 
 import com.example.tourism.R;
 import com.example.tourism.entity.SecondaryMenu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecondaryMenuItemAdapter extends BaseAdapter {
 

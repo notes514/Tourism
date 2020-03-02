@@ -25,7 +25,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
@@ -43,11 +42,9 @@ import com.example.tourism.entity.SecondaryMenu;
 import com.example.tourism.ui.activity.HotelActivity;
 import com.example.tourism.ui.activity.LocationActivity;
 import com.example.tourism.ui.activity.MapActivity;
-import com.example.tourism.ui.activity.NearbyActivity;
 import com.example.tourism.ui.activity.RomanticJourneyActivity;
 import com.example.tourism.ui.activity.SeachActivity;
 import com.example.tourism.ui.activity.SecondaryActivity;
-import com.example.tourism.ui.activity.StrategyCommunityActivity;
 import com.example.tourism.ui.fragment.base.BaseFragment;
 import com.example.tourism.utils.AppUtils;
 import com.example.tourism.utils.StatusBarUtil;
@@ -62,7 +59,6 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.RefreshState;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnMultiListener;
-import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -70,9 +66,7 @@ import com.youth.banner.Transformer;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

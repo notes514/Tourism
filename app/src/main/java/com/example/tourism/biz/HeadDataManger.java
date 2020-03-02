@@ -1,6 +1,7 @@
 package com.example.tourism.biz;
 
 import com.example.tourism.entity.TrHeadBean;
+
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

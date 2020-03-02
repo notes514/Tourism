@@ -30,9 +30,6 @@ public class SpotAdapter extends RecyclerView.Adapter<SpotAdapter.SpotViewHolder
         void onClick(int position);
     }
 
-
-
-
     //第二步， 写一个公共的方法
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;

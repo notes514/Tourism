@@ -7,10 +7,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
@@ -22,7 +18,6 @@ import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
 import com.example.tourism.R;
-import com.example.tourism.adapter.CityItemAdapter;
 import com.example.tourism.ui.activity.base.BaseActivity;
 
 public class MapActivity extends BaseActivity implements GeocodeSearch.OnGeocodeSearchListener,AMap.OnMyLocationChangeListener {

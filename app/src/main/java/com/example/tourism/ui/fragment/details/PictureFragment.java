@@ -2,23 +2,14 @@ package com.example.tourism.ui.fragment.details;
 
 
 import android.annotation.SuppressLint;
-import android.net.http.SslError;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 
 import com.example.tourism.R;
 import com.example.tourism.ui.fragment.base.BaseFragment;
-import com.example.tourism.utils.HTML5CustomWebView;
 import com.example.tourism.widget.ChildAutoViewPager;
 import com.example.tourism.widget.ViewBundle;
 

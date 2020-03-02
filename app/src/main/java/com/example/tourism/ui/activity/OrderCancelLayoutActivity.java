@@ -1,6 +1,5 @@
 package com.example.tourism.ui.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +25,6 @@ import com.example.tourism.entity.Contacts;
 import com.example.tourism.entity.Order;
 import com.example.tourism.entity.OrderDetails;
 import com.example.tourism.entity.Passenger;
-import com.example.tourism.entity.TravellingPeopleBean;
 import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
 import com.example.tourism.utils.AppUtils;

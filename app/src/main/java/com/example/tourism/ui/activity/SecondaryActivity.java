@@ -6,19 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-
-import com.example.tourism.R;
-import com.example.tourism.adapter.SecondaryScenicSpotItemAdapter;
-import com.example.tourism.application.RetrofitManger;
-import com.example.tourism.application.ServerApi;
-import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.ScenicSpot;
-import com.example.tourism.utils.AppUtils;
-import com.example.tourism.utils.StatusBarUtil;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +15,16 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.palette.graphics.Palette;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.example.tourism.R;
+import com.example.tourism.adapter.SecondaryScenicSpotItemAdapter;
+import com.example.tourism.application.RetrofitManger;
+import com.example.tourism.application.ServerApi;
+import com.example.tourism.common.RequestURL;
+import com.example.tourism.entity.ScenicSpot;
+import com.example.tourism.utils.StatusBarUtil;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,30 +1,26 @@
 package com.example.tourism.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tourism.R;
 import com.example.tourism.application.InitApp;
 import com.example.tourism.common.RequestURL;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.ui.activity.TourismDetailsActivity;
-import com.example.tourism.utils.AppUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SecondaryScenicSpotItemAdapter extends RecyclerView.Adapter<SecondaryScenicSpotItemAdapter.ViewHolder> {
 

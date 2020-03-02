@@ -1,11 +1,10 @@
 package com.example.tourism.ui.activity;
 
-import android.content.Context;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.ListView;
+
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.tourism.R;
 import com.example.tourism.adapter.RedEnvelopsItemAdapter;

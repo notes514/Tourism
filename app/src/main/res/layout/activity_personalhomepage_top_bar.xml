@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--注意最外层布局的高度不能使用match_parent，不然将会遮挡了ViewPager部分-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">

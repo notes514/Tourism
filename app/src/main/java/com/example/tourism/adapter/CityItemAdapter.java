@@ -1,8 +1,5 @@
 package com.example.tourism.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -13,20 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.example.tourism.MainActivity;
 import com.example.tourism.R;
 import com.example.tourism.entity.City;
 import com.example.tourism.ui.activity.LocationActivity;
-import com.example.tourism.ui.fragment.HomeFragment;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 

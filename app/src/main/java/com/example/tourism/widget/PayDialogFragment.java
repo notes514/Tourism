@@ -36,7 +36,6 @@ import com.example.tourism.common.RequestURL;
 import com.example.tourism.payment.OrderInfoUtil2_0;
 import com.example.tourism.payment.PayResult;
 import com.example.tourism.ui.activity.SuccessfulPaymentActivity;
-import com.example.tourism.ui.activity.TravelerActivity;
 import com.example.tourism.utils.AppUtils;
 
 import org.json.JSONObject;
@@ -108,7 +107,7 @@ public class PayDialogFragment extends DialogFragment implements PasswordEditTex
      * 	建议使用支付宝提供的公私钥生成工具生成和获取 RSA2_PRIVATE。
      * 	工具地址：https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=106097&docType=1
      */
-    public static final String RSA2_PRIVATE = "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC4Ic0oKiAxw4Ia3LInUSop+MEYzGG12iKT941HpHvSgBHGRf8muuRPHEKP1durhrAMffRloKKR4hI0etvZjB0AMjhdceOxSTrQebM+uHGWMg6EzxutD1G/8a7C37a15Y2ezzUFieZsVF1PqruxaNBIm6JVkLInh0Rsv3Ryl9G6fWu2OyHbIFQgLbb/NqyMPfN3Pwes51M3Uj7Mso/fZaxQRl59a3dA8zFVuM+B6TQvHXNVsf3/ChYokFzw5o1VM8PPwKmqpYdhhXM2qJIhDwrhpZ14KQh2UbuIYW5j3f50Yf9LWFE1hhuICTftzduZfjLIJiZXrbf2jN9gPUD4YZ2NAgMBAAECggEAT+4UYcgPm6qT8tc02s5n8DpUkFBAZjGf6v1+LchgG9uOW7SM8yIT86d/2XJrXkUkbPfMPMWDbLJnVrKydvhUqn4ia6YBwjbYuiDqR2LHo/xswwgoqnJI+XqPc3armMBiPrsR+CqJhSMGMowZ2AR4zdwJlv0t6OzWLiLaCNiQqVQEqEt8h3aOJqaLMYQU3WD2iyyC3InVnJqK4QOjxiUEmGy5LdzAZ+8l4T9BT0xWrI7Rh+1IYihDf6Qdcrqn8seXuAsDRaRGSnQm/b4xO6zcsJad0xF8mAHp8ukdqyNNkveD+kNosC41RJ+TuXlS30cMwsLganhfE2hfefmHzuOYIQKBgQD1HvpyX5TTGA/GDd6Odgxe+3EIXOBEaI8LLNJteaIWCbYkSfgWlz5gmzPboju+K2sCamb+ApLXEOE5iNBoPYWhCxi1wfvEsIUi6zqlYapQ8QfEWcpSZ4aYXMxUzDUAwzxkaQqILYQsNs37CF8MrTx4WM5rc+4QvGbmjOCfxE6dpQKBgQDATeCL5MzhzOQlFHHy7zjzVhBxPi+ocfMyFKwSE3lcONHZMPVubK6d9IXY9D4RbfKU/yLvgYDw5VmEJsh0SO73SAvjT0KArjCPVujvcHv3YMWZnBFqpToSbzumKmZeRWW4Yh2roK/hxqetJxzmeccdEeC/3ylKmRQ+8HRAvC7LyQKBgD5cODkaygD+UR0A8ErsC2+qpnILNt8QfrvIFmzVkf/rTpRi4SPWLH9lXMcWuf5Ci4Hc0gDzZKokWDhL70FlzXZQHWQ4SrYadnSQxaXHeA4JlAFHGqrmPZ7LlQxJu35LLTUaaByG/+ZDtxmTYqMV+5ledn1ty/YkCEXFN2xOA/YlAoGAGS9Z1Bhv+LaDvpNx5PYNiFjiKGKTjUT3K7znWCqyvzA103MFAaQ8LjWi/enm4xN6LKdJZQKZ53KyCYumvwv6N+p4nBl6RS4K8Ara0Njzc096MYbuBQCEnXtx3W46H+iIzOAUsLCHuFLzDMtNjqWuPRFlVNueJcXsj92f7AZ5PnkCgYBIoPBy9yysW6iJwQO7HNtPQNeaowiibtR2qrrU45LzyLfXmcx2pdLDFZWobJqTdhMJ1kOHzmBzXhjs2logTALFgFjPW+QruVVVQwLKm1yRqgi1J4GcvLn31Pf+JgsiDJ/yQ91ZwmA65Wct4FBhxJR8GEg+04ExMo4Cm39F/YWXEw==";
+    public static final String RSA2_PRIVATE = "";
     public static final String RSA_PRIVATE = "";
 
     private static final int SDK_PAY_FLAG = 1;

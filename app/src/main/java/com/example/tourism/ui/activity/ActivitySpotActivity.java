@@ -1,14 +1,11 @@
 package com.example.tourism.ui.activity;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,25 +17,15 @@ import com.example.tourism.application.RetrofitManger;
 import com.example.tourism.application.ServerApi;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.common.RequestURL;
-import com.example.tourism.entity.Constant;
-import com.example.tourism.entity.Country;
 import com.example.tourism.entity.ScenicRegion;
 import com.example.tourism.entity.ScenicSpot;
 import com.example.tourism.entity.TravelMode;
-import com.example.tourism.entity.User;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.utils.DbManger;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +37,6 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static org.greenrobot.eventbus.EventBus.TAG;
 
 public class ActivitySpotActivity extends BaseActivity implements DefineView{
     private Unbinder unbinder;

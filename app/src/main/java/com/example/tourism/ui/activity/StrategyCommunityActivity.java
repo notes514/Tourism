@@ -1,7 +1,6 @@
 package com.example.tourism.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,7 +20,6 @@ import com.example.tourism.biz.AuthorDataManger;
 import com.example.tourism.common.DefineView;
 import com.example.tourism.entity.AuthorBean;
 import com.example.tourism.ui.activity.base.BaseActivity;
-import com.example.tourism.ui.fragment.SignIn2Fragment;
 import com.example.tourism.ui.fragment.strategycommunit.CommunityCommentsFragment;
 import com.example.tourism.ui.fragment.strategycommunit.CommunityListFragment;
 import com.example.tourism.ui.fragment.strategycommunit.CommunityMapFragment;
